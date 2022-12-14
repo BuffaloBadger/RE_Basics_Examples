@@ -4,7 +4,10 @@ There is a folder for each Reaction Engineering Basics Example Problem. The fold
 
 * a README.md file with any notes regarding the problem.
 * the problem statement as a .qmd file.
+* a succinct formulation of the solution as a .qmd file.
 * python code used to solve the problem.
 * Matlab code used to solve the problem.
 * numerical results as a .csv file.
 * graphical results as .png files.
+
+My intention is that the problem statement and graphical results can be included directly in "Reaction Engineering Basics," "SCoRE," etc. The results can be read in and formatted as desired. The formulation can be copied and pasted and the embellished as desired in the final document.
