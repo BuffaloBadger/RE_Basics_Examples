@@ -1,0 +1,6 @@
+
+Carbon monoxide can be oxidized by molecular oxygen to produce carbon dioxide as shown in reaction (1). If equal volumes of carbon monoxide and air at equal temperature and pressure are mixed and flow into a chemical reactor, which reactant is limiting? 
+
+$$
+2 CO + O_2 \rightarrow 2 CO_2 \tag{1}
+$$
