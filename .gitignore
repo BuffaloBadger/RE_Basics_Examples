@@ -1,3 +1,5 @@
 *.csv
 *.png
+*.html
+*.csv
 .DS_Store
