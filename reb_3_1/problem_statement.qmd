@@ -1,0 +1,10 @@
+
+A new catalyst is being developed with the hope of generating ethylene by the oxidative dehydrogenation of ethane, reaction (1). Reaction (2) also takes place at the operating conditions of 1 atm and 150 °C. The process starts with 90% ethane and 10% air (you may take air to contain 79% N~2~ and 21% O~2~) and ends with a 50% conversion of O~2~ and a selectivity of 3 C~2~H~4~/CO~2~. Construct a mole table for this system and use it to calculate the final mole fraction of CO~2~.
+
+$$
+2 C_2H_6 + O_2 \leftrightarrows 2 C_2H_4 + 2 H_2O \tag{1}
+$$
+
+$$
+2 C_2H_6 + 7 O_2 \leftrightarrows 4 CO_2 + 6 H_2O \tag{2}
+$$

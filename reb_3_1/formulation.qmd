@@ -1,0 +1,65 @@
+---
+format:
+  html:
+    toc: false
+    embed-resources: true
+---
+
+**Given**
+
+$P$ = 1 atm, $T$ = 150 °C, $y_{C_2H_6,0}$ = 0.9, $y_{O_2,0}$ = 0.21(0.1), $y_{N_2,0}$ = 0.79(0.1), $f_{0_2}$ = 0.5, $S_{C_2H_4/CO_2}$ = 3.0.
+
+**Mole Table**
+
+| Species | Initial Amount | Later Amount |
+|:-------:|:------:|:------:|
+| C~2~H~6~ | $n_{C_2H_6,0}$ | $n_{C_2H_6,0} - 2 \xi_1 - 2 \xi_2$ |
+| O~2~ | $n_{O_2,0}$ | $n_{O_2,0} - \xi_1 - 7 \xi_2$ |
+| C~2~H~4~ | $n_{C_2H_4,0}$ | $n_{C_2H_4,0} + 2 \xi_1$ |
+| H~2~O | $n_{H_2O,0}$ | $n_{H_2O,0} + 2 \xi_1 + 6 \xi_2$ |
+| CO~2~ | $n_{CO_2,0}$ | $n_{CO_2,0} + 4 \xi_2$ |
+| N~2~ | $n_{N_2,0}$ | $n_{N_2,0}$ |
+| Total | $n_{\text{total},0}$ | $n_{\text{total},0} + \xi_1 + \xi_2$ |
+
+: {tbl-colwidths="[20,40,40]"}
+
+**Basis**
+
+$n_{\text{total},0}$ = 1 mol.
+
+**Definitions**
+
+$$
+f_{O_2} = \frac{n_{O_2,0} - n_{O_2}}{n_{O_2,0}} = \frac{n_{O_2,0} - \left(n_{O_2,0} - \xi_1 - 7 \xi_2\right)}{n_{O_2,0}} = \frac{\xi_1 + 7 \xi_2}{n_{O_2,0}} \tag{1}
+$$
+
+$$
+S_{C_2H_4/CO_2} = \frac{n_{C_2H_4}}{n_{CO_2}} = \frac{n_{C_2H_4,0} + 2 \xi_1}{n_{CO_2,0} + 4 \xi_2} \tag{2}
+$$
+
+$$
+n_{O_2,0} = y_{O_2,0} n_{\text{total},0} \tag{3}
+$$
+
+$$
+n_{C_2H_4,0} = y_{C_2H_4,0} n_{\text{total},0} \tag{4}
+$$
+
+$$
+n_{CO_2,0} = y_{CO_2,0} n_{\text{total},0} \tag{5}
+$$
+
+$$
+\sum_i y_i = 0 \quad \Rightarrow \quad y_{C_2H_4,0} = y_{CO_2,0} = y_{H_2O,0} = 0 \tag{6}
+$$
+
+$$
+y_{CO_2} = \frac{n_{CO_2}}{n_{\text{total}}} = \frac{n_{CO_2,0} + 4 \xi_2}{n_{\text{total},0} + \xi_1 + \xi_2} \tag{7}
+$$
+
+**Calculations**
+
+1. Substitute given values, basis, $y_{C_2H_4,0}$, and $y_{CO_2,0}$ (from equation (6)) into all equations.
+2. Calculate $n_{C_2H_6,0}$, $n_{O_2,0}$, $n_{C_2H_4,0}$, and $n_{CO_2,0}$ using equations (3) through (5), and substitute the results into all remaining equations.
+3. Solve equations (1) and (2) for $\xi_1$ and $\xi_2$, and substitute the results into all remaining equations.
+4. Calculate the mole fraction of CO~2~ using equation (7).
