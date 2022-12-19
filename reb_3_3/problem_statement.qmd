@@ -1,0 +1,26 @@
+
+A chemical system initially contains CO and H~2~. At system conditions, reactions (1) through (6) occur. Identify a complete, mathematically independent subset of those reactions and construct a mole table for the system.
+
+$$
+CO + 2 H_2 \leftrightarrows CH_3OH \tag{1}
+$$
+
+$$
+CO + 3 H_2 \leftrightarrows CH_4 + H_2O \tag{2}
+$$
+
+$$
+CH_4 + H_2O \leftrightarrows CH_3OH + H_2 \tag{3}
+$$
+
+$$
+CO + H_2O \leftrightarrows CO_2 + H_2 \tag{4}
+$$
+
+$$
+CO_2 + 4 H_2 \leftrightarrows CH_4 + 2 H_2O \tag{5}
+$$
+
+$$
+CO_2 + 3 H_2 \leftrightarrows CH_3OH + H_2O \tag{6}
+$$
