@@ -1,0 +1,56 @@
+---
+format:
+  html:
+    toc: false
+    embed-resources: true
+---
+
+{{< include problem_statement.qmd >}}
+
+**Given**
+
+$\dot n_{N_2O_5,in}$ = 0.5 mol min~-1~, $\dot n_{N_2,in}$ = 0.5 mol min~-1~, $T$ = 600 K, $P$ = 5 MPa, $y_{N_2,out}$ = 0.3.
+
+**Necessary Equations**
+
+$$
+C_{NO_2} = \frac{\dot n_{NO_2}}{\dot V} \tag{2}
+$$
+
+$$
+\dot n_{N_2O_5} = \dot n_{N_2O_5,in} - 2 \dot \xi \quad \Rightarrow \quad \dot \xi = \frac{\dot n_{N_2O_5,in} - \dot n_{N_2O_5}}{2} \tag{3}
+$$
+
+$$
+\begin{align}
+\dot n_{NO_2} &= \cancelto{0}{\dot n_{NO_2,in}} + 4 \dot \xi \\
+&= 2\left(\dot n_{N_2O_5,in} - \dot n_{N_2O_5}\right)
+\end{align} \tag{4}
+$$
+
+$$
+\begin{align}
+\dot V &= \frac{\dot n_{total}RT}{P} = \frac{\left(\dot n_{total,in} + 3 \dot \xi \right)RT}{P} \\
+&= \left(\dot n_{N_2O_5,in} + \dot n_{N_2,in} + 3 \frac{\dot n_{N_2O_5,in} - \dot n_{N_2O_5}}{2} \right)\frac{RT}{P} \\
+&=\left(5\dot n_{N_2O_5,in} + 2\dot n_{N_2,in} - 3 \dot n_{N_2O_5} \right)\frac{RT}{2P}
+\end{align} \tag{5}
+$$
+
+$$
+C_{NO_2} = \frac{4P\left(\dot n_{N_2O_5,in} - \dot n_{N_2O_5}\right)}{RT\left(5\dot n_{N_2O_5,in} + 2\dot n_{N_2,in} - 3 \dot n_{N_2O_5} \right)} \tag{6}
+$$
+
+$$
+y_{N_2} = \frac{\dot n_{N_2}}{\dot n_{total}} = \frac{\dot n_{N_2,in}}{\dot n_{total,in} + 3 \dot \xi} = \frac{\dot n_{N_2,in}}{n_{N_2O_5,in} + \dot n_{N_2,in} + 3 \dot \xi} \tag{7}
+$$
+
+$$
+\dot n_{N_2O_5} = \dot n_{N_2O_5,in} - 2 \dot \xi \tag{8}
+$$
+
+**Calculations**
+
+1. Subtitute the given and known quantities into all equations.
+2. Solve equation (7) to find the value of $\dot \xi$ and substitute the result in equation (8).
+3. Calculate $\dot n_{N_2O_5}$ using equation (8) and substitute the result in equation (6).
+4. Calculate $C_{NO_2}$ using equation (6).

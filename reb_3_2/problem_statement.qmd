@@ -1,0 +1,6 @@
+
+Suppose reaction (1) was studied in an open, steady-state, isothermal, isobaric system. The flow into the system contained 0.5 mol min^−1^ of N~2~O~5~ and 0.5 mol min^−1^ of N~2~ at 600 K and 5 MPa. Generate an expression for the concentration of NO~2~ in terms of the molar flow rate of N~2~O~5~. If the outlet flow contains 30% N~2~, calculate the outlet concentration of NO~2~.
+
+$$
+2 N_2O_5 \leftrightarrows 4 NO_2 + O_2 \tag{1}
+$$
