@@ -1,0 +1,26 @@
+
+A chemical system initially contains 34 mol CO and 66 mol H~2~. At system conditions, reactions (1) through (6) occur. At the end of the process, the CO conversion is 40%, the yield of CH~3~OH is 10.7% (mol CH~3~OH per initial mol CO), and the selectivity for methanol vs. methane is 0.38 mol CH~3~OH per mol CH~4~. Calculate the number of moles of each species at the end of the process.
+
+$$
+CO + 2 H_2 \leftrightarrows CH_3OH \tag{1}
+$$
+
+$$
+CO + 3 H_2 \leftrightarrows CH_4 + H_2O \tag{2}
+$$
+
+$$
+CH_4 + H_2O \leftrightarrows CH_3OH + H_2 \tag{3}
+$$
+
+$$
+CO + H_2O \leftrightarrows CO_2 + H_2 \tag{4}
+$$
+
+$$
+CO_2 + 4 H_2 \leftrightarrows CH_4 + 2 H_2O \tag{5}
+$$
+
+$$
+CO_2 + 3 H_2 \leftrightarrows CH_3OH + H_2O \tag{6}
+$$

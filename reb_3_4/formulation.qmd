@@ -1,0 +1,74 @@
+---
+format:
+  html:
+    toc: false
+    embed-resources: true
+---
+
+{{< include problem_statement.qmd >}}
+
+**Mole Table from reb_3_3**
+
+| Species | Initial Amount | Later Amount |
+|:-------:|:------:|:------:|
+| CO | $n_{CO,0}$ | $n_{CO,0} - \xi_1 - \xi_2 - \xi_4$ |
+| H~2~ | $n_{H_2,0}$ | $n_{H_2,0} - 2 \xi_1 - 3 \xi_2 + \xi_4$ |
+| CH~3~OH | $n_{CH_3OH,0}$ | $n_{CH_3OH,0} + \xi_1$ |
+| CH~4~ | $n_{CH_4,0}$ | $n_{CH_4,0} + \xi_2$ |
+| H~2~O | $n_{H_2O,0}$ | $n_{H_2O,0} + \xi_2 - \xi_4$ |
+| CO~2~ | $n_{CO_2,0}$ | $n_{CO_2,0} + \xi_4$ |
+| Total | $n_{\text{total},0}$ | $n_{\text{total},0} - 2 \xi_1 - 2 \xi_2$ |
+
+: {tbl-colwidths="[20,40,40]"}
+
+**Given**
+
+$n_{CO,0}$ = 34 mol, $n_{H_2,0}$ = 66 mol, $n_{CH_3OH,0}$ = 0 mol, $n_{CH_4,0}$ = 0 mol, $n_{H_2O,0}$ = 0 mol, $n_{CO_2,0}$ = 0 mol, $f_{CO}$ = 0.4, $Y_{CH_3OH}$ = 0.107, and $S_{CH_3OH/CH_4}$ = 0.38.
+
+**Necessary Equations**
+
+$$
+\begin{align}
+f_{CO} &= \frac{n_{CO,0} - n_{CO}}{n_{CO,0}} \\
+&= \frac{n_{CO,0} - \left(n_{CO,0} - \xi_1 - \xi_2 - \xi_4\right)}{n_{CO,0}} \\
+&= \frac{\xi_1 + \xi_2 + \xi_4}{n_{CO,0}}
+\end{align} \tag{7}
+$$
+
+$$
+Y_{CH_3OH} = \frac{n_{CH_3OH}}{n_{CO,0}} = \frac{n_{CH_3OH,0} + \xi_1}{n_{CO,0}} \tag{8}
+$$
+
+$$
+S_{CH_3OH/CH_4} = \frac{n_{CH_3OH}}{n_{CH_4}} = \frac{n_{CH_3OH,0} + \xi_1}{n_{CH_4,0} + \xi_2} \tag{9}
+$$
+
+$$
+n_{CO} = n_{CO,0} - \xi_1 - \xi_2 - \xi_4 \tag{10}
+$$
+
+$$
+n_{H_2} = n_{H_2,0} - 2 \xi_1 - 3 \xi_2 + \xi_4 \tag{11}
+$$
+
+$$
+n_{CH_3OH} = n_{CH_3OH,0} + \xi_1 \tag{12}
+$$
+
+$$
+n_{CH_4} = n_{CH_4,0} + \xi_2 \tag{13}
+$$
+
+$$
+n_{H_2O} = n_{H_2O,0} + \xi_2 - \xi_4 \tag{14}
+$$
+
+$$
+n_{CO_2} = n_{CO_2,0} + \xi_4 \tag{15}
+$$
+
+**Calculations**
+
+1. Subtitute the given and known quantities into all equations.
+2. Solve equations (7) through (9) for $\xi_1$, $\xi_2$, and $\xi_4$, and substitute the results into all remaining equations.
+3. Calculate $n_{CO}$, $n_{H_2}$, $n_{CH_3OH}$, $n_{CH_4}$, $n_{H_2O}$, and $n_{CO_2}$ using equations (10) through (15).
