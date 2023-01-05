@@ -1,0 +1,28 @@
+---
+format:
+  html:
+    toc: false
+    embed-resources: true
+---
+
+{{< include problem_statement.qmd >}}
+
+**Given**
+
+$\rho _{bed}$ = 155 lb~m~ ft^-3^.
+
+**Necessary Equations**
+
+$$
+r_1 = \frac{r_{NH_3,1}}{\nu _{NH_3,1}} = \frac{r_{NH_3,1}}{2} \tag{3}
+$$
+
+
+$$
+r_1^\prime = r_1 \frac{V_{cat}}{m_{cat}} = \frac{r_1}{\rho _{bed}} \tag{4}
+$$
+
+**Calculations**
+
+1. Substitute equation (2) in equation (3).
+2. Substitute the result from step 1 into equation (4).

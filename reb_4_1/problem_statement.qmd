@@ -1,0 +1,14 @@
+The synthesis of ammonia, reaction (1), is one of the highest production chemical processes in the world. (One reason for this is that ammonia is used to make fertilizer.) It is a heterogeneous catalytic reaction. The ammonia synthesis catalyst takes the form of pellets that pack into the the reactor with an apparent density of 155 lb~m~ ft^-3^. Rase [-@rase_h_f_chemical_1977] provides the expression in equation (2) for the rate of generation of ammonia via reaction (1). In that expression, $E_1$ is the activation energy, $K_{1,eq}$ is the equilibrium constant and $a_i$ represents the thermodynamic activity of reagent $i$.
+
+$$
+3 H_2 + N_2 \rightleftarrows 2 NH_3 \tag{1}
+$$
+
+$$
+\begin{align}
+r_{NH_3,1} &= 1.54 \times 10^{15} \exp{\left( \frac{-E_1}{RT} \right)} \\
+&\times \left[ K_{1,eq}^2\left( \frac{a_{N_2}a_{H_2}^{1.5}}{a_{NH_3}} \right) - \left( \frac{a_{NH_3}}{a_{H_2}^{1.5}} \right)  \right] \frac{\text{kmol NH}_3}{\text{m}_{\text{bed}}^3 \text{h}}
+\end{align} \tag{2}
+$$
+
+Write an expression for the rate of reaction (1), $r_1$, that is normalized per lb~m~ of catalyst.
