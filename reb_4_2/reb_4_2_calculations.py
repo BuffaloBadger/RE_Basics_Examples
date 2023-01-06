@@ -26,7 +26,7 @@ r_m0 = np.zeros(100, dtype=float, order='C')
 r_m1 = np.zeros(100, dtype=float, order='C')
 
 # Calculate rates for each conversion
-for i in range(0, np.size(f_CO) - 1) :
+for i in range(0, np.size(f_CO)) :
     # get conversion
     x = f_CO[i]
     # calculated moles of CO, eqn 8
@@ -50,7 +50,7 @@ for i in range(0, np.size(f_CO) - 1) :
 # Plot the results
 plt.figure(1)
 plt.plot(100*f_CO,r_m0, color = 'r', label = 'm = 0')
-plt.plot(100*f_CO[0:98],r_m1[0:98], color = 'b', label = 'm = 1')
+plt.plot(100*f_CO,r_m1, color = 'b', label = 'm = 1')
 plt.axhline(y=0, color = 'k')
 plt.xlabel("CO Conversion (%)")
 plt.ylabel("Predicted Rate (lbmol h$^{-1}$ ft$^{-3}$ atm$^{-0.55}$)")
@@ -61,7 +61,7 @@ plt.show()
 
 plt.figure(2)
 plt.plot(100*f_CO[84:],r_m0[84:], color = 'r', label = 'm = 0')
-plt.plot(100*f_CO[84:98],r_m1[84:98], color = 'b', label = 'm = 1')
+plt.plot(100*f_CO[84:],r_m1[84:], color = 'b', label = 'm = 1')
 plt.axhline(y=0, color = 'k')
 plt.xlabel("CO Conversion (%)")
 plt.ylabel("Predicted Rate (lbmol h$^{-1}$ ft$^{-3}$ atm$^{-0.55}$)")
