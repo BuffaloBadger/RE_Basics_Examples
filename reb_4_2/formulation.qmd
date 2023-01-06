@@ -1,0 +1,74 @@
+---
+format:
+  html:
+    toc: false
+    embed-resources: true
+---
+
+{{< include problem_statement.qmd >}}
+
+**Given**
+
+$k_1$ = 3.37 lbmol h^-1^ ft^-3^ atm^-0.55^, $K_1$ = 12.0, $y_{H_2O,0}$ = 0.75, $y_{CO,0}$ = 0.24, $y_{CO_2,0}$ = 0.01, $P$ = 10 atm, $T$ = 675 K, $f_{CO,eq}$ = 0.96.
+
+**Basis**
+
+$V$ = 1 L.
+
+**Necessary Equations**
+
+$$
+n_{CO,0} = \frac{y_{CO,0} PV}{RT} \tag{4}
+$$
+
+$$
+n_{H_2O,0} = \frac{y_{H_2O,0} PV}{RT} \tag{5}
+$$
+
+$$
+n_{CO_2,0} = \frac{y_{CO_2,0} PV}{RT} \tag{6}
+$$
+
+$$
+n_{H_2,0} = 0 \tag{7}
+$$
+
+$$
+n_{CO} = n_{CO,0}\left(1 - f_{CO}\right) \tag{8}
+$$
+
+$$
+n_{CO} = n_{CO,0} - \xi_1 \quad \Rightarrow \quad \xi_1 = n_{CO,0} - n_{CO} \tag{9}
+$$
+
+$$
+n_{H_2O} = n_{H_2O,0} - \xi_1 \tag{10}
+$$
+
+$$
+n_{CO_2} = n_{CO_2,0} - \xi_1 \tag{11}
+$$
+
+$$
+n_{H_2} = n_{H_2,0} + \xi_1 \tag{12}
+$$
+
+$$
+P_{CO} = \frac{n_{CO}RT}{V} \tag{13}
+$$
+
+$$
+P_{H_2O} = \frac{n_{H_2O}RT}{V} \tag{14}
+$$
+
+$$
+P_{CO_2} = \frac{n_{CO_2}RT}{V} \tag{15}
+$$
+
+$$
+P_{H_2} = \frac{n_{H_2}RT}{V} \tag{16}
+$$
+
+**Calculations**
+
+
