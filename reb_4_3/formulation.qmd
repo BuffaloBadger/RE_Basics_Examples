@@ -1,0 +1,23 @@
+---
+format:
+  html:
+    toc: false
+    embed-resources: true
+---
+
+{{< include problem_statement.qmd >}}
+
+**Given**
+
+$\mu_{max}$ = 1 h^-1^, $K_s$ = 0.2 g L^-1^.
+
+**Necessary Equations**
+
+$$
+\mu = \frac{\mu_{max}C_S}{K_s + C_S} \tag{1}
+$$
+
+**Calculations**
+
+1. Choose values of $C_S$ and use equation (1) to calculate the corresponding value of $\mu$.
+2. Plot the results.
