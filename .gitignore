@@ -2,4 +2,5 @@
 *.png
 *.html
 *.csv
+*.env
 .DS_Store
