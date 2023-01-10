@@ -55,7 +55,6 @@ result.to_csv("./reb_4_4/reb_4_4_Python_results.csv", index=False)
 # plot the results
 T = np.linspace(min(T_K),max(T_K),100)
 k_pred = calc_k(T,beta[0],beta[1])
-plt.figure
 plt.semilogy(T_K,k,color='r',marker='o', ls='none', label='Measured')
 plt.semilogy(T,k_pred,color='k', label='Predicted')
 plt.xlabel('T (K)')
