@@ -52,7 +52,7 @@ function reb_4_2_calculations
     xlabel('CO Conversion (%)','FontSize', 14)
     ylabel('Predicted Rate (lbmol h^-^1 ft^-^3 atm^-^0^.^5^5)',...
         'FontSize', 14)
-    legend({'m = 0','m = 1'},'Location','northeast','FontSize',14)
+    legend({'without equilibrium factor','with equilibrium factor'},'Location','northeast','FontSize',14)
     % save the figure
     saveas(gcf,"reb_4_2_Matlab_fig_1.png")
     
@@ -64,7 +64,7 @@ function reb_4_2_calculations
     xlabel('CO Conversion (%)','FontSize', 14)
     ylabel('Predicted Rate (lbmol h^-^1 ft^-^3 atm^-^0^.^5^5)',...
         'FontSize', 14)
-    legend({'m = 0','m = 1'},'Location','northeast','FontSize',14)
+    legend({'without equilibrium factor','with equilibrium factor'},'Location','northeast','FontSize',14)
     % save the figure
     saveas(gcf,"reb_4_2_Matlab_fig_2.png")
 end

@@ -49,8 +49,8 @@ for i in range(0, np.size(f_CO)) :
 
 # Plot the results
 plt.figure(1)
-plt.plot(100*f_CO,r_m0, color = 'r', label = 'm = 0')
-plt.plot(100*f_CO,r_m1, color = 'b', label = 'm = 1')
+plt.plot(100*f_CO,r_m0, color = 'r', label = 'without equilibrium factor')
+plt.plot(100*f_CO,r_m1, color = 'b', label = 'with equilibrium factor')
 plt.axhline(y=0, color = 'k')
 plt.xlabel("CO Conversion (%)")
 plt.ylabel("Predicted Rate (lbmol h$^{-1}$ ft$^{-3}$ atm$^{-0.55}$)")
@@ -60,8 +60,8 @@ plt.savefig('reb_4_2/reb_4_2_Python_fig_1.png')
 plt.show()
 
 plt.figure(2)
-plt.plot(100*f_CO[84:],r_m0[84:], color = 'r', label = 'm = 0')
-plt.plot(100*f_CO[84:],r_m1[84:], color = 'b', label = 'm = 1')
+plt.plot(100*f_CO[84:],r_m0[84:], color = 'r', label = 'without equilibrium factor')
+plt.plot(100*f_CO[84:],r_m1[84:], color = 'b', label = 'with equilibrium factor')
 plt.axhline(y=0, color = 'k')
 plt.xlabel("CO Conversion (%)")
 plt.ylabel("Predicted Rate (lbmol h$^{-1}$ ft$^{-3}$ atm$^{-0.55}$)")
