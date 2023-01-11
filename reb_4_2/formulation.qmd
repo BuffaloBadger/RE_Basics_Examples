@@ -71,4 +71,15 @@ $$
 
 **Calculations**
 
-
+1. Substitute the given values and the chosen basis into all equations.
+2. Calculate the initial moles of CO, H~2~O, CO~2~, and H~2~ using equations (4) through (7).
+3. Choose a CO conversion between 0 and 100%.
+    a. Calculate the final moles of CO at that conversion using equation (8).
+    b. Calculate the apparent extent of reaction using equation (9).
+    c. Calculate the final moles of H~2~O, CO~2~, and H~2~ using equations (10) through (12).
+    d. Calculate the final partial pressures of CO, H~2~O, CO~2~, and H~2~ using equations (13) through (16).
+    e. Calculate the rate predicted by equation (2).
+    f. Calculate the rate predicted by equation (3).
+4. Repeat step 3 to generate a set of conversions that span the range from 0 to 100% and the corresponding rates predicted by equations (2) and (3).
+5. Plot the full set of results.
+6. Plot the results for conversions between 85% and 100%.
