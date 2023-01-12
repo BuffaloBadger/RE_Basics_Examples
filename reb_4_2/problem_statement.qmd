@@ -1,6 +1,6 @@
-The water-gas shift, reaction (1), is used commercially to remove CO impurities from hydrogen. The rate expression shown in equation (2) was validated using experimental data that were far from thermodynamic equilibrium. At 675 K, the rate coefficient, $k_1$, was found to equal to 3.37 lbmol h^-1^ ft^-3^ atm^-0.55^. In equation (3), that power-law rate expression has been multiplied by a factor that will force it to evaluate to zero at equilibrium.
+The water-gas shift, reaction (1), is used commercially to remove CO impurities from hydrogen. Suppose the rate expression shown in equation (2) was validated using experimental data that were far from thermodynamic equilibrium. At 675 K, the rate coefficient, $k_1$, was found to equal to 3.37 lbmol h^-1^ ft^-3^ atm^-0.55^. In equation (3), that power-law rate expression has been multiplied by a factor that will force it to evaluate to zero at equilibrium. At 675 K, the equilibrium constant, $K_1$ is equal to 12.0.
 
-At 675 K, the equilibrium constant, $K_1$ is equal to 12.0. If a system initially containing 75% H~2~O, 24% CO, and 1% CO~2~ at 10 atm and 675 K reacts isothermally and isobarically, the equilibrium conversion of CO will equal 96%. The net rate should go to zero at this conversion.
+If a system initially containing 75% H~2~O, 24% CO, and 1% CO~2~ at 10 atm and 675 K reacts isothermally and isobarically, the equilibrium conversion of CO will equal 96%. The net rate should go to zero at this conversion.
 
 $$
 CO + H_2O \rightleftarrows CO_2 + H_2 \tag{1}

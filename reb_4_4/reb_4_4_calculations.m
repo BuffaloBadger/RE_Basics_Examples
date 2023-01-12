@@ -43,7 +43,7 @@ function reb_4_4_calculations
     disp(['R_squared = ',num2str(R_squared,3)])
 
     % save the results to a .csv file
-    results_file ="reb_4_4_Matlat_results.csv";
+    results_file ="reb_4_4_Matlab_results.csv";
     item = ["k0";"k0_lower_limit";"k0_upper_limit"
         "E";"E_lower_limit";"E_upper_limit";"R_squared"];
     value = round([k0;k0_lower_limit;k0_upper_limit;E;E_lower_limit

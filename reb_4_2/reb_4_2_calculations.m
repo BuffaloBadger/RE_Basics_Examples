@@ -19,7 +19,7 @@ function reb_4_2_calculations
     n_H2_0 = 0;
 
     % Create vectors for plot data
-    f_CO = linspace(0.0,1.0,100);
+    f_CO = linspace(0.0,1.0,100).';
     r_m0 = nan(100,1);
     r_m1 = nan(100,1);
 
@@ -67,4 +67,10 @@ function reb_4_2_calculations
     legend({'without equilibrium factor','with equilibrium factor'},'Location','northeast','FontSize',14)
     % save the figure
     saveas(gcf,"reb_4_2_Matlab_fig_2.png")
+
+    % save the plot data to a .csv file
+    data_file = 'reb_4_2_Matlab_results.csv';
+    data_table = table(100*f_CO,r_m0,r_m1);
+    data_table.Properties.VariableNames = ["Conversion", "r2", "r3"];
+    writetable(data_table, data_file)
 end

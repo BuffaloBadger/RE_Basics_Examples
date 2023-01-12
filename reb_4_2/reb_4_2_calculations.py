@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
 
 # Given or known
 k1 = 3.37 # lbmol/h/ft^3/atm^-0.55
@@ -48,24 +49,28 @@ for i in range(0, np.size(f_CO)) :
     r_m1[i] = factor * r_m0[i]
 
 # Plot the results
-plt.figure(1)
+plt.figure(1) # with conversions between 0 and 100%
 plt.plot(100*f_CO,r_m0, color = 'r', label = 'without equilibrium factor')
 plt.plot(100*f_CO,r_m1, color = 'b', label = 'with equilibrium factor')
 plt.axhline(y=0, color = 'k')
 plt.xlabel("CO Conversion (%)")
-plt.ylabel("Predicted Rate (lbmol h$^{-1}$ ft$^{-3}$ atm$^{-0.55}$)")
+plt.ylabel("Predicted Rate (lbmol h$^{-1}$ ft$^{-3}$)")
 plt.legend()
 # save and show the figure
 plt.savefig('reb_4_2/reb_4_2_Python_fig_1.png')
 plt.show()
 
-plt.figure(2)
+plt.figure(2) # with conversions between 85 and 100%
 plt.plot(100*f_CO[84:],r_m0[84:], color = 'r', label = 'without equilibrium factor')
 plt.plot(100*f_CO[84:],r_m1[84:], color = 'b', label = 'with equilibrium factor')
 plt.axhline(y=0, color = 'k')
 plt.xlabel("CO Conversion (%)")
-plt.ylabel("Predicted Rate (lbmol h$^{-1}$ ft$^{-3}$ atm$^{-0.55}$)")
+plt.ylabel("Predicted Rate (lbmol h$^{-1}$ ft$^{-3}$)")
 plt.legend()
 # save and show the figure
 plt.savefig('reb_4_2/reb_4_2_Python_fig_2.png')
 plt.show()
+
+# save the plot data to a .csv file
+plot_data = pd.DataFrame({'Conversion':100*f_CO, 'r2':r_m0, 'r3':r_m1})
+plot_data.to_csv("./reb_4_2/reb_4_2_Python_results.csv", index=False)
