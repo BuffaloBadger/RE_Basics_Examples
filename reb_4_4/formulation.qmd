@@ -18,57 +18,56 @@ results <- read.csv("reb_4_4_data.csv")
 
 ```{r}
 #| echo: false
-kbl(results, format = "markdown", align = "cc", col.names = c("Temperature (°C)",
-    "Rate Coefficient (L mol^-1^ min^-1^)"))
+kbl(results, format = "markdown", align = "cc", col.names = c("i (Expt. Number)", "T (°C)",
+    "k (L mol^-1^ min^-1^)"))
 ```
 
 **Necessary Equations**
 
 $$
-k_j = k_{0,j} \exp{\left(  \frac{-E_j}{RT} \right)} \tag{1}
+k = k_0 \exp{\left(  \frac{-E}{RT} \right)} \tag{1}
 $$
 
 $$
-\ln{k_j} = \left(  \frac{-E_j}{R} \right)\left(  \frac{1}{T} \right) + \ln{k_{0,j}} \tag{2}
+\beta = \log_{10} {\left(k_0\right)} \tag{2}
 $$
 
 $$
-y = mx + b  \tag{3}
+k = 10^\beta \exp{\left(  \frac{-E}{RT} \right)} \tag{3}
 $$
 
 $$
-y = \ln{k_j} \tag{4}
+T_{K,i} = T_i + 273.15 \tag{4}
 $$
 
 $$
-x = \frac{1}{T} \tag{5}
+\beta = \log_{10} {\left(k_0\right)} \quad \Rightarrow \quad k_0 = 10^\beta \tag{5}
 $$
 
 $$
-m = \frac{-E_j}{R} \tag{6}
+k_{i,p} = k_0 \exp{\left(  \frac{-E}{RT_{K,i}} \right)} \tag{6}
 $$
 
 $$
-b = \ln{k_{0,j}} \tag{7}
+\epsilon_i = k_i - k_{i,p} \tag{7}
 $$
 
 **Calculations**
 
-To use linear least squares software or a spreadsheet program:
-
-1. Calculate the absolute temperature for each data point.
-2. Calculate $y$ and $x$ for each data point using equations (4) and (5).
-3. Fit equation (3) to the resulting data
-4. Calculate $E_j$ from the resulting slope, $m$, using equation (6).
-5. Calculate $k_{0,j}$ from the resulting intercept, $b$, using equation (7).
-6. Assess the accuracy of the resulting model.
-    a. Plot equation (3) and the experimental $x$, $y$ data on a common set of axes; the data points will all be close to the line if the fit is accurate, and there won't be any systematic differences between the data and the line.
-    b. The more accurate the model, the closer the coefficient of determination, $R^2$, will be to 1.0.
-    c. The estimated uncertainties in the parameter values will be small relative to the corresponding parameter value when the model is accurate.
-
 To use non-linear parameter estimation software:
 
-1. Create a vector containing the experimental values of the temperature in K.
-2. Create a vector containing the measured values values of the rate coefficient.
-3. Create a function or subroutine that receives test values for the kinetics parameters, $k_{0,j}$ and $E_j$, along with the array of temperatures from step 1, calculates the value of the rate coefficient for each temperature using equation (1), and returns a vector containing the values of the rate coefficient at those temperatures.
-4. Provide the results from steps 1 through 3 to a parameter estimation function along with a guess for the values of the kinetics parameters.
+1. Calculate the absolute temperature for each data point use them to construct the adjusted input vector, $\underline{x}$ using equation (4).
+2. Generate the experimental response vector, $\underline{y_{expt}}$, using equation (5).
+3. Fit equation (3) to the resulting $\underline{x}$ - $\underline{y_{expt}}$ data using parameter estimation software.
+4. Calculate $k_{0,j}$ from the best estimate for $\beta$, using equation (6).
+5. Generate the predicted response vector, $\underline{y_{pred}}$, using equation (7).
+6. Generate the residuals vector, $\underline{\epsilon}$, using equation (8).
+7. Generate a parity plot by plotting $y_{expt,i}$ *vs*. $y_{pred,i}$}.
+8. Generate a residuals plot by plotting $\epsilon_i$ *vs*. $x_i$.
+6. Assess the accuracy of the resulting model using the following criteria for an accurate model:
+    a. The coefficient of determination, $R^2$, is close to 1.
+    b. The uncertainty in each model parameter is small compared to its value.
+    c. The points in the parity plot are all be close to a diagonal line passing through the origin.
+    d. In the residuals plot, the points scatter randomly about the horizontal axis, and no systematic deviations are apparent.
+
+To use linear least squares software or a spreadsheet program:

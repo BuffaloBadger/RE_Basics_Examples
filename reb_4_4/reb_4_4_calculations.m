@@ -5,17 +5,20 @@ function reb_4_4_calculations
     % read the data file
     data_file = "./reb_4_4_data.csv";
     data_table = readtable(data_file,'VariableNamingRule','preserve');
-    T_C = table2array(data_table(:,1)); % °C
-    k = table2array(data_table(:,2)); % L/mol/min
+    T = table2array(data_table(:,2)); % °C
+    k = table2array(data_table(:,3)); % L/mol/min
 
-    % convert temperatures to K
-    T_K = T_C + 273.15;
+    % create adjusted input vector, eqn 4
+    x = T + 273.15;
 
-    % function to fit to the data
-    function yPred = calcY(kin_par, x)
+    % create experimental response vector, eqn 5
+    y_expt = k;
+
+    % response model function, eqn 3
+    function yPred = calcY(kin_par, T_K)
         k0 = 10^kin_par(1);
         E = kin_par(2);
-        yPred = k0*exp(-E/R./x);
+        yPred = k0*exp(-E/R./T_K);
     end
 
     % provide a guess for the parameters and fit the model to the data
@@ -23,13 +26,14 @@ function reb_4_4_calculations
         0 % log(k0)
         20 % E in kJ/mol
     ];
-    [beta, betaCI, R_squared] = fitNLSR(kin_par_guess, T_K, k, @calcY,...
-        true);
+    use_relative_errors = false;
+    [beta, betaCI, R_squared] = fitNLSR(kin_par_guess, x, y_expt, ...
+        @calcY, use_relative_errors);
     
     % extract the results
-    k0 = 10^beta(1);
-    k0_lower_limit = 10^betaCI(1,1);
-    k0_upper_limit = 10^betaCI(1,2);
+    k0 = 10^beta(1); % eqn 6
+    k0_lower_limit = 10^betaCI(1,1); % eqn 6
+    k0_upper_limit = 10^betaCI(1,2); % eqn 6
     E = beta(2);
     E_lower_limit = betaCI(2,1);
     E_upper_limit = betaCI(2,2);
@@ -43,7 +47,11 @@ function reb_4_4_calculations
     disp(['R_squared = ',num2str(R_squared,3)])
 
     % save the results to a .csv file
-    results_file ="reb_4_4_Matlab_results.csv";
+    if(use_relative_errors)
+        results_file ="reb_4_4_Matlab_results_rel.csv";
+    else
+        results_file ="reb_4_4_Matlab_results_abs.csv";
+    end
     item = ["k0";"k0_lower_limit";"k0_upper_limit"
         "E";"E_lower_limit";"E_upper_limit";"R_squared"];
     value = round([k0;k0_lower_limit;k0_upper_limit;E;E_lower_limit
@@ -54,16 +62,35 @@ function reb_4_4_calculations
     writetable(results_table,results_file);
 
 
-    % plot the results
-    T = linspace(min(T_K), max(T_K));
-    yPred = calcY(beta, T);
+    % generate the parity plot
+    y_pred = calcY(beta, x); % eqn 7
+    parity_range = [0.9*min(y_expt), 1.1*max(y_expt)];
     figure
-    semilogy(T_K,k,'or',T,yPred,'k','LineWidth',2)
+    loglog(y_expt,y_pred,'or',parity_range,parity_range,'k',...
+        'MarkerFaceColor','r','MarkerSize',10,'LineWidth',2)
     set(gca, 'FontSize', 14);
-    xlabel('T (K)','FontSize', 14)
-    ylabel('Rate Coefficient (L mol^-^1 min^-^1)','FontSize', 14)
-    legend({'Measured','Predicted'},'Location',...
+    xlabel('Measured k (L mol^-^1 min^-^1)','FontSize', 14)
+    ylabel('Predicted k (L mol^-^1 min^-^1)','FontSize', 14)
+    legend({'Actual Model','Perfect Model'},'Location',...
         'northwest','FontSize',14)
     % save the graph
-    saveas(gcf,"reb_4_4_Matlab_fig_1.png")
+    if(use_relative_errors)
+        saveas(gcf,"reb_4_4_Matlab_parity_plot_rel.png")
+    else
+        saveas(gcf,"reb_4_4_Matlab_parity_plot_abs.png")
+    end
+
+    % generate the residuals plot
+    residual = y_expt - y_pred; % eqn 8
+    figure
+    plot(x,residual,'or','MarkerFaceColor','r','MarkerSize',10)
+    set(gca, 'FontSize', 14);
+    yline(0,'LineWidth',2)
+    xlabel('T (K)','FontSize', 14)
+    ylabel('Residual (L mol^-^1 min^-^1)','FontSize', 14)
+    if(use_relative_errors)
+        saveas(gcf,"reb_4_4_Matlab_residual_plot_rel.png")
+    else
+        saveas(gcf,"reb_4_4_Matlab_residual_plot_abs.png")
+    end
 end
