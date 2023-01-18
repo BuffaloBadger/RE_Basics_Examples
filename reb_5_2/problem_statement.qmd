@@ -1,0 +1,25 @@
+In the mechanism for synthesis of HBr given below, assume step (4) is effectively irreversible and step (5) is kinetically insignificant. Use the Bodenstein steady-state approximation to derive a mechanistic rate expression for apparent rate of generation of HBr via non-elementary reaction (1). Simplify the mechanism so that it contains only partial pressures of stable species and not those of reactive intermediates. Comment on estimating the kinetics parameters in the resulting rate expression.
+
+**Overall Reaction:**
+
+$$
+H_2 + Br_2 \rightleftarrows 2 HBr \tag{1}
+$$
+
+**Proposed Mechanism:**
+
+$$
+Br_2 \rightleftarrows 2 Br \cdot \tag{2}
+$$
+
+$$
+Br \cdot + H_2 \rightleftarrows HBr + H \cdot \tag{3}
+$$
+
+$$
+H \cdot + Br_2 \rightleftarrows HBr + Br \cdot \tag{4}
+$$
+
+$$
+2 H \cdot \rightleftarrows H_2 \tag{5}
+$$

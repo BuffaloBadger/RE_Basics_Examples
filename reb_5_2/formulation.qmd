@@ -1,0 +1,63 @@
+---
+format:
+  html:
+    toc: false
+    embed-resources: true
+---
+
+{{< include problem_statement.qmd >}}
+
+**Reactive Intermediates**: H∙ and Br∙
+
+**Necessary Equations**
+
+$$
+r_2 = k_{2,f} \left[ Br_2 \right] - k_{2,r} \left[ Br \cdot \right]^2 \tag{6}
+$$
+
+$$
+r_3 = k_{3,f} \left[ Br \cdot \right] \left[ H_2 \right] - k_{3,r} \left[ HBr \right] \left[ H \cdot \right] \tag{7}
+$$
+
+$$
+r_4 = k_{4,f} \left[ H \cdot \right] \left[ Br_2 \right] \tag{8}
+$$
+
+$$
+r_5 = 0 \tag{9}
+$$
+
+$$
+r_{HBr,1} = r_3 + r_4 \tag{10}
+$$
+
+$$
+0 = 2r_2 - r_3 + r_4 \tag{11}
+$$
+
+$$
+0 = r_3 - r_4 - 2r_5 \tag{12}
+$$
+
+**Calculations**
+
+1. Substitute equations (6) through (9) into all other equations.
+2. Simultaneously solve equations (11) and (12) to obtain expressions for [H∙] and [Br∙].
+3. Substitute the results from step 2 into equation (10).
+
+**Results and Final Answer**
+
+Solving the Bodenstein steady state equations, (11) and (12) yields equations (13) and (14) for the concentrations of H∙ and Br∙. Substitution of those results into the rate expression, equation (10), yields a mechanistic rate expression for the apparent rate of generation of HBr via non-elementary reaction (1), as shown in equation (15).
+
+$$
+\left[ Br \cdot \right] = \sqrt{\frac{k_{2,f}}{k_{2,r}}} \sqrt{\left[ Br_2 \right]} \tag{13}
+$$
+
+$$
+\left[ H \cdot \right] = \frac{k_{3,f}\sqrt{\frac{k_{2,f}}{k_{2,r}}} \sqrt{\left[ Br_2 \right]}\left[ H_2\right]}{k_{3,r}\left[ HBr\right] + k_{4,f}\left[ Br_2 \right]} \tag{14}
+$$
+
+$$
+r_{HBr,1} = 2\frac{k_{3,f}k_{4,f}\sqrt{\frac{k_{2,f}}{k_{2,r}}} \left[ Br_2 \right]^{3/2}\left[ H_2\right]}{k_{3,r}\left[ HBr\right] + k_{4,f}\left[ Br_2 \right]} \tag{15}
+$$
+
