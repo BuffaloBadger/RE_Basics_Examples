@@ -1,0 +1,46 @@
+---
+format:
+  html:
+    toc: false
+    embed-resources: true
+---
+
+{{< include problem_statement.qmd >}}
+
+**Reactive Intermediates**: $N \cdot$, $O \cdot$
+
+**Initiation/Termination Steps**: Steps (2) and (5)
+
+**Propagation Steps**: Steps (3) and (4)
+
+Adding steps (3) and (4) yields the apparent, non-elementary reaction, reaction (1).
+
+$$
+r_{NO,1} = r_3 + r_4 \tag{6}
+$$
+
+$$
+r_3 = k_{3,f} \left[ O \cdot \right] \left[ N_2 \right] - k_{3,r} \left[ NO \right] \left[ N \cdot \right] \tag{7}
+$$
+
+$$
+r_4 = k_{4,f} \left[ N \cdot \right] \left[ O_2 \right] - k_{3,r} \left[ NO \right] \left[ O \cdot \right] \tag{8}
+$$
+
+$$
+r_1 = \frac{r_{NO,1}}{\nu_{NO,1}} = \frac{r_{NO,1}}{2} \tag{9}
+$$
+
+**Final Answer**
+
+$$
+\begin{align}
+r_1 =&\, 0.5k_{3,f} \left[ O \cdot \right] \left[ N_2 \right] - 0.5k_{3,r} \left[ NO \right] \left[ N \cdot \right] \\
+& + 0.5k_{4,f} \left[ N \cdot \right] \left[ O_2 \right] - 0.5k_{3,r} \left[ NO \right] \left[ O \cdot \right] 
+\end{align} \tag{10}
+$$
+
+**Calculations**
+
+1. Substitute equation (6) into equation (9).
+2. Substitute equations (7) and (8) into the resulting equation.

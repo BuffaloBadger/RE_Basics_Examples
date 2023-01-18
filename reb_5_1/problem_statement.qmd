@@ -1,0 +1,21 @@
+Suppose that nitrogen oxidation, equation (1), occurs via the chain reaction mechanism given in equations (2) through (5). Classify each of the mechanistic steps as initiation/termination, propagation, chain branching or chain transfer; show that there is a linear combination of equations (2) through (5) that is equal to equation (1); and write, but do not simplify, the expression for the apparent rate of non-elementary reaction (1) that is predicted by the mechanism. Discuss the suitability of the resulting rate expression for reaction engineering purposes.
+
+$$
+N_2 + O_2 \rightleftarrows 2 NO \tag{1}
+$$
+
+$$
+O_2 \rightleftarrows 2 O \cdot \tag{2}
+$$
+
+$$
+O \cdot + N_2 \rightleftarrows NO + N \cdot \tag{3}
+$$
+
+$$
+N \cdot + O_2 \rightleftarrows NO + O \cdot \tag{4}
+$$
+
+$$
+2 N \cdot \rightleftarrows N_2\tag{5}
+$$
