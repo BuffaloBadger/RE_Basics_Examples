@@ -1,0 +1,64 @@
+---
+format:
+  html:
+    toc: false
+    embed-resources: true
+---
+
+{{< include problem_statement.qmd >}}
+
+**Reactive Intermediates**: E and E-S
+
+**Necessary Equations**
+
+$$
+r_2 = k_{2,f} \left[ E \right] \left[ S \right] - k_{2,r} \left[ E\!-\!S \right] \tag{4}
+$$
+
+$$
+r_3 = k_{3,f} \left[ E\!-\!S \right] \tag{5}
+$$
+
+$$
+r_{P,1} = r_3 \tag{6}
+$$
+
+$$
+0 = r_2 - r_3 \tag{7}
+$$
+
+$$
+E_0 = \left[ E \right] + \left[ E\!-\!S \right] \tag{8}
+$$
+
+**Calculations**
+
+1. Substitute equations (4) and (5) into all other equations.
+2. Solve equations (7) and (8) to obtain expressions for [E] and [E-S].
+3. Substitute the resulting expressions in equation (6).
+
+**Final Answer**
+
+$$
+\left[ E \right] = \frac{E_0}{1 + \frac{k_{2,f}}{k_{2,r} + k_{3,f}} \left[ S \right]} \tag{9}
+$$
+
+$$
+\left[ E\!-\!S \right] = \frac{k_{2,f} E_0 \left[ S \right]}{k_{2,r}+ k_{3,f} + k_{2,f}\left[ S \right]} \tag{10}
+$$
+
+$$
+r_{P,1} = \frac{k_{2,f} k_{3,f} E_0 \left[ S \right]}{k_{2,r} + k_{3,f} + k_{2,f}\left[ S \right]} = \frac{k_{3,f} E_0 \left[ S \right]}{\frac{k_{2,r} + k_{3,f}}{k_{2,f}} + \left[ S \right]} \tag{11}
+$$
+
+$$
+V_{max} = k_{3,f} E_0 \tag{12}
+$$
+
+$$
+K_m = \frac{k_{2,r} + k_{3,f}}{k_{2,f}} \tag{13}
+$$
+
+$$
+r_{P,1} = \frac{V_{max} \left[ S \right]}{K_m + \left[ S \right]} \tag{14}
+$$

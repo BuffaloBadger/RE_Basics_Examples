@@ -1,0 +1,13 @@
+Suppose an enzyme, E, catalyzes the conversion of substrate, S, into product, P, as indicated in the apparent, non-elementary reaction (1). If the mechanism consists of reactions (2) and (3), derive a mechanistic rate expression for the apparent generation of P via reaction (1) assuming step (3) is effectively irreversible. The resulting rate expression should be suitable for reaction engineering purposes. That is, it should not contain concentrations of reactive intermediates.
+
+$$
+S \rightleftarrows P \tag{1}
+$$
+
+$$
+E + S \rightleftarrows E\!\!-\!\!S \tag{2}
+$$
+
+$$
+E\!\!-\!\!S \rightleftarrows E + P \tag{3}
+$$
