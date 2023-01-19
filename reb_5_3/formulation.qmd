@@ -1,0 +1,105 @@
+---
+format:
+  html:
+    toc: false
+    embed-resources: true
+---
+
+{{< include problem_statement.qmd >}}
+
+**Reactive Intermediates**: $C_3H_5 \cdot$ and $I \cdot$
+
+**Necessary Equations**
+
+$$
+r_2 = k_{2,f} \left[ C_3H_5I \right] - k_{2,r} \left[ C_3H_5 \cdot \right] \left[ I \cdot \right] \tag{5}
+$$
+
+$$
+r_3 = k_{3,f} \left[ C_3H_5I \right] \left[ I \cdot \right] - k_{3,r} \left[ C_3H_5 \cdot \right] \left[ I_2 \right] \tag{6}
+$$
+
+$$
+r_4 = k_{4,f} \left[ C_3H_5 \cdot \right]^2 - k_{4,r} \left[ C_6H_{10} \right] \tag{7}
+$$
+
+$$
+r_1 = r_2 \tag{8}
+$$
+
+$$
+r_1 = r_3 \tag{9}
+$$
+
+$$
+r_1 = r_4 \tag{10}
+$$
+
+$$
+K_2 = \frac{\left[ C_3H_5 \cdot \right] \left[ I \cdot \right]}{\left[ C_3H_5I \right]} \tag{11}
+$$
+
+$$
+K_3 = \frac{\left[ C_3H_5 \cdot \right] \left[ I_2 \right]}{\left[ C_3H_5I \right] \left[ I \cdot \right]} \tag{12}
+$$
+
+$$
+K_4 = \frac{\left[ C_6H_{10} \right]}{\left[ C_3H_5 \cdot \right]^2} \tag{13}
+$$
+
+**Calculations**
+
+1. Substitute equations (5) through (7) in all remaining equations.
+2. For the case where step (2) is rate determining:
+    a. Solve equations (12) and (13) to obtain expressions for $\left[C_3H_5 \cdot\right]$ and $\left[I \cdot\right]$.
+    b. Substitute the results into equation (8).
+3. For the case where step (3) is rate determining:
+    a. Solve equations (11) and (13) to obtain expressions for $\left[C_3H_5 \cdot\right]$ and $\left[I \cdot\right]$.
+    b. Substitute the results into equation (9).
+4. For the case where step (3) is rate determining:
+    a. Solve equations (11) and (12) to obtain expressions for $\left[C_3H_5 \cdot\right]$ and $\left[I \cdot\right]$.
+    b. Substitute the results into equation (10).
+
+**Final Answer**
+
+If step (2) is rate-determining
+
+$$
+\left[ C_3H_5 \cdot \right] = \frac{\sqrt{\left[ C_6H_{10} \right]}}{\sqrt{K_4}} \tag{14}
+$$
+
+$$
+\left[ I \cdot \right] = \frac{\sqrt{\left[ C_6H_{10} \right]}\left[ I_2 \right]}{K_3 \sqrt{K_4}\left[ C_3H_5I \right]} \tag{15}
+$$
+
+$$
+r_1 = k_{2,f} \left[ C_3H_5I \right] - \frac{k_{2,r}}{K_3 K_4} \frac{\left[ C_6H_{10} \right] \left[ I_2 \right]}{\left[ C_3H_5I \right]} \tag{16}
+$$
+
+If step (3) is rate-determining
+
+$$
+\left[ C_3H_5 \cdot \right] = \frac{\sqrt{\left[ C_6H_{10} \right]}}{\sqrt{K_4}} \tag{17}
+$$
+
+$$
+\left[ I \cdot \right] = \frac{K_2 \sqrt{K_4} \left[ C_3H_5I \right]}{\sqrt{\left[ C_6H_{10} \right]}} \tag{18}
+$$
+
+$$
+r_1 = k_{3,f} K_2 \sqrt{K_4} \frac{\left[ C_3H_5I \right]^2}{\sqrt{\left[ C_6H_{10} \right]}} - \frac{k_{3,r}}{\sqrt{K_4}}\sqrt{\left[ C_6H_{10} \right]}\left[ I_2 \right] \tag{19}
+$$
+
+If step (4) is rate-determining
+
+$$
+\left[ C_3H_5 \cdot \right] = \sqrt{K_2K_3}  \frac{\left[ C_3H_5I \right]}{\sqrt{\left[ I_2 \right]}} \tag{20}
+$$
+
+$$
+\left[ I \cdot \right] = \frac{\sqrt{K_2}}{\sqrt{K_3}} \sqrt{\left[ I_2 \right]} \tag{21}
+$$
+
+$$
+r_1 = \frac{k_{4,f}K_2K_3\left[ C_3H_5I \right]^2}{\left[ I_2 \right]} - k_{4,r} \left[ C_6H_{10} \right] \tag{21}
+$$
