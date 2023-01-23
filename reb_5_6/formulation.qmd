@@ -1,0 +1,67 @@
+---
+format:
+  html:
+    toc: false
+    embed-resources: true
+---
+
+{{< include problem_statement.qmd >}}
+
+**Reactive Intermediates**: $\ast$, $A\!-\!\ast$, $B\!-\!\ast$, $C\!-\!\ast$, and $D\!-\!\ast$
+
+**Necessary Equations**
+
+$$
+r_1 = r_4 = k_{4,f} \theta_A \theta_B - k_{4,r} \theta_C \theta_D \tag{7}
+$$
+
+$$
+K_2 = \frac{\theta_A}{\left[ A \right] \theta_{\text{vacant}}} \tag{8}
+$$
+
+$$
+K_3 = \frac{\theta_B}{\left[ B \right] \theta_{\text{vacant}}} \tag{9}
+$$
+
+$$
+K_5 = \frac{\theta_C}{\left[ C \right] \theta_{\text{vacant}}} \tag{10}
+$$
+
+$$
+K_6 = \frac{\theta_D}{\left[ D \right] \theta_{\text{vacant}}} \tag{11}
+$$
+
+$$
+1 = \theta_{\text{vacant}} + \theta_A +\theta_B + \theta_D + \theta_D \tag{12}
+$$
+
+**Calculations**
+
+1. Solve equations (8) through (12) to obtain expressions for $\theta_{\text{vacant}}$, $\theta_A$, $\theta_B$, $\theta_C$, and $\theta_D$.
+2. Substitute the results into equation (7).
+
+**Results and Final Answer**
+
+$$
+\theta_{\text{vacant}} = \frac{1}{1 + K_2 \left[ A \right] + K_3 \left[ B \right] + K_5 \left[ C \right] + K_6 \left[ D \right]} \tag{13}
+$$
+
+$$
+\theta_A = \frac{K_2 \left[ A \right]}{1 + K_2 \left[ A \right] + K_3 \left[ B \right] + K_5 \left[ C \right] + K_6 \left[ D \right]} \tag{14}
+$$
+
+$$
+\theta_B = \frac{K_3 \left[ B \right]}{1 + K_2 \left[ A \right] + K_3 \left[ B \right] + K_5 \left[ C \right] + K_6 \left[ D \right]} \tag{15}
+$$
+
+$$
+\theta_C = \frac{K_5 \left[ A \right]}{1 + K_2 \left[ A \right] + K_3 \left[ B \right] + K_5 \left[ C \right] + K_6 \left[ D \right]} \tag{16}
+$$
+
+$$
+\theta_D = \frac{K_6 \left[ D \right]}{1 + K_2 \left[ A \right] + K_3 \left[ B \right] + K_5 \left[ C \right] + K_6 \left[ D \right]} \tag{17}
+$$
+
+$$
+r_1 = \frac{k_{4,f}K_2K_3\left[ A \right] \left[ B \right]}{\left( 1 + K_2 \left[ A \right] + K_3 \left[ B \right] + K_5 \left[ C \right] + K_6 \left[ D \right] \right)^2} \tag{18}
+$$

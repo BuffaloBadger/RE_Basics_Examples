@@ -1,0 +1,26 @@
+Suppose the non-elementary reaction (1) is heterogeneously catalyzed, and the corresponding reaction mechanism is given by equations (2) through (6). Assume step (4) is rate-determining and derive an expression for the apparent rate of reaction (1) that does not include fractional coverages.
+
+$$
+A + B \rightleftarrows C + D \tag{1}
+$$
+
+$$
+A + \ast \rightleftarrows A\!-\!\ast \tag{2}
+$$
+
+$$
+B + \ast \rightleftarrows B\!-\!\ast \tag{3}
+$$
+
+$$
+A\!-\!\ast + B\!-\!\ast \rightarrow C\!-\!\ast + D\!-\!\ast \tag{4}
+$$
+
+$$
+C\!-\!\ast \rightleftarrows C + \ast \tag{5}
+$$
+
+$$
+D\!-\!\ast \rightleftarrows D + \ast \tag{6}
+$$
+
