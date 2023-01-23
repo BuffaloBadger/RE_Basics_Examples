@@ -43,7 +43,7 @@ $$
 
 1. Substitute equations (6) through (9) into all other equations.
 2. Simultaneously solve equations (11) and (12) to obtain expressions for [H∙] and [Br∙].
-3. Substitute the results from step 2 into equation (10).
+3. Substitute the results from step 2 into the version of equation (10) resulting from step 1.
 
 **Results and Final Answer**
 
