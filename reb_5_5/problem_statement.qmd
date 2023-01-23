@@ -1,0 +1,19 @@
+Suppose that enzyme E catalyzes the conversion of substrate S to product P, but if the reagent I is present in the system, it inhibits the enzyme. The apparent reaction is shown in equation (1), and the proposed mechanism consists of reactions (2) through (4).
+
+$$
+S \rightleftarrows P \tag{1}
+$$
+
+$$
+E + S \rightleftarrows E\!\!-\!\!S \tag{2}
+$$
+
+$$
+E + I \rightleftarrows E\!\!-\!\!I \tag{3}
+$$
+
+$$
+E\!\!-\!\!S \rightleftarrows E + P \tag{4}
+$$
+
+Assume that step (4) is effectively irreversible and derive a Michaelis-Menten type of rate expression for this system that is suitable for reaction engineering purposes (i. e. that does not contain concentrations of reactive intermediates). You may assume that the concentration of the free inhibitor can be easily measured, so that its presence in the rate expression is acceptable.
