@@ -1,4 +1,4 @@
-Suppose that iodopropane disproportionates to produce iodine according to the apparent non-elementary reaction (1). By separately assuming each of the three mechanistic steps proposed in equations (2) through (4) to be rate-determining, generate three possible mechanistic rate expressions for reaction (1) that do not contain concentrations of reactive intermediates.
+Suppose that iodopropane disproportionates to produce iodine according to the apparent non-elementary reaction (1). By separately assuming each of the three mechanistic steps proposed in the mechanism, equations (2) through (4), to be rate-determining, generate three possible mechanistic rate expressions for reaction (1) that do not contain concentrations of reactive intermediates.
 
 $$
 2 C_3H_5I \rightleftarrows C_6H_{10} + I_2 \tag{1}
