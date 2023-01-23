@@ -35,7 +35,7 @@ $$
 
 1. Substitute equations (4) and (5) into all other equations.
 2. Solve equations (7) and (8) to obtain expressions for [E] and [E-S].
-3. Substitute the resulting expressions in equation (6).
+3. Substitute the resulting expressions in the version of equation (6) resulting from step 1.
 
 **Final Answer**
 
