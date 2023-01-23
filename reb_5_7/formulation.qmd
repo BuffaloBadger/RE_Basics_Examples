@@ -1,0 +1,111 @@
+---
+format:
+  html:
+    toc: false
+    embed-resources: true
+---
+
+{{< include problem_statement.qmd >}}
+
+**Reactive Intermediates**: $\ast$, $O_2\!-\!\ast$, $CO_3\!-\!\ast$, $O\!-\!\ast$, and $CO_2\!-\!\ast$.
+
+**Necessary Equations**
+
+$$
+r_1 = r_6 = k_{6,f} \theta_{CO_2} - k_{6,r} \left[ CO_2 \right] \theta_{\text{vacant}} \tag{7}
+$$
+
+$$
+K_2 = \frac{\theta_{O_2}}{ \left[ O_2 \right] \theta_{\text{vacant}}} \tag{8}
+$$
+
+$$
+K_3 = \frac{\theta_{CO_3}}{ \left[ CO \right] \theta_{O_2}} \tag{9}
+$$
+
+$$
+K_4 = \frac{ \left[ CO_2 \right] \theta_{O}}{ \theta_{CO_3}} \tag{10}
+$$
+
+$$
+K_5 = \frac{\theta_{CO_2}}{ \left[ CO \right] \theta_O} \tag{11}
+$$
+
+$$
+1 = \theta_{\text{vacant}} + \theta_{O_2} + \theta_{CO_3} + \theta_O + \theta_{CO_2} \tag{12}
+$$
+
+$$
+\theta_{O} \gg \theta_{\text{vacant}} \tag{13}
+$$
+
+$$
+\theta_{O} \gg \theta_{CO_2} \tag{14}
+$$
+
+$$
+\theta_{O} \gg \theta_{CO_3} \tag{15}
+$$
+
+$$
+\theta_{O} \gg \theta_{O_2} \tag{16}
+$$
+
+**Calculations**
+
+1. Solve equations (8) through (12) to obtain expressions for $\theta_{\text{vacant}}$, $\theta_{O_2}$, $\theta_{CO_3}$, $\theta_{O}$, and $\theta_{CO_2}$.
+2. Substitute the results into equation (7) to obtain the rate expression.
+3. Substitute the results from step 1 into equations (13) through (16) and simplify (typically the expressions for the coverages will be fractions that all have the same denominator, if so, multiply both sides of the inequality by the denominator so that it cancels out).
+4. See whether the resulting inequalities allow simplification of the rate expression.
+    a. Typically the rate expression will have a denominator that contains a sum of several terms.
+    b. If one of the inequalities shows that one term in the denominator is much much greater than another, delete the smaller term from the denominator.
+    c. Repeat step 4.b for each inequality.
+
+**Results and Final Answer**
+
+$$
+\theta_{\text{vacant}} = \frac{1}{\begin{pmatrix}1 + K_2 \left[ O_2 \right] + K_2 K_3 \left[ CO \right] \left[ O_2 \right] \\ + \frac{K_2K_3K_4 \left[ CO \right] \left[O_2 \right]}{\left[ CO_2 \right]} + \frac{K_2K_3K_4K_5\left[ CO \right]^2 \left[ O_2 \right]}{\left[ CO_2 \right]}\end{pmatrix}} \tag{17}
+$$
+
+$$
+\theta_{O_2} = \frac{K_2 \left[ O_2 \right]}{\begin{pmatrix}1 + K_2 \left[ O_2 \right] + K_2 K_3 \left[ CO \right] \left[ O_2 \right] \\ + \frac{K_2K_3K_4 \left[ CO \right] \left[O_2 \right]}{\left[ CO_2 \right]} + \frac{K_2K_3K_4K_5\left[ CO \right]^2 \left[ O_2 \right]}{\left[ CO_2 \right]}\end{pmatrix}} \tag{18}
+$$
+
+$$
+\theta_{CO_3} = \frac{K_2 K_3 \left[ CO \right] \left[ O_2 \right]}{\begin{pmatrix}1 + K_2 \left[ O_2 \right] + K_2 K_3 \left[ CO \right] \left[ O_2 \right] \\ + \frac{K_2K_3K_4 \left[ CO \right] \left[O_2 \right]}{\left[ CO_2 \right]} + \frac{K_2K_3K_4K_5\left[ CO \right]^2 \left[ O_2 \right]}{\left[ CO_2 \right]}\end{pmatrix}} \tag{19}
+$$
+
+$$
+\theta_O = \frac{\frac{K_2K_3K_4 \left[ CO \right] \left[O_2 \right]}{\left[ CO_2 \right]}}{\begin{pmatrix}1 + K_2 \left[ O_2 \right] + K_2 K_3 \left[ CO \right] \left[ O_2 \right] \\ + \frac{K_2K_3K_4 \left[ CO \right] \left[O_2 \right]}{\left[ CO_2 \right]} + \frac{K_2K_3K_4K_5\left[ CO \right]^2 \left[ O_2 \right]}{\left[ CO_2 \right]}\end{pmatrix}} \tag{20}
+$$
+
+$$
+\theta_{CO_2} = \frac{\frac{K_2K_3K_4K_5\left[ CO \right]^2 \left[ O_2 \right]}{\left[ CO_2 \right]}}{\begin{pmatrix}1 + K_2 \left[ O_2 \right] + K_2 K_3 \left[ CO \right] \left[ O_2 \right] \\ + \frac{K_2K_3K_4 \left[ CO \right] \left[O_2 \right]}{\left[ CO_2 \right]} + \frac{K_2K_3K_4K_5\left[ CO \right]^2 \left[ O_2 \right]}{\left[ CO_2 \right]}\end{pmatrix}} \tag{21}
+$$
+
+$$
+\begin{align}
+r_1 =&\,  \frac{\frac{k_{6,f}K_2K_3K_4K_5\left[ CO \right]^2 \left[ O_2 \right]}{\left[ CO_2 \right]} - k_{6,r} \left[ CO_2 \right]}{\begin{pmatrix}1 + K_2 \left[ O_2 \right] + K_2 K_3 \left[ CO \right] \left[ O_2 \right] \\ + \frac{K_2K_3K_4 \left[ CO \right] \left[O_2 \right]}{\left[ CO_2 \right]} + \frac{K_2K_3K_4K_5\left[ CO \right]^2 \left[ O_2 \right]}{\left[ CO_2 \right]}\end{pmatrix}} \\
+&= \frac{k_{6,f}K_2K_3K_4K_5\left[ CO \right]^2 \left[ O_2 \right] - k_{6,r} \left[ CO_2 \right]^2}{\begin{pmatrix}\left[ CO_2 \right] + K_2 \left[ O_2 \right]\left[ CO_2 \right] + K_2 K_3 \left[ CO \right] \left[ O_2 \right]\left[ CO_2 \right] \\ + K_2K_3K_4 \left[ CO \right] \left[O_2 \right] + K_2K_3K_4K_5\left[ CO \right]^2 \left[ O_2 \right] \end{pmatrix}}
+\end{align} \tag{22}
+$$
+
+$$
+K_2K_3K_4 \left[ CO \right] \left[O_2 \right] \gg \left[ CO_2 \right] \tag{23}
+$$
+
+$$
+K_2K_3K_4 \left[ CO \right] \left[O_2 \right] \gg K_2K_3K_4K_5\left[ CO \right]^2 \left[ O_2 \right] \tag{24}
+$$
+
+$$
+K_2K_3K_4 \left[ CO \right] \left[O_2 \right] \gg K_2 K_3 \left[ CO \right] \left[ O_2 \right]\left[ CO_2 \right] \tag{25}
+$$
+
+$$
+K_2K_3K_4 \left[ CO \right] \left[O_2 \right] \gg K_2 \left[ O_2 \right]\left[ CO_2 \right] \tag{26}
+$$
+
+$$
+r_1 = \frac{k_{6,f}K_2K_3K_4K_5\left[ CO \right]^2 \left[ O_2 \right] - k_{6,r} \left[ CO_2 \right]^2}{K_2K_3K_4 \left[ CO \right] \left[O_2 \right]} \tag{27}
+$$

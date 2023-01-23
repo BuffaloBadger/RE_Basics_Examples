@@ -1,0 +1,28 @@
+The oxidation of carbon monoxide, reaction (1) is heterogeneously catalyzed. A proposed reaction mechanism is shown in reactions (2) through (6). Assume that step (6) is rate-limiting and derive an expression for the apparent rate of reaction (1) that contains only partial pressures, rate coefficients and equilibrium constants. How does the apparent rate expression change if $O\!-\!\ast$ is the most abundant surface intermediate?
+
+**Overall Reaction:**
+
+$$
+2 CO + O_2 \rightleftarrows 2 CO_2 \tag{1}
+$$
+
+**Proposed Mechanism:**
+$$
+O_2 + \ast \rightleftarrows O_2\!-\!\ast \tag{2}
+$$
+
+$$
+CO + O_2\!-\!\ast \rightleftarrows CO_3\!-\!\ast \tag{3}
+$$
+
+$$
+CO_3\!-\!\ast \rightleftarrows CO_2 + O\!-\!\ast \tag{4}
+$$
+
+$$
+CO + O\!-\!\ast \rightleftarrows CO_2\!-\!\ast \tag{5}
+$$
+
+$$
+CO_2\!-\!\ast \rightleftarrows CO_2 + \ast \tag{6}
+$$
