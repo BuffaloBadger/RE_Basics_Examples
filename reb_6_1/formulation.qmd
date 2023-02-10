@@ -1,0 +1,73 @@
+---
+format:
+  html:
+    toc: false
+    embed-resources: true
+---
+
+{{< include problem_statement.qmd >}}
+
+**Given**: $V$, $n_{A,0}$, $n_{B,0}$, $n_{I,0}$, $n_{Y,0} = 0$, $n_{Z,0} = 0$, $T_0$, $P_0$, $k_{0,1}$, $E_1$, $t_0 = 0$, and $t_f$.
+
+**BSTR mole balance on A**
+
+$$
+\frac{dn_A}{dt} = Vr_1 \tag{3}
+$$
+
+The reactor is isothermal.
+
+$$
+T = T_0 \tag{4}
+$$
+
+Equation (3) will be solved to find $n_A$ at $t = t_f$.
+
+**ancillary equations**
+
+$$
+k_1 = k_{0,1} \exp{\left( \frac{-E_1}{RT} \right)} \tag{5}
+$$
+
+$$
+C_A = \frac{n_A}{V} \tag{6}
+$$
+
+$$
+C_B = \frac{n_B}{V} \tag{7}
+$$
+
+$$
+n_i = n_{i,0} + \sum_{j^\prime} \nu_{i,j^\prime} \xi_{j^\prime}
+$$
+
+$$
+\xi_1 = n_{A,0} - n_A \tag{8}
+$$
+
+$$
+n_B = n_{B,0} - 2 \xi_1 \tag{9}
+$$
+
+$$
+n_Y = \cancelto{0}{n_{Y,0}} + \xi_1 \tag{10}
+$$
+
+$$
+n_Z = \cancelto{0}{n_{Z,0}} + \xi_1 \tag{11}
+$$
+
+$$
+n_I = n_{I,0} \tag{12}
+$$
+
+$$
+P = \frac{\left( n_A + n_B + n_Y + n_Z + n_I \right)RT}{V} \tag{13}
+$$
+
+**Initial values**: $t=t_0$ and $n_A = n_{A,0}$
+
+**Ending value**: $t=t_f$
+
+
+
