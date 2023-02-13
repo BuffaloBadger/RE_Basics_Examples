@@ -1,5 +1,4 @@
-
-A batch stirred tank reactor with a known, constant volume, $V$, initially contains $n_{A,0}$ moles of A, $n_{B,0}$ moles of B, and $n_{I,0}$ moles of I as gases. No other reagents are present initially. The initial temperature, $T_0$, and pressure, $P_0$, are known. Reaction (1) occurs isothermally in the gas phase, starting at $t_0 = 0$ and ending at $t = t_f$. The rate expression for reaction (1) is given in equation (2). The Arrhenius pre-exponential factor, $k_{0,1}$, and activation energy, $E_1$, for the coefficient in the rate expression are known.
+Gas phase reaction (1) occurs isothermally in an ideal BSTR. Initially the reactor contains only A, B, and an inert gas, I. The rate expression for gas-phase reaction (1) is given in equation (2). The rate coefficient displays Arrhenius temperature dependence. The following quantities are known: the reactor volume, $V$, the initial moles of A, $n_{A,0}$, the initial moles of B, $n_{B,0}$, the initial moles of Y, $n_{Y,0}=0$, the initial moles of Z, $n_{Z,0}=0$, the initial moles of I. $n_{I,0}$, the initial temperature, $T_0$, the initial pressure, $P_0$, the pre-exponential factor, $k_{0,1}$, the activation energy, $E_1$, and the reaction time, $t_f$.
 
 $$
 A + 2 B \rightarrow Y + Z \tag{1}
@@ -9,4 +8,4 @@ $$
 r_1 = k_1 C_A C_B \tag{2}
 $$
 
-Using the minimum number of mole balance equations, formulate a solution of the reactor modeling equations to calculate the final moles of A, B, Y, Z, and I, the final pressure, and the final temperature.
+Using the minimum number of mole balance equations, formulate a reactor model for this system.
