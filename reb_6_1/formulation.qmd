@@ -7,67 +7,85 @@ format:
 
 {{< include problem_statement.qmd >}}
 
-**Given**: $V$, $n_{A,0}$, $n_{B,0}$, $n_{I,0}$, $n_{Y,0} = 0$, $n_{Z,0} = 0$, $T_0$, $P_0$, $k_{0,1}$, $E_1$, $t_0 = 0$, and $t_f$.
 
-**BSTR mole balance on A**
+**Reactor Design Equations**
 
-$$
-\frac{dn_A}{dt} = Vr_1 \tag{3}
-$$
-
-The reactor is isothermal.
+Equation (3) shows a mole balance on the inert reagent, I, and equation (4) presents a mole balance on reagent A.
 
 $$
-T = T_0 \tag{4}
-$$
-
-Equation (3) will be solved to find $n_A$ at $t = t_f$.
-
-**ancillary equations**
-
-$$
-k_1 = k_{0,1} \exp{\left( \frac{-E_1}{RT} \right)} \tag{5}
+\frac{dn_I}{dt} = 0 \quad \Rightarrow \quad n_I = n_{I,0} \tag{3}
 $$
 
 $$
-C_A = \frac{n_A}{V} \tag{6}
+\frac{dn_A}{dt} = -r_1V \tag{4}
+$$
+
+The reactor is isothermal, so the temperature at all times will equal the initial temperature, equation (5).
+
+$$
+T = T_0 \tag{5}
+$$
+
+**Ancillary Equations for Solving the Design Equations**
+
+In addition to $n_I$, equation (3), and $T$, equation (5), the following quantities are known constants: $V$, $n_{A,0}$, $n_{B,0}$, $n_{I,0}$, $n_{Y,0} = 0$, $n_{Z,0} = 0$, $T_0$, $P_0$, $k_{0,1}$, $E_1$, $t_0 = 0$, and $t_f$.
+
+The rate, $r_1$, in equation (4) can be calculated using the rate expression, equation (2). The rate coefficient, $k_1$, and concentrations, $C_A$ and $C_B$, that appear in equation (2) can be calculated using equations (6) through (8).
+
+$$
+k_1 = k_{0,1} \exp{\left( \frac{-E_1}{RT} \right)} \tag{6}
 $$
 
 $$
-C_B = \frac{n_B}{V} \tag{7}
+C_A = \frac{n_A}{V} \tag{7}
 $$
 
 $$
-n_i = n_{i,0} + \sum_{j^\prime} \nu_{i,j^\prime} \xi_{j^\prime}
+C_B = \frac{n_B}{V} \tag{8}
 $$
 
-$$
-\xi_1 = n_{A,0} - n_A \tag{8}
-$$
+The moles of B, $n_B$, that appears in equation (8) can be calculated using equation (9), the apparent extent of reaction, $\xi_1$, that appears in equation (9) can be calculated using equation (10), and the initial moles of A, $n_{A,0}$, that appears in equation (10) can be calculated using equation (11).
 
 $$
 n_B = n_{B,0} - 2 \xi_1 \tag{9}
 $$
 
 $$
-n_Y = \cancelto{0}{n_{Y,0}} + \xi_1 \tag{10}
+\xi_1 = n_{A,0} - n_A \tag{10}
 $$
 
 $$
-n_Z = \cancelto{0}{n_{Z,0}} + \xi_1 \tag{11}
+n_{A,0} = C_{A,0}V \tag{11}
+$$
+
+**Solution of the Design Equations**
+
+At this point every quantity appearing in the design equation other than known constants, the independent variable, $t$, and the dependent variable, $n_A$, can be calculated from $t$ and $n_A$. As such, the design equation can be solved numerically. The initial values and stopping criterion needed for doing so are presented in below.
+
+| Variable | Initial Value | Stopping Criterion |
+|:-------|:-------:|:-------:|
+| $t$ | $0$ | $t_f$ |
+| $n_A$ | $n_{A,0}$ |
+
+: Initial values and stopping criterion for solving the design equations. {tbl-colwidths="[20, 40, 40]"}
+
+Using the initial values and the stopping criterion from the table, the design equation can be solved to find the value of $n_A$ as a function of time in the range from $t=0$ to $t=t_f$. The values of $T$ and $n_I$ in that range were found previously, equations (3) and (5).
+
+**Ancillary Equations for Calculating the Remaining Unknown Final Values**
+
+The value of $n_A$ found by solving the design equation can be used, as before, to calculate the apparent extent of reaction using equations (10) and (11). The resulting apparent extent of reaction can then be used to calculate $n_B$ using equation (9), $n_Y$ using equation (12), and $n_Z$ using equation (13).
+
+$$
+n_Y = \cancelto{0}{n_{Y,0}} + \xi_1 \tag{12}
 $$
 
 $$
-n_I = n_{I,0} \tag{12}
+n_Z = \cancelto{0}{n_{Z,0}} + \xi_1 \tag{13}
 $$
 
+
+The final pressure can be calculated using the ideal gas law, equation (14).
+
 $$
-P = \frac{\left( n_A + n_B + n_Y + n_Z + n_I \right)RT}{V} \tag{13}
+P = \frac{\left( n_A + n_B + n_Y + n_Z + n_I \right)RT}{V} \tag{14}
 $$
-
-**Initial values**: $t=t_0$ and $n_A = n_{A,0}$
-
-**Ending value**: $t=t_f$
-
-
-
