@@ -1,0 +1,114 @@
+---
+format:
+  html:
+    toc: false
+    embed-resources: true
+---
+
+{{< include problem_statement.qmd >}}
+
+**Reactor Design Equations**
+
+The feed stream contains only A, so the inlet molar flow rates of B, S, and W are zero. Mole balances on A, B, S, and W are shown in equations (4) through (7).
+
+$$
+\frac{dn_A}{dt} = \dot n_{A,in} - r_1V \tag{4}
+$$
+
+$$
+\frac{dn_B}{dt} = \cancelto{0}{\dot n_{B,in}} - r_1V \tag{5}
+$$
+
+$$
+\frac{dn_S}{dt} = \cancelto{0}{\dot n_{S,in}} + r_1V \tag{6}
+$$
+
+$$
+\frac{dn_W}{dt} = \cancelto{0}{\dot n_{W,in}} + r_1V \tag{7}
+$$
+
+Start with eq-sbstr_mol_balance
+$$
+\frac{dn_i}{dt} = \dot n_{i,in} + V \sum_j \nu_{i,j}r_j
+$$
+
+Equation (8) is an energy balance on the reacting fluid.
+
+$$
+\breve C_pV \frac{dT}{dt} - P\frac{dV}{dt} = \dot Q - \dot V_{in} \breve C_p \left( T - T_{in} \right)  - r_1  \Delta H_1 \tag{8}
+$$
+
+Start with eq-sbstr_energy_balance with the sensible heat terms written in terms of the known volume-specific heat capacity of the reacting fluid.
+$$
+\begin{align}
+\breve C_pV & \frac{dT}{dt} - V\frac{dP}{dt} - P\frac{dV}{dt} = \dot Q - \dot W \\ &- \dot V_{in} \int_{T_{in}}^T \breve C_pdT  - V\sum_j r_j \Delta H_j
+\end{align}
+$$
+
+The exchange fluid is removing energy in the form of sensible heat, so an energy balance on that fluid is given by equation (9).
+
+$$
+\rho_{ex} V_{ex} \tilde C_{p,ex}\frac{dT_{ex}}{dt} = -\dot Q - \dot m_{ex} \tilde C_{p,ex} \left( T_{ex} - T_{ex,in} \right) \tag{9}
+$$
+
+Start with eq-exchange_energy_bal_sensible
+$$
+\rho_{ex} V_{ex} \tilde C_{p,ex}\frac{dT_{ex}}{dt} = -\dot Q - \dot m_{ex} \int_{T_{ex,in}}^{T_{ex}} \tilde C_{p,ex}dT
+$$
+
+Assuming that the reacting fluid is an incompressible ideal mixture, the change of the reaction fluid volume over time is equal to the inlet volumetric flow rate, equation (10).
+
+$$
+\frac{dV}{dt} = \dot V_{in} \tag{10}
+$$
+
+The design equations for this system are the seven coupled IVODEs, equations (4) through (10). The independent variable is $t$ and the dependent variables are $n_A$, $n_B$, $n_S$, $n_W$, $T$, $T_{ex}$, and $V$.
+
+**Ancillary Equations for Solving the Design Equations**
+
+The following quantities are known constants: $\Delta H_1^0$, $\breve C_p$, $k_{0,1}$, $E_1$, $V_0$, $C_{B0}$, $C_{A,in}$, $T_{in}$, $\alpha$, $T_{ex,0}$, $T_{ex,in}$, $\dot V_{ex,in}$, $\tilde C_{p,ex}$, $\rho_{ex}$, $V_{ex}$, $A$, $U$, and $t_f$.
+
+The inlet molar flow rate of A in equation (4) can be calculated using the defining equation for concentration, equation (11), and the inlet volumetric flow rate in equation (11) can be calculated using equation (3).
+
+$$
+\dot n_{A,in} = \dot V_{in} C_{A,in} \tag{11}
+$$
+
+The rate, $r_1$, in equations (4) through (8) can be calculated using the rate expression, equation (2). The rate coefficient in equation (2) can be calculated using the Arrhenius expression, equation (12), and the concentrations in equation (2) can be calculated using the defining equation for concentration, equations (13) and (14).
+
+$$
+k_1 = k_{0,1} \exp{\left(  \frac{-E_1}{RT} \right)} \tag{12}
+$$
+
+$$
+C_A = \frac{n_A}{V} \tag{13}
+$$
+
+$$
+C_B = \frac{n_B}{V} \tag{13}
+$$
+
+The rate of heat exchange from the chilled water to the reacting fluid can be calculated using equation (14).
+
+$$
+\dot Q = UA\left( T_{ex} - T \right) \tag{14}
+$$
+
+**Solution of the Design Equations**
+
+$$
+n_{B,0} = C_{B,0}V_0 \tag{15}
+$$
+
+| Variable | Initial Value | Stopping Criterion |
+|:-------|:-------:|:-------:|
+| $t$ | $0$ | $t_f$ |
+| $n_A$ | $0$ | |
+| $n_B$ | $n_{B,0}$ | |
+| $n_W$ | $0$ | |
+| $n_S$ | $0$ | |
+| $T$ | $T_0$ | |
+| $T_{ex}$ | $T_{ex,0}$ | |
+| $V$ | $V_0$ |  |
+
+: Initial values and stopping criterion for solving the design equations. {tbl-colwidths="[20, 40, 40]"}

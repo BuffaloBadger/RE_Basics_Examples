@@ -1,0 +1,16 @@
+
+The exothermic, liquid-phase acid neutralization, reaction (1), occurs in an ideal SBSTR. The heat of reaction and heat capacity of the solution are constant. The rate is second order overall, first order in each reactant, equation (2). Initially a volume, $V_0$, of solution is present in the reactor. That solution contains only B at a concentration of $C_{B0}$. To start the process another solution containing only A at a concentration of $C_{A,in}$ and a temperature of $T_{in}$ begins flowing into the reactor. The volumetric flow rate of the added solution increases linearly with time according to equation (3), where $\alpha$ is a known constant. The pressure, $P$, is constant. The reactor jacket initially contains chilled water at a temperature of $T_{ex,0}$. At the same time that the reactant solution starts flowing into the reactor, chilled water at $T_{ex,in}$ starts to flow into the jacket. The volumetric flow rate of the chilled water is constant during the process and equal to $\dot V_{ex,in}$. The reactor jacket volume is $V_{ex}$, the heat transfer area is $A$, and the heat transfer coefficient is $U$. The reactant solution flows into the reactor for a period of time, $t_f$, after which the process ends. 
+
+$$
+A + B \rightarrow S + W \tag{1}
+$$
+
+$$
+r_1 = k_1 C_A C_B \tag{2}
+$$
+
+$$
+\dot V_{in} = \alpha t \tag{3}
+$$
+
+Formulate a reactor model for this system assuming the following constant quantities are known: $\Delta H_1^0$ (the heat of reaction), $\breve C_p$ (the volume-specific heat capacity of the reacting fluid), $k_{0,1}$ (the Arrhenius pre-exponential factor for the rate coefficient), $E_1$ (the activation energy for the rate coefficient), $V_0$, $C_{B0}$, $C_{A,in}$, $T_{in}$, $\alpha$, $P$, $T_{ex,0}$, $T_{ex,in}$, $\dot V_{ex,in}$, $\tilde C_{p,ex}$ (the mass-specific heat capacity of the chilled water), $\rho_{ex}$ (the density of the chilled water), $V_{ex}$, $A$, $U$, and $t_f$.
