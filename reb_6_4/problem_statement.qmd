@@ -1,0 +1,12 @@
+
+Liquid-phase reaction (1) takes place in an ideal steady-state CSTR. It is exothermic and reversible. The rate expression is given in equation (2) where $K_1$ is the concentration equilibrium constant for reaction (1). The feed is a solution containing A and B at concentrations of $C_{A,in}$ and $C_{B,in}$. There is no Z in the feed. The volumetric feed flow rate is $\dot V_{in}$ and the feed temperature is $T_{in}$. The reactor volume is $V$ and it operates at a pressure, $P$. Saturated steam at $T_{ex}$ condenses in the reactor jacket which has a volume, $V_{ex}$, heat transfer area, $A$, and heat transfer coefficient, $U$.
+
+$$
+A + B \rightarrow Z \tag{1}
+$$
+
+$$
+r_1 = k_1 C_A C_B \left( 1 - \frac{C_Z}{K_1 C_A C_B} \right) \tag{2}
+$$
+
+Formulate a model for this reactor assuming the following quantities are known and constant: $\Delta H_1^0$ (the heat of reaction (1)), $\tilde C_p$ (the mass-specific heat capacity of the reacting fluid), $\rho$ (the density of the reacting liquid), $k_{0,1}$ (the pre-exponential factor for the rate coefficient), $E_1$ (the activation energy for reaction (1)), $K_{0,1}$ (the pre-exponential term for the equilibrium constant), $C_{A,in}$, $C_{B,in}$, $\dot V_{in}$, $T_{in}$, $V$, $P$, $T_{ex}$, $V_{ex}$, $A$, and $U$.
