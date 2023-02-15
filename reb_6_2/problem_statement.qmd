@@ -1,5 +1,5 @@
 
-Gas-phase reaction (1) takes place in an ideal, adiabatic BSTR. It is irreversible and first-order in A, equation (2). The heat of reaction and the heat capacities of the reagents may be assumed to be constant. Initially the reactor contains only reagent A, and the reaction proceeds until the temperature reaches $T_f$. The following quantities are known: the pre-exponential factor, $k_{0,1}$, the activation energy, $E_1$, the heat of reaction, $\Delta H^0_1$, the molar heat capacity of A, $\hat C_{p,A}$, the molar heat capacity of B, $\hat C_{p,B}$, the reactor volume, $V$, the initial temperature, $T_0$, the initial pressure, $P_0$, and the final temperature, $T_f$.
+Gas-phase reaction (1) takes place in an ideal, adiabatic BSTR. It is irreversible and first-order in A, equation (2). The heat of reaction and the heat capacities of the reagents may be assumed to be constant. Initially the reactor contains only reagent A, and the reaction proceeds until the temperature reaches $T_f$.
 
 $$
 A \rightarrow B \tag{1}
@@ -9,4 +9,4 @@ $$
 r_1 = k_1 C_A \tag{2}
 $$
 
-Formulate a reactor model for this system.
+Formulate a reactor model for this system assuming the following quantities are known and constant: the pre-exponential factor, $k_{0,1}$, the activation energy, $E_1$, the heat of reaction, $\Delta H^0_1$, the molar heat capacity of A, $\hat C_{p,A}$, the molar heat capacity of B, $\hat C_{p,B}$, the reactor volume, $V$, the initial temperature, $T_0$, the initial pressure, $P_0$, and the final temperature, $T_f$.
