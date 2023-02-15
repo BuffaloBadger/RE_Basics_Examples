@@ -1,0 +1,98 @@
+---
+format:
+  html:
+    toc: false
+    embed-resources: true
+---
+
+{{< include problem_statement.qmd >}}
+
+**Reactor Design Equations**
+
+Mole balances on A, A~2~, and I take the forms shown in equations (3), (4), and (5).
+
+$$
+\frac{d \dot n_A}{dz} = -\frac{\pi D^2}{2}r_1 \tag{3}
+$$
+
+$$
+\frac{d \dot n_{A_2}}{dz} = \frac{\pi D^2}{4}r_1 \tag{4}
+$$
+
+$$
+\frac{d \dot n_I}{dz} = 0 \tag{5}
+$$
+
+Start with eq-pfr_mol_balance
+$$
+\frac{\partial \dot n_i}{\partial z} + \frac{\pi D^2}{4\dot V} \frac{\partial\dot n_i}{\partial t} - \frac{\pi D^2\dot n_i}{4\dot V^2} \frac{\partial \dot V}{\partial t}  =\frac{\pi D^2}{4}\sum_j \nu_{i,j}r_j
+$$
+
+Equation (6) presents an energy balance on the reacting fluid.
+
+$$
+\left( \dot n_A \hat C_{p,A} + \dot n_{A_2} \hat C_{p,A_2} \right) \frac{d T}{dz} = \pi D U\left( T_{ex} - T  \right) - \frac{\pi D^2}{4} r_1 \Delta H_1 \tag{6}
+$$
+
+Start with eq-pfr_energy_balance
+$$
+\begin{split}
+\left(\sum_i \dot n_i \hat C_{p,i} \right) \frac{\partial T}{\partial z} +& \frac{\pi D^2}{4\dot V} \sum_i \left(\dot n_i \hat C_{p,i} \right) \frac{\partial T}{\partial t} - \frac{\pi D^2}{4} \frac{\partial P}{\partial t} \\ &= \pi D U\left( T_{ex} - T  \right) - \frac{\pi D^2}{4}\sum_j r_j \Delta H_j
+\end{split}
+$$
+
+An energy balance on the exchange fluid is presented in equation (7).
+
+$$
+0 = -\dot Q - \dot m_{ex} \tilde C_{p,ex} \left( T_{ex} - T_{ex,in} \right) \tag{7}
+$$
+
+Start with eq-exchange_energy_bal_sensible
+$$
+\rho_{ex} V_{ex} \tilde C_{p,ex}\frac{dT_{ex}}{dt} = -\dot Q - \dot m_{ex} \int_{T_{ex,in}}^{T_{ex}} \tilde C_{p,ex}dT
+$$
+
+The design equations for this system form a coupled set of differential-algebraic equations (DAEs), equations (3) through (7). The IVODEs are equations (3) through (6) wherein $z$ is the independent variable and $\dot n_A$, $\dot n_{A_2}$, $\dot n_I$, and $T$ are the dependent variables. The ATE, equation (6), can be solved to find the value of $T_{ex}$.
+
+**Ancillary Equations for Solving the Design Equations**
+
+The values of the following quantities are known and constant: $k_{0,1}$, $E_1$, $\Delta H_1^0$, $\hat C_{p,A}$, $\hat C_{p,A_2}$, $\hat C_{p,I}$, $D$, $L$, $y_{A,in}$, $y_{I,in}$, $\dot V_{in}$, $T_{in}$, $P$, $T_{ex,in}$, $\dot m_{ex}$, $\tilde C_{p,ex}$, $V_{ex}$, and $U$.
+
+The reaction rate, $r_1$, in equations (3), (4), and (6) can be calculated using the rate expression, equation (2). The rate coefficient, $k_1$, in equation (2) can be calculated using the Arrhenius expression, equation (8). The partial pressure of A in equation (2) can be calculated using equation (9).
+
+$$
+k_1 = k_{0,1} \exp{\left(  \frac{-E_1}{RT} \right)} \tag{8}
+$$
+
+$$
+P_A = y_AP = \frac{\dot n_A}{\dot n_A + \dot n_{A_2} + \dot n_I} P \tag{9}
+$$
+
+The rate of heat transfer from the exchange fluid to the reacting fluid can be calculated using equation (10).
+
+$$
+\dot Q = \pi D L U \left( \frac{\left( T_{ex} - T_{in} \right) + \left( T_{ex} - T \right)}{2} \right) \tag{10}
+$$
+
+**Solution of the Design Equations**
+
+$$
+\dot n_{A,in} = y_{A,in} \frac{P \dot V_{in}}{RT_{in}} \tag{11}
+$$
+
+$$
+\dot n_{I,in} = y_{I,in} \frac{P \dot V_{in}}{RT_{in}} \tag{12}
+$$
+
+| Variable | Initial Value | Stopping Criterion |
+|:-------|:-------:|:-------:|
+| $z$ | $0$ | $L$ |
+| $\dot n_A$ | $\dot n_{A,in}$ | |
+| $\dot n_{A_2}$ | $0$ | |
+| $\dot n_I$ | $\dot n_{I,in}$ | |
+| $T$ | $T_{in}$ | |
+
+: Initial values and stopping criterion for solving the design equations. {tbl-colwidths="[20, 40, 40]"}
+
+**Ancillary Equations for Calculating the Remaining Unknown Outlet Values**
+

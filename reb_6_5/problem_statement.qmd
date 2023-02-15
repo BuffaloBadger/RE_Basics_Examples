@@ -1,0 +1,12 @@
+
+The gas-phase dimerization of A, reaction (1), takes place in an ideal steady-state PFR. The reaction is first order in A, equation (2). The heat of reaction (1), $\Delta H_1^0$, and the heat capacities of A, $\hat C_{p,A}$, A~2~, $\hat C_{p,A_2}$, and I, $\hat C_{p,I}$ may be assumed to be constant. The reactor has a diameter, $D$, and length $L$, and operates with negligible pressure drop. The feed to the reactor is 50% A and 50% I, an inert gas, flowing with a volumetric flow rate of $\dot V_{in}$ at a temperature of $T_{in}$ and pressure of $P$. A liquid coolant flows into the reactor shell at a temperature, $T_{ex,in}$, with a mass flow rate, $\dot m_{ex}$. It has a mass-specific heat capacity of $\tilde C_{p,ex}$. The shell volume is $V_{ex}$ and the heat transfer coefficient is $U$.
+
+$$
+2 A \rightarrow A_2 \tag{1}
+$$
+
+$$
+r_1 = k_1 P_A \tag{2}
+$$
+
+Formulate a reactor model for this system assuming the following quantities are known and constant: $k_{0,1}$ (the pre-exponential factor for $k_1$), $E_1$ (the activation energy for $k_1$), $\Delta H_1^0$, $\hat C_{p,A}$, $\hat C_{p,A_2}$, $\hat C_{p,I}$, $D$, $L$, $y_{A,in} = 0.5$ (the inlet mole fraction of A), $y_{I,in} = 0.5$ (the inlet mole fraction of I), $\dot V_{in}$, $T_{in}$, $P$, $T_{ex,in}$, $\dot m_{ex}$, $\tilde C_{p,ex}$, $V_{ex}$, and $U$.
