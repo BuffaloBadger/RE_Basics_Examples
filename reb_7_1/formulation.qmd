@@ -1,0 +1,110 @@
+---
+format:
+  html:
+    toc: false
+    embed-resources: true
+---
+
+{{< include problem_statement.qmd >}}
+
+---
+
+**Returned Response**: $T_{out}$, $P_{out}$, $f_A$
+
+**Missing Values Argument**: None.
+
+**Adjusted Values Argument**: None.
+
+**Solver Guesses Argument**: None.
+
+**Given and Known Constants**: $y_{A,in}$ = 0.75, $y_{I,in}$ = 0.25, $\dot V_{in}$ = 100 cm^3^ s^-1^, $\dot m$ = 0.44 g s^-1^, $P_{in}$ = 3 atm, $T_{in}$ = 375 °C, $D$ = 2.5 cm, $L$ = 8 m, $T_e$ = 375 °C, $U$ = 187 kJ h^-1^ m^-2^ K^-1^, $D_p$ = 0.25 cm, $\Phi _s$ = 0.7, $\epsilon$ = 0.60, $k_{0,f}$ = 9.0 x 10^17^ mol cm^3^ s^-1^ atm^-1^ , $E_f$ = 285 kJ mol^-1^, $k_{0,r}$ = 4.09 x 10^-4^ mol cm^3^ s^-1^ atm^-4^, $E_r$ = 85 kJ mol^-1^, $\Delta H$ = 200 kJ mol^-1^, $\hat C_{p,A}$ = 11.7 cal mol^-1^ K^-1^, $\hat C_{p,Y}$ = 8.3 cal mol^-1^ K^-1^, $\hat C_{p,Z}$ = 4.3 cal mol^-1^ K^-1^, $\hat C_{p,I}$ = 5.8 cal mol^-1^ K^-1^, and $\mu$ = 0.27 cp.
+
+**Calculated Fixed Input**:
+
+$$
+\dot n_{A,in} = y_{A,in}\frac{P_{in}\dot V_{in}}{RT_{in}} \tag{3}
+$$
+
+$$
+\dot n_{Y,in} = 0 \tag{4}
+$$
+
+$$
+\dot n_{Z,in} = 0 \tag{5}
+$$
+
+$$
+\dot n_{I,in} = y_{I,in}\frac{P_{in}\dot V_{in}}{RT_{in}} \tag{6}
+$$
+
+**Reactor Design and Ancillary Equations**:
+
+$$
+\frac{d \dot{n}_A}{dz} = -\frac{\pi D^2}{4}r_1 \tag{7}
+$$
+
+$$
+\frac{d \dot{n}_Y}{dz} = \frac{\pi D^2}{4}r_1 \tag{8}
+$$
+
+$$
+\frac{d \dot{n}_Z}{dz} = 3\frac{\pi D^2}{4}r_1 \tag{9}
+$$
+
+$$
+\frac{d \dot{n}_I}{dz} = 0 \tag{10}
+$$
+
+$$
+\frac{dT}{dz} = \frac{\pi DU\left( T_e - T \right) - \frac{\pi D^2}{4} r_1\Delta H_1}{\dot n_A \hat C_{p,A} + \dot n_Y \hat C_{p,Y} + \dot n_Z \hat C_{p,Z} + \dot n_I \hat C_{p,I}} \tag{11}
+$$
+
+$$
+\frac{{dP}}{{dz}} =  - \frac{{1 - \varepsilon }}{{{\varepsilon ^3}}}\frac{{{G^2}}}{{\rho {\Phi _s}{D_p}}}\left[ {\frac{{150\left( {1 - \varepsilon } \right)\mu }}{{{\Phi _s}{D_p}G}} + 1.75} \right] \tag{12}
+$$
+
+$$
+k_f = k_{0,f} \exp{\left( \frac{-E_f}{RT}  \right)} \tag{13}
+$$
+
+$$
+k_r = k_{0,r} \exp{\left( \frac{-E_r}{RT}  \right)} \tag{14}
+$$
+
+$$
+P_A = \frac{\dot n_A P}{\dot n_A + \dot n_Y + \dot n_Z + \dot n_I} \tag{15}
+$$
+
+$$
+P_Y = \frac{\dot n_Y P}{\dot n_A + \dot n_Y + \dot n_Z + \dot n_I} \tag{16}
+$$
+
+$$
+P_Z = \frac{\dot n_Z P}{\dot n_A + \dot n_Y + \dot n_Z + \dot n_I} \tag{17}
+$$
+
+$$
+G = \frac{4\dot m_{tot}}{\pi D^2} \tag{18}
+$$
+
+**Reactor Model Solver**:
+
+The reactor design equations are a set of 6 coupled IVODEs, equations (7) through (12). They can be solved numerically to find the values of $\dot n_A$, $\dot n_Y$, $\dot n_Z$, $\dot n_I$, $T$, and $P$ as functions of $z$ in the range from $z=0$ to $z=L$.
+
+The initial values are $z=0$, $\dot n_A = \dot n_{A,in}$, $\dot n_Y = \dot n_{Y,in}$, $\dot n_Z = \dot n_{Z,in}$, $\dot n_I = \dot n_{I,in}$, $T = T_{in}$, and $P=P_{in}$.
+
+The stopping criterion is $z=L$.
+
+**Response Calculation**:
+
+$$
+T_{out} = T\Big\vert_{z=L} \tag{19}
+$$
+
+$$
+P_{out} = P\Big\vert_{z=L} \tag{20}
+$$
+
+$$
+f_A = \frac{\dot n_{A,in} - \dot n_A\Big\vert_{z=L}}{\dot n_{A,in}} \tag{21}
+$$
