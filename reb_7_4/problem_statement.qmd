@@ -1,0 +1,9 @@
+An isothermal, isobaric, steady-state PFR was used to generate data to be used to develop a rate expression for reaction (1). The reactor diameter was 2.5 cm and its length was 1 m. All experiments were performed at atmospheric pressure. The inlet volumetric flow rates of each of the reagents and the temperature were varied from experiment to experiment, and the ratio of the outlet molar flow rate of Y to the outlet molar flow rate of A was measured. There were no reagents other than A, Y and Z present in any of the experiments. The equilibrium constant for reaction (1), $K_1$, can be calculated using equation (2). Generate a reactor response function that can be used to estimate the kinetics parameters in equation (3), $k_0$ and $E$.
+
+$$A \rightleftarrows Y + 3Z \tag{1}$$
+
+$$K_1 = \left( 2.2 \times 10^{23} \text{ atm}^3 \right)\exp{\frac{-200 \text{ kJ mol}^{-1}}{RT}} \tag{2}$$
+
+$$r_1 = k_{0,1} \exp{\left(\frac{-E_1}{RT} \right)}P_A \left(  1 - \frac{P_Y P_Z^3}{K_1 P_A} \right) \tag{3}$$
+
+

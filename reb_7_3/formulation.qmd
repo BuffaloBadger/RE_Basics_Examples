@@ -1,0 +1,94 @@
+---
+format:
+  html:
+    toc: false
+    embed-resources: true
+---
+
+{{< include problem_statement.qmd >}}
+
+---
+
+**Returned Response**: $\underline{T_{max}}$
+
+**Missing Values Argument**: None.
+
+**Adjusted Values Argument**: $\underline{\dot{V}_{ex,in}}$
+
+**Solver Guesses Argument**: None.
+
+**Given and Known Constants**: $C_{A,1}$ = 3 mol L^−1^, $V_1$ = 250 cm^3^, $C_{B,2}$ = 3 mol L^−1^, $V_2$ = 250 cm^3^, $T_0$ = (50 + 273.15) K, $T_{ex,0}$ = (40 + 273.15) K, $T_{ex,in}$ = (40 + 273.15) K, $\tilde{C}_p$ = 0.35 cal g^−1^ K^−1^, $\rho$ = 0.93 g cm^−3^, $k_{0,1}$ = 1.24 × 10^13^ cm^3^ mol^−1^ s^−1^, $E_1$ = 20 kcal mol^−1^, $\Delta H_1$ = −80 kJ mol^−1^, $A$ = 66 cm^2^, $V_{ex}$ = 40 cm^3^, $U$ = 35 BTU ft^−2^ h^−1^ °F^−1^, $\rho_{ex}$ = 1 g cm^−3^, $\tilde{C}_{p,ex}$ = 1 cal g^−1^ K^−1^, and $f_{A,f}$ = 0.9.
+
+**Calculated Fixed Input**: 
+
+$$
+n_{A,0} = C_{A,1}V_1 \tag{3}
+$$
+
+$$
+n_{B,0} = C_{B,2}V_2 \tag{4}
+$$
+
+$$
+n_{Y,0} = 0 \tag{5}
+$$
+
+$$
+n_{Z,0} = 0 \tag{6}
+$$
+
+$$
+n_{A,f} = n_{A,0} \left( 1 - f_{A,f} \right) \tag{7}
+$$
+
+**Reactor Design and Ancillary Equations**:
+
+$$
+\frac{dn_A}{dt} = -r_1V \tag{8}
+$$
+
+$$
+\frac{dn_B}{dt} = -r_1V \tag{9}
+$$
+
+$$
+\frac{dn_Y}{dt} = r_1V \tag{10}
+$$
+
+$$
+\frac{dn_Z}{dt} = r_1V \tag{11}
+$$
+
+$$
+\frac{dT}{dt} = \frac{UA\left( T_{ex} - T \right) - r_1V\Delta H_1}{\rho V \tilde{C}_{p,ex}} \tag{12}
+$$
+
+$$
+\frac{dT_{ex}}{dt} = \frac{\rho_{ex}\dot{V}_{ex}\tilde{C}_{p,ex}\left( T_{ex,in} - T_{ex} \right) - UA\left( T_{ex} - T \right)}{\rho_{ex}V_{ex}\tilde{C}_{p,ex}} \tag{13}
+$$
+
+$$
+k_1 = k_{0,1} \exp{\left( \frac{-E_1}{RT} \right)} \tag{14}
+$$
+
+$$
+C_A = \frac{n_A}{V} \tag{15}
+$$
+
+$$
+C_B = \frac{n_B}{V} \tag{16}
+$$
+
+**Reactor Model Solver**:
+
+The reactor design equations are a set of 6 coupled IVODEs, equations (8) through (13). They can be solved numerically to find the values of $n_A$, $n_B$, $n_Y$, $n_Z$, $T$, and $T_{ex}$ as functions of $t$ in the range from $t=0$ to the time when $n_A = n_{A,f}$.
+
+The initial values are $t=0$, $n_A = n_{A,0}$, $n_B = n_{B,0}$, $n_Y = n_{Y,0}$, $n_Z = n_{Z,0}$, $T = T_0$, and $T_{ex}=T_{ex,0}$.
+
+The stopping criterion is $n_A=n_{A,f}$.
+
+**Response Calculation**:
+
+$$
+T_{max} = \max \left(T\right) \tag{17}
+$$
