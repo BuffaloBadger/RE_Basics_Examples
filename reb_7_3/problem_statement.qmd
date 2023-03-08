@@ -1,17 +1,11 @@
-A 500 cm^3^ stirred tank reactor is available for the batch production of Z according to reaction (1). The reactor has a cooling jacket with a heat transfer area of 66 cm^2^, a volume of 40 cm^3^ and a heat transfer coefficient of 35 BTU ft^−2^ h^−1^ °F^−1^.  
-
-Reactants A and B are available in separate 3 M solutions at 50 °C. The heat capacity of all solutions containing A, B, Y and/or Z are essentially constant and equal to that of the solvent, 0.35 cal g^−1^ K^−1^. Similarly, the density of all solutions is constant and equal to 0.93 g cm^−3^. Cooling water is available at 40 °C. The cooling water density and heat capacity may be assumed to equal 1 g cm^−3^ and 1 cal g^−1^ K^−1^, respectively.
-
-The rate expression for reaction (1) is given in equation (2) where the pre-exponential factor equals 1.24 x 10^13^ cm^3^ mol^−1^ s^−1^ and the activation energy equals 20 kcal mol^−1^. The heat of reaction (1) may be assumed to be constant and equal to -80 kJ mol^−1^.
-
-Before the process starts, the reactor jacket is full of water at 40 °C. To start the process 250 cm^3^ of each solution is added to the reactor, and cooling water starts to flow into the jacket at a constant flow rate. The process ends when 90% of the A is converted.
+In [Example -@sec-example_7_1] of *Reaction Engineering Basics*, a set of BSTR experiments was designed to generate kinetics data for reaction (1). The initial conditions for 12 experiments were specified in @tbl-example_7_1 of that example. In each experiment the concentration of reagent A was to be measured at six reaction times, giving a set of 72 experimental data points. Letting $i$ index the 72 experimental data points, the data set includes values for the three adjusted inputs, $T_i$, $C_{A,0,i}$, and $t_i$, and for the experimental response, $C_{A,i}$. Suppose now that the experimental data set is available to use to assess the accuracy of the first order rate expression shown in equation (2). 
 
 $$
-A + B \rightarrow Y + Z \tag{1}
+A \rightarrow Z \tag{1}
 $$
 
 $$
-r_1 = k_1 C_A C_B \tag{2}
+r_1 = k_{0,1} \exp \left( \frac{-E_1}{RT} \right) C_A \tag{2}
 $$
 
-Generate a reactor response function that can be used to calculate the maximum temperature of the reacting fluid as a function of the cooling water flow rate for flow rates between 25 and 100 cm^3^ min^-1^.
+Linearize the reactor model for this problem and show how to calculate the new variables in it. Then describe how to use the linearized model to assess the accuracy of the rate expression, equation (2).

@@ -1,19 +1,11 @@
-A BSTR will be charged with 1 atm of A and 2 atm of B. The reactor volume is 2 L, and it has a jacket with an area of 600 cm^2^ and an overall heat transfer coefficient of 0.6 cal cm^-2^ min^-1^ K^-1^. The temperature of the coolant in the perfectly-mixed jacket is constant and equal to 30°C. Gas phase reactions (1) and (2) take place within the reactor for 12 min. The rate expressions are given in equations (3) and (4). The rate coefficients display Arrhenius temperature dependence with pre-exponental factors of 3.34 x 10^9^ and 4.99 x 10^9^ mol cm^-3^ min^-1^ atm^-2^ for reactions (1) and (2) respectively and activation energies of 20.5 and 21.8 kcal mol^-1^. The heat of reaction (1) is constant and equal to -6,300 cal mol^-1^; that of reaction (2) is constant and equal to -6,900 cal mol^-1^. The heat capacities of A, B, D, Z and U are constant and equal to 7.4, 8.6, 10.7, 5.2 and 10.3 cal mol^-1^ K^-1^, respectively.
+In [Example -@sec-example_7_1] of *Reaction Engineering Basics*, a set of BSTR experiments was designed to generate kinetics data for reaction (1). The initial conditions for 12 experiments were specified in @tbl-example_7_1 of that example. In each experiment the concentration of reagent A was to be measured at six reaction times, giving a set of 72 experimental data points. Letting $i$ index the 72 experimental data points, the data set includes values for the three adjusted inputs, $T_i$, $C_{A,0,i}$, and $t_i$, and for the experimental response, $C_{A,i}$. Suppose now that the experimental data set is available to use to assess the accuracy of the first order rate expression shown in equation (2). 
 
 $$
-A + B \rightarrow D + Z \tag{1}
-$$
-
-$$
-D + B \rightarrow U + Z \tag{2}
+A \rightarrow Z \tag{1}
 $$
 
 $$
-r_1 = k_{0,1} \exp{\left(\frac{-E_1}{RT}\right)}P_AP_B \tag{3}
+r_1 = k_{0,1} \exp \left( \frac{-E_1}{RT} \right) C_A \tag{2}
 $$
 
-$$
-r_2 = k_{0,2} \exp{\left(\frac{-E_2}{RT}\right)}P_DP_B \tag{4}
-$$
-
-Generate a reactor response function that could be used to find the initial reacting fluid temperature that is needed to reach 80% conversion of reagent A also find the corresponding yield of D (mol D/initial mol A).
+Formulate a response function that receives, as arguments, the adjusted inputs from the experimental data set and values of the kinetics parameters ($k_{0,1}$ and $E_1$). The response function should calculate and return the model-predicted responses for the 72 data. Then describe how to use this response function to assess the accuracy of the rate expression, equation (2).

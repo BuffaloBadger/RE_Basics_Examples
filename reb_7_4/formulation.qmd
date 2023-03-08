@@ -5,75 +5,30 @@ format:
     embed-resources: true
 ---
 
+## Analysis of Processed Data Using the Rate Expression as the Model
+
 {{< include problem_statement.qmd >}}
-
-The table below presents the results from the first few experiments; the full set of experimental data is included in the Excel file, [reb_7_4_data.xlsx](./reb_7_4_data.xlsx). 
-
-```{r}
-#| echo: false
-#| warning: false
-library(tidyverse)
-library(readxl)
-library(knitr)
-library(kableExtra)
-kinData <- read_xlsx("./reb_7_4_data.xlsx")
-kbl(head(kinData,5), escape=FALSE, caption="PFR Kinetics Data from the First Five Experiments", col.names=
-    c("$\\dot{V}_{A,in}\\text{ (cm} ^3 \\text{ s}^{-1} \\text{)}$","$\\dot{V}_{Y,in}\\text{ (cm} ^3 \\text{ s}^{-1} \\text{)}$","$\\dot{V}_{Z,in}\\text{ (cm} ^3 \\text{ s}^{-1} \\text{)}$","$T\\text{ (°C)}$", "$R_{Y/A}$"), format = 'markdown',
-    align = "ccccc")
-```
 
 ---
 
-**Returned Response**: $\underline{R_{Y/A}}$
-
-**Missing Values Argument**: $k_{0,1}$ and $E_1$.
-
-**Adjusted Values Argument**: $\underline{\dot {V}_{A,in}}$, $\underline{\dot {V}_{Y,in}}$, $\underline{\dot {V}_{Z,in}}$, and $\underline{T}$
-
-**Solver Guesses Argument**: None.
-
-**Given and Known Constants**: $D = 2.5\text{ cm}$,  $L = 1\text{ m}$, and $P = 1\text{ atm}$.
-
-**Calculated Fixed Input**:
-
 $$
-\dot{n}_{A,in} = \frac{P \dot{V}_{A,in}}{RT} \tag{4}
+r_1 = \frac{1}{V} \frac{dn_A}{dt} = \frac{dC_A}{dt} \approx \frac{\Delta C_A}{\Delta t} \tag{3}
 $$
 
-$$
-\dot{n}_{Y,in} = \frac{P \dot{V}_{Y,in}}{RT} \tag{5}
-$$
+if $t_i = 5 \text{ min}$
 
 $$
-\dot{n}_{Z,in} = \frac{P \dot{V}_{Z,in}}{RT} \tag{6}
+r_{1,i} \approx \frac{C_{A,i} - C_{A,0,i}}{t_i - 0} = \frac{C_{A,i} - C_{A,0,i}}{t_i} \tag{4}
 $$
 
-**Reactor Design and Ancillary Equations**:
+otherwise
 
 $$
-\frac{d \dot{n}_A}{dz} = -\frac{\pi D^2}{4}r_1 \tag{7}
+r_{1,i} \approx \frac{C_{A,i} - C_{A,i-1}}{t_i - t_{i-1}} \tag{5}
 $$
 
-$$
-\frac{d \dot{n}_Y}{dz} = \frac{\pi D^2}{4}r_1 \tag{8}
-$$
+response function
 
 $$
-\frac{d \dot{n}_Z}{dz} = -\frac{3\pi D^2}{4}r_1 \tag{9}
-$$
-
-
-
-**Reactor Model Solver**:
-
-The reactor design equations are a set of 3 coupled IVODEs, equations (7) through (9). They can be solved numerically to find the values of $\dot{n}_A$, $\dot{n}_Y$, and $\dot{n}_Z$ as functions of $z$ in the range from $z=0$ to $z=L$.
-
-The initial values are $z=0$, $\dot{n}_A = \dot{n}_{A,0}$, $\dot{n}_Y = \dot{n}_{Y,0}$, and $\dot{n}_Z = \dot{n}_{Z,0}$.
-
-The stopping criterion is $z=L$.
-
-**Response Calculation**:
-
-$$
-R_{Y/A} = \frac{\dot{n}_Y\Big\vert_{z=L}}{\dot{n}_A\Big\vert_{z=L}} \tag{10}
+r_{1,i,\text{model}} = k_{0,1} \exp \left( \frac{-E_1}{RT_i} \right) C_{A,i} \tag{6}
 $$

@@ -1,13 +1,5 @@
-The gas-phase decomposition of A according to reaction (1) takes place at steady-state in a PFR. The feed to the reactor is 75% A and 25% inert gas flowing at 100 cm^3^ s^-1^ (0.44 g s^-1^) at 3 atm and 375 °C. The reactor diameter is 2.5 cm and its length is 8 m. It is surrounded by a shell containing a molten salt at a constant temperature of 375 °C. The heat transfer coefficient between the reactor and shell is 187 kJ h^-1^ m^-2^ K^-1^. The reaction is catalytic, and the reactor is packed with catalyst particles with a 0.25 cm diameter, a sphericity of 0.7, and a bed porosity of 0.60.
-
-The rate expression for reaction (1) is given in equation (2) where $k_{0,f}$ = 9.0 x 10^17^ mol cm^3^ s^-1^ atm^-1^ , $E_f$ = 285 kJ mol^-1^, $k_{0,r}$ = 4.09 x 10^-4^ mol cm^3^ s^-1^ atm^-4^, and $E_r$ = 85 kJ mol^-1^. The heat of reaction is constant and equal to  200 kJ mol^-1^. The heat capacities of the reagents are also constant: $\hat C_{p,A}$ = 11.7 cal mol^-1^ K^-1^, $\hat C_{p,Y}$ = 8.3 cal mol^-1^ K^-1^, $\hat C_{p,Z}$ = 4.3 cal mol^-1^ K^-1^, and $\hat C_{p,I}$ = 5.8 cal mol^-1^ K^-1^. The gas viscosity may be assumed to be constant and equal to 0.27 cp. 
+A rate expression for reaction (1) is needed for the design of a new batch reactor process. Preliminary studies suggest that a temperature in the range of 65 to 90 °C will be needed. At lower temperatures the rate is very low and at higher temperatures undesired side reactions begin to occur. At a temperature of ca. 80 °C, it takes approximately 30 minutes for the reaction to go to completion. The preliminary experiments suggest that the reaction is irreversible and that the rate is not affected by the concentration of the product, Z. It is expected that the reactant, A, will be available at concentrations between 0.8 and 1.2 M. A perfectly mixed, 1 L BSTR is available for kinetics experiments. The reactor has a sampling port that allows the concentration of A to be measured while the reaction is taking place. Design a set of experiments to generate kinetics data that can be used to develop a rate expression.
 
 $$
-A \rightleftarrows Y + 3Z \tag{1}
+A \rightarrow Z \tag{1}
 $$
-
-$$
-r_1 = k_f P_A - k_r P_Y P_Z^3 \tag{2}
-$$
-
-Generate a reactor response function that could be used to calculate the outlet temperature, pressure and conversion.
