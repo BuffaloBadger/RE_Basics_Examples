@@ -1,11 +1,9 @@
-In [Example -@sec-example_7_1] of *Reaction Engineering Basics*, a set of BSTR experiments was designed to generate kinetics data for reaction (1). The initial conditions for 12 experiments were specified in @tbl-example_7_1 of that example. In each experiment the concentration of reagent A was to be measured at six reaction times, giving a set of 72 experimental data points. Letting $i$ index the 72 experimental data points, the data set includes values for the three adjusted inputs, $T_i$, $C_{A,0,i}$, and $t_i$, and for the experimental response, $C_{A,i}$. Suppose now that the experimental data set is available to use to assess the accuracy of the first order rate expression shown in equation (2). 
+Kinetics data for liquid-phase reaction (1) were generated using the experimental design described in [Example -@sec-example_7_1] and a 1 L ideal, isothermal BSTR. Specifically the 12 experiments specified in @tbl-example_7_1 of that example were performed. In each experiment the concentration of reagent A was measured at six reaction times, giving a set of 72 experimental data points. Use an approximate reactor model (i. e. perform differential data analysis) to assess the accuracy of the first order rate expression shown in equation (2). 
 
 $$
 A \rightarrow Z \tag{1}
 $$
 
 $$
-r_1 = k_{0,1} \exp \left( \frac{-E_1}{RT} \right) C_A \tag{2}
+r = k_0 \exp \left( \frac{-E}{RT} \right) C_A \tag{2}
 $$
-
-Formulate a response function that receives, as arguments, the adjusted inputs from the experimental data set and values of the kinetics parameters ($k_{0,1}$ and $E_1$). The response function should calculate and return the model-predicted responses for the 72 data. Then describe how to use this response function to assess the accuracy of the rate expression, equation (2).
