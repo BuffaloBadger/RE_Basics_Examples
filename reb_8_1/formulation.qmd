@@ -9,56 +9,145 @@ format:
 
 {{< include problem_statement.qmd >}}
 
+The first few data points are shown in @tbl-example_8_1_data. The full data set is available in the .csv file [reb_8_1_data.csv](./Data/reb_8_1_data.csv)
+
+| Experiment | T (°C) | C~A,0~ (M) | t~rxn~ (min) | C~A~ (M) |
+|:------:|:-------:|:----------:|:----------:|:----------:|
+| 1 | 65 | 0.5 | 5 | ? |
+| 2 | 65 | 1.0 | 10 | ? |
+| 3 | 65 | 1.5 | 15 | ? |
+| 4 | 73 | 0.5 | 20 | ? |
+| 5 | 73 | 1.0 | 25 | ? |
+| 6 | 73 | 1.5 | 30 | ? |
+| 7 | 82 | 0.5 | 5 | ? |
+| 8 | 82 | 1.0 | 10 | ? |
+
+: First 8 of the 72 experimentally generated data. {#tbl-example_8_1_data"}
+
 ---
 
-**Expert Thinking** I am asked to formulate a response function that will predict the response for BSTR experiments given the adjusted reactor inputs and the necessary kinetics parameters. To do that I must first generate a reactor model as described in [Chapter 6]. Then, after solving the reactor design equations for each experiment, the final concentration of A must be calculated.
+:::{.callout-tip collapse="true"}
+## Click Here to See What an Expert Might be Thinking at this Point
 
-To begin, I need to write the reactor design equations for the experimental system. There are two reagents in the system, A and Z, so I will write mole balances for each of them. The reactor operates isothermally which means that the mole balances can be solved independently from the other design equations. In this problem I am not told anything about heat transfer or how the temperature was held constant during the experiments. Even if I wanted to include energy balances in the reactor model, I would not be able to because I have not been provided with enough information to write the energy balances. Additionally, the reactor is a BSTR, so I do not need a momentum balance. Therefore, for this sytesm, the reactor design equations consist of mole balances on A and Z.
+Having identified this as a kinetics data analysis problem as described in the expert thinking callout at the start of this section, I know that I need to identify the adjusted experimental inputs and the measured experimental response. Knowing that I next will need to formulate a mathematical model of the experiments, it is useful to additionally identify the type of reactor used and any additional constant quantities provided in the problem statement. Knowing that I need to estimate the values of all of the kinetics parameters appearing in the rate expression, it is also useful to list those. Creating these lists at the start of the analysis makes it easier to formulate the model for the experiments. Note that in listing the adjusted experimental inputs and the measured experimental response, the variable symbols are underlined to indicate that they are vector quantities.
 
-**Reactor Design Equations**
+:::
 
-$$
-\frac{dn_A}{dt} = -r_1 V \tag{3}
-$$
-
-$$
-\frac{dn_Z}{dt} = r_1 V \tag{4}
-$$
-
-**Solution of the Reactor Design Equations**
-
-2 IVODEs, $t$ is independent variable, $n_A$ and $n_Z$ are dependent variables, solve for each of 72 experimental data points
+**Reactor Type**: BSTR
 
 **Given Constants**: $V = 1\text{ L}$.
 
-**Known Adjusted Input and Parameters**: $T_i$, $C_{A,0,i}$, $t_i$, $k_{0.1}$, and $E_1$
+**Adjusted Inputs**: $\underline{T}$, $\underline{C_{A,0}}$, and $\underline{t}$
 
-**Ancillary Equations**
+**Kinetics Parameters**: $k_0$, and $E$
 
-rate from equation (2)
+**Experimental Responses**: $\underline{C_{A,\text{ expt}}}$
 
-$$
-C_A = \frac{n_A}{V} \tag{5}
-$$
+:::{.callout-tip collapse="true"}
+## Click Here to See What an Expert Might be Thinking at this Point
 
-**Initial Values and Stopping Criterion**
+I am instructed to perform differential data analysis in this problem. That means that I will model the reactor using just one mole balance, and in that mole balance I will approximate the derivative using a finite difference. Since the response in this problem is the concentration of A, it makes sense to write that approximate mole balance on A.
 
-$$
-n_{A,0} = C_{A,0,i}V \tag{6}
-$$
+:::
 
-| Variable | Initial Value | Stopping Criterion |
-|:-------|:-------:|:-------:|
-| $t$ | $0$ | $t_i$ |
-| $n_A$ | $n_{A,0}$ | |
-| $n_Z$ | $0$ | |
+**Reactor Design Equation**
 
-: Initial values and stopping criterion for solving the design equations. {tbl-colwidths="[20, 40, 40]"}
-
-**Response Function**
+An approximate mole balances on A for first measured response in each experiment is presented in equation (3). For the rest of the measured responses in that experiment, the approximate mole balance is given by equation (4), where $i$ indexes the measurement times during that experiment.
 
 $$
-C_{A,i,\text{model}} = \frac{n_A \Big\vert_{t=t_i}}{V} \tag{7}
+\frac{n_A \Big\vert_{t=t_1} - n_A \Big\vert_{t=0}}{t_1} = -r V \tag{3}
+$$
+
+$$
+\frac{n_A \Big\vert_{t=t_i} - n_A \Big\vert_{t=t_{i-1}}}{t_i - t_{i-1}} = -r V \tag{4}
+$$
+
+:::{.callout-tip collapse="true"}
+## Click Here to See Where That Came From
+
+Start from @eq-bstr_diff_mol_bal written for reagent A.
+
+$$
+\frac{dn_A}{dt} = \nu_A r V \approx \frac{\Delta n_A}{\Delta t} = \nu_A r V
+$$
+
+The stoichiometric coefficient of A is -1. If backward differences are used, it is possible to approximate the derivative each time the response is measured in any one experiment. For the first measurement, the previous values of $n_A$ and $t$ are the initial values. If the start of the each experiments is defined to be $t=0$, equation (3) results. For the remaining times when the response is measured, the previous values are simply those from the previous measurement, equation (4). 
+
+:::
+
+:::{.callout-tip collapse="true"}
+## Click Here to See What an Expert Might be Thinking at this Point
+
+I know that the next thing I need to do is to substitute the rate expression into the reactor model and then fit the model to the experimental data. I could do this by writing a response function. However, when differential analysis is used, it is common to linearize the reactor model and use linear least squares for the fitting. That is the approach I will use here.
+
+:::
+
+Substitution of the rate expression into equation (4) and rearrangement leads to equation (5). Recognizing that $t_0 = 0$, this equation can be used for every data point.
+
+$$
+\frac{\frac{C_{A,i-1}}{C_{A,i}} - 1}{t_i - t_{i-1}} = k_0\exp{ \left(\frac{-E}{RT}\right)} \tag{5}
+$$
+
+:::{.callout-tip collapse="true"}
+## Click Here to See Where That Came From
+
+Start by substituting the rate expression, equation (2), into equation (4) and letting $n_{A,i} = n_A \Big\vert_{t=t_i}$.
+
+$$
+\frac{n_{A,i} - n_{A,i-1}}{t_i - t_{i-1}} = -k_0 V \exp{ \left(\frac{-E}{RT}\right)} C_{A,i}
+$$
+
+Next divide each side of the equations by $-C_{A,i}V$.
+
+$$
+\frac{n_{A,i} - n_{A,i-1}}{t_i - t_{i-1}} \frac{-1}{C_{A,i}V} = k_0\exp{ \left(\frac{-E}{RT}\right)}
+$$
+
+Note that $\frac{n_{A,i}}{V} = C_{A,i}$ and $\frac{n_{A,i-1}}{V} = C_{A,i-1}$.
+
+$$
+\frac{C_{A,i} - C_{A,i-1}}{t_i - t_{i-1}} \frac{-1}{C_{A,i}} = k_0\exp{ \left(\frac{-E}{RT}\right)}
+$$
+
+Finally divide the numerator and denominator on the left side of the equation by $C_{A,i}$.
+
+$$
+\frac{\frac{C_{A,i-1}}{C_{A,i}} - 1}{t_i - t_{i-1}} = k_0\exp{ \left(\frac{-E}{RT}\right)}
+$$
+
+:::
+
+Taking the logarithm of each side of equation (5) yields equation (6).
+
+$$
+\ln{\frac{\frac{C_{A,i-1}}{C_{A,i}} - 1}{t_i - t_{i-1}}} = E \frac{-1}{RT} + \ln{k_0} \tag{6}
+$$
+
+If $x$ and $y$ are defined as shown in equations (7) and (8), it is apparent that equation (6) is a linear equation with a slope of $E$ and an intercept of $\ln{k_0}$, equation (9).
+
+$$
+x = \frac{-1}{RT} \tag{7}
+$$
+
+$$
+y = \ln{\frac{\frac{C_{A,i-1}}{C_{A,i}} - 1}{t_i - t_{i-1}}} \tag{8}
+$$
+
+$$
+y = Ex + \ln{k_0} \tag{10}
 $$
 
 **Parameter Estimation and Assessment of Accuracy**
+
+:::{.callout-tip collapse="true"}
+## Click Here to See What an Expert Might be Thinking at this Point
+
+I can estimate the parameter values using linear least squares, and to do so, I can use a spreadsheet program. The data file provided with the problem can be read into a spreadsheet, and two columns can be added for $x$ and $y$ using equations (7) and (8). **The temperatures must be converted to absolute units before $x$ is calculated.** Those two added columns can then be plotted and a trendline can be added. The equation for the trendline will provide the best estimate for $E$ as the slope. The best estimate for $k_0$ will equal the exponential of the intercept. That is, if $b$ is the intercept of the trendline, $k_0 = e^b$.
+
+:::
+
+Values of $x$ and $y$ were calculated for each experiment and a straight line was fit to the resulting data using linear least squares. The results are shown in @fig-example_8_1. The slope of the trendline is the best estimate for the activation energy, 72.4 kJ mol^-1^. The intercept of the trendline is the best estimate for $\ln{k_0}$, so the best estimate for $k_0$ is 2.03 x 10^9^ min^-1^
+
+![Model plot for [Example -@sec-example_8_1].](reb_8_1_model_plot.png){#fig-example_8_1 width="80%"}
+
+The coefficient of determination, $R^2=0.936$, is reasonably close to 1, and the scatter of the data about the trendline appears to be random. However the magnitude of the deviations of the data points from the line is substantial. This is not surprising because an approximate reactor model was used. In light of the significant scatter seen in the model plot, it is recommended that the data be re-analyzed using the exact reactor model.
