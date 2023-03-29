@@ -26,8 +26,8 @@ E_upper = beta_ci[1,1]
 
 # report the results
 print(' ')
-print(f'k0: {k0:.3g} [{k0_lower:.3g}, {k0_upper:.3g}] (95%CI) L/mol/min')
-print(f'E: {E:.3g} [{E_lower:.3g}, {E_upper:.3g}] (95%CI) kJ/mol')
+print(f'k0: {k0:.3g} L/mol/min, 95% CI [{k0_lower:.3g}, {k0_upper:.3g}]')
+print(f'E: {E:.3g} kJ/mol, 95% CI [{E_lower:.3g}, {E_upper:.3g}]')
 print(f'R-squared: {r_squared:.3g}')
 print(' ')
 
