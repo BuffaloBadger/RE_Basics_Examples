@@ -9,27 +9,36 @@ format:
 
 {{< include problem_statement.qmd >}}
 
+```{r}
+#| echo: false
+#| output: false
+library(tidyverse)
+source("~/Libraries/R/fmt_tibble_col.R")
+d <- read.csv("reb_8_1_data.csv")
+# Experiment, T, CA0, t, CA
+```
+
 The first few data points are shown in @tbl-example_8_1_data. The full data set is available in the .csv file [reb_8_1_data.csv](./Data/reb_8_1_data.csv)
 
-| Experiment | T (°C) | C~A,0~ (M) | t~rxn~ (min) | C~A~ (M) |
-|:------:|:-------:|:----------:|:----------:|:----------:|
-| 1 | 65 | 0.5 | 5 | ? |
-| 2 | 65 | 1.0 | 10 | ? |
-| 3 | 65 | 1.5 | 15 | ? |
-| 4 | 73 | 0.5 | 20 | ? |
-| 5 | 73 | 1.0 | 25 | ? |
-| 6 | 73 | 1.5 | 30 | ? |
-| 7 | 82 | 0.5 | 5 | ? |
-| 8 | 82 | 1.0 | 10 | ? |
-
-: First 8 of the 72 experimentally generated data. {#tbl-example_8_1_data"}
+```{r}
+#| echo: false
+#| warning: false
+#| label: tbl-example_8_1_data
+#| tbl-cap: First 8 of the 72 experimentally generated data.
+library(kableExtra)
+library(knitr)
+kbl(d[1:8,], format = "markdown", align = "cc", col.names = c('Experiment','T (°C)',
+    'C~A,0~ (M)', 't~rxn~ (min)', 'C~A~ (M)'))
+```
 
 ---
 
 :::{.callout-tip collapse="true"}
 ## Click Here to See What an Expert Might be Thinking at this Point
 
-Having identified this as a kinetics data analysis problem as described in the expert thinking callout at the start of this section, I know that I need to identify the adjusted experimental inputs and the measured experimental response. Knowing that I next will need to formulate a mathematical model of the experiments, it is useful to additionally identify the type of reactor used and any additional constant quantities provided in the problem statement. Knowing that I need to estimate the values of all of the kinetics parameters appearing in the rate expression, it is also useful to list those. Creating these lists at the start of the analysis makes it easier to formulate the model for the experiments. Note that in listing the adjusted experimental inputs and the measured experimental response, the variable symbols are underlined to indicate that they are vector quantities.
+Having identified this as a kinetics data analysis problem as described in the expert thinking callout at the start of this section, I know that I need to identify the adjusted experimental inputs and the measured experimental response. I like to start by additionally summarizing information from the problem statement including the type of reactor used in the experiments and constant quantities provided in the problem statement. Knowing that I need to estimate the values of all of the kinetics parameters appearing in the rate expression, it is also useful to identify and list them, too. Creating these lists at the start of the analysis makes it easier to formulate the model for the experiments. Note that in listing the adjusted experimental inputs and the measured experimental response, the variable symbols are underlined to indicate that they are vector quantities.
+
+I know that the data will be analyzed in two phases as described in [add ref to chapter 7]. In this problem, data were generated at 4 different temperatures. For the first phase of the analysis, I will separate the data into four blocks. One block will contain the data from all experiments conducted at 60 °C, one will contain the 73 °C data, one, the 82 °C data and one, the 90 °C data. I will analyze each of these blocks separately to estimate the best value of $k$ at that temperature and to assess the accuracy of the rate expression at that temperature.
 
 :::
 
@@ -39,20 +48,22 @@ Having identified this as a kinetics data analysis problem as described in the e
 
 **Adjusted Inputs**: $\underline{T}$, $\underline{C_{A,0}}$, and $\underline{t}$
 
-**Kinetics Parameters**: $k_0$, and $E$
+**Experimental Response**: $\underline{C_{A,\text{ expt}}}$
 
-**Experimental Responses**: $\underline{C_{A,\text{ expt}}}$
+**Kinetics Parameters**: $k_0$, and $E$
 
 :::{.callout-tip collapse="true"}
 ## Click Here to See What an Expert Might be Thinking at this Point
 
-I am instructed to perform differential data analysis in this problem. That means that I will model the reactor using just one mole balance, and in that mole balance I will approximate the derivative using a finite difference. Since the response in this problem is the concentration of A, it makes sense to write that approximate mole balance on A.
+In this phase of the analysis, I will be analyzing the data in blocks where the temperature is the same in all of the experiments being analyzed. It isn't possible to estimate values of $k_0$ and $E$ for the individual blocks, so the rate expression will be written using $k$ in place of $k_0 \exp \left( \frac{-E}{RT} \right)$. The values of $k_0$ and $E$ will be estimated in the second phase of the analysis.
+
+I am instructed to perform differential data analysis in this problem. That means that I will model the reactor using just one mole balance, and in that mole balance I will approximate the derivative using a finite difference. Since the response in this problem is the concentration of A, it makes sense to write that approximate mole balance on A. 
 
 :::
 
 **Reactor Design Equation**
 
-An approximate mole balances on A for first measured response in each experiment is presented in equation (3). For the rest of the measured responses in that experiment, the approximate mole balance is given by equation (4), where $i$ indexes the measurement times during that experiment.
+An approximate mole balances on A for the first measured response in each experiment is presented in equation (3). For the rest of the measured responses in that experiment, the approximate mole balance is given by equation (4), where $i$ indexes the measurement times during that experiment.
 
 $$
 \frac{n_A \Big\vert_{t=t_1} - n_A \Big\vert_{t=0}}{t_1} = -r V \tag{3}
@@ -71,21 +82,21 @@ $$
 \frac{dn_A}{dt} = \nu_A r V \approx \frac{\Delta n_A}{\Delta t} = \nu_A r V
 $$
 
-The stoichiometric coefficient of A is -1. If backward differences are used, it is possible to approximate the derivative each time the response is measured in any one experiment. For the first measurement, the previous values of $n_A$ and $t$ are the initial values. If the start of the each experiments is defined to be $t=0$, equation (3) results. For the remaining times when the response is measured, the previous values are simply those from the previous measurement, equation (4). 
+The stoichiometric coefficient of A is -1. If backward differences are used, it is possible to approximate the derivative at each of the times the response was measured in any one experiment. (If forward differences were used, the derivative could not be approximated at the time of the final measurement.) For the first measurement, the previous values of $n_A$ and $t$ are the initial values. If the start of the each experiments is defined to be $t=0$, equation (3) results. For the remaining times when the response is measured, the previous values are simply those from the previous measurement, equation (4). 
 
 :::
 
 :::{.callout-tip collapse="true"}
 ## Click Here to See What an Expert Might be Thinking at this Point
 
-I know that the next thing I need to do is to substitute the rate expression into the reactor model and then fit the model to the experimental data. I could do this by writing a response function. However, when differential analysis is used, it is common to linearize the reactor model and use linear least squares for the fitting. That is the approach I will use here.
+I know that the next thing I need to do is to substitute the rate expression into the reactor model and then fit the model to the experimental data. I could fit the model using a response function. However, when differential analysis is used, it is common to linearize the reactor model and use linear least squares for the fitting. That is the approach I will use here.
 
 :::
 
 Substitution of the rate expression into equation (4) and rearrangement leads to equation (5). Recognizing that $t_0 = 0$, this equation can be used for every data point.
 
 $$
-\frac{\frac{C_{A,i-1}}{C_{A,i}} - 1}{t_i - t_{i-1}} = k_0\exp{ \left(\frac{-E}{RT}\right)} \tag{5}
+\frac{C_{A,i-1} - C_{A,i}}{t_i - t_{i-1}} = k C_{A,i} \tag{5}
 $$
 
 :::{.callout-tip collapse="true"}
@@ -94,60 +105,107 @@ $$
 Start by substituting the rate expression, equation (2), into equation (4) and letting $n_{A,i} = n_A \Big\vert_{t=t_i}$.
 
 $$
-\frac{n_{A,i} - n_{A,i-1}}{t_i - t_{i-1}} = -k_0 V \exp{ \left(\frac{-E}{RT}\right)} C_{A,i}
+\frac{n_{A,i} - n_{A,i-1}}{t_i - t_{i-1}} = -k V C_{A,i}
 $$
 
-Next divide each side of the equations by $-C_{A,i}V$.
+Then divide each side of the equation by $-V$.
 
 $$
-\frac{n_{A,i} - n_{A,i-1}}{t_i - t_{i-1}} \frac{-1}{C_{A,i}V} = k_0\exp{ \left(\frac{-E}{RT}\right)}
+\frac{n_{A,i} - n_{A,i-1}}{t_i - t_{i-1}} \frac{-1}{V} = k C_{A,i}
 $$
 
-Note that $\frac{n_{A,i}}{V} = C_{A,i}$ and $\frac{n_{A,i-1}}{V} = C_{A,i-1}$.
+Finally, note that $\frac{n_{A,i}}{V} = C_{A,i}$ and $\frac{n_{A,i-1}}{V} = C_{A,i-1}$.
 
 $$
-\frac{C_{A,i} - C_{A,i-1}}{t_i - t_{i-1}} \frac{-1}{C_{A,i}} = k_0\exp{ \left(\frac{-E}{RT}\right)}
-$$
-
-Finally divide the numerator and denominator on the left side of the equation by $C_{A,i}$.
-
-$$
-\frac{\frac{C_{A,i-1}}{C_{A,i}} - 1}{t_i - t_{i-1}} = k_0\exp{ \left(\frac{-E}{RT}\right)}
+\frac{C_{A,i-1} - C_{A,i}}{t_i - t_{i-1}} = k C_{A,i}
 $$
 
 :::
 
-Taking the logarithm of each side of equation (5) yields equation (6).
+If $x$ and $y$ are defined as shown in equations (6) and (7), it is apparent that equation (5) is a linear equation with a slope of $k$ and an intercept of 0, equation (8).
 
 $$
-\ln{\frac{\frac{C_{A,i-1}}{C_{A,i}} - 1}{t_i - t_{i-1}}} = E \frac{-1}{RT} + \ln{k_0} \tag{6}
-$$
-
-If $x$ and $y$ are defined as shown in equations (7) and (8), it is apparent that equation (6) is a linear equation with a slope of $E$ and an intercept of $\ln{k_0}$, equation (9).
-
-$$
-x = \frac{-1}{RT} \tag{7}
+x_i = C_{A,i} \tag{6}
 $$
 
 $$
-y = \ln{\frac{\frac{C_{A,i-1}}{C_{A,i}} - 1}{t_i - t_{i-1}}} \tag{8}
+y_i = \frac{C_{A,i-1} - C_{A,i}}{t_i - t_{i-1}} \tag{7}
 $$
 
 $$
-y = Ex + \ln{k_0} \tag{10}
+y = kx \tag{8}
 $$
-
-**Parameter Estimation and Assessment of Accuracy**
 
 :::{.callout-tip collapse="true"}
 ## Click Here to See What an Expert Might be Thinking at this Point
 
-I can estimate the parameter values using linear least squares, and to do so, I can use a spreadsheet program. The data file provided with the problem can be read into a spreadsheet, and two columns can be added for $x$ and $y$ using equations (7) and (8). **The temperatures must be converted to absolute units before $x$ is calculated.** Those two added columns can then be plotted and a trendline can be added. The equation for the trendline will provide the best estimate for $E$ as the slope. The best estimate for $k_0$ will equal the exponential of the intercept. That is, if $b$ is the intercept of the trendline, $k_0 = e^b$.
+The next step is to estimate the parameters. Since the model is a linear equation, I can do that using linear least squares. I could use a spreadsheet program to do this, but I prefer write a short computer program that calls a linear least squares function. My main reason for this preference is that it the software will provide the coefficient of determination, the parameter estimates, *and* the 95% confidence intervals (or an equivalent measure of uncertainty) for the estimated parameter. When a spreadsheet is used to plot the data and add a trendline, the uncertainties are shown. Additional calculations must be performed in the spreadsheet to generate those uncertainties. 
+
+In either case, the values of $x$ and $y$ must first be calculated for each experiment using equations (6) and (7). A straight line can then be fit to the resulting $x$ - $y$ data to obtain the coefficient of determination, the parameter estimates, and the 95% confidence intervals for the parameters. The model in this problem, $y=mx$, is linear with only one parameter, so a model plot can be used to assess its accuracy as described in [Chapter 7].
 
 :::
 
-Values of $x$ and $y$ were calculated for each experiment and a straight line was fit to the resulting data using linear least squares. The results are shown in @fig-example_8_1. The slope of the trendline is the best estimate for the activation energy, 72.4 kJ mol^-1^. The intercept of the trendline is the best estimate for $\ln{k_0}$, so the best estimate for $k_0$ is 2.03 x 10^9^ min^-1^
+**Parameter Estimation and Assessment of Accuracy**
 
-![Model plot for [Example -@sec-example_8_1].](reb_8_1_model_plot.png){#fig-example_8_1 width="80%"}
+```{r}
+#| echo: false
+#| output: false
+library(tidyverse)
+source("~/Libraries/R/fmt_tibble_col.R")
+d <- read.csv("python/reb_8_1_phase_1_results.csv")
+# T, k, k_ll, k_ul, R_sq_
+d <- fmt_tibble_col(d, 2:5, 3, 2, 2)
+d$k_full = paste0(d$k,' min^-1^, 95% CI [',d$k_ll,', ',d$k_ul,']')
+```
 
-The coefficient of determination, $R^2=0.936$, is reasonably close to 1, and the scatter of the data about the trendline appears to be random. However the magnitude of the deviations of the data points from the line is substantial. This is not surprising because an approximate reactor model was used. In light of the significant scatter seen in the model plot, it is recommended that the data be re-analyzed using the exact reactor model.
+Within each block of data, values of $x$ and $y$ were calculated for each experimental data point, equation (8) was fit to the resulting data, and a model plot was created. The fitting results are given in @tbl-results_1_reb_8_1, and the model plots are shown in @fig-example_8_1_phase_1_plots.
+
+```{r}
+#| echo: false
+#| warning: false
+#| label: tbl-results_1_reb_8_1
+#| tbl-cap: Phase 1 fitting results
+d <- d %>% select(T, k_full, R_sq)
+library(kableExtra)
+library(knitr)
+kbl(d, format = "markdown", align = "cc", col.names = c("T (°C)", "k", "R^2^"))
+```
+
+::: {#fig-example_8_1_phase_1_plots layout-ncol=2}
+
+![](python/reb_8_1_model_T_equals_65.png)
+
+![](python/reb_8_1_model_T_equals_73.png)
+
+![](python/reb_8_1_model_T_equals_82.png)
+
+![](python/reb_8_1_model_T_equals_90.png)
+
+Model Plots for each of the four temperature blocks.
+:::
+
+The 95% confidence intervals for each of the four estimated rate coefficients are relatively small compared to the estimated values and the $R^2$ values are all close to 1. Looking at the model plots, the deviations of the experimental data appear to be random. In general, the magnitude of the deviations are acceptable. The deviations are greater for the experiments at lower temperatures. If this is a concern, additional experiments should be performed at the lower temperatures.
+
+```{r}
+#| echo: false
+#| output: false
+library(tidyverse)
+source("~/Libraries/R/fmt_tibble_col.R")
+d <- read.csv("python/reb_8_1_Arrhenius_results.csv")
+d <- fmt_tibble_col(d, 2, 3, 2, 2)
+# item, value, units
+```
+
+The Arrhenius expression was fit to the estimated rate coefficients for the four blocks with the following results.
+
+k~0~: `r d$value[1]` `r d$units[1]`, 95% CI [`r d$value[2]`, `r d$value[3]`]  
+E: `r d$value[4]` `r d$units[4]`, 95% CI [`r d$value[5]`, `r d$value[6]`]  
+R^2^: `r d$value[7]`
+
+The 95% confidence interval for the pre-exponential factor is quite large, but this is often observed for the pre-exponential factor. The confidence interval for the activation energy is small relative to its value, suggesting a good fit. Additionally, the coefficient of determination is equal to 1, which indicates a very good fit. The Arrhenius plot is shown in @fig-example_8_1_Arrhenius_plot. The estimated rate coefficients fall almost exactly on the line representing the Arrhenius expression.
+
+![Arrhenius plot resulting from the estimated parameters.](python/reb_8_1_Arrhenius_plot.png){#fig-example_8_1_Arrhenius_plot width=80%}
+
+**Recommendation**
+
+As the problem instructed, the kinetics data were analyzed using an approximate reactor model. This is expected to introduce some error. Despite the use of differential data analysis, the model was found to describe the experimental results with reasonable accuracy. The greatest discrepancies between the experiments and the model predictions occurred at low temperature. While additional low-temperature experiment could be performed to try to improve the accuracy, doing so is not necessary. Given that the instructions said to use differential analysis, one can infer that extremely high accuracy is not needed here.

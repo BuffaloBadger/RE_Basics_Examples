@@ -22,11 +22,13 @@ CA0_expt = np.array([0.5, 1.0, 1.5])
 t_reaction = np.array([5.0, 10.0, 15.0, 20.0, 25.0, 30.0])
 
 # Create empty dataframe for the results
-df = pd.DataFrame(columns=["T", "CA0", "t", "CA"])
+df = pd.DataFrame(columns=["Experiment","T", "CA0", "t", "CA"])
 
 # Calculate the responses
+expt_number = 0
 for CA0 in CA0_expt:
     for T in T_expt:
+        expt_number += 1
         for time in t_reaction:
             # Define the mole balances
             def mole_balances(t,C):
@@ -49,7 +51,7 @@ for CA0 in CA0_expt:
             CA = round(CA,2)
 
             # append the result to the dataframe
-            df.loc[len(df.index)] = [T - 273.15, CA0, time, CA]
+            df.loc[len(df.index)] = [expt_number, T - 273.15, CA0, time, CA]
 
 # display the results
 print("\n")
