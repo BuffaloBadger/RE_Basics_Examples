@@ -1,11 +1,8 @@
-In [Example -@sec-example_7_1] of *Reaction Engineering Basics*, a set of BSTR experiments was designed to generate kinetics data for reaction (1). The initial conditions for 12 experiments were specified in @tbl-example_7_1 of that example. In each experiment the concentration of reagent A was to be measured at six reaction times, giving a set of 72 experimental data points. Letting $i$ index the 72 experimental data points, the data set includes values for the three adjusted inputs, $T_i$, $C_{A,0,i}$, and $t_i$, and for the experimental response, $C_{A,i}$. Suppose now that the experimental data set is available to use to assess the accuracy of the first order rate expression shown in equation (2). 
-
+The gas-phase reaction between reagents A and B was studied in an ideal, isothermal, 500 cm^3^ BSTR. In all experiments the reactor was charged with reagents A and B only, but with varying partial pressures. The fractional conversion of reagent A was measured at seven different elapsed times in each experiment. Experiments were performed at three different temperatures. A total of 189 data points were recorded. Use a linearized reactor model to assess the accuracy of the rate expression shown in equation (2).
 $$
-A \rightarrow Z \tag{1}
-$$
-
-$$
-r_1 = k_{0,1} \exp \left( \frac{-E_1}{RT} \right) C_A \tag{2}
+A + B \rightarrow Y + Z \tag{1}
 $$
 
-Linearize the reactor model for this problem and show how to calculate the new variables in it. Then describe how to use the linearized model to assess the accuracy of the rate expression, equation (2).
+$$
+r = k_0 \exp \left( \frac{-E}{RT} \right) P_A P_B \tag{2}
+$$
