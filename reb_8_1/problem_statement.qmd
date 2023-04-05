@@ -1,9 +1,9 @@
-Kinetics data for liquid-phase reaction (1) were generated using the experimental design described in [Example -@sec-example_7_1] and a 1 L ideal, isothermal BSTR. Specifically the 12 experiments specified in @tbl-example_7_1 of that example were performed. In each experiment the concentration of reagent A was measured at six reaction times, giving a set of 72 experimental data points. Use an approximate reactor model (i. e. perform differential data analysis) to assess the accuracy of the first order rate expression shown in equation (2). 
+Kinetics data for liquid-phase reaction (1) were generated using the experimental design described in [Example -@sec-example_7_1] and a 1 L ideal, isothermal BSTR. Specifically the 12 experiments specified in @tbl-example_7_1 of that example were performed. In each experiment the concentration of reagent A was measured at six reaction times, giving a set of 72 experimental data points. Use an approximate reactor model (i. e. perform differential data analysis) to assess the accuracy of the first order rate expression shown in equation (2). The rate coefficient in equation (2) is expected to display Arrhenius temperature dependence.
 
 $$
 A \rightarrow Z \tag{1}
 $$
 
 $$
-r = k_0 \exp \left( \frac{-E}{RT} \right) C_A \tag{2}
+r = k C_A \tag{2}
 $$

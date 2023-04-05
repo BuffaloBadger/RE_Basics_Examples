@@ -6,56 +6,71 @@ import math
 import random
 
 # Constant inputs
-V = 1.0 # L
-R = 8.314E-3 # kJ/mol/K
+V = 0.5 # L
+R = 1.987E-3 # kcal/mol/K
+Rpv = 0.08206 # L atm/mol/K
+
+# kinetics parameters
+k = 0.00176 # mol/L/atm^2/min
+E = 21.7 # kcal/mol
+T_avg = 500 + 273.15
+k0 = k*math.e**(E/R/T_avg)
 
 # Define rate expression
-def rate(conc_A, temp):
-    k0 = 4.23E8
-    E = 68.0
-    reaction_rate = k0*math.e**(-E/R/temp)*conc_A
+def rate(P_A, P_B, temp):
+    reaction_rate = k0*math.e**(-E/R/temp)*P_A*P_B
     return reaction_rate
 
 # Adjusted inputs
-T_expt = np.array([65, 73, 82, 90]) + 273.15
-CA0_expt = np.array([0.5, 1.0, 1.5])
-t_reaction = np.array([5.0, 10.0, 15.0, 20.0, 25.0, 30.0])
+T_expt = np.array([475, 500, 525]) + 273.15
+PA0_expt = np.array([0.5, 1.0, 1.5])
+PB0_expt = np.array([0.5, 1.0, 1.5])
+t_reaction = np.array([0.5, 1.0, 1.5, 2.0, 2.5, 5.0, 10.0])
 
 # Create empty dataframe for the results
-df = pd.DataFrame(columns=["T", "CA0", "t", "CA"])
+df = pd.DataFrame(columns=["T", "PA0", "PB0", "t", "fA"])
 
 # Calculate the responses
-for CA0 in CA0_expt:
-    for T in T_expt:
-        for time in t_reaction:
-            # Define the mole balances
-            def mole_balances(t,C):
-                ddt = [-rate(C,T)]
-                return ddt
-            
-            # Solve the mole balances
-            t0 = 0
-            f_var = 0
-            soln = reb.solveIVODEs(t0, [CA0], f_var, time, mole_balances)
+for T in T_expt:
+    for PA0 in PA0_expt:
+        nA0 = PA0*V/Rpv/T
+        for PB0 in PB0_expt:
+            nB0 = PB0*V/Rpv/T
+            for time in t_reaction:
+                # Define the mole balances
+                def mole_balances(t,n):
+                    PA = n[0]*Rpv*T/V
+                    PB = n[1]*Rpv*T/V
+                    r = rate(PA, PB, T)
+                    ddt = np.array([-r*V, -r*V])
+                    return ddt
+                
+                # Solve the mole balances
+                t0 = 0
+                n0 = np.array([nA0, nB0])
+                f_var = 0
+                f_val = time
+                soln = reb.solveIVODEs(t0, n0, f_var, f_val, mole_balances)
 
-            # calculate the response
-            CA = soln.y[0,-1]
+                # calculate the response
+                nA = soln.y[0,-1]
+                fA = (PA0*V/Rpv/T - nA)/(PA0*V/Rpv/T)
 
-            # add +/- 0.01 M random "error"
-            random_error = (2*random.random() - 1.0)*0.01
-            CA = CA + random_error
+                # add +/- 0.01 random "error"
+                random_error = (2*random.random() - 1.0)*0.001
+                fA = fA + random_error
 
-            # round to 2 decimal places
-            CA = round(CA,2)
+                # round to 3 decimal places
+                fA = round(fA,3)
 
-            # append the result to the dataframe
-            df.loc[len(df.index)] = [T - 273.15, CA0, time, CA]
+                # append the result to the dataframe
+                df.loc[len(df.index)] = [T - 273.15, PA0, PB0, time, fA]
 
 # display the results
 print("\n")
 print(df)
 
 # save the results
-filename = "reb_8_1/reb_8_1_data.csv"
+filename = "reb_8_2/reb_8_2_data.csv"
 print("\nSaving results to " + filename + "\n")
 df.to_csv(filename,index=False)

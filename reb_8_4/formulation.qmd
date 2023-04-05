@@ -1,0 +1,172 @@
+---
+format:
+  html:
+    toc: false
+    embed-resources: true
+---
+
+## Assessing a Michaelis-Menten Rate Expression
+
+{{< include problem_statement.qmd >}}
+
+```{r}
+#| echo: false
+#| output: false
+library(tidyverse)
+source("~/Libraries/R/fmt_tibble_col.R")
+d <- read.csv("reb_8_4_data.csv")
+ # CS0, t, CP
+```
+
+The first few data points are shown in @tbl-example_8_4_data. The full data set is available in the file [reb_8_4_data.csv](./reb_8_4/reb_8_4_data.csv).
+
+```{r}
+#| echo: false
+#| warning: false
+#| label: tbl-example_8_4_data
+#| tbl-cap: First 8 of the 72 experimentally generated data.
+library(kableExtra)
+library(knitr)
+kbl(d[1:5,], format = "markdown", align = "cc", col.names = c('C~S,0~ (mmol L^-1^)', 't~rxn~ (min)', 'C~P~ (mmol L^-1^)'))
+```
+
+---
+
+:::{.callout-tip collapse="true"}
+## Click Here to See What an Expert Might be Thinking at this Point
+
+I will start my solution of this kinetics data analysis problem by listing the reactor type, the constants provided in the problem statement, the adjusted experimental inputs, the measured experimental responses and the kinetics parameters I need to estimate.
+
+:::
+
+**Reactor Type**: BSTR
+
+**Given Constants**: $V=50 \text{ ml}$.
+
+**Adjusted Inputs**: $\underline{C_{S,0}}$ and $\underline{t_{rxn}}$
+
+**Experimental Responses**: $\underline{C_P}$
+
+**Kinetics Parameters**: $V_{max}$, and $K_m$
+
+:::{.callout-tip collapse="true"}
+## Click Here to See What an Expert Might be Thinking at this Point
+
+All of the data in this problem were generated at the same temperature, so they can all be analyzed together. I need to write a reactor model (see @chapter6), use it to create a reactor response function (see @chapter7 and above), and use that to fit the reactor model to the experimental data (see [Appendix -@fittingAppendix] and [Example -@sec-example_8_4]).
+
+For an isothermal reactor, the mole balances can be solved independently of the other reactor design equations. In this problem there are three reagents, the substrate S, the product P, and water. I will use @eq-8_1 to write mole balance on these reagents, noting that their stoichiometric coefficients are -1, 1, and 1, respectively. 
+
+:::
+
+Mole balances on the substrate S, the product P, and water are presented in equations (3) through (5).
+
+$$
+\frac{dn_S}{dt} = -rV \tag{3}
+$$
+
+$$
+\frac{dn_P}{dt} = rV \tag{4}
+$$
+
+$$
+\frac{dn_{H_2O}}{dt} = rV \tag{5}
+$$
+
+:::{.callout-tip collapse="true"}
+## Click Here to See What an Expert Might be Thinking at this Point
+
+Within the response function I am creating, I need to solve the mole balance equations numerically. The adjusted inputs and the kinetics parameters will be available in the response function. The mole balances are IVODEs, so to solve them I need to provide three things: (1) ancillary equations to calculate the value of every quantity in the mole balances using only known constants, the independent variable ($t$ in this problem), and the dependent variables ($n_S$, $n_P$, and $n_{H_2O}$); (2) initial values and (3) a stopping criterion.
+
+:::
+
+**Ancillary Equations**
+
+Substitution of the rate expression into the mole balances introduces the concentration of substrate S, which can be calculated using equation (6).
+
+$$
+C_S = \frac{n_S}{V} \tag{6}
+$$
+
+The instant the reaction began can be defined as $t=0$. The initial values are then given by equations (7) and (8).
+
+$$
+n_S\Big\vert_{t=0} = C_{S,0}V \tag{7}
+$$
+
+$$
+n_P\Big\vert_{t=0} = n_{H_2O}\Big\vert_{t=0} = 0 \tag{8}
+$$
+
+The integration of the IVODEs should stop when $t=t_{rxn}$.
+
+:::{.callout-tip collapse="true"}
+## Click Here to See What an Expert Might be Thinking at this Point
+
+At this point the mole balances can be solved numerically. Doing so will yield the values of $n_S$, $n_P$, and $n_{H_2O}$ at times between $t=0$ and $t=t_{rxn}$. I need to use those results to calculate the response, which in this problem was the concentration of the product P. This is trivial using the definition of a concentration.
+
+:::
+
+**Response Function**
+
+Letting $n_{P,f}$ denote the molar amount of product P found by solving the mole balances, the model-predicted response can be calculated using equation (9).
+
+$$
+C_{P,\text{ model}} = \frac{n_{P,f}}{V} \tag{9}
+$$
+
+:::{.callout-tip collapse="true"}
+## Click Here to See What an Expert Might be Thinking at this Point
+
+The response function can now be used to fit the reactor model to the experimental data. Doing so will yield the best estimates for the kinetics parameters, $V_{max}$ and $K_m$, and their 95% confidence intervals. It will also yield the coefficient of determination, $R^2$.
+
+I can use the estimated parameter values to calculate the model-predicted response for every experiment. Then I can create a parity plot (experimental responses *vs*. model-predicted responses) and residuals plots (difference between the experimental and model-preducted responses *vs*. each of the adjusted inputs, in this case the initial substrate concentration and the reaction time).
+
+The accuracy of the rate expression can then be assessed as described in this chapter and in @sec-chapter7. The criteria suggesting accuracy are as follows:
+
+* The coefficient of determination, $R^2$, will be close to 1.
+* The uncertainty in each parameter estimate will be small compared to the estimate.
+* The points in the parity plot will all be close to a diagonal line ($y_{\text{expt}} = y_{\text{model}}$).
+* In each residuals plot, the points will scatter randomly about zero (the horizontal axis), and no systematic deviations will be apparent.
+
+:::
+
+**Parameter Estimation and Assessment of Accuracy**
+
+```{r}
+#| echo: false
+#| output: false
+library(tidyverse)
+source("~/Libraries/R/fmt_tibble_col.R")
+d <- read.csv("python/reb_8_4_results.csv")
+d <- fmt_tibble_col(d, 2, 3, 2, 2)
+a <- c('V~max~','K~m~','R^2^')
+b1 <- paste0(d$value[1],' ',d$units[1],', 95% CI [',d$value[2],', ',d$value[3],']')
+b2 <- paste0(d$value[4],' ',d$units[4],', 95% CI [',d$value[5],', ',d$value[6],']')
+b <- c(b1,b2,d$value[7])
+ # item, value, units
+d <- data.frame(a,b)
+```
+
+Fitting the reactor model to the experimental data yielded the results shown in @tbl-example_8_4_results. The estimated parameter values were used to create the parity plot shown in @fig-example_8_4_parity and the residuals plots shown in @fig-example_8_4_residuals_t and @fig-example_8_4_residuals_CS.
+
+```{r}
+#| echo: false
+#| warning: false
+#| label: tbl-example_8_4_results
+#| tbl-cap: Parameter estimation results
+library(kableExtra)
+library(knitr)
+kbl(d, format = "markdown", align = "cc", col.names = NULL)
+```
+
+![Parity plot for the proposed rate expression.](python/reb_8_4_parity.png){#fig-example_8_4_parity width=80%}
+
+![Residuals *vs*. reaction time.](python/reb_8_4_residuals_vs_t.png){#fig-example_8_4_residuals_t width=80%}
+
+![Residuals *vs*. initial substrate concentration.](python/reb_8_4_residuals_vs_CS.png){#fig-example_8_4_residuals_CS width=80%}
+
+The confidence intervals for both $V_{max}$ and $K_m$ are narrow and the coefficient of determination is close to 1.0. In the parity plot the deviations of the responses from the line representing a perfect model are small. In both residuals plots the deviations about zero are random. All of these results indicate that the proposed rate expression is accurate when the kinetics parameters have the values shown in @tbl-example_8_4_results.
+
+**Recommendation**
+
+When the parameters, $V_{max}$ and $K_m$ have the values shown in @tbl-example_8_4_results, the rate expression is accurate and acceptable.

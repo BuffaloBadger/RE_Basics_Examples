@@ -4,5 +4,5 @@ A + B \rightarrow Y + Z \tag{1}
 $$
 
 $$
-r = k_0 \exp \left( \frac{-E}{RT} \right) P_A P_B \tag{2}
+r = k P_A P_B \tag{2}
 $$

@@ -38,7 +38,10 @@ kbl(d[1:8,], format = "markdown", align = "cc", col.names = c('Experiment','T (�
 
 Having identified this as a kinetics data analysis problem as described in the expert thinking callout at the start of this section, I know that I need to identify the adjusted experimental inputs and the measured experimental response. I like to start by additionally summarizing information from the problem statement including the type of reactor used in the experiments and constant quantities provided in the problem statement. Knowing that I need to estimate the values of all of the kinetics parameters appearing in the rate expression, it is also useful to identify and list them, too. Creating these lists at the start of the analysis makes it easier to formulate the model for the experiments. Note that in listing the adjusted experimental inputs and the measured experimental response, the variable symbols are underlined to indicate that they are vector quantities.
 
-I know that the data will be analyzed in two phases as described in [add ref to chapter 7]. In this problem, data were generated at 4 different temperatures. For the first phase of the analysis, I will separate the data into four blocks. One block will contain the data from all experiments conducted at 60 째C, one will contain the 73 째C data, one, the 82 째C data and one, the 90 째C data. I will analyze each of these blocks separately to estimate the best value of $k$ at that temperature and to assess the accuracy of the rate expression at that temperature.
+
+
+
+I know that the data will be analyzed in two phases as described in @sec-chapter7. In this problem, data were generated at 4 different temperatures. For the first phase of the analysis, I will separate the data into four blocks. One block will contain the data from all experiments conducted at 60 째C, one will contain the 73 째C data, one, the 82 째C data and one, the 90 째C data. I will analyze each of these blocks separately to estimate the best value of $k$ at that temperature and to assess the accuracy of the rate expression at that temperature.
 
 :::
 
