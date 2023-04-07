@@ -1,0 +1,9 @@
+The liquid-phase reaction between reactants A and B, reaction (1), was studied in a 100 cm^3^ laboratory CSTR. The reactor operated at steady state, and kinetics data were generated in blocks where the temperature was the same in all of the experiments in any one block. In each block the volumetric flow rate and the inlet concentrations of each of the reagents were adjusted, and the outlet concentration of reagent Y was measured. The data from a block of experiments where the temperature was 35 °C are presented below. Use those data to assess the accuracy with which the rate expression shown in equation (2) describes the composition dependence of the rate of reaction (1).
+
+$$
+A + B \rightarrow Y + Z \tag{1}
+$$
+
+$$
+r = kC_AC_B \tag{2}
+$$
