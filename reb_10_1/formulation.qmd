@@ -1,0 +1,121 @@
+---
+format:
+  html:
+    toc: false
+    embed-resources: true
+---
+
+{{< include problem_statement.qmd >}}
+
+```{r}
+#| echo: false
+#| output: false
+library(tidyverse)
+source("~/Libraries/R/fmt_tibble_col.R")
+d <- read.csv("reb_10_1_data.csv")
+ # A_in, Y_in, Z_in, fA
+```
+
+The first few data points are shown in @tbl-example_10_1_data; the full data set are available in the file, [reb_10_1_data.csv](reb_10_1_data.csv).
+
+```{r}
+#| echo: false
+#| warning: false
+#| label: tbl-example_10_1_data
+#| tbl-cap: First 8 of the 160 experimentally generated data.
+library(kableExtra)
+library(knitr)
+kbl(d[1:8,], format = "markdown", align = "cccc", 
+  col.names = c('$\\dot{V}_{A,in}$ (sccm)','$\\dot{V}_{Y,in}$ (sccm)',
+  '$\\dot{V}_{Z,in}$ (sccm)', 'f~A~ (%)'))
+```
+
+---
+
+**Reactor Type**: PFR
+
+**Given Constants**: $P=1\text{ atm}$, $D=1\text{ cm}$, $L=10\text{ cm}$, and $T=1500\text{ K}$.
+
+**Adjusted Inputs**: $\underline{\dot{V}_{A,in}}$, $\underline{\dot{V}_{Y,in}}$, and $\underline{\dot{V}_{Z,in}}$.
+
+**Experimental Response**: $\underline{f_A}$.
+
+**Kinetics Parameter**: $k$.
+
+**Reactor Design Equations**
+
+$$
+\frac{d\dot{n}_A}{dz} = -\frac{\pi D^2}{4}r \tag{3}
+$$
+
+$$
+\frac{d\dot{n}_Y}{dz} = \frac{\pi D^2}{4}r \tag{4}
+$$
+
+$$
+\frac{d\dot{n}_Z}{dz} = \frac{\pi D^2}{4}r \tag{5}
+$$
+
+**Ancillary Equations**
+
+$$
+P_A = \frac{\dot{n}_A}{\dot{n}_A+\dot{n}_Y + \dot{n}_Z}P \tag{6}
+$$
+
+$$
+\dot{n}_A\Big\vert_{z=0} = \dot{n}_{A,in} = \frac{P\dot{V}_{A,in}}{RT} \tag{7}
+$$
+
+$$
+\dot{n}_Y\Big\vert_{z=0} = \dot{n}_{Y,in} = \frac{P\dot{V}_{Y,in}}{RT} \tag{8}
+$$
+
+$$
+\dot{n}_Z\Big\vert_{z=0} = \dot{n}_{Z,in} = \frac{P\dot{V}_{Z,in}}{RT} \tag{9}
+$$
+
+**Response Function**
+
+$$
+f_A = \frac{\dot{n}_{A,in} - \dot{n}_A}{\dot{n}_{A,in}} \tag{10}
+$$
+
+**Parameter Estimation and Assessment of Accuracy**
+
+```{r}
+#| echo: false
+#| output: false
+library(tidyverse)
+source("~/Libraries/R/fmt_tibble_col.R")
+d <- read.csv("python/reb_10_1_results.csv")
+d <- fmt_tibble_col(d, 2, 3, 2, 2)
+a <- c('k','R^2^')
+b1 <- paste0(d$value[1],' ',d$units[1],', 95% CI [',d$value[2],', ',d$value[3],']')
+b <- c(b1,d$value[4])
+d <- data.frame(a,b)
+```
+
+```{r}
+#| echo: false
+#| warning: false
+#| label: tbl-example_10_1_results
+#| tbl-cap: Parameter estimation results
+library(kableExtra)
+library(knitr)
+kbl(d, format = "markdown", align = "cc", col.names = NULL)
+```
+
+::: {#fig-example_10_1_plots layout-ncol=2}
+
+![](python/reb_10_1_parity.png)
+
+![](python/reb_10_1_residuals_vs_VFR_A.png)
+
+![](python/reb_10_1_residuals_vs_VFR_Y.png)
+
+![](python/reb_10_1_residuals_vs_VFR_Z.png)
+
+Parity and Residuals Plots.
+:::
+
+**Recommendation**
