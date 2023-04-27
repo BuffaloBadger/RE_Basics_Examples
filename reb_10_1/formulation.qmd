@@ -5,6 +5,8 @@ format:
     embed-resources: true
 ---
 
+### Kinetics of Gas-Phase Decomposition
+
 {{< include problem_statement.qmd >}}
 
 ```{r}
