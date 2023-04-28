@@ -71,7 +71,11 @@ for yA in y1:
             PA += random_error
 
             # round to 3 decimal places
-            PA = round(PA,2)
+            yA = round(yA,3)
+            yB = round(yB,3)
+            yY = round(yY,3)
+            yZ = round(yZ,3)
+            PA = round(PA,3)
 
             # append the result to the dataframe
             df.loc[len(df.index)] = [yA, yB, yY, yZ, PA]
