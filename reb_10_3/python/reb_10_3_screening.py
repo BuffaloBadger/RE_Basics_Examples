@@ -3,9 +3,9 @@ import numpy as np
 import rebutils as reb
 import matplotlib.pyplot as plt
 
-#par_guess = [-2.0, -1.0, 0.0, 0.0, -1.0]
+par_guess = [-2.0, -1.0, 0.0, 0.0, -1.0]
 #par_guess = [5.58, -9.75, 8.05, 7.84, -1.32]
-par_guess = [5.58, 8.05, -9.75, 7.84, -1.32]
+#par_guess = [5.58, 8.05, -9.75, 7.84, -1.32]
 
 # Given and known constants
 P = 1.0 # atm

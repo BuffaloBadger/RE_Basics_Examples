@@ -11,8 +11,9 @@ T = 400. + 273.15 # K
 K = 12.2
 
 # Parameter guess
-#par_guess = [-2.0, -3.0, -3.0, -3.0, -3.0]
-par_guess = [ 5.09352415, -4.30658933,  7.56602674,  7.3611074,  -2.85303979]
+#par_guess = [3.0, -3.0, -3.0, -3.0, -3.0]
+par_guess = [-2.0, -3.0, 0.0, 0.0, -1.0]
+#par_guess = [ 5.09352415, -4.30658933,  7.56602674,  7.3611074,  -2.85303979]
 
 # path for saving files
 filepath = './reb_10_3/python/'
@@ -135,8 +136,8 @@ result = pd.DataFrame(data, columns=['item','value','units'])
 result.to_csv(filepath + "reb_10_3_results.csv", index=False)
 
 # calculate the model-predicted responses
-y_model = response_function(adjusted_inputs,beta[0],beta[1],beta[2],beta[3],
-        beta[4])
+y_model = response_function(adjusted_inputs,beta[0],beta[1],beta[2],\
+        beta[3],beta[4])
 
 # calculate the residuals
 residuals = PAexpt - y_model
@@ -144,7 +145,8 @@ residuals = PAexpt - y_model
 # create a parity plot
 plt.figure(1) 
 plt.plot(PAexpt, y_model, color = 'r', marker='o', ls='')
-plt.plot([np.min(PAexpt), np.max(PAexpt)], [np.min(PAexpt), np.max(PAexpt)], color = 'k')
+plt.plot([np.min(PAexpt), np.max(PAexpt)], [np.min(PAexpt), np.max(PAexpt)], \
+        color = 'k')
 plt.xlabel("experimental response (atm)")
 plt.ylabel("model-predicted response (atm)")
 
