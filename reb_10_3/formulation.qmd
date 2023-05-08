@@ -80,19 +80,19 @@ P_Z = \frac{\dot{n}_Z}{\dot{n}_A++\dot{n}_B+\dot{n}_Y+\dot{n}_Z}P \tag{10}
 $$
 
 $$
-\dot{n}_A\Big\vert_{m=0} = \dot{n}_{A,in} = y_{A,in}\frac{\dot{V}_{in}}{\tilde{V}_{STP}} \tag{11}
+\dot{n}_A\Big\vert_{m=0} = \dot{n}_{A,in} = y_{A,in}\frac{\dot{V}_{in}}{\hat{V}_{STP}} \tag{11}
 $$
 
 $$
-\dot{n}_B\Big\vert_{m=0} = \dot{n}_{B,in} = y_{B,in}\frac{\dot{V}_{in}}{\tilde{V}_{STP}} \tag{12}
+\dot{n}_B\Big\vert_{m=0} = \dot{n}_{B,in} = y_{B,in}\frac{\dot{V}_{in}}{\hat{V}_{STP}} \tag{12}
 $$
 
 $$
-\dot{n}_Y\Big\vert_{m=0} = \dot{n}_{Y,in} = y_{Y,in}\frac{\dot{V}_{in}}{\tilde{V}_{STP}} \tag{13}
+\dot{n}_Y\Big\vert_{m=0} = \dot{n}_{Y,in} = y_{Y,in}\frac{\dot{V}_{in}}{\hat{V}_{STP}} \tag{13}
 $$
 
 $$
-\dot{n}_Z\Big\vert_{m=0} = \dot{n}_{Z,in} = y_{Z,in}\frac{\dot{V}_{in}}{\tilde{V}_{STP}} \tag{14}
+\dot{n}_Z\Big\vert_{m=0} = \dot{n}_{Z,in} = y_{Z,in}\frac{\dot{V}_{in}}{\hat{V}_{STP}} \tag{14}
 $$
 
 **Response Function**
