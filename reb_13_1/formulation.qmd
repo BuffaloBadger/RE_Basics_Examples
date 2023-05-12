@@ -1,0 +1,104 @@
+---
+format:
+  html:
+    toc: false
+    embed-resources: true
+---
+
+{{< include problem_statement.qmd >}}
+
+---
+
+**Reactor**: BSTR
+
+**Given**: $\Delta H_1 = -41.2 \text{ kJ mol}^{-1}$, $k_{0,1} = 8110 \text{ L mol}^{-1} \text{ s}^{-1}$, $E_1 = 74.8 \text{ kJ mol}^{-1}$, $T_0 = \left( 180 + 273.15 \right) \text{ K}$, $C_{A,0} = 2.9 \text{ mol L}^{-1}$, $C_{B,0} = 3.2 \text{ mol L}^{-1}$, $\tilde{C}_p = 1.23 \text{ cal g}^{-1} \text{ K}^{-1}$, $\rho = 1.02 \text{ g cm}^{-3}$, and $t_{\text{rxn}} = 2 \text{ h}$.
+
+**Basis**: $V = 1 \text{ L}$.
+
+**Requested**: $C_A$, $C_B$, $C_Y$, $C_Z$, and $T$, all *vs*. $t$.
+
+**Reactor Model**:
+
+$$
+\frac{dn_A}{dt} = -r_1V \tag{3}
+$$
+
+$$
+\frac{dn_B}{dt} = -r_1V \tag{4}
+$$
+
+$$
+\frac{dn_Y}{dt} = r_1V \tag{5}
+$$
+
+$$
+\frac{dn_Z}{dt} = r_1V \tag{6}
+$$
+
+$$
+\frac{dT}{dt} = \frac{- r_1 \Delta H_1}{\rho \tilde{C}_p} \tag{7}
+$$
+
+**Ancillary Equations**
+
+$$
+k_1 = k_{0,1}\exp{\left( \frac{-E_1}{RT} \right)} \tag{8}
+$$
+
+$$
+C_A = \frac{n_A}{V} \tag{9}
+$$
+
+$$
+C_B = \frac{n_B}{V} \tag{10}
+$$
+
+$$
+n_A\Big\vert_{t=0} = n_{A,0} = C_{A,0}V \tag{11}
+$$
+
+$$
+n_B\Big\vert_{t=0} = n_{B,0} = C_{B,0}V \tag{12}
+$$
+
+$$
+n_Y\Big\vert_{t=0} = n_{Y,0} = 0 \tag{13}
+$$
+
+$$
+n_Z\Big\vert_{t=0} = n_{Z,0} = 0 \tag{14}
+$$
+
+$$
+T\Big\vert_{t=0} = T_0 \tag{15}
+$$
+
+$$
+\text{Stopping criterion: } t = t_{\text{rxn}} \tag{16}
+$$
+
+**Response**
+
+$$
+C_Y = \frac{n_Y}{V} \tag{17}
+$$
+
+$$
+C_Z = \frac{n_Z}{V} \tag{18}
+$$
+
+**Calculations**
+
+1. Substitute given quantities, basis and equation (2) into all other equations.
+2. Substitute equations (8) through (10) into equations (3) through (7).
+3. Solve equations (3) through (7) using the initial values in equations (11) through (15) and the stopping criterion in equation (16) to obtain $n_A$, $n_B$, $n_Y$, $n_Z$, and $T$ versus $t$ in the range $0 \le t \le t_{\text{rxn}}$.
+4. Calculate $C_A$, $C_B$, $C_Y$, and $C_Z$ at each time using equations (9), (10), (17), and (18).
+5. Plot $C_A$, $C_B$, $C_Y$, $C_Z$, and $T$ *vs*. $t$.
+
+**Results**
+
+![Concentrations *versus* reaction time.](python/reb_12_1_C_vs_t.png){width="60%"}
+
+![Temperature *versus* reaction time.](python/reb_12_1_T_vs_t.png){width="60%"}
+
+![Rate *versus* reaction time.](python/reb_12_1_r_vs_t.png){width="60%"}

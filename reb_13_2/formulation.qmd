@@ -1,0 +1,157 @@
+---
+format:
+  html:
+    toc: false
+    embed-resources: true
+---
+
+{{< include problem_statement.qmd >}}
+
+**Add initial T_ex**
+
+---
+
+**Reactor**: BSTR
+
+**Given**: $V = 10\text{ L}$, $V_{ex} = 3.4\text{ L}$, $U = 188\text{ cal ft}^{-2}\text{ min}^{-1}\text{ K}^{-1}$, $A = 1700\text{ cm}^2$, $T_{ex,in} = 30\text{ °C}$, $\dot{m}_{ex} = ?\text{ g min}^{-1}$, $\rho = 1.0\text{ g cm}^{-3}$, $\rho_{ex} = 1.0\text{ g cm}^{-3}$, $\tilde{C}_p = 1.0\text{ cal g}^{-1}\text{ K}^{-1}$, $\tilde{C}_{p,ex} = 1.0\text{ cal g}^{-1}\text{ K}^{-1}$, $C_{A,0} = 5.0\text{ M}$, $C_{B,0} = 7.0\text{ M}$, $\Delta H_1 = -16.7\text{ kcal mol}^{-1}$, $\Delta H_2 = -14.3\text{ kcal mol}^{-1}$, $k_{0,1} = 9.74 \times 10^9\text{ L mol}^{-1}\text{ min}^{-1}$, $E_1 = 20.1\text{ kcal mol}^{-1}$, $k_{0,2} = 2.38 \times 10^{13}\text{ min}^{-1}$, $E_2 = 25.3\text{ kcal mol}^{-1}$, $f_{A,f} = 0.5$, $t_{rxn} = 30\text{ min}$.
+
+**Response**: $f_A$, $T$, and $S_{X/Z}$ at $t=t_{rxn}$.
+
+**Requested**: $T_0$, $T_f$, and $S_{X/Z,f}$
+
+**Reactor Model**
+
+$$
+\frac{dn_A}{dt} = \left(-r_1 -r_2 \right)V \tag{5}
+$$
+
+$$
+\frac{dn_B}{dt} = -r_1 V \tag{6}
+$$
+
+$$
+\frac{dn_X}{dt} = r_1 V \tag{7}
+$$
+
+$$
+\frac{dn_Y}{dt} = r_1 V \tag{8}
+$$
+
+$$
+\frac{dn_Z}{dt} = r_2 V \tag{9}
+$$
+
+$$
+\frac{dT}{dt}  = \frac{\dot Q - V \left(r_1 \Delta H_1 +  r_2 \Delta H_2\right)}{\tilde{C}_p \rho V} \tag{10}
+$$
+
+$$
+\frac{dT_{ex}}{dt} = \frac{-\dot Q - \dot m_{ex} \tilde C_{p,ex}\left(T_{ex} - T_{ex,in}\right)}{\rho_{ex} V_{ex} \tilde C_{p,ex}} \tag{11}
+$$
+
+**Ancillary Equations**
+
+$$
+k_1 = k_{0,1}\exp{\left( \frac{-E_1}{RT} \right) } \tag{12}
+$$
+
+$$
+k_2 = k_{0,2}\exp{\left( \frac{-E_2}{RT} \right) } \tag{13}
+$$
+
+$$
+C_A = \frac{n_A}{V} \tag{14}
+$$
+
+$$
+C_B = \frac{n_B}{V} \tag{15}
+$$
+
+$$
+\dot{Q} = UA\left(T_{ex} - T \right) \tag{16}
+$$
+
+$$
+n_A \Big\vert_{t=0} = n_{A,0} = C_{A,0}V \tag{17}
+$$
+
+$$
+n_B \Big\vert_{t=0} = n_{B,0} = C_{B,0}V \tag{18}
+$$
+
+$$
+n_X \Big\vert_{t=0} = n_{X,0} = C_{X,0}V = 0 \tag{19}
+$$
+
+$$
+n_Y \Big\vert_{t=0} = n_{Y,0} = C_{Y,0}V = 0 \tag{20}
+$$
+
+$$
+n_Z \Big\vert_{t=0} = n_{Z,0} = C_{Z,0}V = 0 \tag{21}
+$$
+
+$$
+T \Big\vert_{t=0} = T_0 \tag{22}
+$$
+
+$$
+T_{ex} \Big\vert_{t=0} = T_{ex,0} \tag{23}
+$$
+
+$$
+\text{Stopping criterion: }t = t_{rxn} \tag{24}
+$$
+
+**Response Calculation**
+
+$$
+f_A \Big\vert_{t=t_{rxn}} = \frac{n_{A,0} - n_A \Big\vert_{t=t_{rxn}}}{n_{A,0}} \tag{25}
+$$
+
+$$
+S_{X/Z} \Big\vert_{t=t_{rxn}} = \frac{n_X \Big\vert_{t=t_{rxn}}}{n_Z \Big\vert_{t=t_{rxn}}} \tag{26}
+$$
+
+**Missing Reactor Input**: $T_0$
+
+**Response Function**
+
+$$
+\Omega_1\left(T_0\right) = \left( T\vert_{t=t_{rxn}} \right)\Big\vert_{T \big\vert_{t=0} = T_0} \tag{27}
+$$
+
+$$
+\Omega_2\left(T_0\right) = \left( f_A \Big\vert_{t=t_{rxn}} \right)\Big\vert_{T \big\vert_{t=0} = T_0} \tag{28}
+$$
+
+$$
+\Omega_3\left(T_0\right) = \left( S_{X/Z} \Big\vert_{t=t_{rxn}} \right)\Big\vert_{T \big\vert_{t=0} = T_0} \tag{29}
+$$
+
+$$
+0 = \Omega_2\left(T_0\right) - f_{A,f} \tag{30}
+$$
+
+**Calculations**
+
+1. Substitute given quantities and equations (2) and (3) into all other equations.
+2. Substitute equations (12) through (16) into equations (5) through (11).
+3. Create a response function that
+    * is given a value for $T_0$
+    * Solves equations (5) through (11) for n~A~, n~B~, n~X~, n~Y~, n~Z~, T, and T~ex~ as functions of t using the initial conditions in equations (17) through (23) and the stopping criterion in equation (24)
+    * calculates the conversion and selectivity using equations (25) and (26)
+    * returns the final temperature, conversion and selectivity
+4. Solve equation (30) for the requested value of T~0~
+5. Use the resulting value of T~0~ and the response function to calculate the requested final temperature and selectivity.
+
+**Results**
+
+```{r}
+#| echo: false
+#| output: false
+library(tidyverse)
+df <- read.csv("../reb_12_2/python/reb_12_2_results.csv")
+```
+
+When the initial temperature is `r df$value[1]` `r df$units[1]`, the conversion will reach 45% in 30 min. At that time, the temperature of the reacting fluid will be `r df$value[2]` `r df$units[2]`, the exit temperature of the exchange fluid will be `r df$value[3]` `r df$units[3]`, and the selectivity will equal `r df$value[5]` `r df$units[5]`.
