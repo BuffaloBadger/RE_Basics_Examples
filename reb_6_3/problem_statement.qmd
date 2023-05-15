@@ -13,6 +13,6 @@ $$
 \dot V_{in} = \alpha t \tag{3}
 $$
 
-Assume that the following quantities are known and constant: $\Delta H_1^0$ (the heat of reaction), $\breve C_p$ (the volume-specific heat capacity of the reacting fluid), $k_{0,1}$ (the Arrhenius pre-exponential factor for the rate coefficient), $E_1$ (the activation energy for the rate coefficient), $V_0$, $C_{B0}$, $C_{A,in}$, $T_{in}$, $\alpha$, $P$, $T_{ex,0}$, $T_{ex,in}$, $\dot V_{ex,in}$, $\tilde C_{p,ex}$ (the mass-specific heat capacity of the chilled water), $\rho_{ex}$ (the density of the chilled water), $V_{ex}$, $A$, $U$, and $t_f$.
+Assume that the design equations will be solved within a response function such that the following quantities will be known and constant: $\Delta H_1^0$ (the heat of reaction), $\breve C_p$ (the volume-specific heat capacity of the reacting fluid), $k_{0,1}$ (the Arrhenius pre-exponential factor for the rate coefficient), $E_1$ (the activation energy for the rate coefficient), $V_0$, $C_{B0}$, $C_{A,in}$, $T_{in}$, $\alpha$, $P$, $T_{ex,0}$, $T_{ex,in}$, $\dot V_{ex,in}$, $\tilde C_{p,ex}$ (the mass-specific heat capacity of the chilled water), $\rho_{ex}$ (the density of the chilled water), $V_{ex}$, $A$, $U$, and $t_f$.
 
 Write and simplify the reactor design equations needed to model this system and formulate their solution.

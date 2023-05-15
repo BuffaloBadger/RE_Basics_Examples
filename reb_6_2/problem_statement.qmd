@@ -9,6 +9,6 @@ $$
 r_1 = k_1 C_A \tag{2}
 $$
 
-Assume that the following quantities are known and constant: the pre-exponential factor, $k_{0,1}$, the activation energy, $E_1$, the heat of reaction, $\Delta H^0_1$, the molar heat capacity of A, $\hat C_{p,A}$, the molar heat capacity of B, $\hat C_{p,B}$, the reactor volume, $V$, the initial temperature, $T_0$, the initial pressure, $P_0$, and the final temperature, $T_f$.
+Assume that the design equations will be solved within a response function such that the following quantities will be known and constant: the pre-exponential factor, $k_{0,1}$, the activation energy, $E_1$, the heat of reaction, $\Delta H^0_1$, the molar heat capacity of A, $\hat C_{p,A}$, the molar heat capacity of B, $\hat C_{p,B}$, the reactor volume, $V$, the initial temperature, $T_0$, the initial pressure, $P_0$, and the final temperature, $T_f$.
 
 Write and simplify the reactor design equations needed to model this system and formulate their solution.
