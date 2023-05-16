@@ -1,9 +1,5 @@
-Kinetics data for liquid-phase reaction (1) were generated using the experimental design described in [Example -@sec-example_7_1] and a 1 L ideal, isothermal BSTR. Specifically the 12 experiments specified in @tbl-example_7_1 of that example were performed. In each experiment the concentration of reagent A was measured at six reaction times, giving a set of 72 experimental data points. Use an approximate reactor model (i. e. perform differential data analysis) to assess the accuracy of the first order rate expression shown in equation (2). The rate coefficient in equation (2) is expected to display Arrhenius temperature dependence.
+A rate expression for liquid-phase reaction (1) is needed for the design of a new batch reactor process. Preliminary studies suggest that a temperature in the range of 65 to 90 °C will be needed. At lower temperatures the reaction proceeds to slowly, and at higher temperatures undesired side reactions begin to occur. At a temperature of ca. 80 °C, it takes approximately 30 minutes for the reaction to go to completion. The preliminary experiments suggest that the reaction is irreversible and that the rate is not affected by the concentration of the product, Z. It is expected that the reactant, A, will be available at concentrations between 0.8 and 1.2 M. A perfectly mixed, 1 L BSTR is available for kinetics experiments. The reactor has a sampling port that allows the concentration of A to be measured while the reaction is taking place. Design a set of experiments to generate kinetics data that can be used to develop a rate expression.
 
 $$
 A \rightarrow Z \tag{1}
-$$
-
-$$
-r = k C_A \tag{2}
 $$

@@ -5,210 +5,41 @@ format:
     embed-resources: true
 ---
 
-## Direct Analysis of Experimental Data Using a Reactor Model
+## Design of Kinetics Experiments
 
 {{< include problem_statement.qmd >}}
 
-```{r}
-#| echo: false
-#| output: false
-library(tidyverse)
-source("~/Libraries/R/fmt_tibble_col.R")
-d <- read.csv("reb_8_1_data.csv")
-# Experiment, T, CA0, t, CA
-```
+---
 
-The first few data points are shown in @tbl-example_8_1_data. The full data set is available in the .csv file [reb_8_1_data.csv](./Data/reb_8_1_data.csv)
+**Expert Thinking** I am asked to design kinetics experiments, so I need to decide which variables will be adjusted in the experiments. I further need to decide how many levels to use for each adjusted variable and what those levels should be. The problem states that the rate expression developed using these data will be used to design a new process, so I want to be sure to generate a sizeable data set that spans the expected ranges of the adjusted variables and also captures the effects of each of them upon the response. Based upon the information presented in the problem statement, the experimental response here will be the concentration of A.
 
-```{r}
-#| echo: false
-#| warning: false
-#| label: tbl-example_8_1_data
-#| tbl-cap: First 8 of the 72 experimentally generated data.
-library(kableExtra)
-library(knitr)
-kbl(d[1:8,], format = "markdown", align = "cc", col.names = c('Experiment','T (°C)',
-    'C~A,0~ (M)', 't~rxn~ (min)', 'C~A~ (M)'))
-```
+Reaction rates can be affected by the temperature and the concentration of each reagent present. Here the problem states that the rate is not affected by the concentration of Z, so the temperature and the concentration of A should vary from one experiment to the next. The reactor is isothermal, so the temperature can be adjusted directly in the experiments. The concentration of A will change as the reaction proceeds. This suggests two ways to vary the concentration of A from experiment to experiment. The first is to adjust the initial concentration of A and the second is to adjust the time at which the response is measured. Longer times will lead to smaller concentrations because at longer times more of the A will have reacted. I will use both the initial concentration of A and the reaction time as adjusted variables.
+
+Next I need to decide how many levels to use for each adjusted variable and what those levels should be. Normally I would use levels that span a slightly wider range than the range where the rate expression will be used. Here, however, I'm told that the rate is too low below 65 °C and undesireable reactions occur above 90 °C, so I will choose levels that just span that range. The range only spans 25 °C, so four temperature levels seem reasonable, as does spacing them equally across the range.
+
+I want to span a range of concentrations that is slightly wider than the expected range where the rate expression will be used. Three initial concentration levels of 0.5, 1.0, and 1.5 M will do so. Then, in order to ensure that the data are sensitive to the effect of the concentration of A, I will use six levels of reaction time. Noting that at 80 °C it takes 30 min for the reaction to go to completion, spacing the reaction times 5 minutes apart will lead to samples that span a wide range of conversions.
 
 ---
 
-:::{.callout-tip collapse="true"}
-## Click Here to See What an Expert Might be Thinking at this Point
+Three reactor inputs will be adjusted in the experiments: the temperature, $T$, the initial concentration of A, $C_{A,0}$, and the reaction time, $t$. The temperature levels will be 65, 73, 82, and 90 °C; the initial concentration levels will be 0.5, 1.0, and 1.5 M; the reaction time levels will be 5, 10, 15, 20, 25, and 30 min. All possible combinations of these levels will be studied giving a total of 72 experimental data points.
 
-Having identified this as a kinetics data analysis problem as described in the expert thinking callout at the start of this section, I know that I need to identify the adjusted experimental inputs and the measured experimental response. I like to start by additionally summarizing information from the problem statement including the type of reactor used in the experiments and constant quantities provided in the problem statement. Knowing that I need to estimate the values of all of the kinetics parameters appearing in the rate expression, it is also useful to identify and list them, too. Creating these lists at the start of the analysis makes it easier to formulate the model for the experiments. Note that in listing the adjusted experimental inputs and the measured experimental response, the variable symbols are underlined to indicate that they are vector quantities.
+It will not be necessary to perform 72 experiments, however. Using a reactor at 65 °C with an initial concentration of A equal to 0.5 M, six responses can be recorded in the experiment. The number of experiments needed to record all 72 responses is 12. The initial conditions for those 12 experiments are shown in [Table]. Each experiment in the table will yield responses at all six reaction time levels.
 
+| Experiment | T (°C) | C~A,0~ (M) |
+|:------:|:-------:|:----------:|
+| 1 | 65 | 0.5 |
+| 2 | 65 | 1.0 |
+| 3 | 65 | 1.5 |
+| 4 | 73 | 0.5 |
+| 5 | 73 | 1.0 |
+| 6 | 73 | 1.5 |
+| 7 | 82 | 0.5 |
+| 8 | 82 | 1.0 |
+| 9 | 82 | 1.5 |
+| 10 | 90 | 0.5 |
+| 11 | 90 | 1.0 |
+| 12 | 90 | 1.5 |
 
+: Initial conditions for kinetics experiments. {tbl-colwidths="[30,35,35]"}
 
-
-I know that the data will be analyzed in two phases as described in @sec-chapter7. In this problem, data were generated at 4 different temperatures. For the first phase of the analysis, I will separate the data into four blocks. One block will contain the data from all experiments conducted at 60 °C, one will contain the 73 °C data, one, the 82 °C data and one, the 90 °C data. I will analyze each of these blocks separately to estimate the best value of $k$ at that temperature and to assess the accuracy of the rate expression at that temperature.
-
-:::
-
-**Reactor Type**: BSTR
-
-**Given Constants**: $V = 1\text{ L}$.
-
-**Adjusted Inputs**: $\underline{T}$, $\underline{C_{A,0}}$, and $\underline{t}$
-
-**Experimental Response**: $\underline{C_{A,\text{ expt}}}$
-
-**Kinetics Parameters**: $k_0$, and $E$
-
-:::{.callout-tip collapse="true"}
-## Click Here to See What an Expert Might be Thinking at this Point
-
-In this phase of the analysis, I will be analyzing the data in blocks where the temperature is the same in all of the experiments being analyzed. It isn't possible to estimate values of $k_0$ and $E$ for the individual blocks, so the rate expression will be written using $k$ in place of $k_0 \exp \left( \frac{-E}{RT} \right)$. The values of $k_0$ and $E$ will be estimated in the second phase of the analysis.
-
-I am instructed to perform differential data analysis in this problem. That means that I will model the reactor using just one mole balance, and in that mole balance I will approximate the derivative using a finite difference. Since the response in this problem is the concentration of A, it makes sense to write that approximate mole balance on A. 
-
-:::
-
-**Reactor Design Equation**
-
-An approximate mole balances on A for the first measured response in each experiment is presented in equation (3). For the rest of the measured responses in that experiment, the approximate mole balance is given by equation (4), where $i$ indexes the measurement times during that experiment.
-
-$$
-\frac{n_A \Big\vert_{t=t_1} - n_A \Big\vert_{t=0}}{t_1} = -r V \tag{3}
-$$
-
-$$
-\frac{n_A \Big\vert_{t=t_i} - n_A \Big\vert_{t=t_{i-1}}}{t_i - t_{i-1}} = -r V \tag{4}
-$$
-
-:::{.callout-tip collapse="true"}
-## Click Here to See Where That Came From
-
-Start from @eq-bstr_diff_mol_bal written for reagent A.
-
-$$
-\frac{dn_A}{dt} = \nu_A r V \approx \frac{\Delta n_A}{\Delta t} = \nu_A r V
-$$
-
-The stoichiometric coefficient of A is -1. If backward differences are used, it is possible to approximate the derivative at each of the times the response was measured in any one experiment. (If forward differences were used, the derivative could not be approximated at the time of the final measurement.) For the first measurement, the previous values of $n_A$ and $t$ are the initial values. If the start of the each experiments is defined to be $t=0$, equation (3) results. For the remaining times when the response is measured, the previous values are simply those from the previous measurement, equation (4). 
-
-:::
-
-:::{.callout-tip collapse="true"}
-## Click Here to See What an Expert Might be Thinking at this Point
-
-I know that the next thing I need to do is to substitute the rate expression into the reactor model and then fit the model to the experimental data. I could fit the model using a response function. However, when differential analysis is used, it is common to linearize the reactor model and use linear least squares for the fitting. That is the approach I will use here.
-
-:::
-
-Substitution of the rate expression into equation (4) and rearrangement leads to equation (5). Recognizing that $t_0 = 0$, this equation can be used for every data point.
-
-$$
-\frac{C_{A,i-1} - C_{A,i}}{t_i - t_{i-1}} = k C_{A,i} \tag{5}
-$$
-
-:::{.callout-tip collapse="true"}
-## Click Here to See Where That Came From
-
-Start by substituting the rate expression, equation (2), into equation (4) and letting $n_{A,i} = n_A \Big\vert_{t=t_i}$.
-
-$$
-\frac{n_{A,i} - n_{A,i-1}}{t_i - t_{i-1}} = -k V C_{A,i}
-$$
-
-Then divide each side of the equation by $-V$.
-
-$$
-\frac{n_{A,i} - n_{A,i-1}}{t_i - t_{i-1}} \frac{-1}{V} = k C_{A,i}
-$$
-
-Finally, note that $\frac{n_{A,i}}{V} = C_{A,i}$ and $\frac{n_{A,i-1}}{V} = C_{A,i-1}$.
-
-$$
-\frac{C_{A,i-1} - C_{A,i}}{t_i - t_{i-1}} = k C_{A,i}
-$$
-
-:::
-
-If $x$ and $y$ are defined as shown in equations (6) and (7), it is apparent that equation (5) is a linear equation with a slope of $k$ and an intercept of 0, equation (8).
-
-$$
-x_i = C_{A,i} \tag{6}
-$$
-
-$$
-y_i = \frac{C_{A,i-1} - C_{A,i}}{t_i - t_{i-1}} \tag{7}
-$$
-
-$$
-y = kx \tag{8}
-$$
-
-:::{.callout-tip collapse="true"}
-## Click Here to See What an Expert Might be Thinking at this Point
-
-The next step is to estimate the parameters. Since the model is a linear equation, I can do that using linear least squares. I could use a spreadsheet program to do this, but I prefer write a short computer program that calls a linear least squares function. My main reason for this preference is that it the software will provide the coefficient of determination, the parameter estimates, *and* the 95% confidence intervals (or an equivalent measure of uncertainty) for the estimated parameter. When a spreadsheet is used to plot the data and add a trendline, the uncertainties are shown. Additional calculations must be performed in the spreadsheet to generate those uncertainties. 
-
-In either case, the values of $x$ and $y$ must first be calculated for each experiment using equations (6) and (7). A straight line can then be fit to the resulting $x$ - $y$ data to obtain the coefficient of determination, the parameter estimates, and the 95% confidence intervals for the parameters. The model in this problem, $y=mx$, is linear with only one parameter, so a model plot can be used to assess its accuracy as described in [Chapter 7].
-
-:::
-
-**Parameter Estimation and Assessment of Accuracy**
-
-```{r}
-#| echo: false
-#| output: false
-library(tidyverse)
-source("~/Libraries/R/fmt_tibble_col.R")
-d <- read.csv("python/reb_8_1_phase_1_results.csv")
-# T, k, k_ll, k_ul, R_sq_
-d <- fmt_tibble_col(d, 2:5, 3, 2, 2)
-d$k_full = paste0(d$k,' min^-1^, 95% CI [',d$k_ll,', ',d$k_ul,']')
-```
-
-Within each block of data, values of $x$ and $y$ were calculated for each experimental data point, equation (8) was fit to the resulting data, and a model plot was created. The fitting results are given in @tbl-results_1_reb_8_1, and the model plots are shown in @fig-example_8_1_phase_1_plots.
-
-```{r}
-#| echo: false
-#| warning: false
-#| label: tbl-results_1_reb_8_1
-#| tbl-cap: Phase 1 fitting results
-d <- d %>% select(T, k_full, R_sq)
-library(kableExtra)
-library(knitr)
-kbl(d, format = "markdown", align = "cc", col.names = c("T (°C)", "k", "R^2^"))
-```
-
-::: {#fig-example_8_1_phase_1_plots layout-ncol=2}
-
-![](python/reb_8_1_model_T_equals_65.png)
-
-![](python/reb_8_1_model_T_equals_73.png)
-
-![](python/reb_8_1_model_T_equals_82.png)
-
-![](python/reb_8_1_model_T_equals_90.png)
-
-Model Plots for each of the four temperature blocks.
-:::
-
-The 95% confidence intervals for each of the four estimated rate coefficients are relatively small compared to the estimated values and the $R^2$ values are all close to 1. Looking at the model plots, the deviations of the experimental data appear to be random. In general, the magnitude of the deviations are acceptable. The deviations are greater for the experiments at lower temperatures. If this is a concern, additional experiments should be performed at the lower temperatures.
-
-```{r}
-#| echo: false
-#| output: false
-library(tidyverse)
-source("~/Libraries/R/fmt_tibble_col.R")
-d <- read.csv("python/reb_8_1_Arrhenius_results.csv")
-d <- fmt_tibble_col(d, 2, 3, 2, 2)
-# item, value, units
-```
-
-The Arrhenius expression was fit to the estimated rate coefficients for the four blocks with the following results.
-
-k~0~: `r d$value[1]` `r d$units[1]`, 95% CI [`r d$value[2]`, `r d$value[3]`]  
-E: `r d$value[4]` `r d$units[4]`, 95% CI [`r d$value[5]`, `r d$value[6]`]  
-R^2^: `r d$value[7]`
-
-The 95% confidence interval for the pre-exponential factor is quite large, but this is often observed for the pre-exponential factor. The confidence interval for the activation energy is small relative to its value, suggesting a good fit. Additionally, the coefficient of determination is equal to 1, which indicates a very good fit. The Arrhenius plot is shown in @fig-example_8_1_Arrhenius_plot. The estimated rate coefficients fall almost exactly on the line representing the Arrhenius expression.
-
-![Arrhenius plot resulting from the estimated parameters.](python/reb_8_1_Arrhenius_plot.png){#fig-example_8_1_Arrhenius_plot width=80%}
-
-**Recommendation**
-
-As the problem instructed, the kinetics data were analyzed using an approximate reactor model. This is expected to introduce some error. Despite the use of differential data analysis, the model was found to describe the experimental results with reasonable accuracy. The greatest discrepancies between the experiments and the model predictions occurred at low temperature. While additional low-temperature experiment could be performed to try to improve the accuracy, doing so is not necessary. Given that the instructions said to use differential analysis, one can infer that extremely high accuracy is not needed here.
+**Note** At this point, it is possible that the reader might have difficulty with this problem. The problem relies upon an understanding of how BSTR kinetics experiments are performed and the data they generate, and that information has not yet been presented. BSTR kinetics experiments are considered in [Chapter ref]. The important aspects of this example are that it was first necessary to decide which reactor model input variables to adjust, and then it was necessary to decide how many levels of each variable to use and what those levels should be. After doing that, the experimental design simply involves performing an experiment at every combination of the adjusted variable levels.

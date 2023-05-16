@@ -1,8 +1,0 @@
-An ideal, 100 cm^3^, isothermal BSTR was used to generate kinetics data for reaction (1). Three experiments were performed at temperatures of 250, 275 and 300 °C. In each experiment the reactor was initially charged only with reagent A at a pressure of 4 atm. Once the reaction started, the total pressure was recorded once per second for 24 s. Use the experimental data below to assess the accuracy of the rate expression shown in equation (2).
-$$
-2 A \rightarrow A_2 \tag{1}
-$$
-
-$$
-r = k P_A \tag{2}
-$$

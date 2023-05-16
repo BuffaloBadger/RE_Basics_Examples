@@ -1,0 +1,9 @@
+The gas-phase decomposition of reagent A, reaction (1), was studied 1 atm using a PFR with a diameter of 1.0 cm and a length of 10 cm. The inlet volumetric flow rates of reagents A, Y, and Z, in standard cm^3^ min^-1^, were varied from experiment to experiment. In all experiments the outlet conversion of reagent A was measured. The data for a block of experiments at a temperature of 1500 K are presented below. Using those data, assess the accuracy of the rate expression given in equation (2), paying particular attention to whether the expression might not capture possible effects of the concentrations of Y and Z.
+
+$$
+A \rightarrow Y + Z \tag{1}
+$$
+
+$$
+r = kP_A \tag{2}
+$$

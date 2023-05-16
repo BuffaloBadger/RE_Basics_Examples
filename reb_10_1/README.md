@@ -1,11 +1,5 @@
-This problem was adapted from AFCoKaRE Example 15.4.
+This problem was adapted from the 2022 Class 10 Activity. The rate expression used to generate the data was
 
-COS --> CO + S
+r = k*CA*CB/CZ**2 with k = 14 M^-0.5^ min^-1^
 
-1500 K, 1 atm, r = kP_COS
-
-0.25cm x 10 cm
-
-The data were fabricated using k = 1.5 x 10^-3 mol cm-3 min-1 atm-1
-
-The volumetric flow rate varied from 10 to 100 cc/min.
+This is not the rate expression the problem asks to be tested, so the recommendation should be to try a different rate expression that includes dependence on CZ.

@@ -1,1 +1,0 @@
-This example was Evaluation 5 for CE 329 in 2022.

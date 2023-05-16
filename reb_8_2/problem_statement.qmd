@@ -1,8 +1,0 @@
-The gas-phase reaction between reagents A and B was studied in an ideal, isothermal, 500 cm^3^ BSTR. In all experiments the reactor was charged with reagents A and B only, but with varying partial pressures. The fractional conversion of reagent A was measured at seven different elapsed times in each experiment. Experiments were performed at three different temperatures. A total of 189 data points were recorded. Use a linearized reactor model to assess the accuracy of the rate expression shown in equation (2).
-$$
-A + B \rightarrow Y + Z \tag{1}
-$$
-
-$$
-r = k P_A P_B \tag{2}
-$$
