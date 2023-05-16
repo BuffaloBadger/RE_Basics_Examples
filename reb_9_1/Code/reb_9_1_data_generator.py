@@ -5,6 +5,9 @@ import rebutils as reb
 import math
 import random
 
+# filename for results
+filename = 'reb_9_1_data.csv'
+
 # Constant inputs
 V = 1.0 # L
 R = 8.314E-3 # kJ/mol/K
@@ -58,6 +61,11 @@ print("\n")
 print(df)
 
 # save the results
-filename = "reb_8_1/reb_8_1_data.csv"
-print("\nSaving results to " + filename + "\n")
-df.to_csv(filename,index=False)
+filepath = "reb_9_1/Data/" + filename
+print("\nSaving results to " + filepath + "\n")
+df.to_csv(filepath,index=False)
+
+filepath = '../RE_Basics/Data/' + filename
+print("\nSaving results to " + filepath + "\n")
+df.to_csv(filepath,index=False)
+

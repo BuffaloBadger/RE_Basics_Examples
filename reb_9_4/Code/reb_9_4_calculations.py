@@ -8,10 +8,10 @@ import matplotlib.pyplot as plt
 V = 50.0E-3 # L
 
 # path for saving files
-filepath = './reb_8_4/python/'
+filepath = './reb_9_4/Results/'
 
 # Read the experimental data into a dataframe
-df = pd.read_csv("reb_8_4/reb_8_4_data.csv")
+df = pd.read_csv("reb_9_4/Data/reb_9_4_data.csv")
         # columns CS0, t, CP
 
 # extract the data as arrays
@@ -83,7 +83,7 @@ data = [['Vmax', f'{Vmax:.3g}', 'mmol L^-1^ min^-1^'],
     ['Km_upper_limit', f'{Km_upper:.3g}', 'mmol L^-1^'],
     ['R_squared', f'{r_squared:.3g}', '']]
 result = pd.DataFrame(data, columns=['item','value','units'])
-result.to_csv(filepath + "reb_8_4_results.csv", index=False)
+result.to_csv(filepath + "reb_9_4_results.csv", index=False)
 
 # calculate the model-predicted responses
 y_model = response_function(adjusted_inputs,beta[0],beta[1])
@@ -99,7 +99,7 @@ plt.xlabel("experimental response (mmol L$^{-1}$)")
 plt.ylabel("model-predicted response (mmol L$^{-1}$)")
 
 # save and show the parity plot
-filename = filepath + 'reb_8_4_parity.png'
+filename = filepath + 'reb_9_4_parity.png'
 plt.savefig(filename)
 plt.show()
 
@@ -111,7 +111,7 @@ plt.xlabel("Reaction time (s)")
 plt.ylabel("Residual (mmol L$^{-1}$)")
 
 # save and show the residuals plot for the reaction time
-filename = filepath + 'reb_8_4_residuals_vs_t.png'
+filename = filepath + 'reb_9_4_residuals_vs_t.png'
 plt.savefig(filename)
 plt.show()
 
@@ -123,6 +123,6 @@ plt.xlabel("Initial Substrate Concentration (mmol L$^{-1}$)")
 plt.ylabel("Residual (mmol L$^{-1}$)")
 
 # save and show the residuals plot for the initial substrate concentration
-filename = filepath + 'reb_8_4_residuals_vs_CS.png'
+filename = filepath + 'reb_9_4_residuals_vs_CS.png'
 plt.savefig(filename)
 plt.show()

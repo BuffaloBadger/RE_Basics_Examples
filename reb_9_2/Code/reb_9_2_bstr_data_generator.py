@@ -72,6 +72,10 @@ print("\n")
 print(df)
 
 # save the results
-filename = "reb_8_2/reb_8_2_data.csv"
+filename = "./reb_9_2/Data/reb_9_2_data.csv"
+print("\nSaving results to " + filename + "\n")
+df.to_csv(filename,index=False)
+
+filename = "../RE_Basics/Data/reb_9_2_data.csv"
 print("\nSaving results to " + filename + "\n")
 df.to_csv(filename,index=False)

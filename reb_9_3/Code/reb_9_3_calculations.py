@@ -11,10 +11,10 @@ V = 100 # cc
 PA0 = 4.0 # atm
 
 # path for saving files
-filepath = './reb_8_3/python/'
+filepath = './reb_9_3/Results/'
 
 # Read the experimental data into a dataframe
-df = pd.read_csv("reb_8_3/reb_8_3_data.csv")
+df = pd.read_csv("reb_9_3/Data/reb_9_3_data.csv")
         # columns T, t, P
 
 # create a dataframe for the fitting results
@@ -91,7 +91,7 @@ for T_K in block_temperatures:
 
     # save and show the parity plot
     T_as_text = format(T_K-273.15,'.0f')
-    filename = filepath + 'reb_8_3_parity_T_equals_' + T_as_text + '.png'
+    filename = filepath + 'reb_9_3_parity_T_equals_' + T_as_text + '.png'
     plt.savefig(filename)
     plt.show()
 
@@ -102,13 +102,13 @@ for T_K in block_temperatures:
     plt.ylabel("Residual (atm)")
 
     # save and show the parity plot
-    filename = filepath + 'reb_8_3_residuals_T_equals_' + T_as_text + '.png'
+    filename = filepath + 'reb_9_3_residuals_T_equals_' + T_as_text + '.png'
     plt.savefig(filename)
     plt.show()
 
 # Save and show the phase 1 results
 print(phase_1_results_df)
-phase_1_results_df.to_csv(filepath + 'reb_8_3_phase_1_results.csv',index=False)
+phase_1_results_df.to_csv(filepath + 'reb_9_3_phase_1_results.csv',index=False)
 
 # fit the Arrhenius expression to the estimated rate coefficients
 T = phase_1_results_df['T'].to_numpy() + 273.15
@@ -139,7 +139,7 @@ data = [['k0', f'{k0:.3g}', 'mol cm^-3^ s^-1^ atm^-1^'],
     ['E_upper_limit', f'{E_upper:.3g}', 'kcal mol^-1^'],
     ['R_squared', f'{r_squared:.3g}', '']]
 result = pd.DataFrame(data, columns=['item','value','units'])
-result.to_csv(filepath + "reb_8_3_Arrhenius_results.csv", index=False)
+result.to_csv(filepath + "reb_9_3_Arrhenius_results.csv", index=False)
 
 # create, show, and save an Arrhenius plot
 y_pred = k0*np.exp(-E/R/T)
@@ -150,5 +150,5 @@ plt.xlabel('T$^{-1}$ (K$^{-1}$)')
 plt.ylabel('k (min$^{-1}$)')
 plt.xticks(rotation=25)
 plt.tight_layout()
-plt.savefig(filepath + 'reb_8_3_Arrhenius_plot.png')
+plt.savefig(filepath + 'reb_9_3_Arrhenius_plot.png')
 plt.show()
