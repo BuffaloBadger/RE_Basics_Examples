@@ -60,6 +60,9 @@ for T_K in block_temperatures:
     plt.legend(title='T = ' + T_as_text + '°C')
     filename = './reb_9_1/Results/reb_9_1_model_T_equals_' + T_as_text + '.png'
     plt.savefig(filename)
+    filename = '../RE_Basics/Graphics/reb_9_1_model_T_equals_' + T_as_text +\
+         '.png'
+    plt.savefig(filename)
     plt.show()
 
 # show and save the fitting results
@@ -107,4 +110,5 @@ plt.ylabel('k (min$^{-1}$)')
 plt.xticks(rotation=25)
 plt.tight_layout()
 plt.savefig('./reb_9_1/Results/reb_9_1_Arrhenius_plot.png')
+plt.savefig('../RE_Basics/Graphics/reb_9_1_Arrhenius_plot.png')
 plt.show()

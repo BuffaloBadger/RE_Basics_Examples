@@ -4,7 +4,8 @@ import scipy as sp
 import random
 
 # set the filename for the results
-filename = 'reb_9_1/reb_9_1_data.csv'
+filename1 = 'reb_10_1/Data/reb_10_1_data.csv'
+filename2 = '../RE_Basics/Data/reb_10_1_data.csv'
 
 # Constant inputs
 V = 0.1 # L
@@ -67,5 +68,8 @@ print("\n")
 print(df)
 
 # save the results
-print("\nSaving results to " + filename + "\n")
-df.to_csv(filename,index=False)
+print("\nSaving results to " + filename1 + "\n")
+df.to_csv(filename1,index=False)
+
+print("\nSaving results to " + filename2 + "\n")
+df.to_csv(filename2,index=False)

@@ -71,10 +71,12 @@ for T_K in block_temperatures:
     plt.tight_layout()
     filename = filepath + 'reb_9_2_model_T_equals_' + T_as_text + '.png'
     plt.savefig(filename)
+    plt.savefig('../RE_Basics/Graphics/reb_9_2_model_T_equals_'+ T_as_text + \
+                '.png')
     plt.show()
 
 # show and save the fitting results
-phase_1_results_df.to_csv(filepath + 'reb_8_2_phase_1_results.csv',index=False)
+phase_1_results_df.to_csv(filepath + 'reb_9_2_phase_1_results.csv',index=False)
 
 # fit the Arrhenius expression to the estimated rate coefficients
 T = phase_1_results_df['T'].to_numpy() + 273.15
@@ -116,5 +118,6 @@ plt.xlabel('T$^{-1}$ (K$^{-1}$)')
 plt.ylabel('k (min$^{-1}$)')
 plt.xticks(rotation=25)
 plt.tight_layout()
-plt.savefig(filepath + 'reb_2_2_Arrhenius_plot.png')
+plt.savefig(filepath + 'reb_9_2_Arrhenius_plot.png')
+plt.savefig('../RE_Basics/Graphics/reb_9_2_Arrhenius_plot.png')
 plt.show()

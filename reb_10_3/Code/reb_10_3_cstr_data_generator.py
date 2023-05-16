@@ -4,7 +4,8 @@ import scipy as sp
 import random
 
 # set the filename for the results
-filename = 'reb_9_3/reb_9_3_data.csv'
+filename1 = 'reb_10_3/Data/reb_10_3_data.csv'
+filename2 = '../RE_Basics/Data/reb_10_3_data.csv'
 
 # Constant inputs
 V = 3.0 # gal
@@ -70,5 +71,8 @@ print('\n')
 print(df)
 
 # save the results
-print("\nSaving results to " + filename + "\n")
-df.to_csv(filename,index=False)
+print("\nSaving results to " + filename1 + "\n")
+df.to_csv(filename1,index=False)
+
+print("\nSaving results to " + filename2 + "\n")
+df.to_csv(filename2,index=False)

@@ -101,6 +101,7 @@ plt.ylabel("model-predicted response (mmol L$^{-1}$)")
 # save and show the parity plot
 filename = filepath + 'reb_9_4_parity.png'
 plt.savefig(filename)
+plt.savefig('../RE_Basics/Graphics/reb_9_4_parity.png')
 plt.show()
 
 # create a residuals plot for the reaction time
@@ -113,6 +114,7 @@ plt.ylabel("Residual (mmol L$^{-1}$)")
 # save and show the residuals plot for the reaction time
 filename = filepath + 'reb_9_4_residuals_vs_t.png'
 plt.savefig(filename)
+plt.savefig('../RE_Basics/Graphics/reb_9_4_residuals_vs_t.png')
 plt.show()
 
 # create a residuals plot for the initial substrate concentration
@@ -125,4 +127,5 @@ plt.ylabel("Residual (mmol L$^{-1}$)")
 # save and show the residuals plot for the initial substrate concentration
 filename = filepath + 'reb_9_4_residuals_vs_CS.png'
 plt.savefig(filename)
+plt.savefig('../RE_Basics/Graphics/reb_9_4_residuals_vs_CS.png')
 plt.show()

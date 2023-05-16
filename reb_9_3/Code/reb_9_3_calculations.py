@@ -93,6 +93,8 @@ for T_K in block_temperatures:
     T_as_text = format(T_K-273.15,'.0f')
     filename = filepath + 'reb_9_3_parity_T_equals_' + T_as_text + '.png'
     plt.savefig(filename)
+    plt.savefig('../RE_Basics/Graphics/reb_9_3_parity_T_equals_' + T_as_text +\
+                 '.png')
     plt.show()
 
     plt.figure(2) 
@@ -104,6 +106,8 @@ for T_K in block_temperatures:
     # save and show the parity plot
     filename = filepath + 'reb_9_3_residuals_T_equals_' + T_as_text + '.png'
     plt.savefig(filename)
+    plt.savefig('../RE_Basics/Graphics/reb_9_3_residuals_T_equals_' + T_as_text \
+                + '.png')
     plt.show()
 
 # Save and show the phase 1 results
@@ -151,4 +155,5 @@ plt.ylabel('k (min$^{-1}$)')
 plt.xticks(rotation=25)
 plt.tight_layout()
 plt.savefig(filepath + 'reb_9_3_Arrhenius_plot.png')
+plt.savefig('../RE_Basics/Graphics/reb_9_3_Arrhenius_plot.png')
 plt.show()

@@ -12,10 +12,11 @@ T = 1500. # K
 mol_per_cc_at_stp = 1.0E-3/22.4
 
 # path for saving files
-filepath = './reb_10_1/python/'
+filepath1 = './reb_11_1/Results/'
+filepath2 = '../RE_Basics/Graphics/'
 
 # Read the experimental data into a dataframe
-df = pd.read_csv("reb_10_1/reb_10_1_data.csv")
+df = pd.read_csv("reb_11_1/Data/reb_11_1_data.csv")
         # columns: A_in, Y_in, Z_in, fA
 
 # Extract the data as arrays
@@ -85,7 +86,7 @@ data = [['k', f'{k:.3g}', 'mol cm^-3^ min^-1^ atm^-1^'],
     ['k_ul', f'{k_ul:.3g}', 'mol cm^-3^ min^-1^ atm^-1^'],
     ['R_squared', f'{r_squared:.3g}', '']]
 result = pd.DataFrame(data, columns=['item','value','units'])
-result.to_csv(filepath + "reb_10_1_results.csv", index=False)
+result.to_csv(filepath1 + "reb_11_1_results.csv", index=False)
 
 # calculate the model-predicted responses
 y_model = response_function(adjusted_inputs,beta[0])
@@ -101,7 +102,9 @@ plt.xlabel("experimental response (%)")
 plt.ylabel("model-predicted response (%)")
 
 # save and show the parity plot
-filename = filepath + 'reb_10_1_parity.png'
+filename = filepath1 + 'reb_11_1_parity.png'
+plt.savefig(filename)
+filename = filepath2 + 'reb_11_1_parity.png'
 plt.savefig(filename)
 plt.show()
 
@@ -113,7 +116,9 @@ plt.xlabel("Reagent A Inlet Volumetric Flow Rate (sccm)")
 plt.ylabel("Residual (%)")
 
 # save and show the residuals plot for the reaction time
-filename = filepath + 'reb_10_1_residuals_vs_VFR_A.png'
+filename = filepath1 + 'reb_11_1_residuals_vs_VFR_A.png'
+plt.savefig(filename)
+filename = filepath2 + 'reb_11_1_residuals_vs_VFR_A.png'
 plt.savefig(filename)
 plt.show()
 
@@ -125,7 +130,9 @@ plt.xlabel("Reagent Y Inlet Volumetric Flow Rate (sccm)")
 plt.ylabel("Residual (%)")
 
 # save and show the residuals plot for the reaction time
-filename = filepath + 'reb_10_1_residuals_vs_VFR_Y.png'
+filename = filepath1 + 'reb_11_1_residuals_vs_VFR_Y.png'
+plt.savefig(filename)
+filename = filepath2 + 'reb_11_1_residuals_vs_VFR_Y.png'
 plt.savefig(filename)
 plt.show()
 
@@ -137,6 +144,8 @@ plt.xlabel("Reagent Z Inlet Volumetric Flow Rate (sccm)")
 plt.ylabel("Residual (%)")
 
 # save and show the residuals plot for the reaction time
-filename = filepath + 'reb_10_1_residuals_vs_VFR_Z.png'
+filename = filepath1 + 'reb_11_1_residuals_vs_VFR_Z.png'
+plt.savefig(filename)
+filename = filepath2 + 'reb_11_1_residuals_vs_VFR_Z.png'
 plt.savefig(filename)
 plt.show()

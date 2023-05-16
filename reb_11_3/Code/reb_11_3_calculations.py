@@ -16,10 +16,11 @@ par_guess = [-2.0, -3.0, 0.0, 0.0, -1.0]
 #par_guess = [ 5.09352415, -4.30658933,  7.56602674,  7.3611074,  -2.85303979]
 
 # path for saving files
-filepath = './reb_10_3/python/'
+filepath1 = './reb_11_3/Results/'
+filepath2 = '../RE_Basics/Graphics/'
 
 # Read the experimental data into a dataframe
-df = pd.read_csv("reb_10_2/reb_10_2_data.csv")
+df = pd.read_csv("reb_11_2/Data/reb_11_2_data.csv")
         # columns: yA, yB, yY, yZ, PA
 
 # Extract the data as arrays
@@ -133,7 +134,7 @@ data = [['k', f'{k:.3g}', 'mol L^-1^ min^-1^'],
     ['K_Z_ul', f'{K_Z_ul:.3g}',''],
     ['R_squared', f'{r_squared:.3g}', '']]
 result = pd.DataFrame(data, columns=['item','value','units'])
-result.to_csv(filepath + "reb_10_3_results.csv", index=False)
+result.to_csv(filepath1 + "reb_11_3_results.csv", index=False)
 
 # calculate the model-predicted responses
 y_model = response_function(adjusted_inputs,beta[0],beta[1],beta[2],\
@@ -151,7 +152,9 @@ plt.xlabel("experimental response (atm)")
 plt.ylabel("model-predicted response (atm)")
 
 # save and show the parity plot
-filename = filepath + 'reb_10_3_parity.png'
+filename = filepath1 + 'reb_11_3_parity.png'
+plt.savefig(filename)
+filename = filepath2 + 'reb_11_3_parity.png'
 plt.savefig(filename)
 plt.show()
 
@@ -163,7 +166,9 @@ plt.xlabel("Inlet A Mole Fraction")
 plt.ylabel("Residual (%)")
 
 # save and show the residuals plot for the reaction time
-filename = filepath + 'reb_10_3_residuals_vs_yAin.png'
+filename = filepath1 + 'reb_11_3_residuals_vs_yAin.png'
+plt.savefig(filename)
+filename = filepath2 + 'reb_11_3_residuals_vs_yAin.png'
 plt.savefig(filename)
 plt.show()
 
@@ -175,7 +180,9 @@ plt.xlabel("Inlet B Mole Fraction")
 plt.ylabel("Residual (%)")
 
 # save and show the residuals plot for the reaction time
-filename = filepath + 'reb_10_3_residuals_vs_yBin.png'
+filename = filepath1 + 'reb_11_3_residuals_vs_yBin.png'
+plt.savefig(filename)
+filename = filepath2 + 'reb_11_3_residuals_vs_yBin.png'
 plt.savefig(filename)
 plt.show()
 
@@ -187,7 +194,9 @@ plt.xlabel("Inlet Y Mole Fraction")
 plt.ylabel("Residual (%)")
 
 # save and show the residuals plot for the reaction time
-filename = filepath + 'reb_10_3_residuals_vs_yYin.png'
+filename = filepath1 + 'reb_11_3_residuals_vs_yYin.png'
+plt.savefig(filename)
+filename = filepath2 + 'reb_11_3_residuals_vs_yYin.png'
 plt.savefig(filename)
 plt.show()
 
@@ -199,6 +208,8 @@ plt.xlabel("Inlet Z Mole Fraction")
 plt.ylabel("Residual (%)")
 
 # save and show the residuals plot for the reaction time
-filename = filepath + 'reb_10_3_residuals_vs_yZin.png'
+filename = filepath1 + 'reb_11_3_residuals_vs_yZin.png'
+plt.savefig(filename)
+filename = filepath2 + 'reb_11_3_residuals_vs_yZin.png'
 plt.savefig(filename)
 plt.show()

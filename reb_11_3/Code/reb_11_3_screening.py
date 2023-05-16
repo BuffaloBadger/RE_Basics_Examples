@@ -15,7 +15,7 @@ T = 400. + 273.15 # K
 K = 12.2
 
 # Read the experimental data into a dataframe
-df = pd.read_csv("reb_10_2/reb_10_2_data.csv")
+df = pd.read_csv("reb_11_2/Data/reb_11_2_data.csv")
         # columns: yA, yB, yY, yZ, PA
 
 # Extract the data as arrays
