@@ -9,7 +9,5 @@ $$
 r_1 = k_1 P_A \tag{2}
 $$
 
-Assume that the design equations will be solved within a response function such that the following quantities will be known and constant: $k_{0,1}$ (the pre-exponential factor for $k_1$), $E_1$ (the activation energy for $k_1$), $\Delta H_1^0$, $\hat C_{p,A}$, $\hat C_{p,A_2}$, $\hat C_{p,I}$, $D$, $L$, $y_{A,in} = 0.5$ (the inlet mole fraction of A), $y_{I,in} = 0.5$ (the inlet mole fraction of I), $\dot V_{in}$, $T_{in}$, $P$, $T_{ex,in}$, $\dot m_{ex}$, $\tilde C_{p,ex}$, $V_{ex}$, and $U$.
-
-Write and simplify the reactor design equations needed to model this system and formulate their solution.
+Write and simplify the reactor design equations needed to model this system, including any associated initial values and stopping criterion.
  

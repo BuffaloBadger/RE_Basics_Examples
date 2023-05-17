@@ -1,4 +1,4 @@
-Gas phase reaction (1) occurs isothermally in an ideal BSTR. Initially the reactor contains only A, B, and an inert gas, I. The rate expression for gas-phase reaction (1) is given in equation (2). The rate coefficient displays Arrhenius temperature dependence.
+Gas phase reaction (1) occurs isothermally at a known temperature in an ideal BSTR. Initially the reactor contains only known molar amounts of A, B, and an inert gas, I. The reaction ends after a known amount of time. The rate expression for gas-phase reaction (1) is given in equation (2). The rate coefficient displays Arrhenius temperature dependence.
 
 $$
 A + 2 B \rightarrow Y + Z \tag{1}
@@ -8,6 +8,4 @@ $$
 r_1 = k_1 C_A C_B \tag{2}
 $$
 
-Assume that the design equations will be solved within a response function such that the following quantities will be known and constant:  the reactor volume, $V$, the initial moles of A, $n_{A,0}$, the initial moles of B, $n_{B,0}$, the initial moles of Y, $n_{Y,0}=0$, the initial moles of Z, $n_{Z,0}=0$, the initial moles of I, $n_{I,0}$, the initial temperature, $T_0$, the initial pressure, $P_0$, the pre-exponential factor, $k_{0,1}$, the activation energy, $E_1$, and the reaction time, $t_f$.
-
-Write and simplify the minimum number of reactor design equations needed to model this system assuming that the output temperature is known and formulate their solution.
+Write the minimum number of reactor design equations, and the associated initial values and stopping criterion, needed to model the composition within this system over time. 
