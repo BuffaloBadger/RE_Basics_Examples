@@ -5,8 +5,9 @@ import rebutils as reb
 import math
 import random
 
-# filename for results
-filename = 'reb_9_1_data.csv'
+# Filenames for data
+reb_examples_filename = 'reb_9_1/Data/reb_9_1_data.csv'
+reb_filename = '../RE_Basics/Data/reb_9_1_data.csv'
 
 # Constant inputs
 V = 1.0 # L
@@ -61,11 +62,10 @@ print("\n")
 print(df)
 
 # save the results
-filepath = "reb_9_1/Data/" + filename
-print("\nSaving results to " + filepath + "\n")
-df.to_csv(filepath,index=False)
 
-filepath = '../RE_Basics/Data/' + filename
-print("\nSaving results to " + filepath + "\n")
-df.to_csv(filepath,index=False)
+print("\nSaving results to " + reb_examples_filename + "\n")
+df.to_csv(reb_examples_filename,index=False)
+
+print("\nSaving results to " + reb_filename + "\n")
+df.to_csv(reb_filename,index=False)
 
