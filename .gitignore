@@ -3,4 +3,7 @@
 *.html
 *.csv
 *.env
+
+.snakemake/
+
 .DS_Store
