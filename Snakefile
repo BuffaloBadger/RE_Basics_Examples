@@ -1,5 +1,6 @@
-include: "reb_3_1/Snakefile"
+include: "reb_9_3/Snakefile"
 
+# Specify that function  as the input for the all rule
 rule all:
     input:
-        "reb_3_1/Results/reb_3_1_results.csv"
+

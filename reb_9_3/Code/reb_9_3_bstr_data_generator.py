@@ -1,56 +1,58 @@
 import numpy as np
 import pandas as pd
-import scipy as sp
 import rebutils as reb
-import math
 import random
 
 # Constant inputs
-R = 8.314E-3 # kJ/mol/K
 Rpv = 82.06 # cc atm/mol/K
 V = 100 # cc
-PA0 = 4.0 # atm
+P0 = 6.0 # atm
 
 # kinetics parameters
-k = 9.62E-7 # mol/cc/atm/s
-E = 87.6 # kJ/mol
-T_avg = 275 + 273.15
-k0 = k*math.e**(E/R/T_avg)
-print(k0)
+k = 1.62E-6 # mol/cc/atm^1.5/min
+T = 275.0 + 273.15
 
 # Define rate expression
-def rate(P_A, temp):
-    reaction_rate = k0*math.e**(-E/R/temp)*P_A
+def rate(P_A, P_B, temp):
+    if P_A <= 0.0:
+        reaction_rate = 0.0
+    elif P_B <= 0.0:
+        reaction_rate = 0.0
+    else:
+        reaction_rate = k*P_A*np.sqrt(P_B)
     return reaction_rate
 
 # Adjusted inputs
-T_expt = np.array([250, 275, 300]) + 273.15
+PAin = np.array([2.0, 3.0, 4.0])
 t_reaction = np.arange(1.0, 25, 1.0)
 
 # Create empty dataframe for the results
-df = pd.DataFrame(columns=["T", "t", "P"])
+df = pd.DataFrame(columns=["PA0", "t", "P"])
 
 # Calculate the responses
-for T in T_expt:
+for PA0 in PAin:
+    PB0 = P0 - PA0
     for time in t_reaction:
         # Define the mole balances
         def mole_balances(t,n):
             PA = n[0]*Rpv*T/V
-            r = rate(PA,T)
-            ddt = np.array([-2*r*V, r*V])
+            PB = n[1]*Rpv*T/V
+            r = rate(PA,PB,T)
+            ddt = np.array([-r*V, -r*V, r*V])
             return ddt
         
         # Solve the mole balances
         t0 = 0
-        n0 = [PA0*V/Rpv/T, 0]
+        n0 = [PA0*V/Rpv/T, PB0*V/Rpv/T, 0.0]
         f_var = 0
         f_val = time
         soln = reb.solveIVODEs(t0, n0, f_var, f_val, mole_balances)
 
         # calculate the response
         nA = soln.y[0,-1]
-        nA2 = soln.y[1,-1]
-        P = (nA + nA2)*Rpv*T/V
+        nB = soln.y[1,-1]
+        nZ = soln.y[2,-1]
+        P = (nA + nB + nZ)*Rpv*T/V
 
         # add +/- 0.05 atm random "error"
         random_error = (2*random.random() - 1.0)*0.05
@@ -60,7 +62,7 @@ for T in T_expt:
         P = round(P,2)
 
         # append the result to the dataframe
-        df.loc[len(df.index)] = [T - 273.15, time, P]
+        df.loc[len(df.index)] = [PA0, time, P]
 
 # display the results
 print("\n")
