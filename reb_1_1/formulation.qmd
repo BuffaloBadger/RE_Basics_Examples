@@ -1,40 +1,75 @@
+---
+format:
+  html:
+    toc: false
+    embed-resources: true
+---
 
-**Reactants:** CO and O~2~
+## Example 1-1
 
-**Basis:** $\dot V_{CO,in}$ = 1 L s^-1^.
+{{< include problem_statement.qmd >}}
 
-**Given Relationships**
 
-$$
-\dot V_{\text{air},in}$ = \dot V_{CO,in}
-$$
+:::{.callout-tip collapse="true"}
+## Click Here to see What Might an Expert be Thinking at this Point
 
-Air is 21% O~2~.
+The problem asks me to identify the limiting reactant, and that means that I will need to use either @eq-lim_react_closed or @eq-lim_react_open. It also states that CO and air *flow* into the reactor. That means it is an open reactor, and @eq-lim_react_open should be used to identify the limiting reactant. The reactants and their stoichiometric coefficients can be determined from the balanced chemical reaction which is given as reaction (1).
+
+:::
 
 **Limiting Reactant Criterion**
 
 $$
-\frac{\dot n_{i,in}}{\left| \nu_i \right|}\Bigg\rvert_{\substack{ i\text{ = limiting} \\ \text{reactant}}} < \frac{\dot n_{k,in}}{\left| \nu_k \right|}\Bigg\rvert_{\substack{ \text{all } k \, \neq  \text{ limiting} \\ \text{reactant}}} \tag{1}
+\frac{\dot n_{lr,in}}{\left| \nu_{lr} \right|} < \frac{\dot n_{nlr,in}}{\left| \nu_{nlr} \right|} \tag{2}
+$$
+
+**Reactants:** CO and O~2~
+
+**Stoichiometric Coefficients of the Reactants:** $\nu_{CO} = -2$ and $\nu_{O_2} = -1$
+
+:::{.callout-tip collapse="true"}
+## Click Here to see What an Expert Might be Thinking at this Point
+
+The problem does not give me enough information to calculate the inlet molar flow rates. However, since it doesn't give *any* extensive quantities, I can assume the inlet volumetric flow rate of CO or air as a basis. (According to the problem statement they are equal.) I still can't calculate the inlet molar flow rates, though, because I don't know the temperature or pressure. However, I do know that the gases are ideal, so I can try re-writing equation (2) in terms of volumetric flow rates.
+
+:::
+
+Using the ideal gas law the molar flow rates in equation (2) can be expressed in terms of the volumetric flow rates.
+
+$$
+\frac{P\dot V_{lr,in}}{RT\left| \nu_{lr} \right|}< \frac{P\dot V_{nlr,in}}{RT\left| \nu_{nlr} \right|}
+$$
+
+Multiplying both sides by $\frac{RT}{P}$ yields a limiting reactant criterion in terms of inlet volumetric flow rates, equation (3).
+
+$$
+\frac{\dot V_{lr,in}}{\left| \nu_{lr} \right|} < \frac{\dot V_{nlr,in}}{\left| \nu_{nlr} \right|} \tag{3}
+$$
+
+**Basis:** $\dot V_{CO,in}$ = 1 L s^-1^.
+
+According to the problem statement the inlet volumetric flow rates of air and CO are equal, so $\dot V_{\text{air},in}$ = 1 L s^-1^.
+
+Assuming that air is 21% O~2~ and 79% other non-reactive gases (predominantly N~2~) allows calculation of the inlet volumetric flow rate of O~2~, equation (4). At that point the stoichiometric equivalences of CO and O~2~ can be calculated, equations (5) and (6).
+
+$$
+\dot V_{O_2,in} = 0.21 \dot V_{\text{air},in} = 0.21 \text{ L s}^{-1} \tag{4}
 $$
 
 $$
-\frac{P\dot V_{i,in}}{RT\left| \nu_i \right|}\Bigg\rvert_{\substack{ i\text{ = limiting} \\ \text{reactant}}} < \frac{P\dot V_{k,in}}{RT\left| \nu_k \right|}\Bigg\rvert_{\substack{ \text{all } k \, \neq  \text{ limiting} \\ \text{reactant}}}
+\frac{\dot V_{CO,in}}{\left| \nu_{CO} \right|} = \frac{1 \text{ L s}^{-1}}{\left|-2\right|} = 0.5 \text{ L s}^{-1} \tag{5}
 $$
 
 $$
-\frac{\dot V_{i,in}}{\left| \nu_i \right|}\Bigg\rvert_{\substack{ i\text{ = limiting} \\ \text{reactant}}} < \frac{\dot V_{k,in}}{\left| \nu_k \right|}\Bigg\rvert_{\substack{ \text{all } k \, \neq  \text{ limiting} \\ \text{reactant}}} \tag{2}
-$$
-
-$$
-\dot V_{O_2,in} = 0.21 \dot V_{\text{air},in} = 0.21 \text{ L s}^{-1} \tag{3}
-$$
-
-$$
-\frac{\dot V_{CO,in}}{\left| \nu_{CO} \right|} = \frac{1 \text{ L s}^{-1}}{\left|-2\right|} = 0.5 \text{ L s}^{-1} \tag{4}
-$$
-
-$$
-\frac{\dot V_{O_2,in}}{\left| \nu_{O_2} \right|} = \frac{0.21 \text{ L s}^{-1}}{\left|-1\right|} = 0.21 \text{ L s}^{-1} \tag{5}
+\frac{\dot V_{O_2,in}}{\left| \nu_{O_2} \right|} = \frac{0.21 \text{ L s}^{-1}}{\left|-1\right|} = 0.21 \text{ L s}^{-1} \tag{6}
 $$
 
 The stoichiometric equivalence of O~2~ is smaller than that of CO, so **O~2~ is the limiting reactant**.
+
+:::{.callout-note}
+## Note
+
+There are other ways to solve this problem. In the solution presented here, the volumetric flow rate of CO was chosen as a basis for the calculations. An alternative approach would be to choose the molar flow rate of air or CO as a basis. Doing so is left as an exercise for the reader.
+
+:::
+
