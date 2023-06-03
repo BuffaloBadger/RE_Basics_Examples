@@ -1,6 +1,10 @@
 import pandas as pd
 from scipy import optimize
 
+filepath_to_data = './reb_3_1/Data/'
+filepath_to_results = './reb_3_1/Results/'
+filepath_to_figures = '../RE_Basics/Graphics/'
+
 # Given or known
 P = 1 # atm
 T = 150 + 273.15 # K
@@ -49,4 +53,4 @@ print(' ')
 # Save the result to a .csv file
 data = [['y_CO2', y_CO2]]
 result = pd.DataFrame(data, columns=['item','value'])
-result.to_csv("./reb_3_1/Results/reb_3_1_results.csv", index=False)
+result.to_csv(filepath_to_results + "reb_3_1_results.csv", index=False)

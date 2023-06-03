@@ -1,4 +1,7 @@
 rule reb_3_1:
+    input: "reb_3_1/Results/reb_3_1_results.csv"
+
+rule reb_3_1_results:
     input: "reb_3_1/Code/reb_3_1_calculations.py"
     output: "reb_3_1/Results/reb_3_1_results.csv"
     shell:

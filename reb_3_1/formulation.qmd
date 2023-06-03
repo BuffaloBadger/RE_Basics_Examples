@@ -5,11 +5,71 @@ format:
     embed-resources: true
 ---
 
-**Given**
+## Example 3-1
 
-$P$ = 1 atm, $T$ = 150 °C, $y_{C_2H_6,0}$ = 0.9, $y_{O_2,0}$ = 0.21(0.1), $y_{N_2,0}$ = 0.79(0.1), $f_{0_2}$ = 0.5, $S_{C_2H_4/CO_2}$ = 3.0.
+```{r}
+#| echo: false
+#| output: false
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+source('~/Libraries/R/fmt_tibble_col.R')
+```
 
-**Mole Table**
+{{< include problem_statement.qmd >}}
+  
+```{r}
+#| echo: false
+#| output: false
+path_to_data <- './Data/'
+path_to_results <- './Results/'
+path_to_figures <- './Results/'
+```
+
+---
+
+:::{.callout-tip collapse="true"}
+## Click Here to see What an Expert Might be Thinking at this Point
+
+What this problem asks me to do is something that is often done as one step in the completion of a reaction engineering assigment. The completion of reaction engineering assignments often requires the calculation of the composition of a system given information about its initial composition together with some measure of how much reaction has taken place. I often refer to this kind of task as a *reaction progress task*.
+
+Almost inevitably, the completion of a reaction progress task entails first using the given information about the initial composition to calculate the initial molar amounts (for closed systems) or inlet molar flow rates (for open, steady-state systems) of every reagent present in the system. The next step involves using these initial amounts and the given measure of reaction progress to calculate the apparent extent of reaction. The amounts of all of the reagents corresponding to the given measure of reaction progress then can be calculated using the known initial composition and the apparent extent of reaction. Finally the desired quantities, e. g. concentrations, mole fractions, partial pressures, etc., corresponding to the given measure of reaction progress can be calculated using their defining equations.
+
+I like to begin by summarizing the information provided in the problem statement. As I started to do so, I noticed that the system initially contains 10% air. Multiplying that 10% by the fraction of O~2~ found in air (21%), gives the mole fraction of O~2~. The same is true for N~2~, except its fraction in air is 79%.
+
+:::
+
+**Given**: $P = 1 \text{ atm}$, $T = 150 \text{ °C}$, $f_{O_2} = 0.5$, $S_{C_2H_4/CO_2} = 3.0$
+
+**Given Initial Composition**: $y_{C_2H_6,0}$ = 0.9, $y_{O_2,0}$ = 0.21(0.1), $y_{N_2,0}$ = 0.79(0.1)
+
+**Requested**: $y_{CO_2}$
+
+:::{.callout-tip collapse="true"}
+## Click Here to see What an Expert Might be Thinking at this Point
+
+A mole table can be a useful tool when performing reaction progress tasks, particularly when one is just beginning to study reaction engineering. This problem tells me to construct a mole table, so I'll do that first. I know that when I construct a mole table, I'll need to use @eq-moles_apparent_extent. I also know that to use @eq-moles_apparent_extent, I need to identify a complete, mathematically independent subset of the reactions that are taking place. Since there are only two reactions taking place in this problem, I can do that by inspection. The reactions produce different products, so there is no way that one can be a simple multiple of the other, and therefore reactions (1) and (2) are mathematically independent. Consequently, in @eq-moles_apparent_extent, $j^\prime$ will range from 1 to 2.
+
+$$
+n_i = n_{i,0} + \sum_{j^\prime} \nu_{i,j^\prime} \xi_{j^\prime} \qquad \Rightarrow \qquad n_{i,0} + \nu_{i,1} \xi_1 + \nu_{i,2} \xi_2
+$$
+
+With that knowledge, I can construct the mole table. There are six reagents in this system: C~2~H~6~, O~2~, C~2~H~4~, H~2~O, CO~2~, and N~2~. The first column of the mole table lists one of these species in each row. A row is added at the bottom listing "Total." The second column lists variables representing the initial molar amounts of each reagent. I can use $n_{\text{total},0}$ to represent $n_{C_2H_6,0}$ + $n_{O_2,0}$ + $n_{C_2H_4,0}$ + $n_{H_2O,0}$ + $n_{CO_2,0}$ + $n_{N_2,0}$.
+
+The equation above can then be used to construct the entries in each row of the third column of the mole table. For example, the stoichiometric coefficient of C~2~H~6~ in reaction (1), $\nu_{C_2H_6,1}$, is -2, and its stoichiometric coefficient in reaction (2), $\nu_{C_2H_6,2}$, is also equal to -2. Letting $i$ equal C~2~H~6~, substituting these values, and expanding the summation yields an expression for the moles of C~2~H~6~ at any later time. 
+
+$$
+\begin{align}
+n_{C_2H_6} &= n_{C_2H_6,0} + \nu_{C_2H_6,1} \xi_1 + \nu_{C_2H_6,2} \xi_2 \\
+&= n_{C_2H_6,0} - 2 \xi_1 - 2 \xi_2
+\end{align}
+$$
+
+In a similar manner, the rows in the third column corresponding to each of the species are completed. For the last row, the expressions in all the other rows are simply added together to complete the mole table.
+
+:::
+
+A mole table for this system is presented in @tbl-mole_table_reb_3_1.
 
 | Species | Initial Amount | Later Amount |
 |:-------:|:------:|:------:|
@@ -21,45 +81,93 @@ $P$ = 1 atm, $T$ = 150 °C, $y_{C_2H_6,0}$ = 0.9, $y_{O_2,0}$ = 0.21(0.1), $y_{N
 | N~2~ | $n_{N_2,0}$ | $n_{N_2,0}$ |
 | Total | $n_{\text{total},0}$ | $n_{\text{total},0} + \xi_1 + \xi_2$ |
 
-: {tbl-colwidths="[20,40,40]"}
+: Mole Table for [Example -@sec-example_3_1]. {#tbl-mole_table_reb_3_1 tbl-colwidths="[20,40,40]"}
 
-**Basis**
+:::{.callout-tip collapse="true"}
+## Click Here to See What an Expert Might be Thinking at this Point
 
-$n_{\text{total},0}$ = 1 mol.
+The problem directs me to use @tbl-mole_table_reb_3_1 to calculate the final mole fraction of CO~2~. Looking at the mole table and at the given information, I can see that there is no way to calculate the initial molar amounts that appear in the mole table. However, quantity that is provided in the problem statement is an intensive quantity. When no extensive quantities are provided, I can assume the value of any one extensive quantity and use it as the basis for my calculations. Since the initial mole fractions are given, it makes sense to choose the total moles initially present in the system as a basis.
 
-**Definitions**
+:::
 
-$$
-f_{O_2} = \frac{n_{O_2,0} - n_{O_2}}{n_{O_2,0}} = \frac{n_{O_2,0} - \left(n_{O_2,0} - \xi_1 - 7 \xi_2\right)}{n_{O_2,0}} = \frac{\xi_1 + 7 \xi_2}{n_{O_2,0}} \tag{1}
-$$
+**Basis**: $n_{\text{total},0} = 1 \text{ mol}$.
 
-$$
-S_{C_2H_4/CO_2} = \frac{n_{C_2H_4}}{n_{CO_2}} = \frac{n_{C_2H_4,0} + 2 \xi_1}{n_{CO_2,0} + 4 \xi_2} \tag{2}
-$$
+:::{.callout-tip collapse="true"}
+## Click Here to See What an Expert Might be Thinking at this Point
 
-$$
-n_{O_2,0} = y_{O_2,0} n_{\text{total},0} \tag{3}
-$$
+As I noted above, the first step in completing a reacton progress task is to calculate the initial molar amounts. Having chosen a basis, this is straightforward. The initial percentages of ethane (90%) and air (10%) add up to 100%, meaning that there was no C~2~H~4~, H~2~O, or CO~2~ initially present. The total initial moles can then be calculated.
 
-$$
-n_{C_2H_4,0} = y_{C_2H_4,0} n_{\text{total},0} \tag{4}
-$$
+:::
+
+**Necessary Equations**
 
 $$
-n_{CO_2,0} = y_{CO_2,0} n_{\text{total},0} \tag{5}
+n_{C_2H_6,0} = y_{C_2H_6,0} n_{\text{total},0} \tag{3}
 $$
 
 $$
-\sum_i y_i = 0 \quad \Rightarrow \quad y_{C_2H_4,0} = y_{CO_2,0} = y_{H_2O,0} = 0 \tag{6}
+n_{O_2,0} = y_{O_2,0} n_{\text{total},0} \tag{4}
 $$
 
 $$
-y_{CO_2} = \frac{n_{CO_2}}{n_{\text{total}}} = \frac{n_{CO_2,0} + 4 \xi_2}{n_{\text{total},0} + \xi_1 + \xi_2} \tag{7}
+n_{N_2,0} = y_{N_2,0} n_{\text{total},0} \tag{5}
 $$
+
+$$
+n_{C_2H_4,0} = n_{H_2O,0} = n_{CO_2,0} = 0 \tag{6}
+$$
+
+$$
+n_{\text{total},0} = n_{C_2H_6,0} + n_{O_2,0} + n_{C_2H_4,0} + n_{H_2O,0} + n_{CO_2,0} + n_{N_2,0} \tag{7}
+$$
+
+:::{.callout-tip collapse="true"}
+## Click Here to See What an Expert Might be Thinking at this Point
+
+The second step in completing a reacton progress task is using these initial amounts and the given measures of reaction progress to calculate the apparent extents of reaction. In this problem there are two apparent extents of reaction, and the problem provides two measures of reaction progress, namely the O~2~ conversion and the selectivity for C~2~H~4~ over CO~2~. Thus, I can write the defining equations for these two measures of reaction progress.
+
+:::
+
+$$
+f_{O_2} = \frac{n_{O_2,0} - n_{O_2}}{n_{O_2,0}} = \frac{n_{O_2,0} - \left(n_{O_2,0} - \xi_1 - 7 \xi_2\right)}{n_{O_2,0}} = \frac{\xi_1 + 7 \xi_2}{n_{O_2,0}} \tag{8}
+$$
+
+$$
+S_{C_2H_4/CO_2} = \frac{n_{C_2H_4}}{n_{CO_2}}  = \frac{n_{C_2H_4,0} + 2 \xi_1}{n_{CO_2,0} + 4 \xi_2} \tag{9}
+$$
+
+:::{.callout-tip collapse="true"}
+## Click Here to See What an Expert Might be Thinking at this Point
+
+I can see that if I substitute the initial molar amount of O~2~ into equations (8) and (9) along with the expressions for the molar amounts of O~2~, C~2~H~4~, and CO~2~ from the mole table, I will have two equations with two unknowns, $\xi_1$ and $\xi_2$. So at this point I can calculate the apparent extents of reactions (1) and (2).
+
+All that remains to complete this reaction progress task is to calculate the requested final mole fraction of CO~2~. To do that I simply need the defining equation for a mole fraction in a closed system, @eq-mole_frac_closed.
+
+:::
+
+$$
+y_{CO_2} = \frac{n_{CO_2}}{n_{\text{total}}} \tag{10}
+$$
+
+:::{.callout-tip collapse="true"}
+## Click Here to See What an Expert Might be Thinking at this Point
+
+I can substitute the expressions for the molar amount of CO~2~ and the total molar amount from the mole table into equation (10). Then I can substitute the initial molar amounts and the apparent extents of reactions (1) and (2) and calculate the requested mole fraction of CO~2~.
+
+:::
 
 **Calculations**
 
-1. Substitute given values, basis, $y_{C_2H_4,0}$, and $y_{CO_2,0}$ (from equation (6)) into all equations.
-2. Calculate $n_{C_2H_6,0}$, $n_{O_2,0}$, $n_{C_2H_4,0}$, and $n_{CO_2,0}$ using equations (3) through (5), and substitute the results into all remaining equations.
-3. Solve equations (1) and (2) for $\xi_1$ and $\xi_2$, and substitute the results into all remaining equations.
-4. Calculate the mole fraction of CO~2~ using equation (7).
+1. Substitute the given values and the basis into all other equations.
+2. Calculate  $n_{C_2H_6,0}$, $n_{O_2,0}$, $n_{N_2,0}$, $n_{C_2H_4,0}$, $n_{H_2O,0}$, $n_{CO_2,0}$, and $n_{\text{total},0}$ using equations (3) through (7), and substitute the results into all other equations.
+3. Solve equations (8) and (9) for $\xi_1$ and $\xi_2$.
+4. Calculate the mole fraction of CO~2~ using equation (10).
+
+**Result**
+
+```{r}
+#| echo: false
+results <- read.csv(paste0(path_to_results,"reb_3_1_results.csv"))
+```
+
+Performing the calculations as described above shows that the final mole fraction of CO~2~ is `r results$value[1]`.
