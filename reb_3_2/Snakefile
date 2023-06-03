@@ -1,0 +1,10 @@
+rule reb_3_2:
+    input: "reb_3_2/Results/reb_3_2_results.csv"
+
+rule reb_3_2_results:
+    input: "reb_3_2/Code/reb_3_2_calculations.py"
+    output: "reb_3_2/Results/reb_3_2_results.csv"
+    shell:
+        """
+        python3 reb_3_2/Code/reb_3_2_calculations.py
+        """

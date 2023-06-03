@@ -1,4 +1,5 @@
 include: "reb_3_1/Snakefile"
+include: "reb_3_2/Snakefile"
 include: "reb_9_1/Snakefile"
 include: "reb_9_2/Snakefile"
 include: "reb_9_3/Snakefile"

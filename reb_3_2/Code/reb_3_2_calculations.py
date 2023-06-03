@@ -1,6 +1,10 @@
 import pandas as pd
 from scipy import optimize
 
+filepath_to_data = './reb_3_2/Data/'
+filepath_to_results = './reb_3_2/Results/'
+filepath_to_figures = '../RE_Basics/Graphics/'
+
 # Given or known
 nDot_N2O5_in = 0.5 # mol/min
 nDot_N2_in = 0.5 # mol/min
@@ -40,4 +44,4 @@ print(' ')
 # Save the result to a .csv file
 data = [['C_NO2', C_NO2, 'mol/L']]
 result = pd.DataFrame(data, columns=['item','value','units'])
-result.to_csv("./reb_3_2/reb_3_2_Python_results.csv", index=False)
+result.to_csv(filepath_to_results + "reb_3_2_results.csv", index=False)

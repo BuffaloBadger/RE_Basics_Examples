@@ -5,52 +5,125 @@ format:
     embed-resources: true
 ---
 
+## Example 3-1
+
+```{r}
+#| echo: false
+#| output: false
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+source('~/Libraries/R/fmt_tibble_col.R')
+```
+
 {{< include problem_statement.qmd >}}
+  
+```{r}
+#| echo: false
+#| output: false
+path_to_data <- './Data/'
+path_to_results <- './Results/'
+path_to_figures <- './Results/'
+```
 
-**Given**
+---
 
-$\dot n_{N_2O_5,in}$ = 0.5 mol min~-1~, $\dot n_{N_2,in}$ = 0.5 mol min~-1~, $T$ = 600 K, $P$ = 5 MPa, $y_{N_2,out}$ = 0.3.
+:::{.callout-tip collapse="true"}
+## Click Here to see What an Expert Might be Thinking at this Point
+
+This is what I call a reaction progress task; it is something that is typically done as one step in the completion of a reaction engineering assighment. As I noted in the preceding example, the completion of reaction engineering assignments often requires the calculation of the composition of a system given information about its initial composition together with some measure of how much reaction has taken place. In this case an expression for the composition is requested instead of a value.
+
+Generally here are the steps for completing a reaction progress task: (1) use the given information about the initial composition to calculate the initial molar amounts (for closed systems) or inlet molar flow rates (for open, steady-state systems) of every reagent present in the system, (2) use the resulting initial amounts and the given measure of reaction progress to calculate the apparent extent of reaction, (3) use the apparent extents of reaction to calculate (or here, write expressions for) the final molar amounts or flow rates, and (4) use those results to calculate the requested quantity (or write an expression for it).
+
+I will start by summarizing the information profided in the problem statement. The problem only mentions N~2~O~5~ and N~2~ as flowing into the system, so I'll assume the inlet flows of NO~2~ and O~2~ are zero.
+
+:::
+
+**Given**: $T = 600 \text{ K}$, $P = 5 \text{ MPa}$, $y_{N_2,out} = 0.3$.
+
+**Given Initial Composition**: $\dot n_{N_2O_5,in} = 0.5 \text{ mol min}^{-1}$, $\dot n_{N_2,in} = 0.5 \text{ mol min}^{-1}$, $\dot n_{NO_2,in} = 0$, $\dot n_{O_2,in} = 0$.
+
+**Requested**: an expression for $C_{NO_2}$ and its value.
+
+:::{.callout-tip collapse="true"}
+## Click Here to see What an Expert Might be Thinking at this Point
+
+I could write a mole table, but with only one reaction taking place, I think I can get by without one. Expressions for the molar flow rates of N~2~O~5~, NO~2~, and O~2~ are straightforward, @eq-molar_flow_apparent_extent. Looking at the reaction, I can see that each time the reaction occurs as written the total number of moles increases by 3, from 2 to 5, so $\dot n_{\text{total}} = \dot n_{\text{total},in} + 3 \dot \xi$.
+
+:::
 
 **Necessary Equations**
 
 $$
-C_{NO_2} = \frac{\dot n_{NO_2}}{\dot V} \tag{2}
+\dot n_{N_2O_5} = \dot n_{N_2O_5,in} - 2 \dot \xi \tag{2}
 $$
 
 $$
-\dot n_{N_2O_5} = \dot n_{N_2O_5,in} - 2 \dot \xi \quad \Rightarrow \quad \dot \xi = \frac{\dot n_{N_2O_5,in} - \dot n_{N_2O_5}}{2} \tag{3}
+\dot n_{NO_2} = \dot n_{NO_2,in} + 4 \dot \xi \tag{3}
+$$
+
+$$
+\dot n_{O_2} = \dot n_{O_2,in} + \dot \xi \tag{4}
+$$
+
+$$
+\dot n_{N_2} = \dot n_{N_2,in} \tag{5}
+$$
+
+$$
+\dot n_{\text{total}} = \dot n_{\text{total},in} + 3 \dot \xi \tag{6}
+$$
+
+:::{.callout-tip collapse="true"}
+## Click Here to see What an Expert Might be Thinking at this Point
+
+In this problem, two measures of the final composition are mentioned. The first is the concentration of NO~2~, and the other is the mole fraction of N~2~. I'll write the defining equations for both, and for the concentration, I'll also express the volumetric flow rate in terms of the molar amounts using the ideal gas equation. Then, I'll substitute equations (2) through (6) for all of the molar flow rates. 
+
+:::
+
+$$
+C_{NO_2} = \frac{\dot n_{NO_2}}{\dot V} = \frac{P\dot n_{NO_2}}{\dot n_{total}RT} = \frac{4P\dot \xi}{RT\left( \dot n_{\text{total},in} + 3 \dot \xi \right)} \tag{7}
+$$
+
+$$
+y_{N_2} = \frac{\dot n_{N_2}}{\dot n_{total}} = \frac{\dot n_{N_2,in}}{\dot n_{total,in} + 3 \dot \xi} \tag{8}
+$$
+
+**Expression for $C_{NO_2}$**
+
+The problem asks for an expression for the concentration of NO~2~ in terms of the molar flow rate of N~2~O. Equation (2) can be solved to obtain an expression for the apparent extent of reaction in terms of the molar flow rate of N~2~O. The result can be substituted into equation (7), yielding the requested expression for the concentration of NO~2~, equation (9).
+
+$$
+\dot \xi = \frac{\dot n_{N_2O_5,in} - \dot n_{N_2O_5}}{2}
 $$
 
 $$
 \begin{align}
-\dot n_{NO_2} &= \cancelto{0}{\dot n_{NO_2,in}} + 4 \dot \xi \\
-&= 2\left(\dot n_{N_2O_5,in} - \dot n_{N_2O_5}\right)
-\end{align} \tag{4}
+C_{NO_2} &= \frac{4P\dot \xi}{RT\left( \dot n_{\text{total},in} + 3 \dot \xi \right)} \\
+&= \frac{4P}{RT} \frac{\frac{\dot n_{N_2O_5,in} - \dot n_{N_2O_5}}{2}}{\dot n_{N_2O_5,in} + \dot n_{N_2,in} + 3\frac{\dot n_{N_2O_5,in} - \dot n_{N_2O_5}}{2}} \\
+&= \frac{4P}{RT} \frac{\left(\dot n_{N_2O_5,in} - \dot n_{N_2O_5}\right)}{\left(5\dot n_{N_2O_5,in} + 2\dot n_{N_2,in} - 3 \dot n_{N_2O_5} \right)}
+\end{align} \tag{9}
 $$
 
-$$
-\begin{align}
-\dot V &= \frac{\dot n_{total}RT}{P} = \frac{\left(\dot n_{total,in} + 3 \dot \xi \right)RT}{P} \\
-&= \left(\dot n_{N_2O_5,in} + \dot n_{N_2,in} + 3 \frac{\dot n_{N_2O_5,in} - \dot n_{N_2O_5}}{2} \right)\frac{RT}{P} \\
-&=\left(5\dot n_{N_2O_5,in} + 2\dot n_{N_2,in} - 3 \dot n_{N_2O_5} \right)\frac{RT}{2P}
-\end{align} \tag{5}
-$$
 
-$$
-C_{NO_2} = \frac{4P\left(\dot n_{N_2O_5,in} - \dot n_{N_2O_5}\right)}{RT\left(5\dot n_{N_2O_5,in} + 2\dot n_{N_2,in} - 3 \dot n_{N_2O_5} \right)} \tag{6}
-$$
+:::{.callout-tip collapse="true"}
+## Click Here to see What an Expert Might be Thinking at this Point
 
-$$
-y_{N_2} = \frac{\dot n_{N_2}}{\dot n_{total}} = \frac{\dot n_{N_2,in}}{\dot n_{total,in} + 3 \dot \xi} = \frac{\dot n_{N_2,in}}{n_{N_2O_5,in} + \dot n_{N_2,in} + 3 \dot \xi} \tag{7}
-$$
+To find the value of the apparent extent of reaction, I need to use the given measure of reaction progress, which in this case is the final mole fraction of N~2~.
 
-$$
-\dot n_{N_2O_5} = \dot n_{N_2O_5,in} - 2 \dot \xi \tag{8}
-$$
+:::
 
-**Calculations**
+**Calculation of $C_{NO_2}$**
 
 1. Subtitute the given and known quantities into all equations.
-2. Solve equation (7) to find the value of $\dot \xi$ and substitute the result in equation (8).
-3. Calculate $\dot n_{N_2O_5}$ using equation (8) and substitute the result in equation (6).
-4. Calculate $C_{NO_2}$ using equation (6).
+2. Solve equation (8) to find the value of $\dot \xi$.
+3. Use the resulting apparent extent of reaction to calculate $C_{NO_2}$ using equation (7).
+
+**Results**
+
+```{r}
+#| echo: false
+df <- read.csv(paste0(path_to_results,"reb_3_2_Python_results.csv"))
+```
+
+The requested expression for the concentration of NO~2~ is given in equation (9). Performing the calculations as described above yields a value of `r df$value[1]` `r df$units[1]` for the concentration of NO~2~ at the time when the outlet contains 30% N~2~.
