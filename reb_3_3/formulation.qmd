@@ -5,12 +5,28 @@ format:
     embed-resources: true
 ---
 
+## Example 3-3
+
 {{< include problem_statement.qmd >}}
+
+---
+
+:::{.callout-tip collapse="true"}
+## Click Here to see What an Expert Might be Thinking at this Point
+
+What this problem asks me to do is something that is sometimes done as one step in the completion of a reaction engineering assigment. I often refer to this kind of task as an *independent reactions task*, since completing it involves identifying a complete, mathematically independent subset of the reactions that are taking place.
+
+I know from math courses I've taken that identifying mathematically independent equations involves constructing a matrix, and the same is true for identifying independent chemical reactions. Each column in the matrix corresponds to one of the reagants and each row corresponds to one of the reactions. The matrix element at any one row and column is the stoichiometric coefficent of the reagent corresponding to that column in the reaction corresponding to that row.
+
+Here the reaction matrix will have six rows, one for each reaction, and six columns, one for each reagent. I'll let the first column corresponds to CO, the second to H~2~, the third to CH~3~OH, the fourth to CH~4~, the fifth to H~2~O, and the last to CO~2~. Letting the first row correspond to reaction (1), I see that the stoichiometric coefficient of CO in that reaction is -1, and so there is a -1 in the first column of row 1 (see equation (7) below). The stoichiometric coefficeint of H~2~ in the first reaction is -2, so there is a -2 in the second column of row 1. The stoichiometric coefficient of CH~3~OH in reaction (1) is +1, so there is a 1 in the third column of row 1. CH~4~, H~2~O, and CO~2~ do not appear in reaction (1), so there are zeros in the fourth, fifth and sixth columns of row 1. The remaining rows are filled in analogously.
+
+The rank of this matrix will then equal the number of mathematically independent reactions. I'll use computer software to find the rank. 
+
+:::
 
 **Reaction Matrix**
 
-rows: reactions (in order)  
-columns: CO H~2~ CH~3~OH CH~4~ H~2~O CO~2~
+Equation (7) shows a reaction matrix for this problem. The first row corresponds to reaction (1), the second row to reaction (2), and so on. The first column corresponds to CO, the second to H~2~, the third to CH~3~OH, the fourth to CH~4~, the fifth to H~2~O, and the last to CO~2~. 
 
 $$
 \begin{bmatrix}
@@ -23,23 +39,51 @@ $$
 \end{bmatrix} \tag{7}
 $$
 
+Mathematics software can be used to find that the rank of the matrix in equation (7) is equal to 3. This means that there will be 3 equations in any complete, mathematically independent subset of reactions (1) through (6).
+
+In the matrix shown in equation (8) the first row corresponds to reaction (1) and the second row to reaction (2). The rank of this matrix is found to equal 2, so reactions (1) and (2) are mathematically independent.
+
+$$
+\begin{bmatrix}
+-1 & -2 & 1 & 0 & 0 & 0 \\
+-1 & -3 & 0 & 1 & 1 & 0
+\end{bmatrix} \tag{8}
+$$
+
+In the matrix shown in equation (9) a third row, corresponding to reaction (3), was added to the matrix in equation (8). The rank of the matrix in equation (9) is 2. This means that reaction (3) is not independent; it is a linear combinations of reactions (1) and (2).
+
 $$
 \begin{bmatrix}
 -1 & -2 & 1 & 0 & 0 & 0 \\
 -1 & -3 & 0 & 1 & 1 & 0 \\
 0 & 1 & 1 & -1 & -1 & 0
-\end{bmatrix} \tag{8}
+\end{bmatrix} \tag{9}
 $$
+
+Reaction (3) was removed from the matrix and replaced with reaction (4), resulting in the matrix shown in equation (10). The rank of the matrix shown in equation (10) is 3, so the reactions corresponding to the rows of that matrix, in this case reactions (1), (2), and (4), represent a complete, mathematically independent subset of reactions (1) through (6).
 
 $$
 \begin{bmatrix}
 -1 & -2 & 1 & 0 & 0 & 0 \\
 -1 & -3 & 0 & 1 & 1 & 0 \\
 -1 & 1 & 0 & 0 & -1 & 1
-\end{bmatrix} \tag{9}
+\end{bmatrix} \tag{10}
 $$
 
-**Mole Table**
+:::{.callout-tip collapse="true"}
+## Click Here to See What an Expert Might be Thinking at this Point
+
+Having identified a complete, mathematically independent subset of the reactions, I can now construct a mole table as requested in the problem statement. There are six reagents in this system: CO, H~2~, CH~3~OH, CH~4~, H~2~O, and CO~2~. As in [Example -@sec-example_3_1], the first column of the mole table lists these reagents along with a row at the bottom for "Total." The second column lists variables representing the initial molar amounts of each reagent and the third column lists expressions for the molar amounts of the reagents at any later time in terms of the apparent extents of the independent reactions. I need to use @eq-moles_apparent_extent for the entries in the third column of of the mole table
+
+$$
+n_i = n_{i,0} + \sum_{j^\prime} \nu_{i,j^\prime} \xi_{j^\prime}
+$$
+
+:::
+
+**Final Answer**
+
+While there are six reactions taking place in this system, only three reactions are mathematically independent. Therefore the mole table only uses the apparent extents of three reactions. Knowing that reactions (1), (2), and (4), represent a complete, mathematically independent subset of reactions (1) through (6), the apparent extents of those reactions were used to construct @tbl-mole_table_reb_3_3. 
 
 | Species | Initial Amount | Later Amount |
 |:-------:|:------:|:------:|
@@ -51,4 +95,13 @@ $$
 | CO~2~ | $n_{CO_2,0}$ | $n_{CO_2,0} + \xi_4$ |
 | Total | $n_{\text{total},0}$ | $n_{\text{total},0} - 2 \xi_1 - 2 \xi_2$ |
 
-: {tbl-colwidths="[20,40,40]"}
+: Mole Table for [Example -@sec-example_3_3] {#tbl-mole_table_reb_3_3 tbl-colwidths="[20,40,40]"}
+
+:::{.callout-note collapse="false"}
+## Notes
+
+1. Reactions (1), (2), and (4) are not the only complete, mathematically independent subset. For example, reactions (1), (4), and (5) is also a complete, mathematically independent subset and the mole table could have been written using $\xi_1$, $\xi_4$, and $\xi_5$.
+2. The solution presented here used a reaction matrix. [Appendix -@sec-apndx_pre_knowledge] describes identifying independent reactions using the stoichiometric coefficient matrix where the *columns* correspond to the reactions and the *rows* to the reagents. The reaction matrix is the transpose of the stoichiometric coefficient matrix, and the rank of a matrix equals the rank of its transpose. For that reason, either the method used here or the method described in [Appendix -@sec-apndx_pre_knowledge] can be used.
+
+:::
+

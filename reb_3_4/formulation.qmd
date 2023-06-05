@@ -5,9 +5,43 @@ format:
     embed-resources: true
 ---
 
-{{< include problem_statement.qmd >}}
+## Example 3-4
 
-**Mole Table from reb_3_3**
+```{r}
+#| echo: false
+#| output: false
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+source('~/Libraries/R/fmt_tibble_col.R')
+```
+
+{{< include problem_statement.qmd >}}
+  
+```{r}
+#| echo: false
+#| output: false
+path_to_data <- './Data/'
+path_to_results <- './Results/'
+path_to_figures <- './Results/'
+```
+
+---
+
+:::{.callout-tip collapse="true"}
+## Click Here to see What an Expert Might be Thinking at this Point
+
+This is a reaction progress task. Generally here are the steps for completing a reaction progress task: (1) use the given information about the initial composition to calculate the initial molar amounts of every reagent present in the system, (2) use the resulting initial amounts and the given measures of reaction progress to calculate the apparent extents of reaction, (3) use the apparent extents of reaction to calculate the final molar amounts, and (4) use those results to calculate the requested quantities.
+
+I'll begin by summarizing the information provided in the problem statement. The system described here is the same as in [Example -@sec-example_3_3], so I can use the mole table from that example, @tbl-mole_table_reb_3_3.
+
+:::
+
+**Given**: $f_{CO} = 0.4$, $Y_{CH_3OH} = 0.107$, and $S_{CH_3OH/CH_4} = 0.38$.
+
+**Given Initial Composition**: $n_{CO,0} = 34 \text{ mol}$, $n_{H_2,0} = 66 \text{ mol}$, $n_{CH_3OH,0} =  n_{CH_4,0} = n_{H_2O,0} = n_{CO_2,0} = 0 \text{ mol}$.
+
+**Requested**: $n_{CO}$, $n_{H_2}$, $n_{CH_3OH}$, $n_{CH_4}$, $n_{H_2O}$, and $n_{CO_2}$.
 
 | Species | Initial Amount | Later Amount |
 |:-------:|:------:|:------:|
@@ -19,11 +53,14 @@ format:
 | CO~2~ | $n_{CO_2,0}$ | $n_{CO_2,0} + \xi_4$ |
 | Total | $n_{\text{total},0}$ | $n_{\text{total},0} - 2 \xi_1 - 2 \xi_2$ |
 
-: {tbl-colwidths="[20,40,40]"}
+: Mole table (from @sec-example_3_3) {tbl-colwidths="[20,40,40]"}
 
-**Given**
+:::{.callout-tip collapse="true"}
+## Click Here to see What an Expert Might be Thinking at this Point
 
-$n_{CO,0}$ = 34 mol, $n_{H_2,0}$ = 66 mol, $n_{CH_3OH,0}$ = 0 mol, $n_{CH_4,0}$ = 0 mol, $n_{H_2O,0}$ = 0 mol, $n_{CO_2,0}$ = 0 mol, $f_{CO}$ = 0.4, $Y_{CH_3OH}$ = 0.107, and $S_{CH_3OH/CH_4}$ = 0.38.
+Knowing the initial molar amounts, I can proceed to calculate the extents of reaction using the given measures of reaction progress. Here I'm given the conversion, yield and selectivity. Starting from their definitions (Equations [-@eq-conversion_def_closed], [-@eq-yield_def_closed], and [-@eq-selectivity_def_closed]) the given values can be related to the apparent extents of reaction using the mole table, @tbl-mole_table_reb_3_3.
+
+:::
 
 **Necessary Equations**
 
@@ -43,32 +80,39 @@ $$
 S_{CH_3OH/CH_4} = \frac{n_{CH_3OH}}{n_{CH_4}} = \frac{n_{CH_3OH,0} + \xi_1}{n_{CH_4,0} + \xi_2} \tag{9}
 $$
 
-$$
-n_{CO} = n_{CO,0} - \xi_1 - \xi_2 - \xi_4 \tag{10}
-$$
+:::{.callout-tip collapse="true"}
+## Click Here to see What an Expert Might be Thinking at this Point
 
-$$
-n_{H_2} = n_{H_2,0} - 2 \xi_1 - 3 \xi_2 + \xi_4 \tag{11}
-$$
+There are three unknown quantities in equations (7) through (9), so they can be solved to find the values of $\xi_1$, $\xi_2$, and $\xi_4$. The resulting apparent extents of reaction can then be substituted in the expressions in the third column of @tbl-mole_table_reb_3_3 to compute the molar amounts of each of the reagents.
 
-$$
-n_{CH_3OH} = n_{CH_3OH,0} + \xi_1 \tag{12}
-$$
-
-$$
-n_{CH_4} = n_{CH_4,0} + \xi_2 \tag{13}
-$$
-
-$$
-n_{H_2O} = n_{H_2O,0} + \xi_2 - \xi_4 \tag{14}
-$$
-
-$$
-n_{CO_2} = n_{CO_2,0} + \xi_4 \tag{15}
-$$
+:::
 
 **Calculations**
 
 1. Subtitute the given and known quantities into all equations.
-2. Solve equations (7) through (9) for $\xi_1$, $\xi_2$, and $\xi_4$, and substitute the results into all remaining equations.
-3. Calculate $n_{CO}$, $n_{H_2}$, $n_{CH_3OH}$, $n_{CH_4}$, $n_{H_2O}$, and $n_{CO_2}$ using equations (10) through (15).
+2. Solve the equations (7) through (9) for $\xi_1$, $\xi_2$, and $\xi_4$.
+3. Use the resulting apparent extents of reaction to alculate $n_{CO}$, $n_{H_2}$, $n_{CH_3OH}$, $n_{CH_4}$, $n_{H_2O}$, and $n_{CO_2}$ using the expressions in the third column of the mole table.
+
+**Results**
+
+Performing the calculations as described yields the final molar amounts shown in @tbl-results_reb_3_4.
+
+```{r}
+#| echo: false
+#| output: false
+df <- read.csv(paste0(path_to_results,"reb_3_4_results.csv")) %>%
+    select(-item, - units)
+df$species = c("CO", "H~2~", "CH~3~OH", "CH~4~", "H~2~O", "CO~2~")
+df <- df %>% select(species, everything())
+```
+ 
+
+
+```{r}
+#| echo: false
+#| warning: false
+#| label: tbl-results_reb_3_4
+#| tbl-cap: Final Molar Amount of Each Reagent
+kbl(df, format = "markdown", align = "cc", col.names = c("Reagent",
+    "Final Moles"))
+```

@@ -1,6 +1,11 @@
 import pandas as pd
 from scipy import optimize
 
+# set filepaths
+path_to_data = './reb_3_4/Data/'
+path_to_results = './reb_3_4/Results/'
+path_to_figures = '../RE_Basics/Graphics/'
+
 # Given or known
 n_CO_0 = 34.0 # mol
 n_H2_0 = 66.0 # mol
@@ -57,4 +62,4 @@ data = [['n_CO', '%.3g' % n_CO, 'mol'], \
     ['n_CO2', '%.3g' % n_CO2, 'mol'], \
 ]
 result = pd.DataFrame(data, columns=['item','value','units'])
-result.to_csv("./reb_3_4/reb_3_4_Python_results.csv", index=False)
+result.to_csv(path_to_results + "reb_3_4_results.csv", index=False)

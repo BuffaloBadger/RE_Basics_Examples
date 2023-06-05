@@ -1,6 +1,10 @@
 import pandas as pd
 import numpy as np
 
+path_to_data = './reb_3_3/Data/'
+path_to_results = './reb_3_3/Results/'
+path_to_figures = '../RE_Basics/Graphics/'
+
 # Reaction Reaction matrix with column order: CO, H2, CH3OH, CH4, H2O, CO2
 rxn_matrix = np.array([ \
     [-1, -2, 1, 0, 0, 0], \
@@ -44,6 +48,10 @@ print('One complete mathematically independent subset:',ind_rxn_set)
 print(' ')
 
 # Save the result to a .csv file
-data = [['n_ind', n_ind]]
+data = [['Number of Independent Reactions', n_ind]]
 result = pd.DataFrame(data, columns=['item','value'])
-result.to_csv("./reb_3_3/reb_3_3_Python_results.csv", index=False)
+for i in range(0,len(ind_rxn_set)):
+    item = 'Independent Reaction {:d}'.format(i + 1)
+    value = ind_rxn_set[i]
+    result.loc[i+1]=[item,value]
+result.to_csv(path_to_results + "reb_3_3_results.csv", index=False)
