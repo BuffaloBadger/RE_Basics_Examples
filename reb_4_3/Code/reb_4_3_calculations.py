@@ -1,6 +1,11 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
+# set filepaths
+path_to_data = './reb_4_3/Data/'
+path_to_results = './reb_4_3/Results/'
+path_to_figures = '../RE_Basics/Graphics/'
+
 # Given or known
 mu_max = 1.0 # /h
 Ks = 0.2 # g/L
@@ -20,5 +25,6 @@ plt.plot(C_S, mu, color = 'b')
 plt.xlabel("Substrate Mass Concentration (g L$^{-1}$)")
 plt.ylabel("Specific Growth Rate (h$^{-1}$)")
 # save and show the figure
-plt.savefig('reb_4_3/reb_4_3_Python_fig_1.png')
+plt.savefig(path_to_results + 'reb_4_3_fig_1.png')
+plt.savefig(path_to_figures + 'reb_4_3_fig_1.png')
 plt.show()

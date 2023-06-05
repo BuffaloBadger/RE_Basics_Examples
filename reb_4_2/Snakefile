@@ -1,0 +1,21 @@
+rule reb_4_2:
+    input: 
+        "reb_4_2/Results/reb_4_2_results.csv",
+        "reb_4_2/Results/reb_4_2_fig_1.png",
+        "reb_4_2/Results/reb_4_2_fig_2.png",
+        "../RE_Basics/Graphics/reb_4_2_fig_1.png",
+        "../RE_Basics/Graphics/reb_4_2_fig_2.png"
+
+rule reb_4_2_results:
+    input: "reb_4_2/Code/reb_4_2_calculations.py"
+    output: 
+        "reb_4_2/Results/reb_4_2_results.csv",
+        "reb_4_2/Results/reb_4_2_fig_1.png",
+        "reb_4_2/Results/reb_4_2_fig_2.png",
+        "../RE_Basics/Graphics/reb_4_2_fig_1.png",
+        "../RE_Basics/Graphics/reb_4_2_fig_2.png"
+    shell:
+        """
+        python3 reb_4_2/Code/reb_4_2_calculations.py
+        """
+    

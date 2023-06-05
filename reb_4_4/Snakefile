@@ -1,0 +1,21 @@
+rule reb_4_4:
+    input:
+        "reb_4_4/Results/reb_4_4_results.csv",
+        "reb_4_4/Results/reb_4_4_Arrhenius_plot.png",
+        "../RE_Basics/Graphics/reb_4_4_Arrhenius_plot.png",
+        "../RE_Basics/Data/reb_4_4_data.csv"
+
+rule reb_4_4_results:
+    input:
+        "reb_4_4/Data/reb_4_4_data.csv",
+        "reb_4_4/Code/reb_4_4_calculations.py"
+    output:
+        "reb_4_4/Results/reb_4_4_results.csv",
+        "reb_4_4/Results/reb_4_4_Arrhenius_plot.png",
+        "../RE_Basics/Graphics/reb_4_4_Arrhenius_plot.png",
+        "../RE_Basics/Data/reb_4_4_data.csv"
+    shell:
+        """
+        python3 reb_4_4/Code/reb_4_4_calculations.py
+        cp reb_4_4/Data/reb_4_4_data.csv ../RE_Basics/Data/reb_4_4_data.csv
+        """

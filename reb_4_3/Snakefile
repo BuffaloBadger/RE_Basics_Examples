@@ -1,0 +1,15 @@
+rule reb_4_3:
+    input: 
+        "reb_4_3/Results/reb_4_3_fig_1.png",
+        "../RE_Basics/Graphics/reb_4_3_fig_1.png"
+
+rule reb_4_3_results:
+    input: "reb_4_3/Code/reb_4_3_calculations.py"
+    output: 
+        "reb_4_3/Results/reb_4_3_fig_1.png",
+        "../RE_Basics/Graphics/reb_4_3_fig_1.png"
+    shell:
+        """
+        python3 reb_4_3/Code/reb_4_3_calculations.py
+        """
+    

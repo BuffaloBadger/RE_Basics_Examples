@@ -4,11 +4,16 @@ import numpy as np
 import pandas as pd
 import math
 
+# set filepaths
+path_to_data = './reb_4_4/Data/'
+path_to_results = './reb_4_4/Results/'
+path_to_figures = '../RE_Basics/Graphics/'
+
 # given or known
 R = 8.314E-3 # kJ/mol/K
 
 # read the data file and convert the temperature to K
-df = pd.read_csv('./reb_4_4/reb_4_4_data.csv')
+df = pd.read_csv(path_to_data + 'reb_4_4_data.csv')
 df.columns = ['i','T','k']
 T = df['T'].to_numpy() + 273.15
 k = df['k'].to_numpy()
@@ -40,7 +45,7 @@ data = [['k0', f'{k0:.3g}', 'L mol^-1^ min^-1^'],
     ['E_upper_limit', f'{E_upper:.3g}', 'kJ mol^-1^'],
     ['R_squared', f'{r_squared:.3g}', '']]
 result = pd.DataFrame(data, columns=['item','value','units'])
-result.to_csv("./reb_4_4/reb_4_4_Python_results.csv", index=False)
+result.to_csv(path_to_results + "reb_4_4_results.csv", index=False)
 
 y_pred = k0*np.exp(-E/R/T)
 # generate a model plot
@@ -50,5 +55,6 @@ plt.semilogy(1/T,y_pred,color='k')
 plt.xlabel('T$^{-1}$ (K$^{-1}$)')
 plt.ylabel('k (L mol$^{-1}$ min$^{-1}$)')
 # save and show the figure
-plt.savefig('reb_4_4/reb_4_4_Python_Arrhenius_plot.png')
+plt.savefig(path_to_results + 'reb_4_4_Arrhenius_plot.png')
+plt.savefig(path_to_figures + 'reb_4_4_Arrhenius_plot.png')
 plt.show()

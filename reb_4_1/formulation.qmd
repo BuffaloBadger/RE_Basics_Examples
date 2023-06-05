@@ -5,7 +5,22 @@ format:
     embed-resources: true
 ---
 
+## Example 4-1
+
 {{< include problem_statement.qmd >}}
+
+---
+
+:::{.callout-tip collapse="true"}
+## Click Here to See What an Expert Might be Thinking at this Point
+
+I know that the units of a reaction rate are always moles per time per normalization factor. For a rate expression, that means that if you multiply the *units* of the pre-exponential factor by the *units* of the composition variables in the rate expression, you should end up with units of moles per time per normalization factor. Looking at equation (2) I see that the pre-exponential factor has units of moles (actually kmol NH~3~) per time per volume of the bed (in cubic meters). The equilibrium constant and the thermodynamic activities do not have units, so the rate also has units of moles per time per volume of the bed.
+
+So, from the units on the pre-exponential factor in equation (2), I can see that the rate normalization factor is the volume of the catalyst bed. The problem asks for a rate normalized per mass of catalyst, so solving this problem will involve renormalizaton of the rate. To do that, I need to know the ratio of the old normalization factor to the new normalization factor. Here that ratio is given in the problem statement. It is the reciprocal of the apparent density, so dividing equation (2) by the apparent density will renormalize the rate.
+
+I can also see, both from the units and from the variable used to represent the rate in equation (2), that the rate expression yields a species generation rate, specifically the rate of generation of ammonia. The problem asks for an expression for the general reaction rate (not the rate of species generation), so the solution will also involve converting from a species generation rate to a reacton rate.
+
+:::
 
 **Given**
 
@@ -13,10 +28,17 @@ $\rho _{bed}$ = 155 lb~m~ ft^-3^.
 
 **Necessary Equations**
 
+@eq-def_net_gen_rate can be used to convert the species generation rate to the general reaction rate. Applying that equation to the present problem yields equation (3).
+
+$$
+r_{i,j} = \nu_{i,j} r_j \quad \Rightarrow \quad r_j = \frac{r_{i,j}}{\nu_{i,j}}
+$$
+
 $$
 r_1 = \frac{r_{NH_3,1}}{\nu _{NH_3,1}} = \frac{r_{NH_3,1}}{2} \tag{3}
 $$
 
+The rate expression in equation (2) is normalized using the volume of the catalyst bed. Upon substitution in equation (3), the resulting reaction rate also will be normalized by the volume of the catalyst bed. The apparent bed density is the mass of catalyst divided by the volume of the bed, so the rate per bed volume can be converted to the rate per catalyst mass simply by dividing by the apparent bed density, equation (4), where $r_1^\prime$ is the renormalized rate expression.
 
 $$
 r_1^\prime = r_1 \frac{V_{cat}}{m_{cat}} = \frac{r_1}{\rho _{bed}} \tag{4}
@@ -25,4 +47,15 @@ $$
 **Calculations**
 
 1. Substitute equation (2) in equation (3).
-2. Substitute the result from step 1 into equation (4).
+2. Substitute the result from step 1 and the given bed density into equation (4).
+
+**Result**
+
+Performing the calculations as described yields the rate expression shown in equation (5). Notice that the value of $k_0$ changed from $1.54 \times 10^{15}$ to $1.76 \times 10^{14}$ and the units changed from $\frac{\text{kmol NH}_3}{\text{m}_{\text{bed}}^3 \text{h}}$ to $\frac{\text{kmol}}{\text{lb}_{\text{m}} \text{h}}$.
+
+$$
+\begin{align}
+r_1 &= 1.76 \times 10^{14} \exp{\left( \frac{-E_1}{RT} \right)} \\
+&\times \left[ K_{1,eq}^2\left( \frac{a_{N_2}a_{H_2}^{1.5}}{a_{NH_3}} \right) - \left( \frac{a_{NH_3}}{a_{H_2}^{1.5}} \right)  \right] \frac{\text{kmol}}{\text{lb}_{\text{m}} \text{h}}
+\end{align} \tag{5}
+$$

@@ -5,7 +5,37 @@ format:
     embed-resources: true
 ---
 
+## Example 4-2
+
+```{r}
+#| echo: false
+#| output: false
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+source('~/Libraries/R/fmt_tibble_col.R')
+```
+
 {{< include problem_statement.qmd >}}
+
+```{r}
+#| echo: false
+#| output: false
+path_to_data <- './Data/'
+path_to_results <- './Results/'
+path_to_figures <- './Results/'
+```
+
+---
+
+:::{.callout-tip collapse="true"}
+## Click Here to See What an Expert Might be Thinking at this Point
+
+I am asked to plot the rates predicted by equations (2) and (3) as a function of the CO conversion, given an initial composition, temperature, and pressure. Looking at the equations, I can see that I will need the partial pressures of the reagents to calculate the rate. I know the initial composition and I can choose the conversions to be plotted, so the first part of this problem is basically a reaction progress problem, similar to those presented in @sec-1_reaction_progress.
+
+None of the quantities that are given are extensive, so I may choose a basis. The temperature and pressure are given, so if I choose a volume as the basis for my calculations, I can use the ideal gas law to calculate the initial molar amounts.
+
+:::
 
 **Given**
 
@@ -16,6 +46,8 @@ $k_1$ = 3.37 lbmol h^-1^ ft^-3^ atm^-0.55^, $K_1$ = 12.0, $y_{H_2O,0}$ = 0.75, $
 $V$ = 1 L.
 
 **Necessary Equations**
+
+The initial percentages of CO, H~2~O, and CO~2~ sum to 100%, so the initial mole fraction of H~2~ must equal zero. Using the chosen basis, the initial molar amounts of the reagents can be calculated using the ideal gas law as shown in equations (4) through (7).
 
 $$
 n_{CO,0} = \frac{y_{CO,0} PV}{RT} \tag{4}
@@ -30,16 +62,22 @@ n_{CO_2,0} = \frac{y_{CO_2,0} PV}{RT} \tag{6}
 $$
 
 $$
-n_{H_2,0} = 0 \tag{7}
+n_{H_2,0} = \frac{\cancelto{0}{y_{H_2,0}} PV}{RT} = 0 \tag{7}
 $$
+
+Knowing the initial moles of CO, the final moles of CO at any conversion can be calculated using the definition of conversion, equation (8).
 
 $$
 n_{CO} = n_{CO,0}\left(1 - f_{CO}\right) \tag{8}
 $$
 
+That result, together with the previously determined initial moles of CO allows the calculation of the extent of reaction, equation (9)
+
 $$
 n_{CO} = n_{CO,0} - \xi_1 \quad \Rightarrow \quad \xi_1 = n_{CO,0} - n_{CO} \tag{9}
 $$
+
+The final molar amounts of the other reagents can next be computed using their initial amounts and the extent of reaction, equations (10) through (12).
 
 $$
 n_{H_2O} = n_{H_2O,0} - \xi_1 \tag{10}
@@ -50,8 +88,10 @@ n_{CO_2} = n_{CO_2,0} - \xi_1 \tag{11}
 $$
 
 $$
-n_{H_2} = n_{H_2,0} + \xi_1 \tag{12}
+n_{H_2} = \cancelto{0}{n_{H_2,0}} + \xi_1 \tag{12}
 $$
+
+The ideal gas law can then be used to calculate the final partial pressures of the reagents as shown in equations (13) through (16).
 
 $$
 P_{CO} = \frac{n_{CO}RT}{V} \tag{13}
@@ -69,6 +109,8 @@ $$
 P_{H_2} = \frac{n_{H_2}RT}{V} \tag{16}
 $$
 
+At this point the rates predicted by equations (2) and (3) can be calculated.
+
 **Calculations**
 
 1. Substitute the given values and the chosen basis into all equations.
@@ -83,3 +125,25 @@ $$
 4. Repeat step 3 to generate a set of conversions that span the range from 0 to 100% and the corresponding rates predicted by equations (2) and (3).
 5. Plot the full set of results.
 6. Plot the results for conversions between 85% and 100%.
+
+**Results and Comments**
+
+@fig-example_4_2_fig_1 shows the rate of reaction (1) predicted by equations (2) and (3) at conversions between 0 and 100%, based upon isothermal, isobaric reaction with an initial mixture of 75% H~2~O, 24% CO, and 1% CO~2~ at 10 atm and 675 K. @fig-example_4_2_fig_2 shows the same data, but only for conversions between 85 and 100%.
+
+![Rate of water-gas shift as a function of CO conversion as predicted by power-law rate expressions with and without a factor that forces them to evaluate to zero at equilibrium.](`r paste0(path_to_figures,'reb_4_2_fig_1.png')`){#fig-example_4_2_fig_1}
+
+![Rate of water-gas shift at conversions near equilibrium as predicted by power-law rate expressions with and without a factor that forces them to evaluate to zero at equilibrium.](`r paste0(path_to_figures,'reb_4_2_fig_2.png')`){#fig-example_4_2_fig_2}
+
+The figures allow two important observations. First, @fig-example_4_2_fig_1 shows that adding the term to force proper behavior at equilibrium does not affect the predicted rate at conditions far from equilibrium. Hence, since rate expression (2) was validated and found to be accurate at conditions far from equilibrium, the figure shows that rate expression (3) will be equally accurate at those conditions.
+
+Second, @fig-example_4_2_fig_2 shows that when the reaction reaches equilbrium at 96% conversion, rate expression (2) predicts that the rate will equal 0.37 lbmol h^-1^ ft^-3^ while rate expression (3) predicts the rate will be zero. The consequences of using rate expression (2), for example to design a reactor where the conversion approaches equilibrium, could be severe. The design calculations would indicate that, for example, 98% conversion could be achieved in the reactor, but of course, if the reactor was built, the conversion would never exceed 96%. If rate expression (3) was used to design a reactor, the calculations would indicate that the largest possible conversion is 96%.
+
+:::{.callout-note collapse="false"}
+## Notes
+
+While @fig-example_4_2_fig_2 shows conversions greater than equilibrium, it should be noted that **one could not reach the conversions above 96% by reacting the starting mixture at constant $T$ and $P$**. However, one could make a mixture of the reagents that has the same composition *as if the initial mixture had reached a higher conversion*. @fig-example_4_2_fig_2 shows that if one did this, the reaction of that mixture would be predicted to have a negative rate. That is, the reaction would proceed in the reverse direction, and when it reached a composition equivalent to 96% conversion of the initial mixture in the problem statement, the rate would again go to zero because the system would be at equilibrium.
+
+Also, @fig-example_4_2_fig_2 only shows conversions up to 99% for rate expression (3). The reason for this is that rate expression (3) preducts a rate of negative infinity at 100% conversion. At 100% conversion, the partial pressure of CO would equal zero, and since $P_{CO}$ appears in the denominator in the equilbrium factor, the factor becomes equal to negative infinity. The important point is that if one has a rate expression for the forward rate of a reversible reaction that includes a factor to force proper equilibrium behavior, that rate expression **should not be used to predict the rate of the reverse reaction**. Instead, a reverse rate expression should be postulated and experimentally validated.
+
+:::
+

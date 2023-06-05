@@ -2,6 +2,11 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
+# set filepaths
+path_to_data = './reb_4_2/Data/'
+path_to_results = './reb_4_2/Results/'
+path_to_figures = '../RE_Basics/Graphics/'
+
 # Given or known
 k1 = 3.37 # lbmol/h/ft^3/atm^-0.55
 K1 = 12.0
@@ -57,7 +62,8 @@ plt.xlabel("CO Conversion (%)")
 plt.ylabel("Predicted Rate (lbmol h$^{-1}$ ft$^{-3}$)")
 plt.legend()
 # save and show the figure
-plt.savefig('reb_4_2/reb_4_2_Python_fig_1.png')
+plt.savefig(path_to_results + 'reb_4_2_fig_1.png')
+plt.savefig(path_to_figures + 'reb_4_2_fig_1.png')
 plt.show()
 
 plt.figure(2) # with conversions between 85 and 100%
@@ -68,9 +74,10 @@ plt.xlabel("CO Conversion (%)")
 plt.ylabel("Predicted Rate (lbmol h$^{-1}$ ft$^{-3}$)")
 plt.legend()
 # save and show the figure
-plt.savefig('reb_4_2/reb_4_2_Python_fig_2.png')
+plt.savefig(path_to_results + 'reb_4_2_fig_2.png')
+plt.savefig(path_to_figures + 'reb_4_2_fig_2.png')
 plt.show()
 
 # save the plot data to a .csv file
 plot_data = pd.DataFrame({'Conversion':100*f_CO, 'r2':r_m0, 'r3':r_m1})
-plot_data.to_csv("./reb_4_2/reb_4_2_Python_results.csv", index=False)
+plot_data.to_csv(path_to_results + "reb_4_2_results.csv", index=False)

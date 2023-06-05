@@ -5,69 +5,118 @@ format:
     embed-resources: true
 ---
 
-{{< include problem_statement.qmd >}}
+## Example 4-4
 
 ```{r}
 #| echo: false
 #| output: false
 library(tidyverse)
-library(kableExtra)
 library(knitr)
-results <- read.csv("reb_4_4_data.csv")
+library(kableExtra)
+source('~/Libraries/R/fmt_tibble_col.R')
+```
+
+{{< include problem_statement.qmd >}}
+
+```{r}
+#| echo: false
+#| output: false
+path_to_data <- './Data/'
+path_to_results <- './Results/'
+path_to_figures <- './Results/'
+results <- read.csv(paste0(path_to_data,"reb_4_4_data.csv"))
+results <- fmt_tibble_col(results,3,3,3,1)
 ```
 
 ```{r}
 #| echo: false
-kbl(results, format = "markdown", align = "cc", col.names = c("i (Expt. Number)", "T (°C)",
+#| label: tbl-data_reb_4_4
+#| tbl-cap: Rate coefficients measured experimentally at different temperatures.
+kbl(results, format = "markdown", align = "ccc", col.names = c("i (Expt. Number)", "T (°C)",
     "k (L mol^-1^ min^-1^)"))
 ```
 
-**Necessary Equations**
+The data are available in the .csv file, [reb_4_4_data.csv](`r paste0(path_to_data,'reb_4_4_data.csv')`).
+
+---
+
+:::{.callout-tip collapse="true"}
+## Click Here to See What an Expert Might be Thinking at this Point
+
+This problem presents experimental data and then asks whether those data are "consistent with" the Arrhenius expression, @eq-arrhenius. In other words, does the Arrhenius expression accurately predict the value of the rate coefficient, $k$, at each of the tempertures, $T$, listed in @tbl-data_reb_4_4. To answer this question, I can see that I'll need to fit the Arrhenius expression to the experimental data and then assess the accuracy of the model.
+
+From the information provided in this chapter, I now that the most common way to fit the Arrhenius expression to experimental data is by using the linearized form shown in @eq-linear_arrhenius. To do that, I'll first need to convert the temperatures to absolute units. Then I can calculate the values of $x$ and $y$ for each experimental data point.
+
+In general, when solving problems I like to start by listing the quantities whose values are given in the problem statement, assigning them to approprite variable symbols. In this problem I'm given several values of $T$ and $k$; I'll underline these in my listing to indicate that they are vector quantities. I also like to list any relationships I'm provided. Here I'm told to use the Arrhenius expression, and since I now I'll use the linearized form, I'll list that.
+
+:::
+
+**Given and Known**: $\underline{T}$ and $\underline{k}$.
+
+**Model**: 
 
 $$
-k = k_0 \exp{\left(  \frac{-E}{RT} \right)} \tag{1}
+\ln{k} = E \left( \frac{-1}{RT} \right) + \ln{k_0} \tag{1}
+$$
+
+Defining $y$ and $x$ as shown in equations (2) and (3) shows that equation (1) has the linear form shown in equation (4) when the slope, $m$, and intercept, $b$, are defined as in equations (5) and (6).
+
+$$
+y = \ln{k} \tag{2}
 $$
 
 $$
-\beta = \log_{10} {\left(k_0\right)} \tag{2}
+x = \left( \frac{-1}{RT} \right) \tag{3}
 $$
 
 $$
-k = 10^\beta \exp{\left(  \frac{-E}{RT} \right)} \tag{3}
+y = m x + b \tag{4}
 $$
 
 $$
-T_{K,i} = T_i + 273.15 \tag{4}
+m = E \tag{5}
 $$
 
 $$
-\beta = \log_{10} {\left(k_0\right)} \quad \Rightarrow \quad k_0 = 10^\beta \tag{5}
+b = \ln{k_0} \tag{6}
 $$
 
-$$
-k_{i,p} = k_0 \exp{\left(  \frac{-E}{RT_{K,i}} \right)} \tag{6}
-$$
+After converting the temperatures to K, $y$ and $x$ can be computed for each experiment using equations (2) and (3).
 
-$$
-\epsilon_i = k_i - k_{i,p} \tag{7}
-$$
+:::{.callout-tip collapse="true"}
+## Click Here to See What an Expert Might be Thinking at this Point
 
-**Calculations**
+Now I need to fit equation (4) to the data. This can be done using a spreadsheet program. The original data would first be entered in two columns, then new columns would be added for $y$ and $x$. Those columns would the be plotted as a $x-y$ scatterplot. Adding a linear trendline will fit equation (4) to the data, and in most spreadsheets the equation can be displayed on the graph along with the coefficient of determination, $R^2$. I would also like the undertainty in the values of the slope, $E$, and intercept, $\ln{k_0}$. The way those are calculated will depend upon the specific spreadsheet program being used.
 
-To use non-linear parameter estimation software:
+An alternative approach is to simply use linear least squares software to do the fitting and then plotting the results.
 
-1. Calculate the absolute temperature for each data point use them to construct the adjusted input vector, $\underline{x}$ using equation (4).
-2. Generate the experimental response vector, $\underline{y_{expt}}$, using equation (5).
-3. Fit equation (3) to the resulting $\underline{x}$ - $\underline{y_{expt}}$ data using parameter estimation software.
-4. Calculate $k_{0,j}$ from the best estimate for $\beta$, using equation (6).
-5. Generate the predicted response vector, $\underline{y_{pred}}$, using equation (7).
-6. Generate the residuals vector, $\underline{\epsilon}$, using equation (8).
-7. Generate a parity plot by plotting $y_{expt,i}$ *vs*. $y_{pred,i}$}.
-8. Generate a residuals plot by plotting $\epsilon_i$ *vs*. $x_i$.
-6. Assess the accuracy of the resulting model using the following criteria for an accurate model:
-    a. The coefficient of determination, $R^2$, is close to 1.
-    b. The uncertainty in each model parameter is small compared to its value.
-    c. The points in the parity plot are all be close to a diagonal line passing through the origin.
-    d. In the residuals plot, the points scatter randomly about the horizontal axis, and no systematic deviations are apparent.
+:::
 
-To use linear least squares software or a spreadsheet program:
+```{r}
+#| echo: false
+#| output: false
+df <- read.csv(paste0(path_to_results,"reb_4_4_results.csv")) %>%
+    select(-item)
+df <- fmt_tibble_col(df,1,3,3,1)
+```
+
+
+Using linear least squares software, the following Arrhenius parameter values were estimated: $k_0$ = `r df$value[1]` `r df$units[1]`, 95% CI [`r df$value[2]`, `r df$value[3]`] and $E$ = `r df$value[4]` `r df$units[4]`, 95% CI [`r df$value[5]`, `r df$value[6]`]. The coefficient of determination, $R^2$, was found to equal `r df$value[7]`. The results were used to generate the model plot shown in @fig-example_4_4_fig.
+
+![Arrhenius plot comparing the model (line) to the experimental data (points).](`r paste0(path_to_figures,'reb_4_4_Arrhenius_plot.png')`){#fig-example_4_4_fig width="80%"}
+
+:::{.callout-tip collapse="true"}
+## Click Here to See What an Expert Might be Thinking at this Point
+
+The last thing I need to do is to assess the accuracy of the resulting Arrhenius expression. The criteria for assessing the accuracy were presented earlier in this chapter.
+
+:::
+
+The uncertainty in $k_0$, that is the difference between the upper and lower limits of the 95% confidence interval, is 4.69 x 10^7^ `r df$units[1]`. This is quite large compared to the estimated value of $k_0$, `r df$value[1]` `r df$units[1]`. Estimated pre-exponential factors are often found to have large uncertainties. The uncertainty in the activation energy is 10.5 kJ mol^-1^ (18%) compared to the estimated value of `r df$value[4]` kJ mol^-1^. The coefficient of determination is quite close to 1.0, however, and the model plot shows good agreement between the experimental data and the model with no trends in the deviations. Overall, it appears that the experimental data are consistent with the Arrhenius expression.
+
+:::{.callout-note collapse="false"}
+## Note
+
+This example illustrated the preferred way to report a value together with its 95% confidence interval: "value units, 95% CI [lower bound, upper bound]," Thus $E$ = `r df$value[4]` `r df$units[4]`, 95% CI [`r df$value[5]`, `r df$value[6]`] means that the estimated value of $E$ is `r df$value[4]` `r df$units[4]`, and if the experiments were repeated many times, 95% of those times the estimated value of $E$ would be between `r df$value[5]` `r df$units[4]` and `r df$value[6]` `r df$units[4]`. 
+
+:::

@@ -1,5 +1,10 @@
 import pandas as pd
 
+# set filepaths
+path_to_data = './reb_4_1/Data/'
+path_to_results = './reb_4_1/Results/'
+path_to_figures = './reb_4_1/Results/'
+
 # Given
 rho_bed = 155.0 * 0.0283 # lbm/m^3
 k0_NH3 = 1.54e15 # kmol NH3 / m^3 / h
@@ -15,4 +20,4 @@ print(' ')
 # Save the result to a .csv file
 data = [['k0', '%.3g' % k0]]
 result = pd.DataFrame(data, columns=['item','value'])
-result.to_csv("./reb_4_1/reb_4_1_Python_results.csv", index=False)
+result.to_csv(path_to_results + "reb_4_1_results.csv", index=False)

@@ -5,7 +5,33 @@ format:
     embed-resources: true
 ---
 
+```{r}
+#| echo: false
+#| output: false
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+source('~/Libraries/R/fmt_tibble_col.R')
+```
+
 {{< include problem_statement.qmd >}}
+  
+```{r}
+#| echo: false
+#| output: false
+path_to_data <- './Data/'
+path_to_results <- './Results/'
+path_to_figures <- './Results/'
+```
+
+---
+
+:::{.callout-tip collapse="true"}
+## Click Here to See What an Expert Might be Thinking at this Point
+
+The problem statement pretty much tells me what to do. The only thing I don't know is how large $C_S$ will need to be in order to see the limiting behavior. I know that zero is the smallest value. I will simply pick a largest value and make the plot. If the plot doesn't show the limiting behavior, I'll change the largest value and repeat until the plot is acceptable.
+
+:::
 
 **Given**
 
@@ -21,3 +47,21 @@ $$
 
 1. Choose values of $C_S$ and use equation (1) to calculate the corresponding value of $\mu$.
 2. Plot the results.
+    a. If the figure does not show limiting behavior, change the maximum value of $C_S$ and repeat from step 1.
+
+**Result**
+
+@fig-example_4_3_fig_1 shows the specific cell growth rate predicted by the Monod equation. At very low substrate concentration, the curve is nearly linear. Looking at equation (1) it can be seen that when the substrate concentration is neglibibly small compared to $K_s$, the Monod equation reduces to equation (2). Equation (2) is a linear equation with the slope equal to $\frac{\mu_{max}}{K_s}$. Physically this corresponds to a situation where the amount of available nutrient (substrate) is so small that the cells can't all get enough to grow. Put differently, in this situation the cells are forced to compete with each other for nutrient. When one of the competing cells takes in nutrient, it grows, but the others can't.
+
+$$
+\mu = \frac{\mu_{max}C_S}{K_s + \cancelto{0}{C_S}} = \frac{\mu_{max}}{K_s}C_S \tag{2}
+$$
+
+![Specific cell growth rate predicted by the Monod equation with $\mu_{max}$ = 1 h^-1^ and $K_s$ = 0.2 g L^-1^.](`r paste0(path_to_figures,'reb_4_3_fig_1.png')`){#fig-example_4_3_fig_1}
+
+As the substrate concentration becomes very large, @fig-example_4_3_fig_1 suggests that the specific growth rate will become constant. This can be seen by examination of equation (1). When $K_s$ becomes negligibly small compared to $C_S$, the Monod equation reduces to equation (3) where the specific growth rate is constant and equal to $\mu_{max}$. Physically, this limit is the opposite of the first. Here the nutrient is abundant and each cell can take in as much as it needs. Every cell is taking in nutrient and growing as fast as it can, so increasing the amount of nutrient has no effect.
+
+$$
+\mu = \frac{\mu_{max}C_S}{\cancelto{0}{K_s} + C_S} = \mu_{max} \tag{3}
+$$
+
