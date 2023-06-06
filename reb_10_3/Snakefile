@@ -28,6 +28,7 @@ rule reb_10_3_data:
 rule reb_10_3_results:
     input:
         "reb_10_3/Code/reb_10_3_calculations.py",
+        "reb_10_3/Code/response_function.py",
         "reb_10_3/Data/reb_10_3_data.csv"
     output:
         "reb_10_3/Results/reb_10_3_results.csv",

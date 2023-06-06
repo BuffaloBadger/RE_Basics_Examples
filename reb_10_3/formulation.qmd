@@ -5,29 +5,37 @@ format:
     embed-resources: true
 ---
 
-## Analysis of CSTR Kinetics Data for a Reversible Reaction
+```{r}
+#| echo: false
+#| output: false
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+source('~/Libraries/R/fmt_tibble_col.R')
+```
+
+## Example 10-3
 
 {{< include problem_statement.qmd >}}
 
 ```{r}
 #| echo: false
 #| output: false
-library(tidyverse)
-source("~/Libraries/R/fmt_tibble_col.R")
-d <- read.csv("reb_9_3_data.csv")
+path_to_data <- './Data/'
+path_to_results <- './Results/'
+path_to_figures <- './Results/'
+df <- read.csv(paste0(path_to_data,"reb_10_3_data.csv"))
  # VFR, CAin, CYin, CZin, CA
 ```
 
-The first few data points are shown in @tbl-example_9_3_data. The full data set is available in the file [reb_9_3_data.csv](./reb_9_3/reb_9_3_data.csv).
+The first few data points are shown in @tbl-example_10_3_data. The full data set is available in the file [reb_10_3_data.csv](`r paste0(path_to_data,'reb_10_3_data.csv')`).
 
 ```{r}
 #| echo: false
 #| warning: false
-#| label: tbl-example_9_3_data
-#| tbl-cap: First 6 of the 240 experimental data.
-library(kableExtra)
-library(knitr)
-kbl(d[1:6,], format = "markdown", align = "ccccc", 
+#| label: tbl-example_10_3_data
+#| tbl-cap: First 6 experimental data points.
+kbl(df[1:6,], format = "markdown", align = "ccccc", 
   col.names = c('$\\dot{V}$ (gal min^-1^)', 'C~A,in~ (lbmol gal^-1^)', 
   'C~Y,in~ (lbmol gal^-1^)','C~Z,in~ (lbmol gal^-1^)','C~A,out~ (lbmol gal^-1^)'))
 ```
@@ -37,34 +45,34 @@ kbl(d[1:6,], format = "markdown", align = "ccccc",
 :::{.callout-tip collapse="true"}
 ## Click Here to See What an Expert Might be Thinking at this Point
 
-I will begin the kinetics data analysis problem by summarizing the information provided in the problem statement.
+This is a kinetics data analysis assignment, and to solve it I will need to create a response function. I will begin by summarizing the information provided in the problem statement.
 
 :::
 
-**Reactor Type**: CSTR
+**Reactor**: CSTR
 
-**Given Constants**: $V = 3 \text{ gal}$.
+**Given**: $V = 3 \text{ gal}$.
 
-**Adjusted Inputs**: $\underline{\dot{V}}$, $\underline{C_{A,in}}$, $\underline{C_{Y,in}}$, and $\underline{C_{Z,in}}$
+**Adjusted Inputs**: $\underline{\dot{V}}$, $\underline{C}_{A,in}$, $\underline{C}_{Y,in}$, and $\underline{C}_{Z,in}$.
 
-**Experimental Response**: $\underline{C_{A,out}}$.
+**Experimental Response**: $\underline{C}_{A,out}$.
 
-**Kinetics Parameters**: $k_f$ and $k_r$.
+**Rate Expression Parameters**:  $k_f$ and $k_r$.
 
 :::{.callout-tip collapse="true"}
 ## Click Here to See What an Expert Might be Thinking at this Point
 
-I need to write a model for the reactor that will be fit to the experimental data. Since the reactor operated at a known temperature, I only need mole balances to model it. There are 3 reagents in this system, so I'll write @eq-cstr_mole_bal_one_reaction for each of them.
+I need to create a response function that solves the reactor design equations and predicts the response for each data point. Since the CSTR operated at a known temperature, I only need mole balances to model it. There are 3 reagents in this system, so I'll write @eq-cstr_mole_bal_one_reaction for each of them.
 
 $$
 0 = \dot{n}_{i,in} - \dot{n}_i + \nu_i r V
 $$
 
-The stoichiometric coefficients of A, Y, and Z, are -1, 1, and 1, respectively.
+The stoichiometric coefficients of A, Y, and Z, are -1, 1, and 1, respectively, leading to equations (3) through (5).
 
 :::
 
-**Reactor Design Equations**
+**Reactor Model**
 
 Mole balances on A, Y, and Z are shown in equations (3) through (5).
 
@@ -83,9 +91,9 @@ $$
 :::{.callout-tip collapse="true"}
 ## Click Here to See What an Expert Might be Thinking at this Point
 
-I need to solve equations (3) through (5) for $\dot{n}_A$, $\dot{n}_Y$, and $\dot{n}_Z$. To do so numerically, I need to express every other quantity appearing in or substituted into equations (3) through (5) in terms of $\dot{n}_A$, $\dot{n}_Y$, $\dot{n}_Z$ and known constants. Looking at equations (3) through (5) I can see that I will need expressions for the inlet molar flow rates, $\dot{n}_{A,in}$, $\dot{n}_{Y,in}$, and $\dot{n}_{Z,in}$. I know the volumetric flow rate and the inlet concentrations of the reagents, so those expressions are straightforward.
+Within the response function I need to solve equations (3) through (5) for $\dot{n}_A$, $\dot{n}_Y$, and $\dot{n}_Z$. The adjusted inputs and the rate expression parameters will be provided to the response function. To solve the reactor design equations, I need to express every other quantity appearing in or substituted into equations (3) through (5) in terms of $\dot{n}_A$, $\dot{n}_Y$, $\dot{n}_Z$ and known constants. Looking at equations (3) through (5) I can see that I will need expressions for the inlet molar flow rates, $\dot{n}_{A,in}$, $\dot{n}_{Y,in}$, and $\dot{n}_{Z,in}$. I know the volumetric flow rate and the inlet concentrations of the reagents, so those expressions are straightforward.
 
-When the rate expression is substituted into the mole balances it introduces the concentrations of the reagents. This is a steady-state, liquid phase system, so the volumetric flow rate is constant. Knowing that, @eq-concentration_open can be used to express the concentrations in terms of the unknowns.
+When the rate expression is substituted into the mole balances it introduces the concentrations of the reagents. This is a steady-state, liquid phase system, so the volumetric flow rate is constant. Knowing that, @eq-concentration_open can be used to express the concentrations in terms of the unknowns in terms of their molar flow rates.
 
 $$
 C_i = \frac{\dot n_i}{\dot V}
@@ -94,8 +102,6 @@ $$
 :::
 
 **Ancillary Equations**
-
-Equations (6) through (11) can be used to express all quantities in the mole balances and the rate expression in terms of the outlet molar flow rates of A, Y, and Z.
 
 $$
 \dot{n}_{A,in} = C_{A,in}\dot{V} \tag{6}
@@ -124,62 +130,90 @@ $$
 :::{.callout-tip collapse="true"}
 ## Click Here to See What an Expert Might be Thinking at this Point
 
-Now that I have formulated the solution of the reactor model, I need to create a response function. The response function will be given the adjusted experimental inputs and values for the kinetics parameters. Within it, the reactor model must be solved as described above for each data point. The resulting values of $\dot{n}_A$, $\dot{n}_Y$, and $\dot{n}_Z$ then must be used to predict the experimental response. In this study, the response was the outlet concentration of A.
+Once the reactor design equations have been solved, the resulting values of $\dot{n}_A$, $\dot{n}_Y$, and $\dot{n}_Z$ must be used to predict the experimental response. In this study, the response was the outlet concentration of A, and that can be calculated using equation (9).
 
 :::
 
 **Response Function**
 
-A response function can be written to solve the reactor design equations as described above. The resulting value of $\dot{n}_A$ can then be used to predict the outlet concentration of A using equation (9).
+The response function is created with the following structure.
 
-**Parameter Estimation and Assessment of Accuracy**
+* The adjusted inputs, $\underline{\dot{V}}$, $\underline{C}_{A,in}$, $\underline{C}_{Y,in}$, and $\underline{C}_{Z,in}$, and the rate expression parameters, $k_f$ and $k_r$, are passed to it as arguments.
+* A variables is defined and assigned the value of the known and given quantities, $V = 3 \text{ gal}$.
+* A function is defined that evaluates the reactor equation residuals (the right-hand sides of equations (3) through (5)), given values of the unknowns, $\dot{n}_A$, $\dot{n}_Y$, and $\dot{n}_Z$. It
+    * Calculates the inlet molar flow rates of A, Y, and Z, equations (6), (7), and (8).
+    * Calculates the concentrations of A, Y, and Z, equations (9), (10), and (11).
+    * Calculates $r$ using equation (2).
+    * Evaluates and returns the residuals, equations (3) through (5).
+* For each experiment, the response function
+    * Solves the reactor design equations numerically to find $\dot{n}_A$, $\dot{n}_Y$, and $\dot{n}_Z$.
+    * Calculates $C_A$ using equation (9).
+* The predicted values of $C_A$ for all of the experiments are returned.
+
+:::{.callout-tip collapse="true"}
+## Click Here to See What an Expert Might be Thinking at this Point
+
+Having created the response function, I can now use it to estimate the rate expression parameters, $k_f$ and $k_r$, at the experimental temperature. To do so I will use parameter estimation software of my choosing. I will write a simple program that passes the adjusted inputs, the measured responses, and a guess for the rate expression parameter to that parameter estimation software. It will return the best estimates for $k_f$ and $k_r$, some measure of the uncertainty in $k_f$ and $k_r$, and the coefficient of determination, $R^2$.
+
+Using the resulting values of $k_f$ and $k_r$, I can calculate the model-predicted responses for all of the experiments using the response function. Then, knowing the model-predicted responses I can calculate the residual (difference between the measured response and the model-predicted response) for each eperiment. Finally, as described in @sec-4_kin_data_gen, I can create a parity plot and residuals plots.
+
+:::
+
+**Calculations**
+
+1. Pass the response function, the adjusted inputs, the experimental responses, and a guess for the rate expression parameter to parameter estimation software to find $k_f$ and $k_r$, the uncertainty in $k_f$ and $k_r$, and the coefficient of determination, $R^2$.
+2. Use the resulting values of $k_f$ and $k_r$ to calculate the model-predicted response, $C_{A,\text{model}}$, for every experiment.
+3. Create a parity plot ($C_{A,\text{model}}$ *vs*. $C_{ZA,\text{expt}}$) and parity plots ($C_{A,\text{model}} - C_{A,\text{expt}}$ *vs*. $\dot{V}$, *vs*. $C_{A,in}$, *vs*. $C_{Y,in}$, and *vs*. $C_{Z,in}$.
+
+**Results**
 
 ```{r}
 #| echo: false
 #| output: false
-library(tidyverse)
-source("~/Libraries/R/fmt_tibble_col.R")
-d <- read.csv("python/reb_9_3_results.csv")
-d <- fmt_tibble_col(d, 2, 3, 2, 2)
+df <- read.csv(paste0(path_to_results,"reb_10_3_results.csv"))
+df <- fmt_tibble_col(df, 2, 3, 2, 2)
 a <- c('k~f~','k~r~','R^2^')
-b1 <- paste0(d$value[1],' ',d$units[1],', 95% CI [',d$value[2],', ',d$value[3],']')
-b2 <- paste0(d$value[4],' ',d$units[4],', 95% CI [',d$value[5],', ',d$value[6],']')
-b <- c(b1,b2,d$value[7])
+b1 <- paste0(df$value[1],' ',df$units[1],', 95% CI [',df$value[2],', ',df$value[3],']')
+b2 <- paste0(df$value[4],' ',df$units[4],', 95% CI [',df$value[5],', ',df$value[6],']')
+b <- c(b1,b2,df$value[7])
  # item, value, units
 d <- data.frame(a,b)
 ```
 
-To estimate the kinetics parameters, the response function described above was passed to parameter estimation software along with the adjusted experimental inputs, the experimental responses and a guess for the kinetics parameters. The results returned by that software are shown in @tbl-example_9_3_results.
+To estimate the kinetics parameters, the response function described above was passed to parameter estimation software along with the adjusted experimental inputs, the experimental responses and a guess for the kinetics parameters. The results returned by that software are shown in @tbl-example_10_3_results.
 
 ```{r}
 #| echo: false
 #| warning: false
-#| label: tbl-example_9_3_results
+#| label: tbl-example_10_3_results
 #| tbl-cap: Parameter estimation results
-library(kableExtra)
-library(knitr)
 kbl(d, format = "markdown", align = "cc", col.names = NULL)
 ```
 
-The results from the parameter estimation were then used to create the parity plot shown in @fig-example_9_3_parity and residuals plots shown in @fig-example_9_3_residuals_plots as described in @sec-chapter7.
+The results from the parameter estimation were then used to create the parity plot shown in @fig-example_10_3_parity and residuals plots shown in @fig-example_10_3_residuals_plots as described in @sec-4_kin_data_gen.
 
-![Parity plot.](python/reb_9_3_parity.png){#fig-example_9_3_parity}
+![Parity plot.](`r paste0(path_to_figures,'reb_10_3_parity.png')`){#fig-example_10_3_parity}
 
-::: {#fig-example_9_3_residuals_plots layout-ncol=2}
+::: {#fig-example_10_3_residuals_plots layout-ncol=2}
 
-![](python/reb_9_3_VFR_residuals.png)
+![](`r paste0(path_to_figures,'reb_10_3_VFR_residuals.png')`)
 
-![](python/reb_9_3_CA_residuals.png)
+![](`r paste0(path_to_figures,'reb_10_3_CA_residuals.png')`)
 
-![](python/reb_9_3_CY_residuals.png)
+![](`r paste0(path_to_figures,'reb_10_3_CY_residuals.png')`)
 
-![](python/reb_9_3_CZ_residuals.png)
+![](`r paste0(path_to_figures,'reb_10_3_CZ_residuals.png')`)
 
 Parity and Residuals Plots.
 :::
 
+:::{.callout-tip collapse="true"}
+## Click Here to See What an Expert Might be Thinking at this Point
+
 The confidence intervals for $k_f$ and $k_r$ form a narrow range of values about the estimates and the coefficient of determination is close to 1.0. Both of these results suggest that the model is accurate. In the parity plot the experimental data all lie close to the line representing the model, and in the residuals plots, the deviations of the experimental residuals from zero appear to be random with no apparent trends. These graphical results also suggest that the model is acceptably accurate.
 
-**Recommendation**
+:::
 
-When the rate coefficients in @tbl-example_9_3_results are used in the rate expression, equation (2), it provides an accurate representation of the experimental results. It should be accepted.
+**Assessment**
+
+When the rate coefficients in @tbl-example_10_3_results are used in the rate expression, equation (2), it provides an acceptably accurate representation of the experimental results.
