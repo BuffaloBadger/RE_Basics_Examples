@@ -30,6 +30,7 @@ rule reb_10_1_data:
 rule reb_10_1_results:
     input:
         "reb_10_1/Code/reb_10_1_calculations.py",
+        "reb_10_1/Code/response_function.py",
         "reb_10_1/Data/reb_10_1_data.csv"
     output:
         "reb_10_1/Results/reb_10_1_results.csv",

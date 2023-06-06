@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-import scipy as sp
+import response_function as rf
 import rebutils as reb
 import matplotlib.pyplot as plt
 
@@ -24,67 +24,10 @@ n_expts = len(VFR)
 # create a matrix containing the adjusted inputs
 adj_inputs = np.transpose(np.array([VFR, CAin, CBin, CYin, CZin]))
 
-# allocate storage for the responses
-resp = np.zeros(n_expts)
-
-# define the response function
-def response_function(inputs, log_k_guess):
-    k_guess = 10**log_k_guess
-    for i in range(0,n_expts):
-        # extract the inputs
-        Vdot = inputs[i,0]
-        CA0 = inputs[i,1]
-        CB0 = inputs[i,2]
-        CY0 = inputs[i,3]
-        CZ0 = inputs[i,4]
-        # calculate inlet molar flow rates
-        nAin = CA0*Vdot
-        nBin = CB0*Vdot
-        nYin = CY0*Vdot
-        nZin = CZ0*Vdot
-
-        # define the reactor model residuals
-        def reactor_model(x):
-            # extract the test values for the unknowns
-            nA = x[0]
-            nB = x[1]
-            nY = x[2]
-            nZ = x[3]
-
-            # calculate the rate
-            CA = nA/Vdot
-            CB = nB/Vdot
-            r = k_guess*CA*CB
-
-            # evaluate the reactor model residuals
-            r1 = nAin - nA - r*V
-            r2 = nBin - nB - r*V
-            r3 = nYin - nY + r*V
-            r4 = nZin - nZ + r*V
-            return [r1, r2, r3, r4]
-        
-        # guess the solution to the reactor model
-        nY_guess = CYout[i]*Vdot
-        extent = nY_guess - nYin
-        nA_guess = nAin - extent
-        nB_guess = nBin - extent
-        nZ_guess = nZin + extent
-        guess = [nA_guess, nB_guess, nY_guess, nZ_guess]
-
-        # solve the reactor model equations
-        soln = sp.optimize.root(reactor_model,guess)
-        if not(soln.success):
-            print("A solution was NOT obtained:")
-            print(soln.message)
-        
-        # calculate the response, CYout
-        resp[i] = soln.x[2]/Vdot
-    return resp
-
 # Estimate the parameters (here the base 10 log of k)
 par_guess = [0.0]
 beta, beta_ci, r_squared = reb.fitNLSR(par_guess, adj_inputs, CYout, 
-        response_function, False)
+        rf.response_function, False)
 
 # Extract the results
 k = 10.0**beta[0]
@@ -106,7 +49,7 @@ result = pd.DataFrame(data, columns=['item','value','units'])
 result.to_csv('./reb_10_1/Results/reb_10_1_results.csv', index=False)
 
 # calculate the model-predicted responses and the residuals
-y_model = response_function(adj_inputs, beta[0])
+y_model = rf.response_function(adj_inputs, beta[0])
 residuals = CYout - y_model
 
 # create, display and save the parity plot
