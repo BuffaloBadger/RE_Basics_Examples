@@ -1,0 +1,48 @@
+rule reb_11_2:
+    input:
+        "reb_11_2/Data/reb_11_2_data.csv",
+        "../RE_Basics/Data/reb_11_2_data.csv",
+        "reb_11_2/Results/reb_11_2_results.csv",
+        "reb_11_2/Results/reb_11_2_parity.png",
+        "reb_11_2/Results/reb_11_2_residuals_vs_yAin.png",
+        "reb_11_2/Results/reb_11_2_residuals_vs_yBin.png",
+        "reb_11_2/Results/reb_11_2_residuals_vs_yYin.png",
+        "reb_11_2/Results/reb_11_2_residuals_vs_yZin.png",
+        "../RE_Basics/Graphics/reb_11_2_parity.png",
+        "../RE_Basics/Graphics/reb_11_2_residuals_vs_yAin.png",
+        "../RE_Basics/Graphics/reb_11_2_residuals_vs_yBin.png",
+        "../RE_Basics/Graphics/reb_11_2_residuals_vs_yYin.png",
+        "../RE_Basics/Graphics/reb_11_2_residuals_vs_yZin.png"
+
+rule reb_11_2_data:
+    input:
+        "reb_11_2/Code/reb_11_2_pfr_data_generator.py"
+    output:
+        "reb_11_2/Data/reb_11_2_data.csv",
+        "../RE_Basics/Data/reb_11_2_data.csv"
+    shell:
+        """
+        python3 reb_11_2/Code/reb_11_2_pfr_data_generator.py
+        """
+
+rule reb_11_2_results:
+    input:
+        "reb_11_2/Code/reb_11_2/calculations.py",
+        "reb_11_2/Code/response_function.py",
+        "reb_11_2/Data/reb_11_2_data.csv"
+    output:
+        "reb_11_2/Results/reb_11_2_results.csv",
+        "reb_11_2/Results/reb_11_2_parity.png",
+        "reb_11_2/Results/reb_11_2_residuals_vs_yAin.png",
+        "reb_11_2/Results/reb_11_2_residuals_vs_yBin.png",
+        "reb_11_2/Results/reb_11_2_residuals_vs_yYin.png",
+        "reb_11_2/Results/reb_11_2_residuals_vs_yZin.png",
+        "../RE_Basics/Graphics/reb_11_2_parity.png",
+        "../RE_Basics/Graphics/reb_11_2_residuals_vs_yAin.png",
+        "../RE_Basics/Graphics/reb_11_2_residuals_vs_yBin.png",
+        "../RE_Basics/Graphics/reb_11_2_residuals_vs_yYin.png",
+        "../RE_Basics/Graphics/reb_11_2_residuals_vs_yZin.png"
+    shell:
+        """
+        python3 reb_11_2/Code/reb_11_2_calculations.py
+        """
