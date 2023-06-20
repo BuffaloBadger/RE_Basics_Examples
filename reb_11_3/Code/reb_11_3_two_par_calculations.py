@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import rebutils as reb
 import matplotlib.pyplot as plt
+import two_par_response_function as rf
 
 # Given and known constants
 P = 1.0 # atm
@@ -33,54 +34,9 @@ PAexpt = df['PA'].to_numpy()
 # combine the adjusted inputs into a matrix
 adjusted_inputs = np.transpose(np.array([yAin, yBin, yYin, yZin]))
 
-# Allocate storage for the responses
-resp = np.ones(len(yAin)) * -1
-
-# Define the response function
-def response_function(inputs, par1, par2):
-    # extract the rate coefficient
-    k_test = 10.0**par1
-    KB = 10.0**par2
-
-    # loop through the data points
-    for i, input in enumerate(inputs):
-        # define the reactor model
-        def reactor_model(z,n):
-            nA = n[0]
-            nB = n[1]
-            nY = n[2]
-            nZ = n[3]
-            ntot = nA + nB + nY + nZ
-            PA = nA/ntot*P
-            PB = nB/ntot*P
-            PY = nY/ntot*P
-            PZ = nZ/ntot*P
-            r = k_test*PA*PB/(KB*PB+PY)*(1 - PY*PZ/K/PA/PB)
-            ddm = np.array([-r, -r, r, r])
-            return ddm
-
-        # Solve the reactor model equations
-        m0 = 0.0
-        n0 = np.array([input[0], input[1], input[2], input[3]])*VFR_in/22.4
-        f_var = 0
-        f_val = m
-        soln = reb.solveIVODEs(m0, n0, f_var, f_val, reactor_model)
-        if not(soln.success):
-            print("A solution was NOT obtained:")
-            print(soln.message)
-        # Calculate the response
-        n_A = soln.y[0,-1]
-        n_B = soln.y[1,-1]
-        n_Y = soln.y[2,-1]
-        n_Z = soln.y[3,-1]
-        n_tot = n_A + n_B + n_Y + n_Z
-        resp[i] = n_A/n_tot*P
-    return resp
-
 # Estimate the kinetics parameters
-
 beta, beta_ci, r_squared = reb.fitNLSR(par_guess, adjusted_inputs, PAexpt, 
-        response_function, False)
+        rf.response_function, False)
 
 print('\nRaw estimated parameters;')
 print('[%.4g, %.4g]\n'%(beta[0],beta[1]))
@@ -112,7 +68,7 @@ result = pd.DataFrame(data, columns=['item','value','units'])
 result.to_csv(filepath1 + "reb_11_3_two_par_results.csv", index=False)
 
 # calculate the model-predicted responses
-y_model = response_function(adjusted_inputs,beta[0],beta[1])
+y_model = rf.response_function(adjusted_inputs,beta[0],beta[1])
 
 # calculate the residuals
 residuals = PAexpt - y_model
