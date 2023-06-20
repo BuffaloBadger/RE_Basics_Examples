@@ -27,7 +27,7 @@ rule reb_11_2_data:
 
 rule reb_11_2_results:
     input:
-        "reb_11_2/Code/reb_11_2/calculations.py",
+        "reb_11_2/Code/reb_11_2_calculations.py",
         "reb_11_2/Code/response_function.py",
         "reb_11_2/Data/reb_11_2_data.csv"
     output:
