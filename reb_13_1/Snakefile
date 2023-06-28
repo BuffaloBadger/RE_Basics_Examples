@@ -1,0 +1,29 @@
+rule reb_13_1:
+    input:
+        "reb_13_1/Results/reb_13_1_response.csv",
+        "reb_13_1/Results/reb_13_1_C_vs_t.png",
+        "reb_13_1/Results/reb_13_1_r_vs_t.png",
+        "reb_13_1/Results/reb_13_1_T_vs_t.png",
+        "../RE_Basics/Graphics/reb_13_1_C_vs_t.png",
+        "../RE_Basics/Graphics/reb_13_1_r_vs_t.png",
+        "../RE_Basics/Graphics/reb_13_1_T_vs_t.png"
+
+rule reb_13_1_results:
+    input:
+        "reb_13_1/Code/reb_13_1_calculations.py",
+        "reb_13_1/Code/response_function.py"
+    output:
+        "reb_13_1/Results/reb_13_1_response.csv",
+        "reb_13_1/Results/reb_13_1_C_vs_t.png",
+        "reb_13_1/Results/reb_13_1_r_vs_t.png",
+        "reb_13_1/Results/reb_13_1_T_vs_t.png",
+        "../RE_Basics/Graphics/reb_13_1_C_vs_t.png",
+        "../RE_Basics/Graphics/reb_13_1_r_vs_t.png",
+        "../RE_Basics/Graphics/reb_13_1_T_vs_t.png"
+    shell:
+        """
+        python3 reb_13_1/Code/reb_13_1_calculations.py
+        cp reb_13_1/Results/reb_13_1_C_vs_t.png ../RE_Basics/Graphics
+        cp reb_13_1/Results/reb_13_1_r_vs_t.png ../RE_Basics/Graphics
+        cp reb_13_1/Results/reb_13_1_T_vs_t.png ../RE_Basics/Graphics
+        """
