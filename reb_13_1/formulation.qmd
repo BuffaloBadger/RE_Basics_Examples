@@ -151,9 +151,9 @@ $$
 :::{.callout-tip collapse="true"}
 ## Click Here to See What an Expert Might be Thinking at this Point
 
-At this point, there are no missing reactor inputs, properties or operating parameters, and the reactor design equations can be solved. The next step in the general approach to completing an isolated reactor modeling assignment is to write the ancillary equations needed to calculate the response(s) of interest.
+At this point, there are no missing reactor inputs, properties or operating parameters, and the reactor design equations can be solved. The next step in the general approach to completing an isolated reactor modeling assignment is to write the ancillary equations needed to calculate the response(s) of interest and any specified response.
 
-Solving the design equations will give values of $n_A$, $n_B$, $n_Y$, $n_Z$, and $T$ at times between $t=0$ and $t = t_{\text{rxn}}$. The responses of interest are the concentrations and temperature *vs*. $t$. The concentrations can again be calculated using the defining equation for concentration.
+Solving the design equations will give values of $n_A$, $n_B$, $n_Y$, $n_Z$, and $T$ at times between $t=0$ and $t = t_{\text{rxn}}$. The responses of interest are the concentrations and temperature *vs*. $t$. The concentrations can again be calculated using the defining equation for concentration. No responses are specified in this assignment.
 
 :::
 
