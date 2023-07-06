@@ -17,6 +17,7 @@ include: "reb_11_1/Snakefile"
 include: "reb_11_2/Snakefile"
 include: "reb_11_3/Snakefile"
 include: "reb_13_1/Snakefile"
+include: "reb_13_2/Snakefile"
 
 # Specify that function  as the input for the all rule
 rule all:

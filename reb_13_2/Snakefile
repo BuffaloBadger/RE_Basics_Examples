@@ -1,0 +1,14 @@
+rule reb_13_2:
+    input:
+        "reb_13_2/Results/reb_13_2_results.csv"
+
+rule reb_13_2_results:
+    input:
+        "reb_13_2/Code/reb_13_2_calculations.py",
+        "reb_13_2/Code/response_function.py"
+    output:
+        "reb_13_2/Results/reb_13_2_response.csv"
+    shell:
+        """
+        python3 reb_13_2/Code/reb_13_2_calculations.py
+        """

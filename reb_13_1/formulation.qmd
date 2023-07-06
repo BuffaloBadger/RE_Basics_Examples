@@ -41,7 +41,7 @@ I know the general approach to completing an isolated reactor modeling assignmen
 
 **Given**: $\Delta H_1 = -101.2 \text{ kJ mol}^{-1}$, $k_{0,1} = 5.11 \times 10^4 \text{ L mol}^{-1} \text{ s}^{-1}$, $E_1 = 74.8 \text{ kJ mol}^{-1}$, $V = 1900 \text{ L}$, $T_0 = \left( 180 + 273.15 \right) \text{ K}$, $C_{A,0} = 2.9 \text{ mol L}^{-1}$, $C_{B,0} = 3.2 \text{ mol L}^{-1}$, $\tilde{C}_p = 1.23 \text{ cal g}^{-1} \text{ K}^{-1}$, $\rho = 1.02 \text{ g cm}^{-3}$, and $t_{\text{rxn}} = 2 \text{ h}$.
 
-**Responses of Interest**: $C_A\left(t\right)$, $C_B\left(t\right)$, $C_Y\left(t\right)$, $C_Z\left(t\right)$, $T\left(t\right)$, and $r\left(t\right)$.
+**Quantities of Interest**: $C_A\left(t\right)$, $C_B\left(t\right)$, $C_Y\left(t\right)$, $C_Z\left(t\right)$, $T\left(t\right)$, and $r\left(t\right)$.
 
 :::{.callout-tip collapse="true"}
 ## Click Here to See What an Expert Might be Thinking at this Point

@@ -48,9 +48,7 @@ I know that the first step in the general approach for completing isolated react
 
 **Specified Response**: $f_A = 0.45$
 
-**Responses of Interest**: $T$, $T_{ex}$, and $S_{X/Z}$ at $t=t_{rxn}$
-
-**Unknowns of Interest**: $T_0$
+**Quantities of Interest**: $T$, $T_{ex}$, and $S_{X/Z}$ at $t=t_{rxn}$; $T_0$
 
 :::{.callout-tip collapse="true"}
 ## Click Here to See What an Expert Might be Thinking at this Point
