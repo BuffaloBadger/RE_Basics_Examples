@@ -5,19 +5,93 @@ format:
     embed-resources: true
 ---
 
+```{r}
+#| echo: false
+#| output: false
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+source('~/Libraries/R/fmt_tibble_col.R')
+```
+
+### Example 13-2
+
 {{< include problem_statement.qmd >}}
 
-**Add initial T_ex**
+```{r}
+#| echo: false
+#| output: false
+path_to_data <- './Data/'
+path_to_results <- './Results/'
+path_to_figures <- './Results/'
+```
 
 ---
 
+:::{.callout-tip collapse="true"}
+## Click Here to See What an Expert Might be Thinking at this Point
+
+I know that this is an isolated reactor modeling assignment because it includes the following distinguishing characteristics.
+
+* The system consists of an ideal BSTR with no other reactors, heat exchangers, stream splits, stream mixers, etc.
+* Properties of the reactor and operational parameters are provided.
+* The reactions taking place are known, and rate expressions are available for them.
+* The assignment quantities of interest in this assignment are a reactor input, the initial temperature, and three reactor responses, the final temperature, the outlet exchange fluid temperature and the selectivity of X to Z.
+
+I know that the first step in the general approach for completing isolated reactor modeling assignments is to write the reactor design equations for the reactor, but before doing that I will summarize the information provided in the assignment.
+
+:::
+
 **Reactor**: BSTR
 
-**Given**: $V = 10\text{ L}$, $V_{ex} = 3.4\text{ L}$, $U = 188\text{ cal ft}^{-2}\text{ min}^{-1}\text{ K}^{-1}$, $A = 1700\text{ cm}^2$, $T_{ex,in} = 30\text{ °C}$, $\dot{m}_{ex} = ?\text{ g min}^{-1}$, $\rho = 1.0\text{ g cm}^{-3}$, $\rho_{ex} = 1.0\text{ g cm}^{-3}$, $\tilde{C}_p = 1.0\text{ cal g}^{-1}\text{ K}^{-1}$, $\tilde{C}_{p,ex} = 1.0\text{ cal g}^{-1}\text{ K}^{-1}$, $C_{A,0} = 5.0\text{ M}$, $C_{B,0} = 7.0\text{ M}$, $\Delta H_1 = -16.7\text{ kcal mol}^{-1}$, $\Delta H_2 = -14.3\text{ kcal mol}^{-1}$, $k_{0,1} = 9.74 \times 10^9\text{ L mol}^{-1}\text{ min}^{-1}$, $E_1 = 20.1\text{ kcal mol}^{-1}$, $k_{0,2} = 2.38 \times 10^{13}\text{ min}^{-1}$, $E_2 = 25.3\text{ kcal mol}^{-1}$, $f_{A,f} = 0.5$, $t_{rxn} = 30\text{ min}$.
+**Given**: $V = 10\text{ L}$, $V_{ex} = 1.4\text{ L}$, $U = 138\text{ cal ft}^{-2}\text{ min}^{-1}\text{ K}^{-1}$, $A = 1200\text{ cm}^2$, $T_{ex,in} = 40\text{ °C}$, $\dot{m}_{ex} = 100\text{ g min}^{-1}$, $\rho = 1.0\text{ g cm}^{-3}$, $\rho_{ex} = 1.0\text{ g cm}^{-3}$, $\tilde{C}_p = 1.0\text{ cal g}^{-1}\text{ K}^{-1}$, $\tilde{C}_{p,ex} = 1.0\text{ cal g}^{-1}\text{ K}^{-1}$, $C_{A,0} = 5.0\text{ M}$, $C_{B,0} = 7.0\text{ M}$, $\Delta H_1 = -16.7\text{ kcal mol}^{-1}$, $\Delta H_2 = -14.3\text{ kcal mol}^{-1}$, $k_{0,1} = 9.74 \times 10^9\text{ L mol}^{-1}\text{ min}^{-1}$, $E_1 = 20.1\text{ kcal mol}^{-1}$, $k_{0,2} = 2.38 \times 10^{13}\text{ min}^{-1}$, $E_2 = 25.3\text{ kcal mol}^{-1}$, and $t_{rxn} = 30\text{ min}$.
 
-**Response**: $f_A$, $T$, and $S_{X/Z}$ at $t=t_{rxn}$.
+**Specified Response**: $f_A = 0.45$
 
-**Requested**: $T_0$, $T_f$, and $S_{X/Z,f}$
+**Responses of Interest**: $T$, $T_{ex}$, and $S_{X/Z}$ at $t=t_{rxn}$
+
+**Unknowns of Interest**: $T_0$
+
+:::{.callout-tip collapse="true"}
+## Click Here to See What an Expert Might be Thinking at this Point
+
+The first step in the general approach for completing isolated reactor modeling assignments is to write the reactor design equations for the reactor as described in @sec-3_design_eqns. Mole balances are always included in the design equations, and for a BSTR the mole balance is given by @eq-bstr_mole_balance. In this system, there are two reactions taking place, so the summation expands to two terms.
+
+$$
+\frac{dn_i}{dt} = V \sum_j \nu_{i,j}r_j = \nu_{i,1}r_1V + \nu_{i,2}r_2V
+$$
+
+The BSTR is neither adiabatic nor isothermal, so an energy balance on the reacting fluid, @eq-bstr_energy_balance, is required. There are no shafts or moving boundaries (other than the agitator which is assumed to do negligible work), so the rate of doing work, $\dot{W}$, is zero and the volume is constant. This is a liquid phase system, so the pressure will also be constant. Since the volume and pressure are constant, their time derivatives are equal to zero.
+
+$$
+\left(\sum_i n_i \hat C_{p,i} \right) \frac{dT}{dt} - \cancelto{0}{V\frac{dP}{dt}}  - \cancelto{0}{P  \frac{dV}{dt}}  = \dot Q - \cancelto{0}{\dot W} - V \sum_j \left(r_j \Delta H_j \right)
+$$
+
+The summation over the reactions, $j$, expands to two terms, and a mass-specific heat capacity of the entire solution is provided, so the sensible heat term can be re-written using that heat capacity, @eq-bstr_equivalent_sens_heat_terms.
+
+$$
+V \sum_j \left(r_j \Delta H_j \right) \Rightarrow r_1V \Delta H_1 + r_2V \Delta H_2
+$$
+
+$$
+\left(\sum_i n_i \hat C_{p,i} \right) \frac{dT}{dt} \Rightarrow \rho V \tilde{C}_p \frac{dT}{dt}
+$$
+
+The reactor is cooled with chilled water which gains sensible heat from the reacting fluid, so the energy balance on that exchange fluid is given by @eq-exchange_energy_bal_sensible.
+
+$$
+\rho_{ex} V_{ex} \tilde C_{p,ex}\frac{dT_{ex}}{dt} = -\dot Q - \dot m_{ex} \int_{T_{ex,in}}^{T_{ex}} \tilde C_{p,ex}dT
+$$
+
+The exchange fluid heat capacity is constant, making the evaluation of the integral trivial.
+
+$$
+\dot m_{ex}\int_{T_{ex,in}}^{T_{ex}} \tilde C_{p,ex}dT \Rightarrow \dot m_{ex}\tilde C_{p,ex}\left( T_{ex} - T_{ex,in} \right)
+$$
+
+Momentum balances are not used with BSTRS so the full set of design equations consists of mole balances on each of the reagents, A, B, X, Y, and Z, an energy balance on the reacting fluid, and an energy balance on the exchange fluid.
+
+:::
 
 **Reactor Model**
 
@@ -49,6 +123,36 @@ $$
 \frac{dT_{ex}}{dt} = \frac{-\dot Q - \dot m_{ex} \tilde C_{p,ex}\left(T_{ex} - T_{ex,in}\right)}{\rho_{ex} V_{ex} \tilde C_{p,ex}} \tag{11}
 $$
 
+:::{.callout-tip collapse="true"}
+## Click Here to See What an Expert Might be Thinking at this Point
+
+The reactor design equations are initial value ordinary differential equations (IVODEs), so I need to provide initial values and a stopping criterion for solving them. The instant the fluids are mixed in the reactor can be defined as $t=0$. The solutions used to charge it contain only A and B; $n_{A,0}$ and $n_{B,0}$ can be used to represent the initial molar amounts of A and B. The initial molar amounts of X, Y, and Z are zero. The initial temperature is unknown, but $T_0$ can be used to represent it. The assignment does not mention the initial *outlet* temperature of the exchange fluid $T_{ex,0}$, so I will assume that the cooling water is flowing before the reagents are mixed so the initial outlet exchange fluid temperature equals the inlet exchange fluid temperature, $T_{ex,in}$. The assignment is to find responses after a reaction time of $t_{rxn} = 30 \text{ min}$, so that is the stopping criterion.
+
+:::
+
+| Variable | Initial Value | Stopping Criterion |
+|:-------|:-------:|:-------:|
+| $t$ | $0$ | $t_{rxn}$ |
+| $n_A$ | $n_{A,0}$ | |
+| $n_B$ | $n_{B,0}$ | |
+| $n_X$ | $0$ | |
+| $n_Y$ | $0$ | |
+| $n_Z$ | $0$ | |
+| $T$ | $T_0$ | |
+| $T_{ex}$ | $T_{ex,0} = T_{ex,in}$ | |
+  
+: Initial values and stopping criterion for solving design equations, (5) through (11). {#tbl-example_13_2_initial_values tbl-colwidths="[20, 40, 40]"}
+
+:::{.callout-tip collapse="true"}
+## Click Here to See What an Expert Might be Thinking at this Point
+
+The second step in the general approach for completing isolated reactor modeling assignments is to formulate the solution of the design equations to calculate the reactor outputs, assuming that any missing reactor inputs and process parameters will be available. The reactor outputs in this system are the dependent variables in the IVODEs: $n_A$, $n_B$, $n_X$, $n_Y$, $n_Z$, $T$, and $T_{ex}$ at $t = t_{rxn}$. The design equations are IVODEs, and in order to solve them, every quantity that appears them or is substituted into them must be expressed in terms of known constants, the independent variable, $t$, and the dependent variables just listed. The initial values and stopping criterion must also be calculated.
+
+The two rates appearing in the design equations are given by equations (3) and (4), which introduce $k_1$, $k_2$, $C_A$, and $C_B$ into the design equations. The rate coefficients can be expressed in terms of the Arrhenius expression, @eq-arrhenius, and the concentrations in terms of the molar amounts and the fluid volume, @eq-concentration_closed. The rate of heat transfer can be expressed in terms of the heat transfer coefficient, heat transfer area and temperature difference between the reacting and exchange fluids, @eq-bstr_heat_transfer. Finally, the initial molar amounts of A and B can be calculated using their specified initial concentrations.
+
+The initial temperature is not specified, indeed, the assignment asks me to find the initial temperature. It is needed as an initial value for solving the design equations, making it a missing value.
+:::
+
 **Ancillary Equations**
 
 $$
@@ -72,86 +176,103 @@ $$
 $$
 
 $$
-n_A \Big\vert_{t=0} = n_{A,0} = C_{A,0}V \tag{17}
+n_{A,0} = C_{A,0}V \tag{17}
 $$
 
 $$
-n_B \Big\vert_{t=0} = n_{B,0} = C_{B,0}V \tag{18}
+n_{B,0} = C_{B,0}V \tag{18}
 $$
 
-$$
-n_X \Big\vert_{t=0} = n_{X,0} = C_{X,0}V = 0 \tag{19}
-$$
+**Missing Value**: $T_0$
 
-$$
-n_Y \Big\vert_{t=0} = n_{Y,0} = C_{Y,0}V = 0 \tag{20}
-$$
+:::{.callout-tip collapse="true"}
+## Click Here to See What an Expert Might be Thinking at this Point
 
-$$
-n_Z \Big\vert_{t=0} = n_{Z,0} = C_{Z,0}V = 0 \tag{21}
-$$
+Assuming the missing value will be available, solving the reactor design equations will yield $n_A$, $n_B$, $n_X$, $n_Y$, $n_Z$, $T$, and $T_{ex}$ at $t = t_{rxn}$. The third step in the general approach for completing isolated reactor modeling assignments is to use the results from solving the design equations to calculate the quantities of interest. As noted in the summary at the start of this formulation, the quantities of interest are $T$, $T_{ex}$, and $S_{X/Z}$. The assignment also specifies one response, the conversion, $f_A$, and it must also be calculated using the results from solving the reactor design equations. Solving the reactor design equations yields $T$ and $T_{ex}$ directly. The selectivity and conversion are simply calculated using their definitions, @eq-selectivity_def_closed and @eq-conversion_def_closed.
 
-$$
-T \Big\vert_{t=0} = T_0 \tag{22}
-$$
-
-$$
-T_{ex} \Big\vert_{t=0} = T_{ex,0} \tag{23}
-$$
-
-$$
-\text{Stopping criterion: }t = t_{rxn} \tag{24}
-$$
+:::
 
 **Response Calculation**
 
 $$
-f_A \Big\vert_{t=t_{rxn}} = \frac{n_{A,0} - n_A \Big\vert_{t=t_{rxn}}}{n_{A,0}} \tag{25}
+f_A \Big\vert_{t=t_{rxn}} = \frac{n_{A,0} - n_A \Big\vert_{t=t_{rxn}}}{n_{A,0}} \tag{19}
 $$
 
 $$
-S_{X/Z} \Big\vert_{t=t_{rxn}} = \frac{n_X \Big\vert_{t=t_{rxn}}}{n_Z \Big\vert_{t=t_{rxn}}} \tag{26}
+S_{X/Z} \Big\vert_{t=t_{rxn}} = \frac{n_X \Big\vert_{t=t_{rxn}}}{n_Z \Big\vert_{t=t_{rxn}}} \tag{20}
 $$
 
-**Missing Reactor Input**: $T_0$
+:::{.callout-tip collapse="true"}
+## Click Here to See What an Expert Might be Thinking at this Point
+
+The fourth step in the general approach for completing isolated reactor modeling assignments is to create the response function that solves the reactor design equations and calculates the quantities of interest as just described. The response function should be passed the missing value, that is, the initial temperature of the reacting fluid, as an argument. The response function should return the quantities of interest **and** the calculated value of the specified response, namely the conversion of A.
+
+:::
 
 **Response Function**
 
-$$
-\Omega_1\left(T_0\right) = \left( T\vert_{t=t_{rxn}} \right)\Big\vert_{T \big\vert_{t=0} = T_0} \tag{27}
-$$
+The response function is created with the following structure:
 
-$$
-\Omega_2\left(T_0\right) = \left( f_A \Big\vert_{t=t_{rxn}} \right)\Big\vert_{T \big\vert_{t=0} = T_0} \tag{28}
-$$
-
-$$
-\Omega_3\left(T_0\right) = \left( S_{X/Z} \Big\vert_{t=t_{rxn}} \right)\Big\vert_{T \big\vert_{t=0} = T_0} \tag{29}
-$$
-
-$$
-0 = \Omega_2\left(T_0\right) - f_{A,f} \tag{30}
-$$
+* The missing input, $T_0$, is passed to it as an argument.
+* Variables are defined and assigned the values of all known and given quantities, $V$, $V_{ex}$, $U$, $A$, $T_{ex,in}$, $\dot{m}_{ex}$, $\rho$, $\rho_{ex}$, $\tilde{C}_p$, $\tilde{C}_{p,ex}$, $C_{A,0}$, $C_{B,0}$, $\Delta H_1$, $\Delta H_2$, $k_{0,1}$, $E_1$, $k_{0,2}$, $E_2$, and $t_{rxn}$, after converting them to consistent units.
+* It defines a function that evaluates the derivatives in the design equations given values of the independent variable, $t$, and the dependent variables, $n_A$, $n_B$, $n_X$, $n_Y$, $n_Z$, $T$, and $T_{ex}$. That function
+  * Calculates $k_1$ and $k_2$ using equations (12) and (13),
+  * Calculates $C_A$ and $C_B$ using equations (14) and (15),
+  * Calculates $r_1$ and $r_2$ using equations (3) and (4),
+  * Calculates $\dot{Q}$ using equation (16), and
+  * Evaluates and returns the values of the derivatives, equations (5) through (11).
+* The initial molar amounts of A and B, $n_{A,0}$ and $n_{B,0}$ are calculated using equations (17) and (18).
+* The design equations, (5) through (11), are solved using the initial values and stopping criterion in @tbl-example_13_2_initial_values to find $n_A$, $n_B$, $n_X$, $n_Y$, $n_Z$, $T$, and $T_{ex}$ at $t=t_{rxn}$.
+* The following quantities are calculated (if necessary) and returned.
+  * The specified response, $f_A$, is calculated using equation (19).
+  * The responses of interest, $T$, $T_{ex}$, are known from solving the design equations.
+  * The selectivity for X over Z, $S_{X/Z}$, is calculated using equation (20).
 
 **Calculations**
 
-1. Substitute given quantities and equations (2) and (3) into all other equations.
-2. Substitute equations (12) through (16) into equations (5) through (11).
-3. Create a response function that
-    * is given a value for $T_0$
-    * Solves equations (5) through (11) for n~A~, n~B~, n~X~, n~Y~, n~Z~, T, and T~ex~ as functions of t using the initial conditions in equations (17) through (23) and the stopping criterion in equation (24)
-    * calculates the conversion and selectivity using equations (25) and (26)
-    * returns the final temperature, conversion and selectivity
-4. Solve equation (30) for the requested value of T~0~
-5. Use the resulting value of T~0~ and the response function to calculate the requested final temperature and selectivity.
+:::{.callout-tip collapse="true"}
+## Click Here to See What an Expert Might be Thinking at this Point
+
+The fifth and final step in the general approach for completing isolated reactor modeling assignments is to use the response function to calculate all quantities of interest. In the present analysis a reactor input, specifically the initial temperature, $T_0$, is unknown, while a response, specifically the fractional conversion of A, $f_A$, is specified. In this situation it is necessary to use the response function to create a trivial residual equation and calculate and the missing unknown using an ATE solver as described in @sec-5_response_opt_design. Then, knowing the value of the missing input, it can be passed to the response function to find the other responses of interest.
+
+In this case, the response function can be thought of as providing the fractional conversion, given the initial temperature. (It also provides some other quantities, but for now, the other quantities can be ignored.) If it is given the correct value of the initial temperature, it will then equal the fractional conversion specified in the assignment. This can be represented as follows where $\Omega$ is used to represent the response function, $f_{A,f}$ is the conversion specified in the assignment, and $T_0$ is the unknown initial temperature.
+
+$$
+\Omega\left(T_0\right) = f_{A,f} \qquad \Rightarrow \qquad 0 = \Omega\left(T_0\right) - f_{A,f}
+$$
+
+This can be thought of as a single algebraic-transcendental equation (ATE) that needs to be solved to find $T_0$. The second form above has been written as a residual equation, which is the form used when solving ATEs numerically. Thus, to complete the assignment, I need to solve that trivial residual equation numerically for $T_0$. Then, once I know the initial temperature, I can call the response function passing that value as an argument and it will return the responses of interest, $T$, $T_{ex}$, and $S_{X/Z}$. (It will also return the fractional conversion, but I already know that.)
+
+:::
+
+1. Letting $\Omega\left(T_0\right)$ represent the fractional conversion returned by the response function, use numerical software that solves algebraic-transcendental equations (ATEs) to solve equation (21) to find the initial temperature that results in the fractional conversion specified in the assignment.
+
+$$
+0 = \Omega\left(T_0\right) - f_{A,f} \tag{21}
+$$
+
+2. Pass the resulting value of $T_0$ to the response function to get the responses of interest, $T$, $T_{ex}$, and $S_{X/Z}$. 
 
 **Results**
 
 ```{r}
 #| echo: false
 #| output: false
-library(tidyverse)
-df <- read.csv("../reb_12_2/python/reb_12_2_results.csv")
+df <- read.csv(paste0(path_to_results,"reb_13_2_results.csv"))
+df <- fmt_tibble_col(df, 2, 3, 2, 1)
 ```
 
-When the initial temperature is `r df$value[1]` `r df$units[1]`, the conversion will reach 45% in 30 min. At that time, the temperature of the reacting fluid will be `r df$value[2]` `r df$units[2]`, the exit temperature of the exchange fluid will be `r df$value[3]` `r df$units[3]`, and the selectivity will equal `r df$value[5]` `r df$units[5]`.
+The calculations were performed as described above, yielding the results shown in @tbl-example_13_2_results.
+
+```{r}
+#| echo: false
+#| label: tbl-example_13_2_results
+#| tbl-cap: Computational results.
+kbl(df, format = "markdown", align = "ccc")
+```
+
+**Summary and Comments**
+
+An initial temperature of `r df$value[1]` `r df$units[1]` is required to reach a conversion of `r df$value[4]``r df$units[4]` in 30 min. At that time, the temperature of the reacting fluid will be `r df$value[2]` `r df$units[2]`, the exit temperature of the exchange fluid will be `r df$value[3]` `r df$units[3]`, and the selectivity will equal `r df$value[5]` `r df$units[5]`.
+
+[Note pointing out that that Example 13-1 and this example are both response tasks but they differ in that in example 13-1 all of the reactor inputs, etc were specified and the response was calculate while in this example one of the reactor inputs had to be calculated using the specified response after which other responses of interest could also be calculated.]
