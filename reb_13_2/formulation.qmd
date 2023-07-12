@@ -59,7 +59,7 @@ $$
 \frac{dn_i}{dt} = V \sum_j \nu_{i,j}r_j = \nu_{i,1}r_1V + \nu_{i,2}r_2V
 $$
 
-The BSTR is neither adiabatic nor isothermal, so an energy balance on the reacting fluid, @eq-bstr_energy_balance, is required. There are no shafts or moving boundaries (other than the agitator which is assumed to do negligible work), so the rate of doing work, $\dot{W}$, is zero and the volume is constant. This is a liquid phase system, so the pressure will also be constant. Since the volume and pressure are constant, their time derivatives are equal to zero.
+The BSTR is not isothermal, so an energy balance on the reacting fluid, @eq-bstr_energy_balance, is required. There are no shafts or moving boundaries (other than the agitator which is assumed to do negligible work), so the rate of doing work, $\dot{W}$, is zero and the volume is constant. This is a liquid phase system, so the pressure will also be constant. Since the volume and pressure are constant, their time derivatives are equal to zero.
 
 $$
 \left(\sum_i n_i \hat C_{p,i} \right) \frac{dT}{dt} - \cancelto{0}{V\frac{dP}{dt}}  - \cancelto{0}{P  \frac{dV}{dt}}  = \dot Q - \cancelto{0}{\dot W} - V \sum_j \left(r_j \Delta H_j \right)
