@@ -31,9 +31,9 @@ path_to_figures <- './Results/'
 :::{.callout-tip collapse="true"}
 ## Click Here to See What an Expert Might be Thinking at this Point
 
-This assignment describes a single BSTR and its operation. There are no other reactors, heat exchangers, stream splits or stream mixers. The reaction taking place in the reactor is identified, and a rate expression is provided for it. The quantities of interest in the assignment are reactor variables. I know from @sec-5__response_opt_design that this combination of characteristics identifies this as an isolated reactor modeling assignment.
+This assignment describes a single BSTR and its operation. There are no other reactors, heat exchangers, stream splits or stream mixers. The reaction taking place in the reactor is identified, and a rate expression is provided for it. The quantities of interest in the assignment are reactor variables. I know from @sec-5_response_opt_design that this combination of characteristics identifies this as an isolated reactor modeling assignment.
 
-I know the general approach to completing an isolated reactor modeling assignment that was described in @sec-5__response_opt_design, and I will implement it here, but first I will summarize the information provided in the assignment.
+I know the general approach to completing an isolated reactor modeling assignment that was described in @sec-5_response_opt_design, and I will implement it here, but first I will summarize the information provided in the assignment.
 
 :::
 
@@ -52,7 +52,7 @@ $$
 \frac{dn_i}{dt} = V \sum_j \nu_{i,j}r_j
 $$
 
-The BSTR in this assignment is neither adiabatic nor isothermal, so an energy balance must also be included among the design equations. The BSTR energy balance is given in @eq-bstr_energy_balance.
+The BSTR in this assignment is not isothermal, so an energy balance must also be included among the design equations. The BSTR energy balance is given in @eq-bstr_energy_balance.
 
 $$
 \left(\sum_i n_i \hat C_{p,i} \right) \frac{dT}{dt} - \cancelto{0}{V\frac{dP}{dt}}  - \cancelto{0}{P\frac{dV}{dt}}  = \cancelto{0}{\dot Q} - \cancelto{0}{\dot W} - V \sum_j \left(r_j \Delta H_j \right)
@@ -206,7 +206,7 @@ The final step in the general approach to completing an isolated reactor modelin
 
 A computer script/function was written to perform the calculations as described above. Specifically, it
 
-1. Calls the response function to get sets of values of $t$, $C_A$, $C_B$, $C_Y$, $C_Z$, $T$, and $r$.
+1. Call the response function to get sets of values of $t$, $C_A$, $C_B$, $C_Y$, $C_Z$, $T$, and $r$.
 2. Plots each of the concentrations, the temperature, and the rate versus time.
 
 **Results**
