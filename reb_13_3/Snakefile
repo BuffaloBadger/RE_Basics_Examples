@@ -1,0 +1,19 @@
+rule reb_13_3:
+    input:
+        "reb_13_3/Results/reb_13_3_results.csv",
+        "reb_13_3/Results/reb_13_3_yield_plot.png",
+        "../RE_Basics/Graphics/reb_13_3_yield_plot.png"
+
+rule reb_13_3_results:
+    input:
+        "reb_13_3/Code/reb_13_3_calculations.m",
+        "reb_13_3/Code/reb_13_3_response.m"
+    output:
+        "reb_13_3/Results/reb_13_3_results.csv",
+        "reb_13_3/Results/reb_13_3_yield_plot.png",
+        "../RE_Basics/Graphics/reb_13_3_yield_plot.png"
+    shell:
+        """
+        matlab -nodisplay -r "cd('/Users/lund/Projects/Kinetics/RE_Basics_Examples/reb_13_3/Code');reb_13_3_calculations;exit"
+        cp reb_13_3/Results/reb_13_3_yield_plot.png ../RE_Basics/Graphics
+        """
