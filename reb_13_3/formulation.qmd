@@ -260,6 +260,13 @@ The response function is created with the following structure:
 	a. If it shows a maximum, the value of $t_{rxn}$ corresponding to the maximum value of $Y_{D/A}$ and the maximum value of $Y_{D/A}$ are two of the quantities of interest. The conversion of A at the value of $t_{rxn}$ corresponding to the maximum value of $Y_{D/A}$ is the other quantity of interest.
 	b. If it does not show a maximum, the range of values of $t_{rxn}$ is adjusted and steps 2 through 4 are repeated.
 
+:::{.callout-note collapse="false"}
+## Note
+
+Once a maximum has been found graphically, the process can be repeated using a large number of values of $t_{rxn}$ packed into a small range that includes the maximum. This will improve the accuracy of the results. These results need not be plotted. Instead they can be tabulated. The largest value of $Y_{D/A}$ can then be identified, and the corresponding value of $t_{rxn}$ can be read from the same row of the table.
+
+:::
+
 **Results**
 
 ```{r}
