@@ -1,0 +1,34 @@
+rule reb_13_4:
+    input:
+        "reb_13_4/Results/reb_13_4_results.csv",
+        "reb_13_4/Results/reb_13_4_net_rate_plot.png",
+        "reb_13_4/Results/reb_13_4_conversion_profile.png",
+        "reb_13_4/Results/reb_13_4_temperature_profile.png",
+        "reb_13_4/Results/reb_13_4_rate_profile.png",
+        "../RE_Basics/Graphics/reb_13_4_net_rate_plot.png",
+        "../RE_Basics/Graphics/reb_13_4_conversion_profile.png",
+        "../RE_Basics/Graphics/reb_13_4_temperature_profile.png",
+        "../RE_Basics/Graphics/reb_13_4_rate_profile.png"
+
+rule reb_13_4_results:
+    input:
+        "reb_13_4/Code/reb_13_4_calculations.m",
+        "reb_13_4/Code/reb_13_4_response.m"
+    output:
+        "reb_13_4/Results/reb_13_4_results.csv",
+        "reb_13_4/Results/reb_13_4_net_rate_plot.png",
+        "reb_13_4/Results/reb_13_4_conversion_profile.png",
+        "reb_13_4/Results/reb_13_4_temperature_profile.png",
+        "reb_13_4/Results/reb_13_4_rate_profile.png",
+        "../RE_Basics/Graphics/reb_13_4_net_rate_plot.png",
+        "../RE_Basics/Graphics/reb_13_4_conversion_profile.png",
+        "../RE_Basics/Graphics/reb_13_4_temperature_profile.png",
+        "../RE_Basics/Graphics/reb_13_4_rate_profile.png"
+    shell:
+        """
+        matlab -nodisplay -r "cd('/Users/lund/Projects/Kinetics/RE_Basics_Examples/reb_13_4/Code');reb_13_4_calculations;exit"
+        cp reb_13_4/Results/reb_13_4_net_rate_plot.png ../RE_Basics/Graphics
+        cp reb_13_4/Results/reb_13_4_conversion_profile.png ../RE_Basics/Graphics
+        cp reb_13_4/Results/reb_13_4_temperature_profile.png ../RE_Basics/Graphics
+        cp reb_13_4/Results/reb_13_4_rate_profile.png ../RE_Basics/Graphics
+        """
