@@ -1,48 +1,48 @@
-rule reb_11_2:
+rule reb_10_2:
     input:
-        "reb_11_2/Data/reb_11_2_data.csv",
-        "../RE_Basics/Data/reb_11_2_data.csv",
-        "reb_11_2/Results/reb_11_2_results.csv",
-        "reb_11_2/Results/reb_11_2_parity.png",
-        "reb_11_2/Results/reb_11_2_residuals_vs_yAin.png",
-        "reb_11_2/Results/reb_11_2_residuals_vs_yBin.png",
-        "reb_11_2/Results/reb_11_2_residuals_vs_yYin.png",
-        "reb_11_2/Results/reb_11_2_residuals_vs_yZin.png",
-        "../RE_Basics/Graphics/reb_11_2_parity.png",
-        "../RE_Basics/Graphics/reb_11_2_residuals_vs_yAin.png",
-        "../RE_Basics/Graphics/reb_11_2_residuals_vs_yBin.png",
-        "../RE_Basics/Graphics/reb_11_2_residuals_vs_yYin.png",
-        "../RE_Basics/Graphics/reb_11_2_residuals_vs_yZin.png"
+        "reb_10_2/Data/reb_10_2_data.csv",
+        "../RE_Basics/Data/reb_10_2_data.csv",
+        "reb_10_2/Results/reb_10_2_results.csv",
+        "reb_10_2/Results/reb_10_2_parity.png",
+        "reb_10_2/Results/reb_10_2_residuals_vs_yAin.png",
+        "reb_10_2/Results/reb_10_2_residuals_vs_yBin.png",
+        "reb_10_2/Results/reb_10_2_residuals_vs_yYin.png",
+        "reb_10_2/Results/reb_10_2_residuals_vs_yZin.png",
+        "../RE_Basics/Graphics/reb_10_2_parity.png",
+        "../RE_Basics/Graphics/reb_10_2_residuals_vs_yAin.png",
+        "../RE_Basics/Graphics/reb_10_2_residuals_vs_yBin.png",
+        "../RE_Basics/Graphics/reb_10_2_residuals_vs_yYin.png",
+        "../RE_Basics/Graphics/reb_10_2_residuals_vs_yZin.png"
 
-rule reb_11_2_data:
+rule reb_10_2_data:
     input:
-        "reb_11_2/Code/reb_11_2_pfr_data_generator.py"
+        "reb_10_2/Code/reb_10_2_pfr_data_generator.py"
     output:
-        "reb_11_2/Data/reb_11_2_data.csv",
-        "../RE_Basics/Data/reb_11_2_data.csv"
+        "reb_10_2/Data/reb_10_2_data.csv",
+        "../RE_Basics/Data/reb_10_2_data.csv"
     shell:
         """
-        python3 reb_11_2/Code/reb_11_2_pfr_data_generator.py
+        python3 reb_10_2/Code/reb_10_2_pfr_data_generator.py
         """
 
-rule reb_11_2_results:
+rule reb_10_2_results:
     input:
-        "reb_11_2/Code/reb_11_2_calculations.py",
-        "reb_11_2/Code/response_function.py",
-        "reb_11_2/Data/reb_11_2_data.csv"
+        "reb_10_2/Code/reb_10_2_calculations.py",
+        "reb_10_2/Code/response_function.py",
+        "reb_10_2/Data/reb_10_2_data.csv"
     output:
-        "reb_11_2/Results/reb_11_2_results.csv",
-        "reb_11_2/Results/reb_11_2_parity.png",
-        "reb_11_2/Results/reb_11_2_residuals_vs_yAin.png",
-        "reb_11_2/Results/reb_11_2_residuals_vs_yBin.png",
-        "reb_11_2/Results/reb_11_2_residuals_vs_yYin.png",
-        "reb_11_2/Results/reb_11_2_residuals_vs_yZin.png",
-        "../RE_Basics/Graphics/reb_11_2_parity.png",
-        "../RE_Basics/Graphics/reb_11_2_residuals_vs_yAin.png",
-        "../RE_Basics/Graphics/reb_11_2_residuals_vs_yBin.png",
-        "../RE_Basics/Graphics/reb_11_2_residuals_vs_yYin.png",
-        "../RE_Basics/Graphics/reb_11_2_residuals_vs_yZin.png"
+        "reb_10_2/Results/reb_10_2_results.csv",
+        "reb_10_2/Results/reb_10_2_parity.png",
+        "reb_10_2/Results/reb_10_2_residuals_vs_yAin.png",
+        "reb_10_2/Results/reb_10_2_residuals_vs_yBin.png",
+        "reb_10_2/Results/reb_10_2_residuals_vs_yYin.png",
+        "reb_10_2/Results/reb_10_2_residuals_vs_yZin.png",
+        "../RE_Basics/Graphics/reb_10_2_parity.png",
+        "../RE_Basics/Graphics/reb_10_2_residuals_vs_yAin.png",
+        "../RE_Basics/Graphics/reb_10_2_residuals_vs_yBin.png",
+        "../RE_Basics/Graphics/reb_10_2_residuals_vs_yYin.png",
+        "../RE_Basics/Graphics/reb_10_2_residuals_vs_yZin.png"
     shell:
         """
-        python3 reb_11_2/Code/reb_11_2_calculations.py
+        python3 reb_10_2/Code/reb_10_2_calculations.py
         """
