@@ -4,8 +4,8 @@ import scipy as sp
 import random
 
 # set the filename for the results
-filename1 = 'reb_10_3/Data/reb_10_3_data.csv'
-filename2 = '../RE_Basics/Data/reb_10_3_data.csv'
+filename1 = 'reb_11_3/Data/reb_11_3_data.csv'
+filename2 = '../RE_Basics/Data/reb_11_3_data.csv'
 
 # Constant inputs
 V = 3.0 # gal

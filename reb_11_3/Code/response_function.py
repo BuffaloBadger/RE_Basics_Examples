@@ -12,7 +12,7 @@ def response_function(inputs, log_kf_guess, log_kr_guess):
 
     # Read the experimental responses to use as guesses when solving the reactor
     # design equations
-    df = pd.read_csv('./reb_10_3/Data/reb_10_3_data.csv')
+    df = pd.read_csv('./reb_11_3/Data/reb_11_3_data.csv')
     CAout = df['CA'].to_numpy()
 
     # allocate storage for the responses

@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 V = 3.0 # gal
 
 # Read the data file
-df = pd.read_csv('./reb_10_3/Data/reb_10_3_data.csv')
+df = pd.read_csv('./reb_11_3/Data/reb_11_3_data.csv')
         # Columns: VFR, CAin, CYin, CZin, CA
 
 # Extract the data into arrays and get the number of experiments
@@ -51,7 +51,7 @@ data = [['kf', f'{kf:.3g}', 'gal lbmol^-1^ min^-1^'],
     ['kr_upper_limit', f'{kr_ul:.3g}', 'gal lbmol^-1^ min^-1^'],
     ['R_squared', f'{r_squared:.3g}', '']]
 result = pd.DataFrame(data, columns=['item','value','units'])
-result.to_csv('./reb_10_3/Results/reb_10_3_results.csv', index=False)
+result.to_csv('./reb_11_3/Results/reb_11_3_results.csv', index=False)
 
 # calculate the model-predicted responses and the residuals
 y_model = rf.response_function(adj_inputs, beta[0], beta[1])
@@ -65,8 +65,8 @@ plt.plot([np.min(CAout), np.max(CAout)], [np.min(CAout), np.max(CAout)],
 plt.xlabel("experimental response (lbmol gal$^{-1}$)")
 plt.ylabel("model-predicted response (lbmol gal$^{-1}$)")
 plt.tight_layout()
-plt.savefig('./reb_10_3/Results/reb_10_3_parity.png')
-plt.savefig('../RE_Basics/Graphics/reb_10_3_parity.png')
+plt.savefig('./reb_11_3/Results/reb_11_3_parity.png')
+plt.savefig('../RE_Basics/Graphics/reb_11_3_parity.png')
 plt.show()
 
 # create, display and save the residuals plots
@@ -77,8 +77,8 @@ plt.axhline(y=0, color = 'k')
 plt.xlabel("Volumetric Flow Rate (gal min$^{-1}$)")
 plt.ylabel("Residual (lbmol gal$^{-1}$)")
 plt.tight_layout()
-plt.savefig('./reb_10_3/Results/reb_10_3_VFR_residuals.png')
-plt.savefig('../RE_Basics/Graphics/reb_10_3_VFR_residuals.png')
+plt.savefig('./reb_11_3/Results/reb_11_3_VFR_residuals.png')
+plt.savefig('../RE_Basics/Graphics/reb_11_3_VFR_residuals.png')
 plt.show()
 
 # residuals vs. CAin
@@ -88,8 +88,8 @@ plt.axhline(y=0, color = 'k')
 plt.xlabel("Inlet Concentration of A (lbmol gal$^{-1}$)")
 plt.ylabel("Residual (lbmol gal$^{-1}$)")
 plt.tight_layout()
-plt.savefig('./reb_10_3/Results/reb_10_3_CA_residuals.png')
-plt.savefig('../RE_Basics/Graphics/reb_10_3_CA_residuals.png')
+plt.savefig('./reb_11_3/Results/reb_11_3_CA_residuals.png')
+plt.savefig('../RE_Basics/Graphics/reb_11_3_CA_residuals.png')
 plt.show()
 
 # residuals vs. CYin
@@ -99,8 +99,8 @@ plt.axhline(y=0, color = 'k')
 plt.xlabel("Inlet Concentration of Y (lbmol gal$^{-1}$)")
 plt.ylabel("Residual (lbmol gal$^{-1}$)")
 plt.tight_layout()
-plt.savefig('./reb_10_3/Results/reb_10_3_CY_residuals.png')
-plt.savefig('../RE_Basics/Graphics/reb_10_3_CY_residuals.png')
+plt.savefig('./reb_11_3/Results/reb_11_3_CY_residuals.png')
+plt.savefig('../RE_Basics/Graphics/reb_11_3_CY_residuals.png')
 plt.show()
 
 # residuals vs. CZin
@@ -110,6 +110,6 @@ plt.axhline(y=0, color = 'k')
 plt.xlabel("Inlet Concentration of Z (lbmol gal$^{-1}$)")
 plt.ylabel("Residual (lbmol gal$^{-1}$)")
 plt.tight_layout()
-plt.savefig('./reb_10_3/Results/reb_10_3_CZ_residuals.png')
-plt.savefig('../RE_Basics/Graphics/reb_10_3_CZ_residuals.png')
+plt.savefig('./reb_11_3/Results/reb_11_3_CZ_residuals.png')
+plt.savefig('../RE_Basics/Graphics/reb_11_3_CZ_residuals.png')
 plt.show()
