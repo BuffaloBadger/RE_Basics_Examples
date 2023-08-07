@@ -173,8 +173,6 @@ d <- data.frame(a,b)
 
 The calculations were performed as described above. The resulting values of the rate expression parameters, their 95% confidence intervals, and the coefficient of determination, $R^2$, are shown in @tbl-example_11_3_results. The parity plot is shown in @fig-example_11_3_parity, and the residuals plots are shown in @fig-example_11_3_residuals_plots.
 
-
-
 ```{r}
 #| echo: false
 #| warning: false

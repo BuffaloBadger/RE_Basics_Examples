@@ -119,7 +119,6 @@ The cooling phase begins the instant the heating phase ends, so the initial valu
 
 The initial values and stopping criterion for solving the reactor design equations for the heating phase are presented in @tbl-example_13_4_heating_initial_values. If $t_1$, $n_{A,1}$, $n_{Z,1}$, and $T_{ex,1}$ represent the values of $t$, $n_A$, $n_Z$, and $T_{ex}$ at the end of the heating phase, those values are also the intial values for the cooling phase, which ends when $T = T_f$. Thus, the initial values and stopping criterion for the coolling phase are given in @tbl-example_13_4_cooling_initial_values
 
-### Initial values and stopping criterion
 | Variable | Initial Value | Stopping Criterion |
 |:-------|:-------:|:-------:|
 | $t$ | $0$ | |
