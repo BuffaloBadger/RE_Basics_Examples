@@ -4,8 +4,8 @@ import scipy as sp
 import random
 
 # set the filename for the results
-filename1 = 'reb_10_2/Data/reb_10_2_data.csv'
-filename2 = '../RE_Basics/Data/reb_10_2_data.csv'
+filename1 = 'reb_11_2/Data/reb_11_2_data.csv'
+filename2 = '../RE_Basics/Data/reb_11_2_data.csv'
 
 # Constant inputs
 V = 1.0 # L (basis)

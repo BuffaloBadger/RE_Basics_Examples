@@ -11,7 +11,7 @@ V = 1.0 # L (basis)
 R = 0.08206 # L*atm/mol/K
 
 # Read the data file
-df = pd.read_csv('./reb_10_2/Data/reb_10_2_data.csv')
+df = pd.read_csv('./reb_11_2/Data/reb_11_2_data.csv')
         # Columns: tau, yAin, CZout
 
 # Extract the data into arrays and get the number of experiments
@@ -62,7 +62,7 @@ data = [['k', f'{k:.3g}', 'mol L^-1^ s^-1^ atm^' + order_as_text + '^'],
     ['alphaB_ul', f'{alphaB_ul:.3g}', ''],
     ['R_squared', f'{r_squared:.3g}', '']]
 result = pd.DataFrame(data, columns=['item','value','units'])
-result.to_csv('./reb_10_2/Results/reb_10_2_results.csv', index=False)
+result.to_csv('./reb_11_2/Results/reb_11_2_results.csv', index=False)
 
 # calculate the model-predicted responses and the residuals
 y_model = rf.response_function(adj_inputs, beta[0], beta[1], beta[2])
@@ -76,8 +76,8 @@ plt.plot([np.min(CZout), np.max(CZout)], [np.min(CZout), np.max(CZout)],
 plt.xlabel("experimental response (M)")
 plt.ylabel("model-predicted response (M)")
 plt.tight_layout()
-plt.savefig('./reb_10_2/Results/reb_10_2_parity.png')
-plt.savefig('../RE_Basics/Graphics/reb_10_2_parity.png')
+plt.savefig('./reb_11_2/Results/reb_11_2_parity.png')
+plt.savefig('../RE_Basics/Graphics/reb_11_2_parity.png')
 plt.show()
 
 # create, display and save the residuals plots
@@ -88,8 +88,8 @@ plt.axhline(y=0, color = 'k')
 plt.xlabel("Space Time (s)")
 plt.ylabel("Residual (M)")
 plt.tight_layout()
-plt.savefig('./reb_10_2/Results/reb_10_2_tau_residuals.png')
-plt.savefig('../RE_Basics/Graphics/reb_10_2_tau_residuals.png')
+plt.savefig('./reb_11_2/Results/reb_11_2_tau_residuals.png')
+plt.savefig('../RE_Basics/Graphics/reb_11_2_tau_residuals.png')
 plt.show()
 
 # residuals vs. yAin
@@ -99,6 +99,6 @@ plt.axhline(y=0, color = 'k')
 plt.xlabel("Inlet Mole Fraction of A")
 plt.ylabel("Residual (M)")
 plt.tight_layout()
-plt.savefig('./reb_10_2/Results/reb_10_2_yA_residuals.png')
-plt.savefig('../RE_Basics/Graphics/reb_10_2_yA_residuals.png')
+plt.savefig('./reb_11_2/Results/reb_11_2_yA_residuals.png')
+plt.savefig('../RE_Basics/Graphics/reb_11_2_yA_residuals.png')
 plt.show()

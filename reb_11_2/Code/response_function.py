@@ -21,7 +21,7 @@ def response_function(inputs, log_k_guess, alphaA_guess, alphaB_guess):
 
     # read the experimental responses to use as guesses when solving the reactor
     # design equations
-    df = pd.read_csv('./reb_10_2/Data/reb_10_2_data.csv')
+    df = pd.read_csv('./reb_11_2/Data/reb_11_2_data.csv')
     CZout = df['CZout'].to_numpy()/1000.0
 
     for i in range(0,n_data):
