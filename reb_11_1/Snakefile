@@ -1,52 +1,52 @@
-rule reb_10_1:
+rule reb_11_1:
     input:
-        "reb_10_1/Data/reb_10_1_data.csv",
-        "../RE_Basics/Data/reb_10_1_data.csv",
-        "reb_10_1/Results/reb_10_1_results.csv",
-        "reb_10_1/Results/reb_10_1_parity.png",
-        "reb_10_1/Results/reb_10_1_VFR_residuals.png",
-        "reb_10_1/Results/reb_10_1_CA_residuals.png",
-        "reb_10_1/Results/reb_10_1_CB_residuals.png",
-        "reb_10_1/Results/reb_10_1_CY_residuals.png",
-        "reb_10_1/Results/reb_10_1_CZ_residuals.png",
-        "../RE_Basics/Graphics/reb_10_1_parity.png",
-        "../RE_Basics/Graphics/reb_10_1_VFR_residuals.png",
-        "../RE_Basics/Graphics/reb_10_1_CA_residuals.png",
-        "../RE_Basics/Graphics/reb_10_1_CB_residuals.png",
-        "../RE_Basics/Graphics/reb_10_1_CY_residuals.png",
-        "../RE_Basics/Graphics/reb_10_1_CZ_residuals.png"
+        "reb_11_1/Data/reb_11_1_data.csv",
+        "../RE_Basics/Data/reb_11_1_data.csv",
+        "reb_11_1/Results/reb_11_1_results.csv",
+        "reb_11_1/Results/reb_11_1_parity.png",
+        "reb_11_1/Results/reb_11_1_VFR_residuals.png",
+        "reb_11_1/Results/reb_11_1_CA_residuals.png",
+        "reb_11_1/Results/reb_11_1_CB_residuals.png",
+        "reb_11_1/Results/reb_11_1_CY_residuals.png",
+        "reb_11_1/Results/reb_11_1_CZ_residuals.png",
+        "../RE_Basics/Graphics/reb_11_1_parity.png",
+        "../RE_Basics/Graphics/reb_11_1_VFR_residuals.png",
+        "../RE_Basics/Graphics/reb_11_1_CA_residuals.png",
+        "../RE_Basics/Graphics/reb_11_1_CB_residuals.png",
+        "../RE_Basics/Graphics/reb_11_1_CY_residuals.png",
+        "../RE_Basics/Graphics/reb_11_1_CZ_residuals.png"
 
-rule reb_10_1_data:
+rule reb_11_1_data:
     input: 
-        "reb_10_1/Code/reb_10_1_cstr_data_generator.py"
+        "reb_11_1/Code/reb_11_1_cstr_data_generator.py"
     output:
-        "reb_10_1/Data/reb_10_1_data.csv",
-        "../RE_Basics/Data/reb_10_1_data.csv"
+        "reb_11_1/Data/reb_11_1_data.csv",
+        "../RE_Basics/Data/reb_11_1_data.csv"
     shell:
         """
-        python3 reb_10_1/Code/reb_10_1_cstr_data_generator.py
+        python3 reb_11_1/Code/reb_11_1_cstr_data_generator.py
         """
 
-rule reb_10_1_results:
+rule reb_11_1_results:
     input:
-        "reb_10_1/Code/reb_10_1_calculations.py",
-        "reb_10_1/Code/response_function.py",
-        "reb_10_1/Data/reb_10_1_data.csv"
+        "reb_11_1/Code/reb_11_1_calculations.py",
+        "reb_11_1/Code/response_function.py",
+        "reb_11_1/Data/reb_11_1_data.csv"
     output:
-        "reb_10_1/Results/reb_10_1_results.csv",
-        "reb_10_1/Results/reb_10_1_parity.png",
-        "reb_10_1/Results/reb_10_1_VFR_residuals.png",
-        "reb_10_1/Results/reb_10_1_CA_residuals.png",
-        "reb_10_1/Results/reb_10_1_CB_residuals.png",
-        "reb_10_1/Results/reb_10_1_CY_residuals.png",
-        "reb_10_1/Results/reb_10_1_CZ_residuals.png",
-        "../RE_Basics/Graphics/reb_10_1_parity.png",
-        "../RE_Basics/Graphics/reb_10_1_VFR_residuals.png",
-        "../RE_Basics/Graphics/reb_10_1_CA_residuals.png",
-        "../RE_Basics/Graphics/reb_10_1_CB_residuals.png",
-        "../RE_Basics/Graphics/reb_10_1_CY_residuals.png",
-        "../RE_Basics/Graphics/reb_10_1_CZ_residuals.png"
+        "reb_11_1/Results/reb_11_1_results.csv",
+        "reb_11_1/Results/reb_11_1_parity.png",
+        "reb_11_1/Results/reb_11_1_VFR_residuals.png",
+        "reb_11_1/Results/reb_11_1_CA_residuals.png",
+        "reb_11_1/Results/reb_11_1_CB_residuals.png",
+        "reb_11_1/Results/reb_11_1_CY_residuals.png",
+        "reb_11_1/Results/reb_11_1_CZ_residuals.png",
+        "../RE_Basics/Graphics/reb_11_1_parity.png",
+        "../RE_Basics/Graphics/reb_11_1_VFR_residuals.png",
+        "../RE_Basics/Graphics/reb_11_1_CA_residuals.png",
+        "../RE_Basics/Graphics/reb_11_1_CB_residuals.png",
+        "../RE_Basics/Graphics/reb_11_1_CY_residuals.png",
+        "../RE_Basics/Graphics/reb_11_1_CZ_residuals.png"
     shell:
         """
-        python3 reb_10_1/Code/reb_10_1_calculations.py
+        python3 reb_11_1/Code/reb_11_1_calculations.py
         """

@@ -18,7 +18,7 @@ def response_function(inputs, log_k_guess):
 
     # read the experimental responses to use as guesses when solving the reactor
     # design equations  
-    df = pd.read_csv('./reb_10_1/Data/reb_10_1_data.csv')
+    df = pd.read_csv('./reb_11_1/Data/reb_11_1_data.csv')
     CYout = df['CYout'].to_numpy()
 
     # loop through all of the experiments
