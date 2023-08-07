@@ -14,7 +14,7 @@ library(kableExtra)
 source('~/Libraries/R/fmt_tibble_col.R')
 ```
 
-### Example 11-2
+## Example 10-2
 
 {{< include problem_statement.qmd >}}
 
@@ -24,19 +24,19 @@ source('~/Libraries/R/fmt_tibble_col.R')
 path_to_data <- './Data/'
 path_to_results <- './Results/'
 path_to_figures <- './Results/'
-d <- read.csv(paste0(path_to_data,"reb_11_2_data.csv"))
- # A_in, Y_in, Z_in, fA
+df <- read.csv(paste0(path_to_data,"reb_10_2_data.csv"))
+ # tau, yAin, CZout
 ```
 
-The first few data points are shown in @tbl-example_11_2_data; the full data set are available in the file, [reb_11_2_data.csv](`r paste0(path_to_data,'reb_11_2_data.csv')`).
+The first few data points are shown in @tbl-example_10_2_data. The full data set is available in the file [reb_10_2_data.csv](`r paste0(path_to_data,'reb_10_2_data.csv')`).
 
 ```{r}
 #| echo: false
 #| warning: false
-#| label: tbl-example_11_2_data
-#| tbl-cap: First 8 of the 64 experimentally generated data.
-kbl(d[1:8,], format = "markdown", align = "ccccc", 
-  col.names = c('y~A,in~','y~B,in~','y~Y,in~', 'y~Z,in~', 'P~A,out~ (atm)'))
+#| label: tbl-example_10_2_data
+#| tbl-cap: First 6 experimental data points.
+kbl(df[1:6,], format = "markdown", align = "ccc", 
+  col.names = c('$\\tau$ (s)', 'y~A,in~', 'C~Z,out~ (mmol L^-1^)'))
 ```
 
 ---
@@ -44,190 +44,181 @@ kbl(d[1:8,], format = "markdown", align = "ccccc",
 :::{.callout-tip collapse="true"}
 ## Click Here to See What an Expert Might be Thinking at this Point
 
-This is a kinetics data analysis problem. I will begin by listing the reactor type, known constants, inputs that were adjusted during the experiments, response that was measured in the experiments, and rate expression parameters that need to be estimated.
+This problem describes reactor experiments, provides the data from the experiments, and asks me to assess the accuracy of a rate expression, so it is a kinetics data analysis problem. Knowing that I will be creating a response function, I'll start by listing the reactor type, constants given in the problem statement, the adjusted experimental inputs, the experimental response, and the rate expression parameter I need to estimate.
 
 :::
 
-**Reactor**: PFR
+**Reactor**:CSTR
 
-**Given**: $P=1\text{ atm}$, $m_{\text{cat}}=3\text{ g}$, $\dot{V}_{in}=0.85\text{ L min}^{-1}$, $T=400\text{ °C}$, and $K = 12.2$.
+**Given**: $P = 3 \text{ atm}$ and $T = 450 + 273.15 \text{ K}$.
 
-**Adjusted Inputs**: $\underline{y}_{A,in}$, $\underline{y}_{B,in}$, $\underline{y}_{Y,in}$, and $\underline{y}_{Z,in}$.
+**Adjusted Inputs**: $\underline{\tau}$ and $\underline{y}_{A,in}$.
 
-**Experimental Response**: $\underline{P}_A$.
+**Experimental Response**: $\underline{C}_Z$.
 
-**Rate Expression Parameters**: $k$, $\alpha_A$, $\alpha_B$, $\alpha_Y$, and $\alpha_Z$.
+**Rate Expression Parameters**:  $k$, $\alpha_A$, and $\alpha_B$.
 
 :::{.callout-tip collapse="true"}
 ## Click Here to See What an Expert Might be Thinking at this Point
 
-The first step in solving a kinetics data analysis problem is to a response function. The response function solves the reactor design equations for the experimental reactor and uses the results to calculate a predicted value for the measured response. Thus, the first thing I need to do is to write the reactor design equations for the experimental reactor. Since the reactor is isobaric and isothermal, and its temperature is known, I can model it using only mole balances on the reagents A, B, Y, and Z. The reaction is catalytic and the size of the reactor is not provided. The mass of catalyst is provided, so I will use a form of the PFR mole balance where the catalyst mass is the independent variable, @eq-pfr_mole_bal_one_rxn_using_m, and the rate is normalized by the catalyst mass. The stoichiometric coefficients of A, B, Y, and Z are -1, -1, 1, and 1, respectively.
+I need to generate a response function that predicts the responses using the rate expression. To start, I need a model for the reactor. Referring back to @sec-3_design_eqns, I know that when the reactor operates at a known temperature, the mole balances can be solved independently from the other design equations, so all I need here is a set of mole balances for this reactor. The mole balance design equation for a steady-state CSTR with only one reaction taking place is given in @eq-cstr_mole_bal_one_reaction.
 
 $$
-\frac{d \dot n_i}{dm} =\nu_{i} r
+0 = \dot{n}_{i,in} - \dot{n}_i + \nu_i r V
 $$
 
-The design equations are IVODEs, so initial values and a stopping criterion are needed in order to solve them. At the inlet to the reactor, the catalyst mass is equal to zero, $m=0$, and at the end of the reactor it is equal to $m_{\text{cat}}$. Letting $\dot{n}_{A,in}$, $\dot{n}_{B,in}$, $\dot{n}_{Y,in}$, and $\dot{n}_{Z,in}$ represent the molar flow rates at the reactor inlets then leads to the initial values and stopping criterion shown in @tbl-example_11_2_initial_values.
+The stoichiometric coefficients of A, B, and Z are -1, -1 and 1, respectively. The problem also states that the feed contained only reagents A and B, so the inlet molar flow rate of reagent Z is equal to zero. Substitution of those values leads to equations (3) through (5).
 
 :::
 
 **Reactor Model**
 
-Mole balances on A, B, Y, and Z, are presented in equations (3) through (6), and the corresponding initial values and stopping criterion are shown in @tbl-example_11_2_initial_values.
+Mole balances on A, B, and Z are shown in equations (3) through (5).
 
 $$
-\frac{d\dot{n}_A}{dm} = -r \tag{3}
-$$
-
-$$
-\frac{d\dot{n}_B}{dm} = -r \tag{4}
+0 = \dot{n}_{A,in} - \dot{n}_A - rV \tag{3}
 $$
 
 $$
-\frac{d\dot{n}_Y}{dm} = r \tag{5}
+0 = \dot{n}_{B,in} - \dot{n}_B - rV \tag{4}
 $$
 
 $$
-\frac{d\dot{n}_Z}{dm} = r \tag{6}
+0 = \cancelto{0}{\dot{n}_{Z,in}} - \dot{n}_Z + rV \tag{5}
 $$
-
-| Variable | Initial Value | Stopping Criterion |
-|:-------|:-------:|:-------:|
-| $m$ | $0$ | $m_{\text{cat}}$ |
-| $\dot{n}_A$ | $\dot{n}_{A,in}$ |  |
-| $\dot{n}_B$ | $\dot{n}_{B,in}$ |  |
-| $\dot{n}_Y$ | $\dot{n}_{Y,in}$ |  |
-| $\dot{n}_Z$ | $\dot{n}_{Z,in}$ |  |
-
-: Initial values and stopping criterion for solving the design equations, equations (3) through (6). {#tbl-example_11_2_initial_values tbl-colwidths="[20, 40, 40]"}
 
 :::{.callout-tip collapse="true"}
 ## Click Here to See What an Expert Might be Thinking at this Point
 
-Since the mole balances are IVODEs, I will need to express every quantity that appears in them or is substituted into them in terms of known constants, the independent variable, $m$, and the dependent variables, $\dot{n}_A$, $\dot{n}_B$, $\dot{n}_Y$, and $\dot{n}_Z$ before I can solve them. When the rate expression is substituted into equations (3) through (6) it will introduce the partial pressures of each of the reagents. These can be related to the molar flow rates using @eq-partial_pressure_open.
+Within the response function I will need to numerically solve equations (3) through (5) for the outlet molar flow rates of A, B, and Z. To do that, I must provide equations for calculating every other quantity in the equations from those unknowns and known constants. So I'll go through each of the mole balances and any equations that will be substituted into them and write equations for the quantities other than the unknowns and known constants.
 
-$$
-P_i = y_iP = \frac{\dot n_iRT}{\dot V} = C_iRT
-$$
+At first, looking at the mole balances, it appears that I'm not given sufficient information, but upon careful reading of the problem statement I see that all of the quantities provided are *intensive* quantities. When that is true, I can choose the value for one *extensive* quantity and use it as the basis for my calculations. I'm going to choose a reactor volume of 1 L as the basis for my calculations.
 
-The rate expression parameters and the adjusted inputs will be available in the response function, so no other expression need to be substituted into the design equations. However, the initial values are not known and must be calculated. Letting $\hat{V}_{STP}$ represent the *standard* molar volume of an ideal gas, 22.4 mol L^-1^, the inlet volumetric flow rate divided by the standard molar volume yields the molar flow rate. Multiplying that by the inlet mole fraction yields the needed inlet molar flow rates.
+The mole balance design equations also contain the inlet molar flow rates of A and B. The problem statement does not provide any flow rates, but having chosen a volume as a basis, I can use the definition of space time (which is one of the adjusted inputs) to calculate the inlet volumetric flow rate. Then I can use the ideal gas law to calculate the total inlet molar flow rate and the inlet mole fractions of A and B to calculate their inlet molar flow rates.
+
+When I substitute the rate expression into the mole balances, that will introduce the partial pressures of A and B. Equations for the partial pressures can be written using the unknowns and the defining equation for partial pressure. The rate coefficient and the reaction orders will be passed to the response function as arguments, so I don't need equations for them.
+
 :::
 
 **Ancillary Equations**
 
 $$
-P_A = \frac{\dot{n}_A}{\dot{n}_A++\dot{n}_B+\dot{n}_Y+\dot{n}_Z}P \tag{7}
+V = 1 \text{ L }\left( \text{Basis} \right) \tag{6}
 $$
 
 $$
-P_B = \frac{\dot{n}_B}{\dot{n}_A++\dot{n}_B+\dot{n}_Y+\dot{n}_Z}P \tag{8}
+\dot{V}_{in} = V/\tau \tag{7}
 $$
 
 $$
-P_Y = \frac{\dot{n}_Y}{\dot{n}_A++\dot{n}_B+\dot{n}_Y+\dot{n}_Z}P \tag{9}
+\dot{n}_{in,\text{total}} = \frac{P\dot{V}_{in}}{RT} \tag{8}
 $$
 
 $$
-P_Z = \frac{\dot{n}_Z}{\dot{n}_A++\dot{n}_B+\dot{n}_Y+\dot{n}_Z}P \tag{10}
+\dot{n}_{A,in} = y_{A,in}\dot{n}_{in,\text{total}} \tag{9}
 $$
 
 $$
-\dot{n}_A\Big\vert_{m=0} = \dot{n}_{A,in} = y_{A,in}\frac{\dot{V}_{in}}{\hat{V}_{STP}} \tag{11}
+\dot{n}_{B,in} = \left(1 - y_{A,in}\right)\dot{n}_{in,\text{total}} \tag{10}
 $$
 
 $$
-\dot{n}_B\Big\vert_{m=0} = \dot{n}_{B,in} = y_{B,in}\frac{\dot{V}_{in}}{\hat{V}_{STP}} \tag{12}
+P_A = y_A P = \frac{\dot{n}_A}{\dot{n}_A + \dot{n}_B + \dot{n}_Z}P \tag{11}
 $$
 
 $$
-\dot{n}_Y\Big\vert_{m=0} = \dot{n}_{Y,in} = y_{Y,in}\frac{\dot{V}_{in}}{\hat{V}_{STP}} \tag{13}
-$$
-
-$$
-\dot{n}_Z\Big\vert_{m=0} = \dot{n}_{Z,in} = y_{Z,in}\frac{\dot{V}_{in}}{\hat{V}_{STP}} \tag{14}
+P_B = y_B P = \frac{\dot{n}_B}{\dot{n}_A + \dot{n}_B + \dot{n}_Z}P \tag{12}
 $$
 
 :::{.callout-tip collapse="true"}
 ## Click Here to See What an Expert Might be Thinking at this Point
 
-With the information just provided, the mole balances can be solved within the response function to find the outlet molar flow rates of A, B, Y, and Z. The response in this problem is the partial pressure of A. Therefore, the model-predicted response can be calculated using equation (7).
+At this point the mole balances can be solved numerically for the outlet molar flow rates of A, B, and Z. This will be done within the response function, and then the results must be used to calculate the response predicted by the model. In this problem the response is the concentration of Z in the stream leaving the reactor. That can be calculated using the ideal gas law, @eq-conc_cstr_kinetics.
 
 :::
 
 **Response Calculation**
 
-The predicted value of the measured response can be calculated using equation (7).
+$$
+C_Z = \frac{\dot{n}_Z}{\dot{V}} = \frac{\dot{n}_ZP}{\dot{n}_{\text{total}}RT} = \frac{\dot{n}_ZP}{\left(\dot{n}_A + \dot{n}_B + \dot{n}_Z\right)RT} \tag{13}
+$$
 
 **Response Function**
 
-The response function is created with the following structure:
+The response function is created with the following structure.
 
-* The adjusted inputs, $\underline{y}_{A,in}$, $\underline{y}_{B,in}$, $\underline{y}_{Y,in}$, and $\underline{y}_{Z,in}$, and the rate expression parameters, $k$, $\alpha_A$, $\alpha_B$, $\alpha_Y$, and $\alpha_Z$, are passed to it as arguments.
-* Variables are defined and assigned the values of all known and given quantities: $P=1\text{ atm}$, $m_{\text{cat}}=3\text{ g}$, $\dot{V}_{in}=0.85\text{ L min}^{-1}$, $T=400\text{ °C}$, and $K = 12.2$.
-* A function that evaluates the derivatives in the design equations given values of the independent variable, $m$, and the dependent variables, $\dot{n}_A$, $\dot{n}_B$, $\dot{n}_Y$, and $\dot{n}_Z$, is defined. It
-    * Calculates $P_A$, $P_B$, $P_Y$, and $P_Z$ using equations (7) through (10).
+* The adjusted inputs, $\underline{\tau}$ and $\underline{y}_{A,in}$, and the rate expression parameters, $k$, $\alpha_A$, and $\alpha_B$, are passed to it as arguments.
+* Variables are defined and assigned the values of all known and given quantities, $P = 3 \text{ atm}$ and $T = 450 + 273.15 \text{ K}$, and the basis, equation (6).
+* A function is defined that evaluates the reactor equation residuals (the right-hand sides of equations (3) through (5)), given values of the unknowns, $\dot{n}_A$, $\dot{n}_B$, and $\dot{n}_Z$. It
+    * Calculates the inlet volumetric and molar flow rates, equations (7) and (8).
+    * Calculates the inlet molar flow rates of A and B, equations (9) and (10).
+    * Calculates the partial pressures of A and B, equations (11) and (12).
     * Calculates $r$ using equation (2).
-    * Evaluates and returns the values of the derivatives, equations (3) through (6).
-* For each experiment, the response function 
-    * Calculates $\dot{n}_{A,in}$, $\dot{n}_{B,in}$, $\dot{n}_{Y,in}$, and $\dot{n}_{Z,in}$ using equations (11) through (14).
-    * Solves the design equations using the initial values and stopping criterion in @tbl-example_11_2_initial_values to find $\dot{n}_A$, $\dot{n}_B$, $\dot{n}_Y$, and $\dot{n}_Z$ at the reactor outlet where $m = m_{\text{cat}}$.
-    * Calculates $P_A$ using equation (7).
-* The values of $P_A$ for all of the experiments are returned.
+    * Evaluates and returns the residuals, equations (3) through (5).
+* For each experiment, the response function
+    * Solves the reactor design equations numerically to find $\dot{n}_A$, $\dot{n}_B$, and $\dot{n}_Z$.
+    * Calculates $C_Z$ using equation (13).
+* The predicted values of $C_Z$ for all of the experiments are returned.
+
+:::{.callout-tip collapse="true"}
+## Click Here to See What an Expert Might be Thinking at this Point
+
+Having created the response function, I can now use it to estimate the rate expression parameters, $k$, $\alpha_A$, and $\alpha_B$, at the experimental temperature, 450 °C. To do so I will use parameter estimation software of my choosing. I will write a simple program that passes the adjusted inputs, the measured responses, and a guess for the rate expression parameter to that parameter estimation software. It will return the best estimate for $k$, $\alpha_A$, and $\alpha_B$, some measure of the uncertainty in $k$, $\alpha_A$, and $\alpha_B$, and the coefficient of determination, $R^2$.
+
+Using the resulting value of $k$, $\alpha_A$, and $\alpha_B$, I can calculate the model-predicted responses for all of the experiments using the response function. Then, knowing the model-predicted responses I can calculate the residual (difference between the measured response and the model-predicted response) for each eperiment. Finally, as described in @sec-4_kin_data_gen, I can create a parity plot and residuals plots.
+
+:::
 
 **Calculations**
 
-1. Pass the response function, the adjusted inputs, and the experimental responses to parameter estimation software to find $k$, $\alpha_A$, $\alpha_B$, $\alpha_Y$, and $\alpha_Z$,, the uncertainty in $k$, $\alpha_A$, $\alpha_B$, $\alpha_Y$, and $\alpha_Z$,, and the coefficient of determination, $R^2$.
-2. Use the resulting value of $k$, $\alpha_A$, $\alpha_B$, $\alpha_Y$, and $\alpha_Z$, to create a parity plot ($P_{A,\text{ expt}}$ *vs*. $P_{A,\text{ model}}$) and residuals plots ($P_{A,\text{ expt}} - P_{A,\text{ model}}$ *vs*. $y_{A,in}$, *vs*. $y_{B,in}$, *vs*. $y_{Y,in}$, and *vs*. $y_{Z,in}$,)
+1. Pass the response function, the adjusted inputs, the experimental responses, and a guess for the rate expression parameter to parameter estimation software to find $k$, $\alpha_A$, and $\alpha_B$, the uncertainty in $k$, $\alpha_A$, and $\alpha_B$, and the coefficient of determination, $R^2$.
+2. Use the resulting values of $k$, $\alpha_A$, and $\alpha_B$ to calculate the model-predicted response, $C_{Z,\text{model}}$, for every experiment.
+3. Create a parity plot ($C_{Z,\text{model}}$ *vs*. $C_{Z,\text{expt}}$) and parity plots ($C_{Z,\text{model}} - C_{Z,\text{expt}}$ *vs*. $\underline{\tau}$ and *vs*. $\underline{y}_{A,in}$.
 
 **Results**
 
 ```{r}
 #| echo: false
 #| output: false
-d <- read.csv(paste0(path_to_results,'reb_11_2_results.csv'))
-d <- fmt_tibble_col(d, 2, 3, 2, 1)
-a <- c('k','α~A~','α~B~','α~Y~','α~Z~','R^2^')
-b1 <- paste0(d$value[1],' ',d$units[1],', 95% CI [',d$value[2],', ',d$value[3],']')
-b2 <- paste0(d$value[4],' ',d$units[4],', 95% CI [',d$value[5],', ',d$value[6],']')
-b3 <- paste0(d$value[7],' ',d$units[7],', 95% CI [',d$value[8],', ',d$value[9],']')
-b4 <- paste0(d$value[10],' ',d$units[10],', 95% CI [',d$value[11],', ',d$value[12],']')
-b5 <- paste0(d$value[13],' ',d$units[13],', 95% CI [',d$value[14],', ',d$value[15],']')
-b <- c(b1,b2,b3,b4,b5,d$value[16])
+df <- read.csv(paste0(path_to_results,"reb_10_2_results.csv"))
+df <- fmt_tibble_col(df, 2, 3, 2, 2)
+a <- c('k','$\\alpha_A$','$\\alpha_B$','R^2^')
+b1 <- paste0(df$value[1],' ',df$units[1],', 95% CI [',df$value[2],', ',df$value[3],']')
+b2 <- paste0(df$value[4],' ',df$units[4],', 95% CI [',df$value[5],', ',df$value[6],']')
+b3 <- paste0(df$value[7],' ',df$units[7],', 95% CI [',df$value[8],', ',df$value[9],']')
+b <- c(b1,b2,b3,df$value[10])
+ # item, value, units
 d <- data.frame(a,b)
 ```
 
-The calculations were performed as described above. The resulting values of the rate expression parameters, their 95% confidence intervals, and the coefficient of determination, $R^2$, are shown in @tbl-example_11_2_results. The parity plot is shown in @fig-example_11_2_parity, and the residuals plots are shown in @fig-example_11_2_residuals_plots.
+The reactor model described above was fit to the experimental data presented in @tbl-example_10_2_data using parameter estimation software. The results are presented in @tbl-example_10_2_parameters. A parity plot is shown in @fig-example_10_2_parity and residuals plots are shown in @fig-example_10_2_residuals_plots.
 
 ```{r}
 #| echo: false
 #| warning: false
-#| label: tbl-example_11_2_results
+#| label: tbl-example_10_2_parameters
 #| tbl-cap: Parameter estimation results
 kbl(d, format = "markdown", align = "cc", col.names = NULL)
 ```
 
-![Parity Plot.](`r paste0(path_to_figures,'reb_11_2_parity.png')`){#fig-example_11_2_parity width=80%}
+![Parity plot.](`r paste0(path_to_figures,'reb_10_2_parity.png')`){#fig-example_10_2_parity}
 
-::: {#fig-example_11_2_residuals_plots layout-ncol=2}
+::: {#fig-example_10_2_residuals_plots layout-ncol=2}
 
-![](`r paste0(path_to_figures,'reb_11_2_residuals_vs_yAin.png')`)
+![](`r paste0(path_to_figures,'reb_10_2_tau_residuals.png')`)
 
-![](`r paste0(path_to_figures,'reb_11_2_residuals_vs_yBin.png')`)
+![](`r paste0(path_to_figures,'reb_10_2_yA_residuals.png')`)
 
-![](`r paste0(path_to_figures,'reb_11_2_residuals_vs_yYin.png')`)
-
-![](`r paste0(path_to_figures,'reb_11_2_residuals_vs_yZin.png')`)
-
-Residuals Plots.
+Parity and Residuals Plots.
 :::
-
-**Assessment**
 
 :::{.callout-tip collapse="true"}
 ## Click Here to See What an Expert Might be Thinking at this Point
 
-The coefficient of determination is close to 1.0, the points on the parity plot lie close to the diagonal line, and the points in the residuals plots scatter randomly about zero. This suggests an accurate rate expression. However, the upper and lower limits of the 95% confidence intervals for the parameters are significant compated to the parameter values. This suggests some inaccuracy in the model.
+The deviations of the data points from the line in the parity plot are small, the deviations of the residuals about zero are random with no apparent trends, the coefficient of determination is close to 1, and the upper and lower limits of the 95% confidence intervals for all three parameters are close to the estimated parameter value. All of these are indicators of an accurate model.
 
 :::
 
-Based upon the parity plot, residuals plots and coefficient of determination, the rate expression in equation (2) accurately predicts the experimental results when the parameters have the values shown in @tbl-example_11_2_results. The confidence intervals are not narrow relative to the parameters' values, but they are acceptable. It is possible that additional experiments at different conditions would tighten the confidence intervals for the parameters.
+**Assessment**
+
+When used with the rate expression parameters shown in @tbl-example_10_2_parameters, the accuracy of the proposed rate expression in describing the concentration dependence of the rate at 450 °C is acceptable.

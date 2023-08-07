@@ -1,61 +1,73 @@
 import pandas as pd
 import numpy as np
+import scipy as sp
 import rebutils as reb
 import matplotlib.pyplot as plt
 
-# Define the response function
-def response_function(inputs, par1, par2, par3, par4, par5):
-    # Given and known constants
-    P = 1.0 # atm
-    m = 3.0 # g
-    VFR_in = 0.85 # L/min
-    T = 400. + 273.15 # K
-    K = 12.2
+# define the response function
+def response_function(inputs, log_kf_guess, log_kr_guess):
 
-    # extract the rate coefficient
-    k_test = 10.0**par1
-    KA = 10.0**par2
-    KB = 10.0**par3
-    KY = 10.0**par4
-    KZ = 10.0**par5
+    # Given and known constants
+    V = 3.0 # gal
+
+    # Read the experimental responses to use as guesses when solving the reactor
+    # design equations
+    df = pd.read_csv('./reb_10_3/Data/reb_10_3_data.csv')
+    CAout = df['CA'].to_numpy()
 
     # allocate storage for the responses
     shape = np.shape(inputs)
     n_data = shape[0]
     response = np.zeros(n_data)
 
-    # loop through the data points
-    for i, input in enumerate(inputs):
-        # define the reactor model
-        def reactor_model(z,n):
-            nA = n[0]
-            nB = n[1]
-            nY = n[2]
-            nZ = n[3]
-            ntot = nA + nB + nY + nZ
-            PA = nA/ntot*P
-            PB = nB/ntot*P
-            PY = nY/ntot*P
-            PZ = nZ/ntot*P
-            r = k_test*PA*PB/(1+KA*PA+KB*PB+KY*PY+KZ*PZ)*(1 - PY*PZ/K/PA/PB)
-            ddm = np.array([-r, -r, r, r])
-            return ddm
+    # extract the guesses for kf and kr
+    kf_guess = 10.0**log_kf_guess
+    kr_guess = 10.0**log_kr_guess
 
-        # Solve the reactor model equations
-        m0 = 0.0
-        n0 = np.array([input[0], input[1], input[2], input[3]])*VFR_in/22.4
-        f_var = 0
-        f_val = m
-        soln = reb.solveIVODEs(m0, n0, f_var, f_val, reactor_model)
+    # loop through all of the experiments
+    for i in range(0,n_data):
+        # extract the inputs
+        Vdot = inputs[i,0]
+        CA0 = inputs[i,1]
+        CY0 = inputs[i,2]
+        CZ0 = inputs[i,3]
+        # calculate inlet molar flow rates
+        nAin = CA0*Vdot
+        nYin = CY0*Vdot
+        nZin = CZ0*Vdot
+
+        # define the reactor model residuals
+        def reactor_model(x):
+            # extract the test values for the unknowns
+            nA = x[0]
+            nY = x[1]
+            nZ = x[2]
+
+            # calculate the rate
+            CA = nA/Vdot
+            CY = nY/Vdot
+            CZ = nZ/Vdot
+            r = kf_guess*CA**2 - kr_guess*CY*CZ
+
+            # evaluate the reactor model residuals
+            r1 = nAin - nA - r*V
+            r2 = nYin - nY + r*V
+            r3 = nZin - nZ + r*V
+            return [r1, r2, r3]
+        
+        # guess the solution to the reactor model
+        nA_guess = CAout[i]*Vdot
+        extent = nAin - nA_guess
+        nY_guess = nYin + extent
+        nZ_guess = nZin + extent
+        guess = [nA_guess, nY_guess, nZ_guess]
+
+        # solve the reactor model equations
+        soln = sp.optimize.root(reactor_model,guess)
         if not(soln.success):
             print("A solution was NOT obtained:")
             print(soln.message)
-        # Calculate the response
-        n_A = soln.y[0,-1]
-        n_B = soln.y[1,-1]
-        n_Y = soln.y[2,-1]
-        n_Z = soln.y[3,-1]
-        n_tot = n_A + n_B + n_Y + n_Z
-        response[i] = n_A/n_tot*P
+        
+        # calculate the response, CYout
+        response[i] = soln.x[0]/Vdot
     return response
-

@@ -1,9 +1,9 @@
-The liquid-phase reaction between reactants A and B, reaction (1), was studied in a 100 cm^3^ laboratory CSTR. The reactor operated at steady state, and kinetics data were generated in blocks where the temperature was the same in all of the experiments in any one block. In each block the volumetric flow rate and the inlet concentrations of each of the reagents were adjusted, and the outlet concentration of reagent Y was measured. The data from a block of experiments where the temperature was 35 °C are presented below. Use those data to assess the accuracy with which the rate expression shown in equation (2) describes the composition dependence of the rate of reaction (1).
+The gas-phase decomposition of reagent A, reaction (1), was studied 1 atm using a PFR with a diameter of 1.0 cm and a length of 10 cm. The inlet volumetric flow rates of reagents A, Y, and Z, in standard cm^3^ min^-1^, were varied from experiment to experiment. In all experiments the outlet conversion of reagent A was measured. The data for a block of experiments at a temperature of 1500 K are presented below. Using those data, assess the accuracy of the rate expression given in equation (2), paying particular attention to whether the expression might not capture possible effects of the concentrations of Y and Z.
 
 $$
-A + B \rightarrow Y + Z \tag{1}
+A \rightarrow Y + Z \tag{1}
 $$
 
 $$
-r = kC_AC_B \tag{2}
+r = kP_A \tag{2}
 $$

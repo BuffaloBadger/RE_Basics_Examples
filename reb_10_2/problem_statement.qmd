@@ -1,9 +1,9 @@
-Preliminary experiments have indicated that gas-phase reaction (1) is irreversible and that the rate is not affected by the concentration of the product Z. To generate kinetics data, experiments were performed in blocks where the temperature of every experiment in the block was the same. An ideal CSTR operating at 3 atm was used for all experiments. The feed in every experiment contained only reagents A and B. The space time and the mole fraction of A were varied from experiment to experiment, and the outlet concentration of Z was measured. The block of experiments where the temperature was equal to 450 °C is presented below. Use those data to assess the accuracy of the rate expression shown in equation (2) where the power-law reaction orders, $\alpha_A$ and $\alpha_B$, must be estimated along with the rate coefficient, $k$.
+Reversible, gas-phase reaction (1) was studied in a PFR at 1 atm and several temperatures. In all experiments the same amount of catalyst, 3.0 g, was present in the reactor, forming a small packed bed. The apparent density of the catalyst bed was constant, and pressure drop across the catalyst bed was negligible. The inlet volumetric flow rate was also the same in all experiments and equal to 0.85 L min^-1^ at standard temperature and pressure. The inlet mole fractions of A, B, Y, and Z were varied in the experiments and the partial pressure of A at the reactor outlet was recorded. Use the data for a block of experiments at 400 °C presented below to assess the accuracy of the power-law rate expression shown in equation (2). The equilibrium constant, $K$, in equation (2) can be calculated from available thermodynamic data. At 400 °C the value of $K$ is 12.2.
 
 $$
-A + B \rightarrow Z \tag{1}
+A + B \rightarrow Y + Z \tag{1}
 $$
 
 $$
-r = kP_A^{\alpha_A} P_B^{\alpha_B} \tag{2}
+r = kP_{A}^{\alpha_A}P_{B}^{\alpha_B}P_{Y}^{\alpha_Y}P_{Z}^{\alpha_Z}\left( 1 - \frac{P_YP_Z}{KP_AP_B} \right) \tag{2}
 $$
