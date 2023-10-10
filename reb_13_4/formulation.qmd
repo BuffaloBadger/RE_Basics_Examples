@@ -31,58 +31,88 @@ path_to_figures <- './Results/'
 :::{.callout-tip collapse="true"}
 ## Click Here to See What an Expert Might be Thinking at this Point
 
-Using the criteria presented in @sec-5_response_opt_design, this is an isolated reactor modeling assignment. The system consists of a BSTR and no other equipment. The reactor and its operation are described. The reaction taking place is indentified and its rate expression is provided, and it asks for a reactor input, namely the coolant flow rate. Additionally, this is an optimization assignment because the coolant flow rate of interest is the one that maximizes the net rate of production of Z.
+Using the criteria presented in @sec-5_response_opt_design, this is an isolated reactor modeling assignment. The system consists of a BSTR and no other equipment. The reactor and its operation are described. The reaction taking place is indentified and its rate expression is provided, and it asks for a reactor input, namely the coolant flow rate. This is an optimization assignment because the coolant flow rate of interest is the one that maximizes the net rate of production of Z.
 
-Having identified this as an isolated reactor optimization assignment, I know the general approach to take to complete it, again from @sec-5_response_opt_design. I will need to select the reactor design equations needed to model the system, formulate their solution (assuming missing reactor inputs and process parameters will be provided), formulate the calculation of the response of interest (here the net rate of production of Z), create a response function that incorporates those formulations, and use the response function to calculate the quantities of interest. Being an optimization assignment, I'll do that by selecting a range of values of the coolant flow rate, calculate the net rate for each of them, plot the results, and identify the maximum net rate using the graph.
+Having identified this as an isolated reactor optimization assignment, I know from @sec-5_response_opt_design that completing the assignment entails five basic steps.
 
-To get started, I'll summarize the information provided in the assignment. I'll use a subscripted "ex" to denote quantities related to the jacket and "coil" to denote quantities related to the coil. I'll use a subscripted "0" to denote initial values of quantities, a subscripted "1" to denote quantities at the time the temperature reaches 50 °C, and a subscripted "f" to denote quantities at the end of the processing steps.
+1. Summarize the information provided in the assignment.
+2. Formulate the solution mathematically.
+3. Implement the solution numerically.
+4. Execute the solution.
+5. Report and comment upon the results.
+
+To complete the first step, I'll read through the assignment and list the following things. Since this reactor has both a jacket and a coil, I'll use a subscripted "ex" to denote quantities related to the jacket and "coil" to denote quantities related to the coil. The operating protocol for this reactor has two steps, so I'll use a subscripted "0" to denote initial values of quantities, a subscripted "1" to denote quantities at the time the temperature reaches 50 °C, and a subscripted "f" to denote quantities at the end of the processing steps.
+
+1. Summarize the information provided in the assignment.
+	a. Reactor type and operational mode
+	b. Constant quantities
+	c. Adjusted quantities
+	d. Missing reactor input or process parameter and specified reactor response
+	e. Quantities of interest
+
+The coolant only flows during the second stage of the operational protocol. The assignment asks for the coolant flow rate that will maximize the net rate. That means I will solve the reactor design equations many times changing the coolant flow rate each time until I find the coolant flow rate that maximizes the rate. In other words, the coolant flow rate is an adjusted quantity.
 
 :::
 
-**Reactor**:  BSTR
+**Information Provided in the Assignment**
 
-**Given**: $k_{0,1}$ = 2.59 x 10^9^ min^-1^, $E_1$ = 16.5 kcal mol^-1^, $\Delta H_1$ = -22,200 cal mol^-1^, $C_{A,0}$ = 2 M, $T_0$ = 23 °C, $\breve{C}_p$ = 440 cal L^-1^ K^-1^, $V$ = 4.0 L, $V_{ex}$ = 0.5 L, $A_{ex}$ = 0.6 ft^2^, $U_{ex}$ = 1.13 x 10^4^ cal ft^-2^ h^-1^ K^-1^, $T_{ex,in}$ = 20 °C, $\rho_{ex}$ = 1 g cm^-3^, $\tilde{C}_{p,ex}$ = 1 cal g^-1^ K^-1^, $U_{coil}$ = 3.8 x 10^4^ cal ft^-2^ h^-1^ K^-1^, $A_{coil}$ =  0.23 ft^2^, $T_{coil}$ = 120 °C, $T_{ex,0}$ = 23 °C, $\dot{m}_{ex,0}$ = 0, $T_1$ = 50 °C, $T_f$ = 25 °C, $t_{turn}$ = 25 min.
+**Reactor**:  BSTR with a 2 step operating protocol
 
-**Quantities of Interest**: $\dot{m}_{ex,opt} = \underset{\dot{m}_{ex}}{\arg\max} \left(r_{Z,net}\right)$, $\underset{\dot{m}_{ex}}{\max} \left(r_{Z,net}\right)$, $f_A\left(t\right)\Big\vert_{\dot{m}_{ex,opt}}$, $T\left(t\right)\Big\vert_{\dot{m}_{ex,opt}}$
+**Given Constants**: $k_{0,1}$ = 2.59 x 10^9^ min^-1^, $E_1$ = 16.5 kcal mol^-1^, $\Delta H_1$ = -22,200 cal mol^-1^, $C_{A,0}$ = 2 M, $T_0$ = 23 °C, $\breve{C}_p$ = 440 cal L^-1^ K^-1^, $V$ = 4.0 L, $V_{ex}$ = 0.5 L, $A_{ex}$ = 0.6 ft^2^, $U_{ex}$ = 1.13 x 10^4^ cal ft^-2^ h^-1^ K^-1^, $T_{ex,in}$ = 20 °C, $\rho_{ex}$ = 1 g cm^-3^, $\tilde{C}_{p,ex}$ = 1 cal g^-1^ K^-1^, $U_{coil}$ = 3.8 x 10^4^ cal ft^-2^ h^-1^ K^-1^, $A_{coil}$ =  0.23 ft^2^, $T_{coil}$ = 120 °C, $T_{ex,0}$ = 23 °C, $\dot{m}_{ex,0}$ = 0, $T_1$ = 50 °C, $T_f$ = 25 °C, $t_{turn}$ = 25 min.
+
+**Adjusted Quantity**: $\dot{m}_{ex}\Big\vert_{t\ge t_1}$
+
+**Quantities of Interest**: $\dot{m}_{ex,opt} = \underset{\dot{m}_{ex}\Big\vert_{t\ge t_1}}{\arg\max} \left(r_{Z,net}\right)$, $\underset{\dot{m}_{ex}\Big\vert_{t\ge t_1}}{\max} \left(r_{Z,net}\right)$, $f_A\left(t\right)\Big\vert_{\dot{m}_{ex,opt}}$, $T\left(t\right)\Big\vert_{\dot{m}_{ex,opt}}$
 
 :::{.callout-tip collapse="true"}
 ## Click Here to See What an Expert Might be Thinking at this Point
 
-I need to write the reactor design equations needed to model this system. The reactor design equations always include at least one mole balance. The general BSTR mole balance is given in @eq-bstr_mole_balance.  I'll write a mole balance for both of the reagents in this system, noting that the sum reduces to a single term since only one reaction is taking place.
+The second basic step for completing an isolated BSTR modeling assignment is to formulate the solution mathematically. From my reading of this chapter, I know, generally, how to do this.
+
+2. Formulate the solution mathematically.
+	a. Choose, write and simplify the reactor design equations needed to model the reactor.
+	b. Identify the independent variable and the dependent variables, and ensure that the number of dependent variables is equal to the number of reactor design equations.
+	c. Specify the initial values and the stopping criterion, and write equations for calculating their values.
+	d. Write equations to express every quantity appearing in the reactor design equations or in equations that will be substituted into the reactor design equations in terms of known constants, the independent variable, the dependent variables, the missing reactor input or process parameter (if there is one), and the adjusted quantities (if there are any).
+	e. Write the equations to calculate every quantity of interest and the response that was specified in the assignment (if there is one) using the results from solving the reactor design equations, the independent variable, the dependent variables, the missing reactor input or process parameter (if there is one), and the adjusted quantities (if there are any).
+	f. Briefly explain or outline the sequence of calculations that must be used to calculate and process the quantities of interest (and the response that was specified in the assignment, if there is one).
+
+:::
+
+**Mathematical Formulation of the Solution**
+
+:::{.callout-tip collapse="true"}
+## Click Here to See What an Expert Might be Thinking at this Point
+
+I need to write and simplify the reactor design equations needed to model this system. The reactor design equations always include at least one mole balance. The general BSTR mole balance is given in @eq-bstr_mole_balance.  I'll write a mole balance for both of the reagents in this system, noting that the sum reduces to a single term since only one reaction is taking place.
 
 $$
-\frac{dn_i}{dt} = V \sum_j \nu_{i,j}r_j
+\frac{dn_i}{dt} = V \cancelto{\nu_{i,1}r_1}{\sum_j \nu_{i,j}r_j}
 $$
 
-The BSTR is not isothermal, so I must include an energy balance on the reacting fluid among the design equations. The general BSTR mole balance is given in @eq-bstr_energy_balance. Assuming the liquid to be incompressible and the reactor walls to be rigid, both the pressure and volume will be constant, so their time-derivatives will equal zero. The work associated with mixing the reactor can also be assumed to be negligible.
+The BSTR is not isothermal, so I must include an energy balance on the reacting fluid among the design equations. The general BSTR mole balance is given in @eq-bstr_energy_balance. Assuming the liquid to be incompressible and the reactor walls to be rigid, both the pressure and volume will be constant, so their time-derivatives will equal zero. The work associated with mixing the reactor can also be assumed to be negligible. There is only one reaction occurring, so the final sum will reduce to a single term. In addition, the assignment provides the volumetric heat capacity of the entire solution, so the sensible heat term can be written in terms of that heat capacity, @eq-bstr_equivalent_sens_heat_terms. During the first stage of the operating protocol, heat is exchanged with both the cooling water and the steam, so the rate of heat exchange must be split into two terms. During the second stage the coil is not present.
 
 $$
-\left(\sum_i n_i \hat C_{p,i} \right) \frac{dT}{dt} - V\cancelto{0}{\frac{dP}{dt}}  - P  \cancelto{0}{\frac{dV}{dt}}  = \dot Q - \cancelto{0}{\dot W} - V \sum_j \left(r_j \Delta H_j \right)
-$$
-
-There is only one reaction occurring, so the final sum will reduce to a single term. In addition, the assignment provides the volumetric heat capacity of the entire solution, so the sensible heat term can be written in terms of that heat capacity, @eq-bstr_equivalent_sens_heat_terms. Heat is exchanged with both the cooling water and the steam, so the rate of heat exchange must be split into two terms
-
-$$
-\left(\sum_i n_i \hat C_{p,i} \right) \frac{dT}{dt}\ \Leftrightarrow\  V \breve C_p \frac{dT}{dt}
+\cancelto{V \breve{C}_p}{\left(\sum_i n_i \hat C_{p,i} \right)} \frac{dT}{dt} - V\cancelto{0}{\frac{dP}{dt}}  - P  \cancelto{0}{\frac{dV}{dt}}  = \cancelto{\dot{Q}_{ex} + \dot{Q}_{coil}}{\dot Q} - \cancelto{0}{\dot W} - V \cancelto{r_1 \Delta H_1}{\sum_j \left(r_j \Delta H_j \right)}
 $$
 
 $$
-\dot{Q} = \dot{Q}_{ex} + \dot{Q}_{coil}
+V \breve{C}_p \frac{dT}{dt} = \dot{Q}_{ex} + \dot{Q}_{coil} - V r_1 \Delta H_1
 $$
 
-There are two heat exchange fluids in this system. The water in the jacket exchanges sensible heat so the energy balance on it is given by @eq-exchange_energy_bal_sensible. Noting that the heat capacity is constant, the integral is easily evaluated.
+There are two heat exchange fluids in this system. The water in the jacket exchanges sensible heat so the energy balance on it is given by @eq-exchange_energy_bal_sensible. During the first stage of the operating protocol, the coolant is not flowing, so $\dot{m}_{ex} = 0$. Noting that the heat capacity is constant, the integral is easily evaluated.
 
 $$
 \rho_{ex} V_{ex} \tilde C_{p,ex}\frac{dT_{ex}}{dt} = -\dot{Q}_{ex} - \dot m_{ex} \int_{T_{ex,in}}^{T_{ex}} \tilde C_{p,ex}dT
 $$
 
-The steam in the coil exchanges latent heat, so the its temperature is known and constant. As a consequence, the mole balances, energy balance on the reacting fluid and energy balance on the cooling water can be solved independently of the energy balance on the steam. The problem does not ask any questions about the steam flow rate or how much of it condenses, so an energy balance on the steam is not needed.
+The steam in the coil exchanges latent heat, so its temperature is known and constant. As a consequence, the mole balances, energy balance on the reacting fluid and energy balance on the cooling water can be solved independently of the energy balance on the steam. The problem does not ask any questions about the steam flow rate or how much of it condenses, so an energy balance on the steam is not needed.
 
 Momentum balances are not used for stirred tank reactors, so the full set of reactor design equations consists of mole balances on A and Z, an energy balance on the reacting fluid and an energy balance on the cooling water.
 
 :::
 
-**Reactor Model**
+**Reactor Design Equations**
 
 Mole balances on A and Z are presented in equations (3) and (4). An energy balance on the reacting fluid is given in equation (5), and an energy balance on the cooling water in equation (6).
 
@@ -95,11 +125,7 @@ $$
 $$
 
 $$
-V \breve C_p \frac{dT}{dt}  = \dot{Q}_{ex} + \dot{Q}_{coil}  - Vr_1 \Delta H_1 \qquad \Rightarrow \qquad \frac{dT}{dt} = \frac{\dot{Q}_{ex} + \dot{Q}_{coil}  - Vr_1 \Delta H_1}{V \breve C_p} \tag{5}
-$$
-
-$$
-\rho_{ex} V_{ex} \tilde C_{p,ex}\frac{dT_{ex}}{dt} = -\dot{Q}_{ex} - \dot m_{ex} \tilde{C}_{p,ex} \left(T_{ex} - T_{ex,in}\right)
+\frac{dT}{dt} = \frac{\dot{Q}_{ex} + \dot{Q}_{coil}  - Vr_1 \Delta H_1}{V \breve C_p} \tag{5}
 $$
 
 $$
@@ -109,15 +135,15 @@ $$
 :::{.callout-tip collapse="true"}
 ## Click Here to See What an Expert Might be Thinking at this Point
 
-The reactor design equations, (3) through (6), are initial value ordinary differential equations (IVODEs), so initial values and a stopping criterion are needed. I could analyze the entire process all at once, but here I'm going to analyze it as two phases: the heating phase and the cooling phase.
+The four reactor design equations, (3) through (6), are IVODEs, and they contain four dependent variables ($n_A$, $n_B$, $T$, and $T_{ex}$), so no additional IVODEs are needed. Initial values and a stopping criterion are needed to solve the design equations. The operating protocol has two steps. Each step is analyzed separately, so two sets of initial values and two stopping criteria are needed. The initial values for the second step are the final values at the end of the first step since the steps are sequential and each step follows the one before it immediately.
 
-The instant the solution is added to the reactor can be defined as $t=0$. This marks the start of the heating phase. The molar amounts of A, $n_{A,0}$, and Z, 0.0 (only A is present initially), the reacting fluid temperature, $T_0$, and the cooling water temperature, $T_{ex,0}$, at that time are then the initial values for the analysis of the heating phase. It ends when the reacting fluid reaches $T_1 = 50 °C$.
+The instant the solution is added to the reactor can be defined as $t=0$. This marks the start of the heating phase. The molar amounts of A, $n_{A,0}$, and Z, 0.0 (only A is present initially), the reacting fluid temperature, $T_0$, and the cooling water temperature, $T_{ex,0}$, at that time are then the initial values for the analysis of the heating phase. It ends when the reacting fluid reaches $T_1 = 50 °C$.  The initial molar amount of A is not given, but it can be calculated from the initial concentration.
 
 The cooling phase begins the instant the heating phase ends, so the initial values for the cooling phase are the final values from the heating phase. The cooling phase ends when the reacting fluid cools down to $T_f = 25 °C$, so that is the stopping criterion for the cooling phase.
 
 :::
 
-The initial values and stopping criterion for solving the reactor design equations for the heating phase are presented in @tbl-example_13_4_heating_initial_values. If $t_1$, $n_{A,1}$, $n_{Z,1}$, and $T_{ex,1}$ represent the values of $t$, $n_A$, $n_Z$, and $T_{ex}$ at the end of the heating phase, those values are also the intial values for the cooling phase, which ends when $T = T_f$. Thus, the initial values and stopping criterion for the coolling phase are given in @tbl-example_13_4_cooling_initial_values
+The initial values and stopping criterion for solving the reactor design equations for the heating phase are presented in @tbl-example_13_4_heating_initial_values. The initial molar amount of A can be calculated using equation (7). If $t_1$, $n_{A,1}$, $n_{Z,1}$, and $T_{ex,1}$ represent the values of $t$, $n_A$, $n_Z$, and $T_{ex}$ at the end of the heating phase, those values are also the intial values for the cooling phase, which ends when $T = T_f$. Thus, the initial values and stopping criterion for the coolling phase are given in @tbl-example_13_4_cooling_initial_values
 
 | Variable | Initial Value | Stopping Criterion |
 |:-------|:-------:|:-------:|
@@ -127,7 +153,11 @@ The initial values and stopping criterion for solving the reactor design equatio
 | $T$ | $T_0$ | $T_1$ |
 | $T_{ex}$ | $T_{ex,0}$ | |
   
-: Initial values and stopping criterion for solving the design equations, (3) through (6), for the heating phase of the process. {#tbl-example_13_4_heating_initial_values tbl-colwidths="[20, 40, 40]"}
+: Initial values and stopping criterion for solving the design equations, (3) through (6), for the heating phase of the process. {#tbl-example_13_4_heating_initial_values}
+
+$$
+n_{A,0} = C_{A,0}V \tag{7}
+$$
 
 
 | Variable | Initial Value | Stopping Criterion |
@@ -138,24 +168,22 @@ The initial values and stopping criterion for solving the reactor design equatio
 | $T$ | $T_1$ | $T_f$ |
 | $T_{ex}$ | $T_{ex,1}$ | |
   
-: Initial values and stopping criterion for solving the design equations, (3) through (6), for the cooling phase of the process. {#tbl-example_13_4_cooling_initial_values tbl-colwidths="[20, 40, 40]"}
+: Initial values and stopping criterion for solving the design equations, (3) through (6), for the cooling phase of the process. {#tbl-example_13_4_cooling_initial_values}
 
 :::{.callout-tip collapse="true"}
 ## Click Here to See What an Expert Might be Thinking at this Point
 
-In order to solve the reactor design equations, every quantity appearing in them or substituted into them must be expressed in terms of known constants, the independent variable, $t$, and the dependent variables, $n_A$, $n_Z$, $T$, and $T_{ex}$. The initial values and stopping criterion must also be calculated.
-
-Looking at the reactor design equations, I see that $V$, $\breve{C}_p$, $\Delta H_1$, $\rho_{ex}$, $\tilde{C}_{p,ex}$, and $T_ex,in$ are known constants. The water flow rate, $\dot{m}_{ex}$, will equal 0 until the reacting fluid temperature reaches 50 °C. After that, $\dot{m}_{ex}$ will be constant with a value that will be provided at the time the reactor design equations are solved.
+The design equations cannot be solved until every quantity appearing in them and every quantity substituted into them is expressed in terms of known constants, the independent variable, $t$, and the dependent variables, $n_A$, $n_Z$, $T$, and $T_{ex}$. Looking at the reactor design equations, I see that $V$, $\breve{C}_p$, $\Delta H_1$, $\rho_{ex}$, $\tilde{C}_{p,ex}$, and $T_ex,in$ are known constants. The water flow rate, $\dot{m}_{ex}$, will equal 0 until the reacting fluid temperature reaches 50 °C. After that, $\dot{m}_{ex}$ will be constant. The design equations will be solved many times using a different value of the coolant flow each time. At the time the design equations are solved, the coolant flow rate will be known.
 
 The reaction rate, $r_1$, is given by equation (2); it introduces $k_1$ and $C_A$ when it is substituted into the design equations. The rate coefficient can be expressed in terms of known constants ($k_{0,1}$, $E_1$, and the gas constant, $R$) using the Arrhenius expression, @eq-arrhenius. The concentration of A can be expressed in terms of the molar amount of A and the volume using the definition of concentration.
 
-The rate of heat exchange between the water in the jacket and the reacting fluid can be expressed in terms of the known constants, $A_{ex}$ and $U_{ex}$, and the jacket and reacting fluid temperatures. Similarly, the rate of heat exchange between the steam in the coil and the reacting fluid can be expressed in terms of the kknown constants, $U_{coil}$, $A_{coil}$, and $T_{coil}$ = 120 °C, and the reacting fluid temperature. However, the coil only exchanges heat until the reacting fluid reaches 50 °C.
+The rate of heat exchange between the water in the jacket and the reacting fluid can be expressed in terms of the known constants, $A_{ex}$ and $U_{ex}$, and the jacket and reacting fluid temperatures. Similarly, the rate of heat exchange between the steam in the coil and the reacting fluid can be expressed in terms of the known constants, $U_{coil}$, $A_{coil}$, and $T_{coil}$ = 120 °C, and the reacting fluid temperature. However, the coil only exchanges heat until the reacting fluid reaches 50 °C.
 
 The initial moles of A can be calculated from the known initial concentration of A and the volume.
 
 :::
 
-**Ancillary Equations**
+**Ancillary Equations for Solving the Reactor Design Equations**
 
 The water flow rate is given by equation (7), and the rate of heat exchange with the steam by equation (8). Both of these terms change when the heating phase ends and the cooling phase begins. The rate of heat exchange between the water in the jacket and the reacting fluid is given by equation (9).
 
@@ -171,7 +199,7 @@ $$
 \dot{Q}_{ex} = U_{ex} A_{ex} \left(T_{ex} - T\right) \tag{9}
 $$
 
-The rate is given by equation (2), where the rate coefficient is found using equation (10) and the concentration of A is found using equation (11). The initial molar amount of A can be calculated using equation (12).
+The rate is given by equation (2), where the rate coefficient is found using equation (10) and the concentration of A is found using equation (11).
 
 $$
 k_1 = k_{0,1}\exp{\left( \frac{-E_1}{RT} \right)} \tag{10}
@@ -181,66 +209,97 @@ $$
 C_A = \frac{n_A}{V} \tag{11}
 $$
 
-$$
-n_{A,0} = C_{A,0}V \tag{12}
-$$
-
 :::{.callout-tip collapse="true"}
 ## Click Here to See What an Expert Might be Thinking at this Point
 
-At this point, the only thing needed in order to solve the design equations is the value of the cooling water flow rate, $\dot{m}_{ex}$. Assuming that value will be provided when needed, the design equations can be solved to find $n_A$, $n_Z$, $T$, and $T_{ex}$ at times between $t=0$ and the time, $t_f$, when the reactor cools to 25 °C. The conversion as a function of processing time can be calculated using its definition, @eq-conversion_def_closed. The final time and the final molar amount of A can then be used to calculate the net rate of production of Z, using @eq-bstr_net_rate.
+At this point, the only thing needed in order to solve the design equations is the value of the cooling water flow rate, $\dot{m}_{ex}$. Assuming that value will be provided when needed, the design equations can be solved to find $n_A\left(t\right)$, $n_Z\left(t\right)$, $T\left(t\right)$, and $T_{ex}\left(t\right)$ at times between $t=0$ and the time, $t_f$, when the reactor cools to 25 °C. The conversion as a function of processing time can be calculated using its definition, @eq-conversion_def_closed. The final time and the final molar amount of A can then be used to calculate the net rate of production of Z, using @eq-bstr_net_rate.
 
 :::
 
-**Adjusted Value**: $\dot{m}_{ex}$
-
-**Response Calculation**
-
-Solving the reactor design equations will yield $n_A\left(t\right)$ and $T\left(t\right)$ directly. The conversion as a function of reaction time can then be calculated using equation (13). The final reaction time, $t_f$, and the final molar amount of Z, $n_Z$, can be used to calculate the net rate of production of Z using equation (14).
+**Ancillary Equations for Calculating the Quantities of Interest**
 
 $$
 f_A\left(t\right) = \frac{n_{A,0} - n_A\left(t\right)}{n_{A,0}} \tag{13}
 $$
 
 $$
-r_{Z,net} = \frac{n_Z}{t_f + t_{turn}} \tag{14}
+r_{Z,net} = \frac{n_Z\big\vert_{t_f}}{t_f + t_{turn}} \tag{14}
 $$
+
+**Sequence of Calculations to Complete the Assignment**
+
+1. Choose a value for $\dot{m}_{ex}\Big\vert_{t \ge t_1}$.
+2. Substitute given and known constants into all equations.
+3. Substitute equations (10) and (11) into equation (2).
+4. Substitute equations (2), (8) and (9) into equations (3) through (6).
+5. Calculate $n_{A,0}$ using equation (7).
+6. Solve equations (3) through (6) using the initial values and stopping criteria in @tbl-example_13_4_heating_initial_values and @tbl-example_13_4_cooling_initial_values to get $n_A\left(t\right)$, $n_Z\left(t\right)$, $T\left(t\right)$ and $T_{ex}\left(t\right)$ at reaction times between 0 and $t_{rxn}$.
+7. Use the results to calculate $f_A\left(t\right)$ and $r_{Z,net}$ using equations (13) and (14).
+8. Repeat steps (1) through (7) many times, using different values of $\dot{m}_{ex}\Big\vert_{t \ge t_1}$ to find the value, $\dot{m}_{ex,opt}$, that maximizes = $r_{Z,net}$.
+9. Solve equations (3) through (6) using the initial values and stopping criteria in @tbl-example_13_4_heating_initial_values, @tbl-example_13_4_cooling_initial_values, and $\dot{m}_{ex,opt}$ to get $n_A\left(t\right)$, $n_Z\left(t\right)$, $T\left(t\right)$ and $T_{ex}\left(t\right)$.
+10. Calculate $r_{Z,net}\Big\vert_{\dot{m}_{ex,opt}}$ and $f_A\left(t\right)\Big\vert_{\dot{m}_{ex,opt}}$ using equations (13) and (14).
+
+:::{.callout-tip collapse="true"}
+## Click Here to See What an Expert Might be Thinking at this Point
+
+Having formulated the solution mathematically, the third basic step for completing an isolated reactor modeling assignment is to implement the solution numerically. I know that this will entail creating two computer functions.
+
+3. Implement the solution numerically.
+	a. Create a response function.
+		i. Pass the missing value (if there is one) and the adjusted values (if there are any) to it as arguments.
+		ii. Solve the reactor design equations for each set of adjusted values.
+		iii. Calculate and return the quantities of interest (and the specified response if there is one) corresponding to each set of adjusted values.
+	b. Create a calculations function.
+		i. Perform the sequence of calculations that is needed to calculate the quantities of interest, calling or using the response function as needed.
+		ii. Process the quantities of interest as necessary to complete the assignment.
+
+:::
+
+**Numerical Implementation of the Solution**
+
+:::{.callout-tip collapse="true"}
+## Click Here to See What an Expert Might be Thinking at this Point
+
+I know that the purpose of the response function is to calculate the quantities of interest. In this assignment there isn't a missing reactor input or process parameter. That means that the response function will not have a missing value argument.
+
+There is an adjusted value, namely $\dot{m}_{ex}\Big\vert_{t \ge t_1}$, so the response function will be passed a vector containing a range of values of $\dot{m}_{ex}\Big\vert_{t \ge t_1}$. The response function must loop through those values. For each one it needs to complete steps 2 through 7 in the sequence given above.
+
+It then needs to use the results to complete steps 8 through 10 and return the quantities of interest: $\dot{m}_{ex,opt} = \underset{\dot{m}_{ex}\Big\vert_{t\ge t_1}}{\arg\max} \left(r_{Z,net}\right)$, $\underset{\dot{m}_{ex}\Big\vert_{t\ge t_1}}{\max} \left(r_{Z,net}\right)$, $f_A\left(t\right)\Big\vert_{\dot{m}_{ex,opt}}$, $T\left(t\right)\Big\vert_{\dot{m}_{ex,opt}}$
+
+:::
 
 **Response Function**
 
 The response function is created with the following structure:
 
-* The adjusted value, that is the coolant flow rate, $\dot{m}_{ex}$, is passed to the response function as an argument.
-* Variables are defined and assigned the values of all known and given quantities: $k_{0,1}$ = 2.59 x 10^9^ min^-1^, $E_1$ = 16.5 kcal mol^-1^, $\Delta H_1$ = -22,200 cal mol^-1^, $C_{A,0}$ = 2 M, $T_0$ = 23 °C, $\breve{C}_p$ = 440 cal L^-1^ K^-1^, $V$ = 4.0 L, $V_{ex}$ = 0.5 L, $A_{ex}$ = 0.6 ft^2^, $U_{ex}$ = 1.13 x 10^4^ cal ft^-2^ h^-1^ K^-1^, $T_{ex,in}$ = 20 °C, $\rho_{ex}$ = 1 g cm^-3^, $\tilde{C}_{p,ex}$ = 1 cal g^-1^ K^-1^, $U_{coil}$ = 3.8 x 10^4^ cal ft^-2^ h^-1^ K^-1^, $A_{coil}$ =  0.23 ft^2^, $T_{coil}$ = 120 °C, $T_{ex,0}$ = 23 °C, $\dot{m}_{ex,0}$ = 0, $T_1$ = 50 °C, $T_f$ = 25 °C, $t_{turn}$ = 25 min.
-* A function that evaluates the derivatives in the design equations given values of the independent variable, $t$, and the dependent variables, $n_A$, $n_Z$, $T$, and $T_{ex}$, is defined. It
-	* Sets the value of $\dot{m}_{ex}$ according to equation (7).
-	* Calculates $\dot{Q}_{coil}$, $\dot{Q}_{ex}$, $k_1$, and $C_A$ using equations (8) through (11).
-	* Calculates $r_1$ using equation (2).
-	* Evaluates and returns the values of the derivatives, equations (3) through (6).
-* The response function then
-	* Calculates $n_{A,0}$ using equation (12).
-	* Solves the design equations for the heating phase using the initial values and stopping criterion in @tbl-example_13_4_heating_initial_values to find the final values of $t_1$, $n_{A,1}$, $n_{Z,1}$, and $T_{ex,1}$.
-	* Solves the design equations for the cooling phase using the initial values and stopping criterion in@tbl-example_13_4_cooling_initial_values to find the values of $t$, $n_A$, $n_Z$, $T$, and $T_{ex}$ at the end of the processing.
-	* Calculates the conversion as a function of reaction time using equation (13) and the net rate of production of Z using equation (14).
-	* Returns the net rate of production of Z and vectors containing the reaction time, conversion and reacting fluid temperature.
+* It is passed vector containing a range of coolant flow rates, $\dot{m}_{ex}\Big\vert_{t\ge t_1}$, as an argument.
+* It defines variables and assigns values to them for all known and given quantities.
+* It loops over the values of the coolant flow rate. For each coolant flow rate
+	* It sets the initial values and stopping criterion according to @tbl-example_13_4_heating_initial_values, @tbl-example_13_4_cooling_initial_values and equation (7).
+	* In preparation for solving the IVODEs, it defines a function to evaluate $\frac{dn_A}{dt}$, $\frac{dn_Z}{dt}$, $\frac{dT}{dt}$, and $\frac{dT_{ex}}{dt}$ using equations (3) through (6). That function
+		* receives values for $t$, $n_A$, $n_Z$, $T$, and $T_{ex}$,
+		* calculates $k$ and $C_A$ using equations (10) and (11),
+		* calculates $r_1$, $\dot{Q}_{coil}$, and $\dot{Q}_{ex}$ using equations (4), (8), and (9).
+		* calculates and returns $\frac{dn_Z}{dt}$, $\frac{dT}{dt}$, and $\frac{dT_{ex}}{dt}$ using equations (3) through (6).
+	* The response function next calls an IVODE solver to solve equations (3) through (6) and get vectors containing values for $t$, $n_A$, $n_Z$, $T$, and $T_{ex}$, passing the function above and the initial values and stopping criteria as arguments.
+	* It uses the results from the IVODE solver to calculate $r_{Z,net}$.
+* It uses the results to find the value of $\dot{m}_{ex}\Big\vert_{t\ge t_1}$ that maximizes $r_{Z,net}$.
+* It solves the IVODEs as above using that value.
+* It uses the results to calculate $f_A\left(t\right)\Big\vert_{\dot{m}_{ex,opt}}$.
+* It returns the quantities of interest: $\dot{m}_{ex,opt} = \underset{\dot{m}_{ex}\Big\vert_{t\ge t_1}}{\arg\max} \left(r_{Z,net}\right)$, $\underset{\dot{m}_{ex}\Big\vert_{t\ge t_1}}{\max} \left(r_{Z,net}\right)$, $f_A\left(t\right)\Big\vert_{\dot{m}_{ex,opt}}$, $T\left(t\right)\Big\vert_{\dot{m}_{ex,opt}}$.
 
-**Calculations**
+:::{.callout-tip collapse="true"}
+## Click Here to See What an Expert Might be Thinking at this Point
 
-1. A range of values of $\dot{m}_{ex}$ is chosen. (Note the range of values may need to be adjusted.)
-2. The response function is used to calculate $r_{Z,net}$ for each value of $\dot{m}_{ex}$.
-3. The resulting values of $r_{Z,net}$ are plotted against $\dot{m}_{ex}$.
-4. The graph produced in step 3 is inspected.
-	a. If it shows a maximum, the value of $\dot{m}_{ex}$ corresponding to the maximum value of $r_{Z,net}$ and the maximum value of $r_{Z,net}$ are the quantities of interest.
-	b. If it does not show a maximum, the range of values of $\dot{m}_{ex}$ is adjusted and steps 2 through 4 are repeated.
-5. The response function is used to calculate $t$, $f_A\left(t\right)$, and $T\left(t\right)$ using the optimum coolant rate found in step 4.
-6. The conversion and reacting fluid temperature are plotted *vs*. the reaction time.
-
-:::{.callout-note collapse="false"}
-## Note
-
-Once a maximum has been found graphically, the process can be repeated using a large number of values of $\dot{m}_{ex}$ packed into a small range that includes the maximum. This will improve the accuracy of the results. These results need not be plotted. Instead they can be tabulated. The largest value of $r_{Z,net}$ can then be identified, and the corresponding value of $\dot{m}_{ex}$ can be read from the same row of the table.
+The calculations function is responsible for performing the entire sequence of calculations listed at the end of the mathematical formulation. After setting a range of values for the coolant flow rate, it can perform steps 2 through 10 by simply calling the response function. Then it can use the results to make the graphs requested in the assighment.
 
 :::
+
+**Calculations Function**
+
+The calculations function is created with the following structure:
+
+
 
 **Results**
 
