@@ -1,0 +1,17 @@
+
+
+The halogenation of the aromatic hydrocarbon A can produce two different isomers, Y and Z, as shown in reactions (1) and (2). The reaction occurs in the liquid phase in an adiabatic 100 gal semi-batch reactor. Initially the reactor is filled with reagent A and heated to the initial temperature. Then a continuous flow of halogen into the reactor is started at a rate of ? scfm (standard cubic feet per minute); the low solubility of the halogen in reagent A necessitates this low flow rate. The equivalent liquid-phase volumetric flow rate of the halogen is negligible compared to the volume of reagent A. The rate expression, equation (3), is the same for both reactions, but the rate coefficients differ. For reaction (1) the pre-exponential factor equals ? and the activation energy is ?, while for reaction (2) the pre-exponential factor equals ? and the activation energy is ? The heats of reaction are also similar, ? and ?, for reactions (1) and (2), respectively. The heat capacity, ?, and density, ?, of the reacting mixture are essentially constant. The temperature of the reacting fluid must not exceed ?. Find the initial temperature that will maximize the selectivity for Z over Y at 65% conversion of reactant A.
+
+$$
+A + X_2 \rightarrow Y + HX \tag{1}
+$$
+
+$$
+A + X_2 \rightarrow Z + HX \tag{2}
+$$
+
+$$
+r = kC_AC_B \tag{3}
+$$
+
+This problem needs to be "adjusted."
