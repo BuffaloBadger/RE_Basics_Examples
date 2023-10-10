@@ -1,5 +1,5 @@
 function [rNet, t, pctConv, CelsiusT] = reb_13_4_response(mEx)
-% performs the calculations for the 2022 CE 329 Evaluation 3 
+% performs the calculations for Reaction Engineering Basics Example 13.4
 
     % Known, constant quantities
     Renergy = 1.987; % cal/mol/K
