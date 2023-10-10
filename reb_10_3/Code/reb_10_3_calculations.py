@@ -21,7 +21,7 @@ filepath1 = './reb_10_3/Results/'
 filepath2 = '../RE_Basics/Graphics/'
 
 # Read the experimental data into a dataframe
-df = pd.read_csv("reb_11_0/Data/reb_10_2_data.csv")
+df = pd.read_csv("reb_10_2/Data/reb_10_2_data.csv")
         # columns: yA, yB, yY, yZ, PA
 
 # Extract the data as arrays
