@@ -1,0 +1,39 @@
+rule reb_19_4:
+    input: 
+        "reb_19_4/Data/reb_19_4_data.csv",
+        "../RE_Basics/Data/reb_19_4_data.csv",
+        "reb_19_4/Results/reb_19_4_results.csv",
+        "reb_19_4/Results/reb_19_4_parity.png",
+        "reb_19_4/Results/reb_19_4_residuals_vs_CS0.png",
+        "reb_19_4/Results/reb_19_4_residuals_vs_t.png",
+        "../RE_Basics/Graphics/reb_19_4_parity.png",
+        "../RE_Basics/Graphics/reb_19_4_residuals_vs_CS0.png",
+        "../RE_Basics/Graphics/reb_19_4_residuals_vs_t.png"
+
+rule reb_19_4_data:
+    input: "reb_19_4/Code/reb_19_4_bstr_data_generator.py"
+    output:
+        "reb_19_4/Data/reb_19_4_data.csv",
+        "../RE_Basics/Data/reb_19_4_data.csv"
+    shell:
+        """
+        python reb_19_4/Code/reb_19_4_bstr_data_generator.py
+        """
+
+rule reb_19_4_results:
+    input:
+        "reb_19_4/Data/reb_19_4_data.csv",
+        "reb_19_4/Code/reb_19_4_calculations.py",
+        "reb_19_4/Code/response_function.py"
+    output:
+        "reb_19_4/Results/reb_19_4_results.csv",
+        "reb_19_4/Results/reb_19_4_parity.png",
+        "reb_19_4/Results/reb_19_4_residuals_vs_CS0.png",
+        "reb_19_4/Results/reb_19_4_residuals_vs_t.png",
+        "../RE_Basics/Graphics/reb_19_4_parity.png",
+        "../RE_Basics/Graphics/reb_19_4_residuals_vs_CS0.png",
+        "../RE_Basics/Graphics/reb_19_4_residuals_vs_t.png"
+    shell:
+        """
+        python reb_19_4/Code/reb_19_4_calculations.py
+        """

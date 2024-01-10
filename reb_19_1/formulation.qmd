@@ -1,0 +1,413 @@
+---
+format:
+  html:
+    toc: false
+    embed-resources: true
+---
+
+## Example 9-1
+
+```{r}
+#| echo: false
+#| output: false
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+source('~/Libraries/R/fmt_tibble_col.R')
+```
+
+{{< include problem_statement.qmd >}}
+
+```{r}
+#| echo: false
+#| output: false
+path_to_data <- './Data/'
+path_to_results <- './Results/'
+path_to_figures <- './Results/'
+```
+
+```{r}
+#| echo: false
+#| output: false
+d <- read.csv(paste0(path_to_data,'reb_9_1_data.csv'))
+# Experiment, T, CA0, t, CA
+```
+
+Note that these data were generated using the experimental design from [Example -@sec-example_8_1]. and the initial conditions from @tbl-example_8_1. The first few data points are shown in @tbl-example_9_1_data. The full data set is available in the .csv file [reb_9_1_data.csv](`r paste0(path_to_data,'reb_9_1_data.csv')`)
+
+```{r}
+#| echo: false
+#| warning: false
+#| label: tbl-example_9_1_data
+#| tbl-cap: First 8 of the 72 experimentally generated data.
+kbl(d[1:8,], format = "markdown", align = "cc", col.names = c('Experiment','T (°C)',
+    'C~A,0~ (M)', 't~rxn~ (min)', 'C~A~ (M)'))
+```
+
+---
+
+:::{.callout-tip collapse="true"}
+## Click Here to See What an Expert Might be Thinking at this Point
+
+The callout in the introduction to the Examples section, @sec-examples_into_9, describes how I determined that this is a kinetics data analysis assignment and, by knowing that, listed the general approach to use to complete it. I find it helpful to begin any assignment by summarizing the information provided in the problem statement.
+
+:::
+
+**Reactor**: BSTR
+
+**Given**: $V = 1\text{ L}$.
+
+**Adjusted Inputs**: $\underline{T}$, $\underline{C}_{A,0}$, and $\underline{t}_{rxn}$
+
+**Experimental Response**: $\underline{C}_{A,\text{ expt}}$
+
+**Rate Expression Parameter**:  $k$
+
+The experiments were performed at one of four temperature levels, so four same-temperature blocks of data can be created from the full data set.
+
+:::{.callout-tip collapse="true"}
+## Click Here to See What an Expert Might be Thinking at this Point
+
+This assignment asks me to perform the data analysis twice. The information above applies for both analyses. I'll do the analysis using a response function first. To create a response function I need to first write the design equations for the reactor. Since the experimental reactor was isothermal, only the mole balance design equations are needed to model the reactor.
+
+:::
+
+---
+
+#### Analysis using a Response Function
+
+**Reactor Model**
+
+$$
+\frac{dn_A}{dt} = -rV \tag{3}
+$$
+
+$$
+\frac{dn_Z}{dt} = rV \tag{4}
+$$
+
+| Variable | Initial Value | Stopping Criterion |
+|:-------|:-------:|:-------:|
+| $t$ | $0$ | $t_{rxn}$ |
+| $n_A$ | $n_{A,0}$ |  |
+| $n_Z$ | $0$ | |
+
+: Initial values and stopping criterion for solving the design equations, equations (3) and (4). {#tbl-example_9_1_initial_values tbl-colwidths="[20, 40, 40]"}
+
+:::{.callout-tip collapse="true"}
+## Click Here to See Where That Came From
+
+When only one reaction takes place in a BSTR, the mole balance design equation is given by equation @eq-bstr_mole_bal_one_reaction. Substitution of the stoichiometric coefficients of A (-1) and Z(+1) gives equations (3) and (4).
+
+$$
+\frac{dn_i}{dt} = \nu_i r V
+$$
+
+The instant the reaction starts can be defined as $t=0$. The moles of reagent A at that instant can be represented by $n_{A,0}$. The assignment states that the concentration of A was set, so presumably reagent Z was not present, i. e. the molar amount of reagent Z at $t=0$ is zero. The response was measured at $t_{rxn}$, so the stopping criterion is $t=t_{rxn}$. 
+
+:::
+
+:::{.callout-tip collapse="true"}
+## Click Here to See What an Expert Might be Thinking at this Point
+
+The design equations are IVODEs. The independent variable is $t$ and the dependent variables are $n_A$ and $n_Z$. In order to solve those IVODEs numerically I need to go through the design equations, initial values and stopping criterion and express every quantity that is in them, or that gets subtituted into them, in terms of known constants, the independent variable and the dependent variables.
+
+In this assignment the volume is a known constant. When the rate expression, equation (2) is substituted into the design equations it will introduce the rate coefficient and the concentration of A. The rate coefficient will be known at the time the IVODEs are solved, but an expression for the concentration of A is needed. The defining equation for concentration in a closed system is the necessary equation.
+
+Looking at the initial values, the assignment provides the initial concentration of A. Again the defining equation for concentratio can be used to calculate the initial molar amount of reagent A. The final time, $t_{rxn}$ is provided in the assigment and will be available when the IVODEs are solved.
+
+So, I need ancillary equations to calculate the concentration of A and the initial molar amount of A using known constants, $t$, $n_A$, and $n_Z$.
+
+:::
+
+**Ancillary Equations**
+
+$$
+C_A = \frac{n_A}{V} \tag{5}
+$$
+
+$$
+n_{A,0} = C_{A,0}V \tag{6}
+$$
+
+:::{.callout-tip collapse="true"}
+## Click Here to See What an Expert Might be Thinking at this Point
+
+The response function will receive the adjusted inputs ($\underline{T}$, $\underline{C}_{A,0}$, and $\underline{t}_{rxn}$) and the rate expression parameter ($k$) as arguments. With that, the design equations can be solved numerically using the information just presented.
+
+Solving the design equations will yield $n_A$ and $n_Z$ at the time the response was measured, $t_{rxn}$. The measured response was the concentration of A, which must be calculated next and returned. Equation (5) can be used to calculate it.
+
+:::
+
+**Response Function**
+
+The response function is created with the following structure:
+
+* The adjusted inputs, $T$, $C_{A,0}$, and $t_{rxn}$, and the rate expression parameter, $k$, are passed to it as arguments.
+* Variables are defined and assigned the values of all known and given quantities.
+* A function that evaluates the design equations given values of the independent variable, $t$, and the dependent variables, $n_A$ and $n_Z$ is defined. It
+    * Calculates $C_A$ using equation (5).
+    * Calculates $r$ using equation (2).
+    * Evaluates the derivatives equations (3) and (4).
+* For each experiment the response function
+    * Calculates $n_{A,0}$ using equation (6).
+    * Solves the design equations using the initial values and stopping criterion in @tbl-example_9_1_initial_values to find $n_A$ at $t_{rxn}$.
+    * Calculates $C_A$ at $t_{rxn}$ using equation (5).
+* The values of $C_A$ for all of the experiments are returned.
+
+:::{.callout-tip collapse="true"}
+## Click Here to See What an Expert Might be Thinking at this Point
+
+Having created the response function, I can now use it to estimate the rate expression parameter, $k$, at each of the experimental temperature levels. To do so I will use parameter estimation software of my choosing. I will write a simple program that passes the adjusted inputs, the measured responses, and a guess for the rate expression parameter to that parameter estimation software. I will exectute this program using each of the same-temperature data blocks, and it will return the best estimate for $k$, some measure of the uncertainty in $k$, and the coefficient of determination, $R^2$, for each experimental temperature level.
+
+Using the resulting value of $k$ for each data block, I then can calculate the model-predicted response and the residual (difference between the measured response and the model-predicted response) for each eperiment. Then, as described in @sec-4_kin_data_gen, a parity plot and residuals plots can be created.
+
+To complete the analysis, I will fit the Arrhenius expression to the resulting $k$ *vs*. $T$ data. (see [Example -@sec-example_4_4])
+
+:::
+
+**Calculations**
+
+1. For each temperature level used in the experiments:
+    a. Pass the response function, the adjusted inputs for that temperature, and the experimental responses for that temperature to parameter estimation software to find $k$, the uncertainty in $k$, and the coefficient of determination, $R^2$, for that temperature.
+    b. Use the resulting value of $k$ to create a parity plot ($C_{A,\text{ expt}}$ *vs*. $C_{a,\text{ model}}$) and residuals plots ($C_{A,\text{ expt}}$ - $C_{A,\text{ model}}$ *vs*. $C_{A,0}$ and *vs*. $t_{rxn}$) for that temperature.
+2. Fit the Arrhenius expression to the $k$ *vs*. $T$ data from step 1a. (see @sec-example_4_4)
+
+**Results**
+
+```{r}
+#| echo: false
+#| output: false
+d <- read.csv(paste0(path_to_results, 'reb_9_1_resp_fcn_params.csv'))
+# T, k, k_ll, k_ul, R_sq_
+d <- fmt_tibble_col(d, 2:5, 3, 2, 2)
+d$k_full = paste0(d$k,' min^-1^, 95% CI [',d$k_ll,', ',d$k_ul,']')
+```
+
+The parameter estimation results are listed in @tbl-example_9_1_k_resp_fcn. @fig-example_9_1_parity shows the parity plots, @fig-example_9_1_residual_1 shows the residuals plots for $C_{A,0}$, and  @fig-example_9_1_residual_2 shows the residuals plots for $t_{rxn}$.
+
+```{r}
+#| echo: false
+#| warning: false
+#| label: tbl-example_9_1_k_resp_fcn
+#| tbl-cap: Parameter estimation results using the response function.
+d <- d %>% select(T, k_full, R_sq)
+kbl(d, format = "markdown", align = "cc", col.names = c("T (°C)", "k", "R^2^"))
+```
+
+::: {#fig-example_9_1_parity layout-ncol=2}
+
+![](`r paste0(path_to_figures,'reb_9_1_resp_fcn_parity_65.png')`){width=60%}
+
+![](`r paste0(path_to_figures,'reb_9_1_resp_fcn_parity_73.png')`){width=60%}
+
+![](`r paste0(path_to_figures,'reb_9_1_resp_fcn_parity_82.png')`){width=60%}
+
+![](`r paste0(path_to_figures,'reb_9_1_resp_fcn_parity_90.png')`){width=60%}
+
+Parity plots from parameter estimation using a response function.
+:::
+
+::: {#fig-example_9_1_residual_1 layout-ncol=2}
+
+![](`r paste0(path_to_figures,'reb_9_1_resp_fcn_residual_CA0_65.png')`){width=60%}
+
+![](`r paste0(path_to_figures,'reb_9_1_resp_fcn_residual_CA0_73.png')`){width=60%}
+
+![](`r paste0(path_to_figures,'reb_9_1_resp_fcn_residual_CA0_82.png')`){width=60%}
+
+![](`r paste0(path_to_figures,'reb_9_1_resp_fcn_residual_CA0_90.png')`){width=60%}
+
+Residuals plots for $C_{A,0}$ from parameter estimation using a response function.
+:::
+
+::: {#fig-example_9_1_residual_2 layout-ncol=2}
+
+![](`r paste0(path_to_figures,'reb_9_1_resp_fcn_residual_t_rxn_65.png')`){width=60%}
+
+![](`r paste0(path_to_figures,'reb_9_1_resp_fcn_residual_t_rxn_73.png')`){width=60%}
+
+![](`r paste0(path_to_figures,'reb_9_1_resp_fcn_residual_t_rxn_82.png')`){width=60%}
+
+![](`r paste0(path_to_figures,'reb_9_1_resp_fcn_residual_t_rxn_90.png')`){width=60%}
+
+Residuals plots for $t_{rxn}$ from parameter estimation using a response function.
+:::
+
+```{r}
+#| echo: false
+#| output: false
+d <- read.csv(paste0(path_to_results,"reb_9_1_Arrhenius_resp_fcn.csv"))
+d <- fmt_tibble_col(d, 2, 3, 2, 2)
+# item, value, units
+```
+
+The Arrhenius expression was fit to the rate coefficients shown in @tbl-example_9_1_k_resp_fcn with the following results.
+
+k~0~: `r d$value[1]` `r d$units[1]`, 95% CI [`r d$value[2]`, `r d$value[3]`]  
+E: `r d$value[4]` `r d$units[4]`, 95% CI [`r d$value[5]`, `r d$value[6]`]  
+R^2^: `r d$value[7]`
+
+The Arrhenius plot is shown in @fig-example_9_1_Arr_resp_fcn.
+
+![Arrhenius plot for rate coefficients estimated using the response function.](`r paste0(path_to_figures,'reb_9_1_Arrhenius_resp_fcn.png')`){#fig-example_9_1_Arr_resp_fcn width='60%'}
+
+**Assessment**
+
+:::{.callout-tip collapse="true"}
+## Click Here to See What an Expert Might be Thinking at this Point
+
+In assessing the accuracy I need to consider the fit of the model to the data for each of the experimental temperature levels and the fit of the Arrhenius expression to the resulting $k$ *vs*. $T$ data. The coefficient of determination, $R^2$, is extremely close to 1.0 in all cases, indicating high accuracy. In the four parity plots, @fig-example_9_1_parity, and in the Arrhenius plot, @fig-example_9_1_Arr_resp_fcn, the experimental data points are all close to the line representing the model, again indicating an accurate model. In the residuals plots, @fig-example_9_1_residual_1 and @fig-example_9_1_residual_2, and the Arrhenius plot, @fig-example_9_1_Arr_resp_fcn, the experimental data points scatter randomly about the line representing the model with no apparent systematic trends in the deviations. This, too, suggests an accurate model. Finally, for each estimated parameter, the upper and lower limits of the 95% confidence intervals are very close in value to the estimated parameter. That is, the uncertainty in the estimated parameters is small, yet again indicative of an accurate model.
+
+:::
+
+The coefficients of determination, parameter uncertainties, parity plots, residuals plots and Arrhenius plot all indicate that rate expression in equation (2) is very accurate when the Arrhenius expression is used to represent the temperature dependence of $k$. Equation (2) should be accepted as the rate expression with `r d$value[1]` `r d$units[1]` as the pre-exponential factor and `r d$value[4]` `r d$units[4]` as the activation energy.
+
+---
+
+#### Differential Data Analysis
+
+:::{.callout-tip collapse="true"}
+## Click Here to See What an Expert Might be Thinking at this Point
+
+I know that in a differential data analysis the mole balance design [equation -@eq-bstr_mole_bal_one_reaction], is approximated using @eq-bstr_diff_mol_bal. Here I will use backwards differences for the approximation, (see [Appendix -@sec-apndx_pre_knowledge]).
+
+$$
+\frac{dn_i}{dt} = \nu_i r V \approx \frac{\Delta n_i}{\Delta t} = \nu_i r V
+$$
+
+I then need to substitute the rate expression into the approximate design equations for one of the reactants or products and linearize the resulting equation. There is only one rate expression parameter, so the linearized response model will take the form $y=mx$.
+
+For each block of same-temperature data, I will need to calculate $x$ and $y$ using the experimental data and then estimate the value of $m$. This can all be done using a spreadsheet, if desired. That will yield values of $k$ at each of the experimental temperature levels. The Arrhenius expression can then be fit to the resulting estimated $k$ values.
+
+Here I will write the mole balance on A, substituting its stoichiometric coefficient (-1) and the rate expression, equation (2).
+
+:::
+
+**Approximate Reactor Model**
+
+$$
+\frac{n_A \Big\vert_{t=t_i} - n_A \Big\vert_{t=t_{i-1}}}{t_i - t_{i-1}} = -k C_A \Big\vert_{t=t_i} V \tag{7}
+$$
+
+:::{.callout-tip collapse="true"}
+## Click Here to See What an Expert Might be Thinking at this Point
+
+Looking at equation (7), I see that it already has a linear form.
+
+:::
+
+**Linearized Response Model**
+
+Defining $x$ and $y$ as shown in equations (8) and (9), it can be seen that equation (7) has the linear form shown in equation (10).
+
+$$
+x = C_A \Big\vert_{t=t_i} V \tag{8}
+$$
+
+$$
+y = \frac{n_A \Big\vert_{t=t_i-1} - n_A \Big\vert_{t=t_i}}{t_i - t_{i-1}} \tag{9}
+$$
+
+$$
+y=kx \tag{10}
+$$
+
+:::{.callout-tip collapse="true"}
+## Click Here to See What an Expert Might be Thinking at this Point
+
+I need to calculate $x$ and $y$ for each experimental data point. The values of $V$, $t_i$, $t_{i-1}$, and $C_A \Big\vert_{t=t_i}$ are known, so expressions to calculate $n_A \Big\vert_{t=t_i}$ and $n_A \Big\vert_{t=t_{i-1}}$ are needed. In both instances, the defining equation for concentration in a closed system can be used.
+
+:::
+
+**Ancillary Equations**
+
+$$
+n_A \Big\vert_{t=t_i} = C_A \Big\vert_{t=t_i} V \tag{11}
+$$
+
+$$
+n_A \Big\vert_{t=t_i-1} = C_A \Big\vert_{t=t_i-1} V \tag{12}
+$$
+
+**Calculations**
+
+1. For each temperature level used in the experiments:
+    a. Calculate the values of $x$ and $y$ for each experiment using equations (8) and (9).
+    b. Using a spreadsheet or linear least squares software, fit equation (10) to the resulting data.
+    c. Use the resulting value of $k$ to create a model plot ($y$ *vs*. $x$ as points and the model, $y=kx$, as a line) for that temperature.
+2. Fit the Arrhenius expression to the $k$ *vs*. $T$ data from step 1b. (see [Example -@sec-example_4_4])
+
+**Results**
+
+```{r}
+#| echo: false
+#| output: false
+d <- read.csv(paste0(path_to_results, "reb_9_1_diff_params.csv"))
+# T, k, k_ll, k_ul, R_sq_
+d <- fmt_tibble_col(d, 2:5, 3, 2, 2)
+d$k_full = paste0(d$k,' min^-1^, 95% CI [',d$k_ll,', ',d$k_ul,']')
+```
+
+The parameter estimation results are listed in @tbl-example_9_1_k_diff. @fig-example_9_1_model shows the model plots.
+
+```{r}
+#| echo: false
+#| warning: false
+#| label: tbl-example_9_1_k_diff
+#| tbl-cap: Parameter estimation results from differential analysis.
+d <- d %>% select(T, k_full, R_sq)
+kbl(d, format = "markdown", align = "cc", col.names = c("T (°C)", "k", "R^2^"))
+```
+
+::: {#fig-example_9_1_model layout-ncol=2}
+
+![](`r paste0(path_to_figures,'reb_9_1_model_65.png')`){width=60%}
+
+![](`r paste0(path_to_figures,'reb_9_1_model_73.png')`){width=60%}
+
+![](`r paste0(path_to_figures,'reb_9_1_model_82.png')`){width=60%}
+
+![](`r paste0(path_to_figures,'reb_9_1_model_90.png')`){width=60%}
+
+Model plots from parameter estimation using differential analysis.
+:::
+
+```{r}
+#| echo: false
+#| output: false
+dd <- read.csv(paste0(path_to_results,"reb_9_1_Arrhenius_diff.csv"))
+dd <- fmt_tibble_col(dd, 2, 3, 2, 2)
+# item, value, units
+```
+
+The Arrhenius expression was fit to the rate coefficients shown in @tbl-example_9_1_k_diff with the following results.
+
+k~0~: `r dd$value[1]` `r dd$units[1]`, 95% CI [`r dd$value[2]`, `r dd$value[3]`]  
+E: `r dd$value[4]` `r dd$units[4]`, 95% CI [`r dd$value[5]`, `r dd$value[6]`]  
+R^2^: `r dd$value[7]`
+
+The Arrhenius plot is shown in @fig-example_9_1_Arr_diff.
+
+![Arrhenius plot for rate coefficients estimated using differential analysis.](`r paste0(path_to_figures,'reb_9_1_Arrhenius_diff.png')`){#fig-example_9_1_Arr_diff width='60%'}
+
+**Assessment**
+
+:::{.callout-tip collapse="true"}
+## Click Here to See What an Expert Might be Thinking at this Point
+
+As was the case for the analysis using a response function, every assessment criterion indicates that the rate expression is accurate.
+
+* The coefficient of determination, $R^2$, is close to 1.0 in all cases. 
+* In the four model plots, @fig-example_9_1_model, and in the Arrhenius plot, @fig-example_9_1_Arr_diff, the experimental data points are all close to the line representing the model and the experimental data points scatter randomly about the line representing the model, with no apparent systematic trends in the deviations from the line.
+* For each estimated parameter, the upper and lower limits of the 95% confidence intervals are close in value to the estimated parameter. That is, the uncertainty in the estimated parameters is small.
+
+:::
+
+The coefficients of determination, parameter uncertainties, parity plots, residuals plots and Arrhenius plot all indicate that rate expression in equation (2) is accurate when the Arrhenius expression is used to represent the temperature dependence of $k$. Equation (2) should be accepted as the rate expression with `r dd$value[1]` `r dd$units[1]` as the pre-exponential factor and `r dd$value[4]` `r dd$units[4]` as the activation energy.
+
+#### Comparison
+
+The accuracy criteria suggested that the model obtained using differential analysis and that obtained using a response function were both sufficiently accurate to accept. However, the parameter estimates from the two analyses were not equal. The model that resulted from the differential analysis appears to be less accurate than that resulting from analysis using a response function. In particular in the differential analysis the coefficients of determination are not as close to 1.0, there is more scatter in the model plots (compared to the parity plots), and the uncertainty in the estimated parameters is greater.
+
+The same data and the same rate expression were used in both analyses. They differed in the reactor models used. Not surprisingly, the results with the greater uncertainty were obtained using an *approximate* reactor model. In general, analysis should be performed using the true reactor model (i. e. using a response function) to avoid the additional uncertainty resulting from the use of an approximate model. 
