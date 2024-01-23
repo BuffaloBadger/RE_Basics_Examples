@@ -13,14 +13,14 @@ function reb_I_1_calculations
     R = 1.987; % cal/mol/K
 
     % Initial guess for the solution
-    initialGuess = [nDotAin/2; nDotAin/2; Tin - 20.];
+    initialGuess = [nDotAin/2; nDotAin/2; Tin - 1.];
 
     % Solve the ATEs
     [solution, flag, message] = solveATEs(@evalResiduals...
         , initialGuess);
 
     % Check that the solution is converged
-    if flag < 0
+    if flag <= 0
         disp(' ')
         disp(['The ATE solver did not converge: ',message])
     end

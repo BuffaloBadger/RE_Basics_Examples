@@ -1,0 +1,10 @@
+rule reb_I_1:
+    input:
+        "reb_I_1/Code/reb_I_1_calculations.m"
+    output:
+        "reb_I_1/Results/reb_I_1_results.csv"
+    shell:
+        """
+        matlab -nodisplay -r "cd('reb_I_1/Code');\
+        reb_I_1_calculations;exit" 
+        """
