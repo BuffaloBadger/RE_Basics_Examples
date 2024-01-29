@@ -1,10 +1,25 @@
 rule reb_I_1:
     input:
-        "reb_I_1/Code/reb_I_1_calculations.m"
+        "reb_I_1/matlab/results/reb_I_1_results.csv",
+        "reb_I_1/python/results/reb_I_1_results.csv"
+
+rule reb_I_1_python:
+    input:
+        "reb_I_1/python/code/reb_I_1_calculations.py"
     output:
-        "reb_I_1/Results/reb_I_1_results.csv"
+        "reb_I_1/python/results/reb_I_1_results.csv"
     shell:
         """
-        matlab -nodisplay -r "cd('reb_I_1/Code');\
-        reb_I_1_calculations;exit" 
+        python reb_I_1/python/code/reb_I_1_calculations.py
+        """
+
+rule reb_I_1_matlab:
+    input:
+        "reb_I_1/matlab/code/reb_I_1_calculations.m"
+    output:
+        "reb_I_1/matlab/results/reb_I_1_results.csv"
+    shell:
+        """
+        matlab -nodisplay -r "cd('reb_I_1/matlab/code');\
+        reb_I_1_calculations;exit"
         """
