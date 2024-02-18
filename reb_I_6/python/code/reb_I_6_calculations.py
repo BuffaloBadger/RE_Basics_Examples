@@ -5,7 +5,7 @@ import scipy as sp
 import pandas as pd
 
 # set filepath
-filepath_to_results = './reb_I_1/python/results/'
+filepath_to_results = './reb_I_6/python/results/'
 
 # given and known constants
 n_A_in = 500. # mol/h
@@ -66,4 +66,4 @@ data = [['Flow Rate of A', f'{n_A_out}', ' mol/h'],
     ['Flow Rate of Z', f'{n_Z_out}', ' mol/h'],
     ['Temperature',f'{temp_out_K - 273.15}', ' °C']]
 result = pd.DataFrame(data, columns=['item','value','units'])
-result.to_csv(filepath_to_results + 'reb_I_1_results.csv', index=False)
+result.to_csv(filepath_to_results + 'reb_I_6_results.csv', index=False)

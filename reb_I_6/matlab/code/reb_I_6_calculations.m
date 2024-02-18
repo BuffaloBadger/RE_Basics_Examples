@@ -1,5 +1,6 @@
-function reb_I_1_calculations
-%REB_I_1_CALCULATIONS solve 3 ATEs in Reaction Engineering Basics Example I.6
+function reb_I_6_calculations
+%REB_I_6_CALCULATIONS solve 3 ATEs in Reaction Engineering Basics 
+%   Example I.6
 
     % Set filepath
     filepath_to_results = '../results/';
@@ -38,7 +39,7 @@ function reb_I_1_calculations
     disp(['Flow Rate of Z: ',num2str(n_Z_out,3),' mol/h'])
     disp(['Temperature: ',num2str(temp_out_K-273.15,3),' °C'])
 
-    results_file = strcat(filepath_to_results,"reb_I_1_results.csv");
+    results_file = strcat(filepath_to_results,"reb_I_6_results.csv");
     item = ["Flow Rate of A";"Flow Rate of Z";"Temperature"];
     value = [n_A_out;n_Z_out;temp_out_K-273.15];
     units = ["mol h^-1^";"mol h^-1^";"°C"];
