@@ -1,11 +1,5 @@
-Gas phase reaction (1) occurs isothermally at a known temperature in an ideal BSTR. Initially the reactor contains only known molar amounts of A, B, and an inert gas, I. The reaction ends after a known amount of time. The rate expression for gas-phase reaction (1) is given in equation (2). The rate coefficient displays Arrhenius temperature dependence.
+Gas phase reaction (1) occurs isothermally at a known temperature in an ideal BSTR. Initially the reactor contains only known molar amounts of A, B, and an inert gas, I. Write the minimum number of reactor design equations needed to model the composition within this system over time. 
 
 $$
 A + 2 B \rightarrow Y + Z \tag{1}
 $$
-
-$$
-r_1 = k_1 C_A C_B \tag{2}
-$$
-
-Write the minimum number of reactor design equations, and the associated initial values and stopping criterion, needed to model the composition within this system over time. 

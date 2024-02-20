@@ -1,1 +1,0 @@
-Example 6.1 is made-up and is not knowingly based upon any other problems.

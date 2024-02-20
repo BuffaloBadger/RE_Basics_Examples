@@ -30,6 +30,9 @@ function reb_I_6_calculations
         disp(['The ATE solver did not converge: ',message])
     end
 
+    % calculate the residuals
+    residuals = eval_resids(solution);
+
     % Display and save the results
     n_A_out = solution(1);
     n_Z_out = solution(2);
@@ -40,9 +43,10 @@ function reb_I_6_calculations
     disp(['Temperature: ',num2str(temp_out_K-273.15,3),' °C'])
 
     results_file = strcat(filepath_to_results,"reb_I_6_results.csv");
-    item = ["Flow Rate of A";"Flow Rate of Z";"Temperature"];
-    value = [n_A_out;n_Z_out;temp_out_K-273.15];
-    units = ["mol h^-1^";"mol h^-1^";"°C"];
+    item = ["Flow Rate of A";"Flow Rate of Z";"Temperature"...
+        ;"Residual 1"; "Residual 2"; "Residual 3"];
+    value = [n_A_out;n_Z_out;temp_out_K-273.15; residuals];
+    units = ["mol h^-1^";"mol h^-1^";"°C";"";"";""];
     results_table = table(item,value,units);
     writetable(results_table,results_file);
 

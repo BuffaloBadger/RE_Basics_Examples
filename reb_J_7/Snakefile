@@ -1,0 +1,14 @@
+rule reb_J_7:
+    input:
+        "reb_J_7/matlab/results/reb_J_7_results.csv"
+
+rule reb_J_7_matlab:
+    input:
+        "reb_J_7/matlab/code/reb_J_7_calculations.m"
+    output:
+        "reb_J_7/matlab/results/reb_J_7_results.csv"
+    shell:
+        """
+        matlab -nodisplay -r "cd('reb_J_7/matlab/code');\
+        reb_J_7_calculations;exit"
+        """

@@ -1,12 +1,6 @@
 
-Gas-phase reaction (1) takes place in an ideal, adiabatic BSTR. It is irreversible and first-order in A, equation (2). The heat of reaction and the heat capacities of the reagents may be assumed to be constant. Initially the reactor contains only reagent A at a known temperature, $T_0$, and pressure, $P_0$, and the reaction proceeds until the temperature reaches $T_f$.
+Gas-phase reaction (1) takes place in an ideal, adiabatic BSTR. Write and simplify the reactor design equations needed to model this system.
 
 $$
-A \rightarrow B \tag{1}
+A \rightarrow Z \tag{1}
 $$
-
-$$
-r_1 = k_1 C_A \tag{2}
-$$
-
-Write and simplify the reactor design equations needed to model this system, including the associated initial values and stopping criterion.
