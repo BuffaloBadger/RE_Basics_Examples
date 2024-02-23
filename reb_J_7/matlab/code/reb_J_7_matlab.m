@@ -1,9 +1,6 @@
-function reb_J_7_calculations
+function reb_J_7_matlab
 %REB_J_7_CALCULATIONS solve IVODEs in Reaction Engineering Basics 
 %   Example J.7
-    
-    % Set filepath
-    filepath_to_results = '../results/';
 
     % Given and known constants
     V = 2.0; % m^3
@@ -95,8 +92,4 @@ function reb_J_7_calculations
     % Display the results
     disp(' ')
     disp(results_table)
-
-    % Save the results
-    results_file =strcat(filepath_to_results,"reb_J_7_results.csv");
-    writetable(results_table,results_file);
 end
