@@ -1,9 +1,6 @@
-function reb_I_6_calculations
-%REB_I_6_CALCULATIONS solve 3 ATEs in Reaction Engineering Basics 
+function reb_I_6_matlab
+%REB_I_6_MATLAB solve 3 ATEs in Reaction Engineering Basics 
 %   Example I.6
-
-    % Set filepath
-    filepath_to_results = '../results/';
 
     % Given and known constants
     n_A_in = 500.; % mol/h
@@ -52,9 +49,6 @@ function reb_I_6_calculations
         disp(['The ATE solver did not converge: ',message])
     end
 
-    % Calculate the residuals
-    residuals = eval_resids(soln);
-
     % Extract the solution
     n_A_out = soln(1);
     n_Z_out = soln(2);
@@ -65,14 +59,4 @@ function reb_I_6_calculations
     disp(['Flow Rate of A: ',num2str(n_A_out,3),' mol/h'])
     disp(['Flow Rate of Z: ',num2str(n_Z_out,3),' mol/h'])
     disp(['Temperature: ',num2str(T_out_K-273.15,3),' °C'])
-
-    % Save the results
-    results_file = strcat(filepath_to_results,"reb_I_6_results.csv");
-    item = ["Flow Rate of A";"Flow Rate of Z";"Temperature"...
-        ;"Residual 1"; "Residual 2"; "Residual 3"];
-    value = [n_A_out;n_Z_out;temp_out_K-273.15; residuals];
-    units = ["mol h^-1^";"mol h^-1^";"°C";"";"";""];
-    results_table = table(item,value,units);
-    writetable(results_table,results_file);
-
 end

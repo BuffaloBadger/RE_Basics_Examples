@@ -3,10 +3,6 @@
 # Import libraries
 import math
 import scipy as sp
-import pandas as pd
-
-# Set filepath
-filepath_to_results = './reb_I_6/python/results/'
 
 # Given and known constants
 n_A_in = 500. # mol/h
@@ -52,9 +48,6 @@ soln = sp.optimize.root(eval_residuals,init_guess)
 if not(soln.success):
     print(f"A solution was NOT obtained: {soln.message}")
 
-# Calculate the residuals
-residuals = eval_residuals(soln.x)
-
 # Extract the solution
 n_A_out = soln.x[0]
 n_Z_out = soln.x[1]
@@ -66,13 +59,3 @@ print(f'Flow Rate of A: {n_A_out:.3g} mol/h')
 print(f'Flow Rate of Z: {n_Z_out:.3g} mol/h')
 print(f'Temperature: {temp_out_K - 273.15:.3g} °C')
 print(' ')
-
-# Save the results
-data = [['Flow Rate of A', f'{n_A_out}', ' mol/h'],
-    ['Flow Rate of Z', f'{n_Z_out}', ' mol/h'],
-    ['Temperature',f'{temp_out_K - 273.15}', ' °C'],
-    ['Residual 1',f'{residuals[0]}',' '],
-    ['Residual 2',f'{residuals[1]}',' '],
-    ['Residual 3',f'{residuals[2]}',' ']]
-result = pd.DataFrame(data, columns=['item','value','units'])
-result.to_csv(filepath_to_results + 'reb_I_6_results.csv', index=False)
