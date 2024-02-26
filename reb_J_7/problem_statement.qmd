@@ -36,5 +36,5 @@ $$
 | $T$ | $450 \text{ K}$ | |
 | $P$ | $7 \text{ atm}$ | |
   
-: Initial values and stopping criterion for solving the design equations, (1) through (6). {#tbl-initial_values}
+: Initial values and stopping criterion for solving the IVODEs, equations (1) through (6). {#tbl-initial_values}
 
