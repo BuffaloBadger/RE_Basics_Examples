@@ -1,0 +1,3 @@
+This problem was adapted from CE 329 Evaluation 6, Fall 2021.
+
+The Matlab code did not converge when the guess was T_out - 50.0
