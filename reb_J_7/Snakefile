@@ -5,7 +5,7 @@ rule reb_J_7:
 
 rule reb_J_7_python:
     input:
-        "reb_J_7/python/code/reb_J_7_calculations.m"
+        "reb_J_7/python/code/reb_J_7_calculations.py"
     output:
         "reb_J_7/python/results/reb_J_7_results.csv"
     shell:
