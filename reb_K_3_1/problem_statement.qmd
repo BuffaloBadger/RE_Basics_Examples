@@ -14,7 +14,7 @@ $$
 $$
 
 $$
-r = k_0exp{\left( \frac{-E}{RT}\right)} \left(\frac{\dot{n}_AP}{\left( \dot{n}_A + \dot{n}_B\right)RT}\right)^2 \tag{4}
+r = k_0exp{\left( \frac{-E}{RT}\right)} \left(\frac{\dot{n}_AP}{\left( \dot{n}_A + \dot{n}_Z\right)RT}\right)^2 \tag{4}
 $$
 
 | Quantity | Initial Value | Stopping Criterion |
