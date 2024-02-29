@@ -1,5 +1,5 @@
 
-Equations (1) through (3), with the initial values and stopping criterion in @tbl-apndx_K_3_1_init_values, are representative of the IVODEs an engineer might need to solve when analyzing a reactor system. Suppose the engineer needs to calculate the initial value of the temperature, $T_{in}$, knowing that the outlet temperature, $T_{out}$, must equal 400 K, and also knowing $D$ = 1 in, $k_0$ = 7.49 x 10^9^ L mol^-1^ min^-1^, $E$ = 15,300 cal mol^-1^, $P$ = 4 atm, $\Delta H$ = -14,500 cal mol^-1^, $\hat{C}_{p,A}$ = 10.9 cal mol^-1^ K^-1^, $\hat{C}_{p,Z}$ = 21.8 cal mol^-1^ K^-1^, $L$ = 100 in, and $\dot{n}_{A,in}$ = 1.5 mol min^-1^.
+Equations (1) through (3), with the initial values and stopping criterion in @tbl-apndx_K_3_1_init_values, are representative of the IVODEs an engineer might need to solve when analyzing a reactor system. Suppose the engineer needs to calculate the initial value of the temperature, $T_{in}$, knowing that the outlet temperature, $T_{out}$, must equal 400 K, that equation (4) is the rate expression, and that $D$ = 1 in, $k_0$ = 7.49 x 10^9^ L mol^-1^ min^-1^, $E$ = 15,300 cal mol^-1^, $P$ = 4 atm, $\Delta H$ = -14,500 cal mol^-1^, $\hat{C}_{p,A}$ = 10.9 cal mol^-1^ K^-1^, $\hat{C}_{p,Z}$ = 21.8 cal mol^-1^ K^-1^, $L$ = 100 in, and $\dot{n}_{A,in}$ = 1.5 mol min^-1^.
 
 $$
 \frac{d\dot{n}_A}{dz} = -2\frac{\pi D^2}{4}r \tag{1}
