@@ -1,4 +1,4 @@
-function reb_J_7_calculations
+function reb_J_7_1_calculations
 %REB_J_7_CALCULATIONS solve IVODEs in Reaction Engineering Basics 
 %   Example J.7
     
@@ -97,6 +97,6 @@ function reb_J_7_calculations
     disp(results_table)
 
     % Save the results
-    results_file =strcat(filepath_to_results,"reb_J_7_results.csv");
+    results_file =strcat(filepath_to_results,"reb_J_7_1_results.csv");
     writetable(results_table,results_file);
 end

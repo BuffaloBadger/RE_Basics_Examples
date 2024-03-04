@@ -1,4 +1,4 @@
-function reb_J_7_matlab
+function reb_J_7_1_matlab
 %REB_J_7_CALCULATIONS solve IVODEs in Reaction Engineering Basics 
 %   Example J.7
 
