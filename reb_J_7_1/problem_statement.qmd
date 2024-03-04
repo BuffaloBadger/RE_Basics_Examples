@@ -1,4 +1,4 @@
-Equations (1) through (6) with the initial values and stopping criterion shown in @tbl-initial_values are representative of a set of IVODEs that an engineer might generate and need to solve when completing a reaction engineering assignment. For this example we will assume that the engineer knows the constant values of the following quantities: $V$ = 2 m^3^, $\Delta H_1$ = -3470 cal mol^-1^, $\hat{C}_{p,A}$ = 7.5 cal mol^-1^ K^-1^, $\hat{C}_{p,B}$ = 8.5 cal mol^-1^ K^-1^, $\hat{C}_{p,Y}$ =  12.1 cal mol^-1^ K^-1^, $\hat{C}_{p,Z}$ =  5.7 cal mol^-1^ K^-1^, $k_{0,1}$ = 83.0 m^3^ mol^-1^ h^-1^, and $E_1$ = 10.2 kcal mol^-1^. We will further assume that the engineer knows the rate expression used in the solution that follows.
+Equations (1) through (6) with the initial values and stopping criterion shown in @tbl-initial_values are representative of a set of IVODEs that an engineer might generate during the analysis of an adiabatic BSTR. The engineer would need to solve those equations to find the values of $n_A$, $n_B$, $n_Y$, $n_Z$, $T$, and $P$ at elapsed times, $t$, between 0 and 2 h. For this example we will assume that the engineer knows the constant values of the following quantities: $V$ = 2 m^3^, $\Delta H_1$ = -3470 cal mol^-1^, $\hat{C}_{p,A}$ = 7.5 cal mol^-1^ K^-1^, $\hat{C}_{p,B}$ = 8.5 cal mol^-1^ K^-1^, $\hat{C}_{p,Y}$ =  12.1 cal mol^-1^ K^-1^, $\hat{C}_{p,Z}$ =  5.7 cal mol^-1^ K^-1^, $k_{0,1}$ = 83.0 m^3^ mol^-1^ h^-1^, and $E_1$ = 10.2 kcal mol^-1^. We will further assume that the engineer knows the rate expression used in the solution that follows.
 
 $$
 \frac{dn_A}{dt} = -Vr_1 \tag{1}
@@ -36,5 +36,5 @@ $$
 | $T$ | $450 \text{ K}$ | |
 | $P$ | $7 \text{ atm}$ | |
   
-: Initial values and stopping criterion for solving the IVODEs, equations (1) through (6). {#tbl-initial_values}
+: Initial values and stopping criterion for solving the IVODEs, equations (1) through (6). {#tbl-example_J_7_1_initial_values}
 
