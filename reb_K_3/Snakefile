@@ -1,25 +1,25 @@
-rule reb_K_3_2:
+rule reb_K_3:
     input:
-        "reb_K_3_2/matlab/results/reb_K_3_2_results.csv",
-        "reb_K_3_2/python/results/reb_K_3_2_results.csv"
+        "reb_K_3/matlab/results/reb_K_3_results.csv",
+        "reb_K_3/python/results/reb_K_3_results.csv"
 
-rule reb_K_3_2_python:
+rule reb_K_3_python:
     input:
-        "reb_K_3_2/python/code/reb_K_3_2_calculations.py"
+        "reb_K_3/python/code/reb_K_3_calculations.py"
     output:
-        "reb_K_3_2/python/results/reb_K_3_2_results.csv"
+        "reb_K_3/python/results/reb_K_3_results.csv"
     shell:
         """
-        python reb_K_3_2/python/code/reb_K_3_2_calculations.py
+        python reb_K_3/python/code/reb_K_3_calculations.py
         """
 
-rule reb_K_3_2_matlab:
+rule reb_K_3_matlab:
     input:
-        "reb_K_3_2/matlab/code/reb_K_3_2_calculations.m"
+        "reb_K_3/matlab/code/reb_K_3_calculations.m"
     output:
-        "reb_K_3_2/matlab/results/reb_K_3_2_results.csv"
+        "reb_K_3/matlab/results/reb_K_3_results.csv"
     shell:
         """
-        matlab -nodisplay -r "cd('reb_K_3_2/matlab/code');\
-        reb_K_3_2_calculations;exit"
+        matlab -nodisplay -r "cd('reb_K_3/matlab/code');\
+        reb_K_3_calculations;exit"
         """

@@ -1,4 +1,4 @@
-# calculations for Reaction Engineering Basics Example K.3.2
+"""Calculations for Reaction Engineering Basics Example K.3"""
 
 # import libraries
 import math

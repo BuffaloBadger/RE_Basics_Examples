@@ -1,8 +1,8 @@
-function reb_K_3_2_calculations
-%REB_K_3_2_CALCULATIONS Reaction Engineering Basics Example K.3.2
+function reb_K_3_calculations
+%REB_K_3_2_CALCULATIONS Reaction Engineering Basics Example K.3
 
     % results file specification
-    results_file_spec = '../results/reb_K_3_2_results.csv';
+    results_file_spec = '../results/reb_K_3_results.csv';
 
     % given and known constants
     D = 5.; % cm

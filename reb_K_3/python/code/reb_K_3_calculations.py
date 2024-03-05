@@ -1,4 +1,4 @@
-# calculations for Reaction Engineering Basics Example K.3.2
+"""Calculations for Reaction Engineering Basics Example K.3"""
 
 # import libraries
 import math
@@ -8,7 +8,7 @@ import pandas as pd
 from score_utils import solve_ivodes
 
 # set the filespec for the results
-results_file_spec = './reb_K_3_2/python/results/reb_K_3_2_results.csv'
+results_file_spec = './reb_K_3/python/results/reb_K_3_results.csv'
 
 # given and known constants
 D = 5. # cm

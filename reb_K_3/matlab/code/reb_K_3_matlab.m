@@ -1,5 +1,5 @@
-function reb_K_3_2_matlab
-%REB_K_3_2_CALCULATIONS Reaction Engineering Basics Example K.3.2
+function reb_K_3_matlab
+%REB_K_3_2_CALCULATIONS Reaction Engineering Basics Example K.3
 
     % given and known constants
     D = 5.; % cm
