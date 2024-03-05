@@ -1,4 +1,4 @@
-# Solve 3 ATEs in Reaction Engineering Basics Example I.6
+""" Calculations for Reaction Engineering Basics Example I.6"""
 
 # Import libraries
 import math

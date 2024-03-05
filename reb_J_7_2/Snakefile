@@ -1,0 +1,25 @@
+rule reb_J_7_2:
+    input:
+        "reb_J_7_2/matlab/results/reb_J_7_2_results.csv",
+        "reb_J_7_2/python/results/reb_J_7_2_results.csv"
+
+rule reb_J_7_2_python:
+    input:
+        "reb_J_7_2/python/code/reb_J_7_2_calculations.py"
+    output:
+        "reb_J_7_2/python/results/reb_J_7_2_results.csv"
+    shell:
+        """
+        python reb_J_7_2/python/code/reb_J_7_2_calculations.py
+        """
+
+rule reb_J_7_2_matlab:
+    input:
+        "reb_J_7_2/matlab/code/reb_J_7_2_calculations.m"
+    output:
+        "reb_J_7_2/matlab/results/reb_J_7_2_results.csv"
+    shell:
+        """
+        matlab -nodisplay -r "cd('reb_J_7_2/matlab/code');\
+        reb_J_7_2_calculations;exit"
+        """

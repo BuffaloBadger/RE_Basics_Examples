@@ -1,4 +1,4 @@
-# Solve IVODEs in Reaction Engineering Basics Example J.7
+""" Calculations for Reaction Engineering Basics Example J.7"""
 
 # Import libraries
 import math
