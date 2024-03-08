@@ -1,27 +1,27 @@
 
-Equations (1) through (3), with the initial values and stopping criterion shown in @tbl-example_J_7_2_initial_values, are representative IVODEs that a reaction engineer might need to solve when analyzing a steady-state, adiabatic PFR with negligible pressure drop. Suppose the engineer is tasked with finding the volumetric flow rate, $\dot{V}$, that results in the final value of $T$ being equal to 325 K, and then using that volumetric flow rate, to calculate the final values of $\dot{n}_A$ and $\dot{n}_Z$. It can be assumed that the reaction engineer knows that the rate expression for $r$ is equation (4), and the following values: $D$ = 5 cm, $\Delta H$ = -14,000 cal mol^-1^, $\breve{C}_p$ = 1.3 cal cm^-3^ K^-1^, $\dot{n}_{A,in}$ = 1.0 mol min^-1^, $\dot{n}_{Z,in}$ = 0, $T_{in}$ = 300 K, $L$ = 50 cm, $k_0$ = 4.2 x 10^15^ cm^3^ mol^-1^ min^-1^, and $E$ = 18,000 cal mol^-1^.
+Equations (1) through (3), with the initial values and stopping criterion in @tbl-example_J_7_3_initial_values, are representative of the IVODEs an engineer might need to solve when analyzing an adiabatic, steady-state PFR with negligible pressure drop. Suppose the engineer needs to calculate the initial value of $T$, $T_{in}$, that will result in a specified final value of $T$, $T_{out}$, and then calculate $\dot{n}_A\left(z\right)$, $\dot{n}_Z\left(z\right)$, and $T\left(z\right)$ using $T_{in}$. For this example, assume that the engineer knows that equation (4) is the rate expression, and that $D$ = 1 in, $k_0$ = 7.49 x 10^9^ L mol^-1^ min^-1^, $E$ = 15,300 cal mol^-1^, $P$ = 4 atm, $\Delta H$ = -14,500 cal mol^-1^, $\hat{C}_{p,A}$ = 10.9 cal mol^-1^ K^-1^, $\hat{C}_{p,Z}$ = 21.8 cal mol^-1^ K^-1^, $L$ = 100 in, $\dot{n}_{A,in}$ = 1.5 mol min^-1^, $\dot{n}_{Z,in}$ = 0, and $T_{out}$ = 400 K.
 
 $$
-\frac{d\dot{n}_A}{dz} = - \frac{\pi D^2}{4}r \tag{1}
-$$
-
-$$
-\frac{d\dot{n}_Z}{dz} =  \frac{\pi D^2}{4}r \tag{2}
+\frac{d\dot{n}_A}{dz} = -2\frac{\pi D^2}{4}r \tag{1}
 $$
 
 $$
-\frac{dT}{dz} = - \frac{\pi D^2}{4}\frac{r\Delta H}{\dot{V} \breve{C}_p} \tag{3}
+\frac{d\dot{n}_Z}{dz} = \frac{\pi D^2}{4}r \tag{2}
 $$
 
-| Variable | Initial Value | Stopping Criterion |
-|:------:|:-------:|:-------:|
-| $z$ | $0$ | $L$ |
+$$
+\frac{dT}{dz} = -\frac{\pi D^2}{4}\frac{r\Delta H}{\dot{n}_A \hat{C}_{p,A} + \dot{n}_Z \hat{C}_{p,Z}} \tag{3}
+$$
+
+| Quantity | Initial Value | Stopping Criterion |
+|:---:|:---:|:---:|
+| $z$ | 0.0 | L |
 | $\dot{n}_A$ | $\dot{n}_{A,in}$ | |
 | $\dot{n}_Z$ | $\dot{n}_{Z,in}$ | |
 | $T$ | $T_{in}$ | |
-  
-: Initial values and stopping criterion for solving the IVODEs, equations (1) through (3). {#tbl-example_J_7_2_initial_values}
+
+: Initial values and stopping criterion for solving the IVODEs, equations (1) through (3). {#tbl-example_J_7_3_initial_values}
 
 $$
-r = k_0 \exp{\left( \frac{-E}{RT} \right)}\frac{\dot{n}_A^2}{\dot{V}^2} \tag{4}
+r = k_0exp{\left( \frac{-E}{RT}\right)} \left(\frac{\dot{n}_AP}{\left( \dot{n}_A + \dot{n}_Z\right)RT}\right)^2 \tag{4}
 $$

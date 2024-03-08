@@ -1,4 +1,4 @@
-"""Calculations for Example J.7.2 of Reaction Engineering Basics"""
+"""Calculations for Example J.7.3 of Reaction Engineering Basics"""
 
 # import libraries
 import math
@@ -8,102 +8,83 @@ import pandas as pd
 from score_utils import solve_ivodes
 
 # given and known constants
-T_f = 325. # K
-D = 5. # cm
-dH = -14000. # cal /mol
-Cp = 1.3 # cal /cm^3 /K
-nDot_A_in = 1.0 # mol /min
-nDot_Z_in = 0.0 # mol /min
-T_in = 300. # K
-L = 50.0 # cm
-k_0 = 4.2E15 # cm^3 /mol /min
-E = 18000. # cal /mol
+T_out = 400. # K
+D = 1. # in
+k_0 = 7.49E9*61.02 # in^3 /mol /min
+E = 15300. # cal /mol
+P = 4. # atm
+dH = -14500. # cal /mol
+Cp_A = 10.9 # cal /mol /K
+Cp_Z = 21.8 # cal /mol /K
+L = 100. # in
+nDot_A_in = 1.5 # mol /min
 Re = 1.987 # cal /mol /K
-
-# make IVODE constant available to all functions
-Vdot = float('nan')
+Rw = 0.08206*61.02 # in^3 atm /mol /K
 
 # reactor design equations as derivative expressions
-def derivatives(z,dep):
+def derivatives(z, dep):
     # extract the dependent variables for the current integration step
     nDot_A = dep[0]
     nDot_Z = dep[1]
     T = dep[2]
-
-    # calculate the rate
-    r = other_ivode_variables(T, nDot_A)
     
+    # calculate other IVODE variables
+    r = other_ivode_variables(T, nDot_A, nDot_Z)
+
     # evaluate the derivatives
-    dnDotAdz = -math.pi*D**2/4*r
+    dnDotAdz = -2*math.pi*D**2/4*r
     dnDotZdz = math.pi*D**2/4*r
-    dTdz = -math.pi*D**2/4*r*dH/Vdot/Cp
+    dTdz = -math.pi*D**2/4*r*dH/(nDot_A*Cp_A + nDot_Z*Cp_Z)
 
     # return the derivatives
     return [dnDotAdz, dnDotZdz, dTdz]
 
 # calculate other IVODE variables
-def other_ivode_variables(T, nDot_A):
-    r = k_0*math.exp(-E/Re/T)*nDot_A**2/Vdot**2
+def other_ivode_variables(T, nDot_A, nDot_Z):
+    r = k_0*math.exp(-E/Re/T)*(P*nDot_A/Rw/T/(nDot_A + nDot_Z))**2
     return r
 
-# calculate unknown IVODE constant
-def ivode_constant():
-    # allow this function to set Vdot
-    global Vdot
-
-    # initial guess
-    initial_guess = 100.0
-
-    # solve the implicit equation for Vdot
-    soln = sp.optimize.root(residual,initial_guess)
-
-    # check that the solution converged
-    if not(soln.success):
-        print(f"Vdot was NOT found: {soln.message}")
-
-    # set Vdot and return
-    Vdot = soln.x[0]
-    return Vdot
-
-# implicit equation for the IVODE constant as residual
-def residual(guess):
-    # allow this function to set Vdot
-    global Vdot
-    Vdot = guess[0]
-  
-    # solve the reactor design equations
-    z, n_A, n_Z, T = profiles()
-
-    # extract the calculated final T
-    T_f_calc = T[-1]
-
-    # evaluate the residual
-    residual_1 = T_f - T_f_calc
-
-    # return the residual
-    return residual_1
-
 # calculate IVODE initial and final values
-def initial_and_final_values():
+def initial_and_final_values(T_in_guess):
+    # set the initial values
     ind_0 = 0.0
-    dep_0 = np.array([nDot_A_in, nDot_Z_in, T_in])
+    dep_0 = np.array([nDot_A_in, 0.0, T_in_guess])
+
+    # define the stopping criterion
     f_var = 0
-    f_val = L
+    f_val = L   
+
+    # return the initial and final values     
     return ind_0, dep_0, f_var, f_val
 
+# implicit equation for IVODE initial value as residual
+def residual(guess):
+    # solve the reactor design equations
+    T_in_guess = guess[0]
+    z, nDot_A, nDot_Z, T = profiles(T_in_guess)
+
+    # extract Tf
+    Tf = T[-1]
+
+    # evaluate the residual
+    residual = Tf - T_out
+
+    # return the residual
+    return residual
+
 # solve the reactor design equations
-def profiles():
-    # get the initial values and stopping criterion
-    ind_0, dep_0, f_var, f_val = initial_and_final_values()
- 
+def profiles(T_in):
+    # get the initial and final values
+    ind_0, dep_0, f_var, f_val = initial_and_final_values(T_in)
+
     # solve the IVODEs
-    z, dep, success, message = solve_ivodes(ind_0, dep_0
-                            , f_var, f_val, derivatives)
+    z, dep, success, message = solve_ivodes(ind_0, dep_0, f_var, f_val
+                                        , derivatives)
 
     # check that a solution was found
     if not(success):
-        print(f"The profiles were NOT found: {message}")
-
+        print(f"An IVODE solution was NOT obtained: {message}")
+    
     # extract dependent variable profiles
     nDot_A = dep[0,:]
     nDot_Z = dep[1,:]
@@ -112,40 +93,43 @@ def profiles():
     # return all profiles
     return z, nDot_A, nDot_Z, T
 
-# calculate other quantities of interest
-def other_quantities_of_interest(nDot_A, nDot_Z):
-    # extract the final values
-    nDot_A_f = nDot_A[-1]
-    nDot_Z_f = nDot_Z[-1]
-
-    # return the other quantities of interest
-    return nDot_A_f, nDot_Z_f
-
 # complete the assignment
 def complete_the_assignment():
-    # calculate Vdot
-    Vdot = ivode_constant()
+    # initial guess
+    initial_guess = T_out - 100.
 
-    # get the solution of the reactor design equations
-    z, nDot_A, nDot_Z, T = profiles()
+    # solve the implict equation for Tin
+    soln = sp.optimize.root(residual,initial_guess)
 
-    # get the quantities of interest
-    nDot_A_f, nDot_Z_f = other_quantities_of_interest(nDot_A, nDot_Z)
+    # check that the solution is converged
+    if not(soln.success):
+        print(f"The initial temperature was NOT found: {soln.message}")
 
+    # extract the result
+    T_in = soln.x[0]
+
+    # solve the reactor design equations
+    z, nDot_A, nDot_Z, T = profiles(T_in)
+
+    # tabulate the results
+    Tin_results_df = pd.DataFrame(columns=['item','value','units'])
+    Tin_results_df.loc[0] = ['T_in' , T_in, 'K']
+    profile_results_df = pd.DataFrame({'z':z , 'nDot_A':nDot_A
+                                       , 'nDot_Z':nDot_Z, 'T':T})
+        
     # display the results
     print(' ')
-    print(f'Volumetric Flow Rate: {Vdot:.3g} cm^3 /min')
-    print(f'Final Molar Flow of A: {nDot_A_f:.3g} mol /min')
-    print(f'Final Molar Flow of Z: {nDot_Z_f:.3g} mol /min')
+    print(f'Inlet Temperature: {T_in:.3g} K')
     print(' ')
+    print('Molar Flow and Temperature Profiles')
+    print(profile_results_df.to_string(index=False))
 
     # save the results
-    data = [['$\dot{V}$', f'{Vdot}', 'cm^3^ min^-1^'],
-    ['$\dot{n}_{A,f}$', f'{nDot_A_f}', 'mol min^-1^'],
-    ['$\dot{n}_{Z,f}$', f'{nDot_Z_f}', 'mol min^-1^']]
-    results_df = pd.DataFrame(data, columns=['item','value','units'])
-    file_spec = './reb_J_7_2/python/results/reb_J_7_2_results.csv'
-    results_df.to_csv(file_spec, index=False)
+    Tin_results_file_spec = './reb_J_7_3/python/results/reb_J_7_3_Tin_results.csv'
+    profile_results_file_spec = \
+            './reb_J_7_3/python/results/reb_J_7_3_profile_results.csv'
+    Tin_results_df.to_csv(Tin_results_file_spec, index=False)
+    profile_results_df.to_csv(profile_results_file_spec, index=False)
 
 if __name__=="__main__":
     complete_the_assignment()
