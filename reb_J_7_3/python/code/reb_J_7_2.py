@@ -47,12 +47,9 @@ def other_ivode_variables(T, nDot_A):
     return r
 
 # calculate unknown IVODE constant
-def ivode_constant():
+def ivode_constant(initial_guess):
     # allow this function to set Vdot
     global Vdot
-
-    # initial guess
-    initial_guess = 100.0
 
     # solve the implicit equation for Vdot
     soln = sp.optimize.root(residual,initial_guess)
@@ -123,8 +120,11 @@ def other_quantities_of_interest(nDot_A, nDot_Z):
 
 # complete the assignment
 def complete_the_assignment():
+    # initial guess for Vdot
+    initial_guess = 100.0
+
     # calculate Vdot
-    Vdot = ivode_constant()
+    Vdot = ivode_constant(initial_guess)
 
     # get the solution of the reactor design equations
     z, nDot_A, nDot_Z, T = profiles()
