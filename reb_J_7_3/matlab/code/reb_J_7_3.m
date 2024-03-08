@@ -1,5 +1,5 @@
-function reb_J_7_2
-%REB_J_7_2 Calculations for Example J.7.2 of Reaction Engineering Basics
+function reb_J_7_3
+%REB_J_7_3 Calculations for Example J.7.3 of Reaction Engineering Basics
     % given and known constants
     T_f = 325.; % K
     D = 5.; % cm
@@ -135,6 +135,6 @@ function reb_J_7_2
     disp(['Final Molar Flow of Z: ', num2str(nDot_Z_f,3), ' mol min^-1^'])
 
     % Save the results
-    results_file = "../results/reb_J_7_2_results.csv";
+    results_file = "../results/reb_J_7_3_results.csv";
     writetable(results_table,results_file);
 end

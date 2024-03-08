@@ -1,25 +1,25 @@
-rule reb_J_7_2:
+rule reb_J_7_3:
     input:
-        "reb_J_7_2/matlab/results/reb_J_7_2_results.csv",
-        "reb_J_7_2/python/results/reb_J_7_2_results.csv"
+        "reb_J_7_3/matlab/results/reb_J_7_3_results.csv",
+        "reb_J_7_3/python/results/reb_J_7_3_results.csv"
 
-rule reb_J_7_2_python:
+rule reb_J_7_3_python:
     input:
-        "reb_J_7_2/python/code/reb_J_7_2.py"
+        "reb_J_7_3/python/code/reb_J_7_3.py"
     output:
-        "reb_J_7_2/python/results/reb_J_7_2_results.csv"
+        "reb_J_7_3/python/results/reb_J_7_3_results.csv"
     shell:
         """
-        python reb_J_7_2/python/code/reb_J_7_2.py
+        python reb_J_7_3/python/code/reb_J_7_3.py
         """
 
-rule reb_J_7_2_matlab:
+rule reb_J_7_3_matlab:
     input:
-        "reb_J_7_2/matlab/code/reb_J_7_2.m"
+        "reb_J_7_3/matlab/code/reb_J_7_3.m"
     output:
-        "reb_J_7_2/matlab/results/reb_J_7_2_results.csv"
+        "reb_J_7_3/matlab/results/reb_J_7_3_results.csv"
     shell:
         """
-        matlab -nodisplay -r "cd('reb_J_7_2/matlab/code');\
-        reb_J_7_2;exit"
+        matlab -nodisplay -r "cd('reb_J_7_3/matlab/code');\
+        reb_J_7_3;exit"
         """

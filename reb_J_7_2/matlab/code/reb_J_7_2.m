@@ -1,5 +1,5 @@
-function reb_J_7_3
-%REB_J_7_3 Calculations for Example J.7.3 of Reaction Engineering Basics
+function reb_J_7_2
+%REB_J_7_2 Calculations for Example J.7.2 of Reaction Engineering Basics
     % given and known constants
     T_out = 400.; % K
     D = 1. ; % in
@@ -121,9 +121,9 @@ function reb_J_7_3
     disp(profile_results_table)
 
     % Save the results
-    Tin_results_file = "../results/reb_J_7_3_Tin_results.csv";
+    Tin_results_file = "../results/reb_J_7_2_Tin_results.csv";
     writetable(Tin_results_table,Tin_results_file);
     profile_results_file ...
-        = "../results/reb_J_7_3_profile_results.csv";
+        = "../results/reb_J_7_2_profile_results.csv";
     writetable(profile_results_table,profile_results_file);
 end

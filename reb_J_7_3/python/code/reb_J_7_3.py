@@ -1,4 +1,4 @@
-"""Calculations for Example J.7.2 of Reaction Engineering Basics"""
+"""Calculations for Example J.7.3 of Reaction Engineering Basics"""
 
 # import libraries
 import math
@@ -144,7 +144,7 @@ def complete_the_assignment():
     ['$\dot{n}_{A,f}$', f'{nDot_A_f}', 'mol min^-1^'],
     ['$\dot{n}_{Z,f}$', f'{nDot_Z_f}', 'mol min^-1^']]
     results_df = pd.DataFrame(data, columns=['item','value','units'])
-    file_spec = './reb_J_7_2/python/results/reb_J_7_2_results.csv'
+    file_spec = './reb_J_7_3/python/results/reb_J_7_3_results.csv'
     results_df.to_csv(file_spec, index=False)
 
 if __name__=="__main__":

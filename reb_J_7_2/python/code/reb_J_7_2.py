@@ -1,4 +1,4 @@
-"""Calculations for Example J.7.3 of Reaction Engineering Basics"""
+"""Calculations for Example J.7.2 of Reaction Engineering Basics"""
 
 # import libraries
 import math
@@ -125,9 +125,9 @@ def complete_the_assignment():
     print(profile_results_df.to_string(index=False))
 
     # save the results
-    Tin_results_file_spec = './reb_J_7_3/python/results/reb_J_7_3_Tin_results.csv'
+    Tin_results_file_spec = './reb_J_7_2/python/results/reb_J_7_2_Tin_results.csv'
     profile_results_file_spec = \
-            './reb_J_7_3/python/results/reb_J_7_3_profile_results.csv'
+            './reb_J_7_2/python/results/reb_J_7_2_profile_results.csv'
     Tin_results_df.to_csv(Tin_results_file_spec, index=False)
     profile_results_df.to_csv(profile_results_file_spec, index=False)
 
