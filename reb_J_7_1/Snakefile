@@ -5,12 +5,12 @@ rule reb_J_7_1:
 
 rule reb_J_7_1_python:
     input:
-        "reb_J_7_1/python/code/reb_J_7_1_calculations.py"
+        "reb_J_7_1/python/code/reb_J_7_1.py"
     output:
         "reb_J_7_1/python/results/reb_J_7_1_results.csv"
     shell:
         """
-        python reb_J_7_1/python/code/reb_J_7_1_calculations.py
+        python reb_J_7_1/python/code/reb_J_7_1.py
         """
 
 rule reb_J_7_1_matlab:
