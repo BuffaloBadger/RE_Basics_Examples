@@ -15,11 +15,11 @@ rule reb_J_7_1_python:
 
 rule reb_J_7_1_matlab:
     input:
-        "reb_J_7_1/matlab/code/reb_J_7_1_calculations.m"
+        "reb_J_7_1/matlab/code/reb_J_7_1.m"
     output:
         "reb_J_7_1/matlab/results/reb_J_7_1_results.csv"
     shell:
         """
         matlab -nodisplay -r "cd('reb_J_7_1/matlab/code');\
-        reb_J_7_1_calculations;exit"
+        reb_J_7_1;exit"
         """
