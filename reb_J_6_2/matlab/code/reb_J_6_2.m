@@ -1,5 +1,5 @@
-function reb_J_7_2
-%REB_J_7_2 Calculations for Example J.7.2 of Reaction Engineering Basics
+function reb_J_6_2
+%REB_J_6_2 Calculations for Example J.6.2 of Reaction Engineering Basics
     % given and known constants
     T_out = 400.; % K
     D = 1. ; % in
@@ -11,18 +11,22 @@ function reb_J_7_2
     Cp_Z = 21.8; % cal /mol /K
     L = 100.; % in
     nDot_A_in = 1.5; % mol /min
+    nDot_Z_in = 0.0;
     Re = 1.987; % cal /mol /K
     Rw = 0.08206*61.02; % in^3 atm /mol /K
 
+    % make T_in available in all functions
+    T_in = nan;
+
     % reactor design equations as derivative expressions
     function derivs = derivatives(~, dep)
-        % extract ind and dep vars for the current integration step
+        % extract ind and dep vars for this integration step
         nDot_A = dep(1);
         nDot_Z = dep(2);
         T = dep(3);
 
         % calculate rate
-        [r] = other_ivode_variables(T, nDot_A, nDot_Z);
+        r = k_0*exp(-E/Re/T)*(nDot_A*P/Rw/T/(nDot_A + nDot_Z))^2;
 
         % evaluate the derivatives
         dnDotAdz = -2*pi()*D^2/4*r;
@@ -34,28 +38,13 @@ function reb_J_7_2
 
     end
 
-    % calculate other IVODE variables
-    function [r] = other_ivode_variables(T, nDot_A, nDot_Z)
-        r = k_0*exp(-E/Re/T)*(nDot_A*P/Rw/T/(nDot_A + nDot_Z))^2;
-    end
-
-    % calculate IVODE initial and final values
-    function [ind_0, dep_0, f_var, f_val] ...
-            = initial_and_final_values(T_in_guess)
-        % initial values
-        ind_0 = 0.0;
-        dep_0 = [nDot_A_in; 0.0; T_in_guess];
-
-        % stopping criterion
-        f_var = 0;
-        f_val = L;
-    end
-
     % implicit equation for IVODE initial value as residual
     function resid = residual(guess)
-        % solve the reactor design equations using the guess
-        T_in_guess = guess;
-        [~, ~, ~, T] = profiles(T_in_guess);
+        % make the guess available to all functions
+        T_in = guess;
+
+        % solve the reactor design equations
+        [~, ~, ~, T] = profiles();
 
         % extract the calculated final temperature
         T_f = T(end);
@@ -64,11 +53,15 @@ function reb_J_7_2
         resid = T_f - T_out;
     end
 
-    % solve the reactor design equations
-    function [z, nDot_A, nDot_Z, T] = profiles(T_in)
-        % get the initial values and stopping criterion
-        [ind_0, dep_0, f_var, f_val] ...
-            = initial_and_final_values(T_in);
+    % reactor model function
+    function [z, nDot_A, nDot_Z, T] = profiles()
+        % set the initial values
+        ind_0 = 0.0;
+        dep_0 = [nDot_A_in; nDot_Z_in; T_in];
+
+        % stopping criterion
+        f_var = 0;
+        f_val = L;
 
         % solve the IVODEs
         odes_are_stiff = false;
@@ -81,14 +74,13 @@ function reb_J_7_2
             disp('WARNING: The ODE solution may not be accurate!')
         end
 
-        % extract the dependent variable profiles
+        % extract and return the dependent variable profiles
         nDot_A = dep(:,1);
         nDot_Z = dep(:,2);
         T = dep(:,3);
-        
     end
 
-    % complete the assignment
+    % perform the analysis
 
     % calculate the inlet temperature
     % initial guess
@@ -103,8 +95,8 @@ function reb_J_7_2
         disp(['The ATE solver did not converge: ',message])
     end
 
-    % get the solution of the reactor design equations
-    [z, nDot_A, nDot_Z, T] = profiles(T_in);
+    % solve the reactor design equations
+    [z, nDot_A, nDot_Z, T] = profiles();
 
     % tabulate the results
     item = "T_in";
@@ -121,9 +113,9 @@ function reb_J_7_2
     disp(profile_results_table)
 
     % Save the results
-    Tin_results_file = "../results/reb_J_7_2_Tin_results.csv";
+    Tin_results_file = "../results/reb_J_6_2_Tin_results.csv";
     writetable(Tin_results_table,Tin_results_file);
     profile_results_file ...
-        = "../results/reb_J_7_2_profile_results.csv";
+        = "../results/reb_J_6_2_profile_results.csv";
     writetable(profile_results_table,profile_results_file);
 end

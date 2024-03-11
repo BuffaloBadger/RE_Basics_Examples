@@ -1,4 +1,4 @@
-"""Calculations for Example J.7.1 of Reaction Engineering Basics"""
+"""Calculations for Example J.6.1 of Reaction Engineering Basics"""
 
 # import libraries
 import math
@@ -8,6 +8,13 @@ import pandas as pd
 import scipy as sp
 
 # given and known constants
+n_A_0 = 190. # mol
+n_B_0 = 190. # mol
+n_Y_0 = 0. # mol
+n_Z_0 = 0. # mol
+T_0 = 450. # K
+P_0 = 7.0 # atm
+t_f = 2.0 # h
 V = 2.0 # m^3
 dH_1 = -3470 # cal/mol
 Cp_A = 7.5 # cal/mol/K
@@ -19,7 +26,7 @@ E_1 = 10200 # cal/mol
 Re = 1.987 # cal/mol
 Rw = 8.206E-5 # m^3 atm/mol/K
 
-# reactor design equations as derivative expressions
+# derivatives function
 def derivatives(t, dep):
     # Extract the dependent variables for this integration step
     n_A = dep[0]
@@ -51,7 +58,9 @@ def derivatives(t, dep):
     mass_matrix[5,5] = -V
 
     # Calculate the rate
-    r = other_ivode_variables(T, n_A, n_B)
+    C_A = n_A/V
+    C_B = n_B/V
+    r = k_0_1*math.exp(-E_1/Re/T)*C_A*C_B
 
     # Create right side vector
     rhs = np.array([-V*r, -V*r, V*r, V*r, -V*r*dH_1, 0])
@@ -62,25 +71,13 @@ def derivatives(t, dep):
     # Return the derivatives
     return derivs
 
-# calculate other IVODE variables
-def other_ivode_variables(T, n_A, n_B):
-    C_A = n_A/V
-    C_B = n_B/V
-    r = k_0_1*math.exp(-E_1/Re/T)*C_A*C_B
-    return r
-
-# calculate IVODE initial and final values
-def initial_and_final_values():
-    ind_0 = 0.0
-    dep_0 = np.array([190.0, 190.0, 0.0, 0.0, 450.0, 7.0])
-    f_var = 0
-    f_val = 2.0
-    return ind_0, dep_0, f_var, f_val
-
-# solve the reactor design equations
+# reactor model
 def profiles():
-    # get the initial values and stopping criterion
-    ind_0, dep_0, f_var, f_val = initial_and_final_values()
+    # set the initial and final values
+    ind_0 = 0.0
+    dep_0 = np.array([n_A_0, n_B_0, n_Y_0, n_Z_0, T_0, P_0])
+    f_var = 0
+    f_val = t_f
 
     # solve the IVODEs
     t, dep, success, message = solve_ivodes(ind_0, dep_0
@@ -98,12 +95,12 @@ def profiles():
     T = dep[4,:]
     P = dep[5,:]
 
-    # return all profiles
+    # return the profiles
     return t, n_A, n_B, n_Y, n_Z, T, P
 
-# complete the assignment
-def complete_the_assignment():
-    # get the solution of the reactor design equations
+# perform the analysis
+def perform_the_analysis():
+    # solve the reactor design equations
     t, n_A, n_B, n_Y, n_Z, T, P = profiles()
 
     # tabulate the results
@@ -116,8 +113,8 @@ def complete_the_assignment():
     print(' ')
 
     # save the results
-    file_spec = './reb_J_7_1/python/results/reb_J_7_1_results.csv'
+    file_spec = './reb_J_6_1/python/results/reb_J_6_1_results.csv'
     results_df.to_csv(file_spec, index=False)
 
 if __name__=="__main__":
-    complete_the_assignment()
+    perform_the_analysis()

@@ -1,4 +1,4 @@
-"""Calculations for Example J.7.2 of Reaction Engineering Basics"""
+"""Calculations for Example J.6.2 of Reaction Engineering Basics"""
 
 # import libraries
 import math
@@ -18,18 +18,23 @@ Cp_A = 10.9 # cal /mol /K
 Cp_Z = 21.8 # cal /mol /K
 L = 100. # in
 nDot_A_in = 1.5 # mol /min
+nDot_Z_in = 0.0
 Re = 1.987 # cal /mol /K
 Rw = 0.08206*61.02 # in^3 atm /mol /K
 
+
+# make T_in available in all functions
+T_in = float('nan')
+
 # reactor design equations as derivative expressions
 def derivatives(z, dep):
-    # extract the dependent variables for the current integration step
+    # extract the dependent variables for this integration step
     nDot_A = dep[0]
     nDot_Z = dep[1]
     T = dep[2]
     
-    # calculate other IVODE variables
-    r = other_ivode_variables(T, nDot_A, nDot_Z)
+    # calculate the rate
+    r = k_0*math.exp(-E/Re/T)*(P*nDot_A/Rw/T/(nDot_A + nDot_Z))**2
 
     # evaluate the derivatives
     dnDotAdz = -2*math.pi*D**2/4*r
@@ -39,31 +44,16 @@ def derivatives(z, dep):
     # return the derivatives
     return [dnDotAdz, dnDotZdz, dTdz]
 
-# calculate other IVODE variables
-def other_ivode_variables(T, nDot_A, nDot_Z):
-    r = k_0*math.exp(-E/Re/T)*(P*nDot_A/Rw/T/(nDot_A + nDot_Z))**2
-    return r
-
-# calculate IVODE initial and final values
-def initial_and_final_values(T_in_guess):
-    # set the initial values
-    ind_0 = 0.0
-    dep_0 = np.array([nDot_A_in, 0.0, T_in_guess])
-
-    # define the stopping criterion
-    f_var = 0
-    f_val = L   
-
-    # return the initial and final values     
-    return ind_0, dep_0, f_var, f_val
-
 # implicit equation for IVODE initial value as residual
 def residual(guess):
-    # solve the reactor design equations
-    T_in_guess = guess[0]
-    z, nDot_A, nDot_Z, T = profiles(T_in_guess)
+    # make the guess available to all functions
+    global T_in
+    T_in = guess[0]
 
-    # extract Tf
+    # solve the reactor design equations
+    z, nDot_A, nDot_Z, T = profiles()
+
+    # extract the calculated final temperature
     Tf = T[-1]
 
     # evaluate the residual
@@ -72,10 +62,15 @@ def residual(guess):
     # return the residual
     return residual
 
-# solve the reactor design equations
-def profiles(T_in):
-    # get the initial and final values
-    ind_0, dep_0, f_var, f_val = initial_and_final_values(T_in)
+# reactor model function
+def profiles():
+    # set the initial values
+    ind_0 = 0.0
+    dep_0 = np.array([nDot_A_in, nDot_Z_in, T_in])
+
+    # define the stopping criterion
+    f_var = 0
+    f_val = L  
 
     # solve the IVODEs
     z, dep, success, message = solve_ivodes(ind_0, dep_0, f_var, f_val
@@ -94,7 +89,10 @@ def profiles(T_in):
     return z, nDot_A, nDot_Z, T
 
 # complete the assignment
-def complete_the_assignment():
+def perform_the_analysis():
+    # calculate the inlet temperature and make it available to all functions
+    global T_in
+    
     # initial guess
     initial_guess = T_out - 100.
 
@@ -109,7 +107,7 @@ def complete_the_assignment():
     T_in = soln.x[0]
 
     # solve the reactor design equations
-    z, nDot_A, nDot_Z, T = profiles(T_in)
+    z, nDot_A, nDot_Z, T = profiles()
 
     # tabulate the results
     Tin_results_df = pd.DataFrame(columns=['item','value','units'])
@@ -125,11 +123,11 @@ def complete_the_assignment():
     print(profile_results_df.to_string(index=False))
 
     # save the results
-    Tin_results_file_spec = './reb_J_7_2/python/results/reb_J_7_2_Tin_results.csv'
+    Tin_results_file_spec = './reb_J_6_2/python/results/reb_J_6_2_Tin_results.csv'
     profile_results_file_spec = \
-            './reb_J_7_2/python/results/reb_J_7_2_profile_results.csv'
+            './reb_J_6_2/python/results/reb_J_6_2_profile_results.csv'
     Tin_results_df.to_csv(Tin_results_file_spec, index=False)
     profile_results_df.to_csv(profile_results_file_spec, index=False)
 
 if __name__=="__main__":
-    complete_the_assignment()
+    perform_the_analysis()

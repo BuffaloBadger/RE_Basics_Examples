@@ -1,6 +1,13 @@
-function reb_J_7_1
-%REB_J_7_1 Calculations for Example J.7.1 of Reaction Engineering Basics
+function reb_J_6_1
+%REB_J_6_1 Calculations for Example J.6.1 of Reaction Engineering Basics
     % given and known constants
+    n_A_0 = 190.; % mol
+    n_B_0 = 190.; % mol
+    n_Y_0 = 0.; % mol
+    n_Z_0 = 0.; % mol
+    T_0 = 450.; % K
+    P_0 = 7.0; % atm
+    t_f = 2.0; % h
     V = 2.0; % m^3
     dH_1 = -3470; % cal/mol
     Cp_A = 7.5; % cal/mol/K
@@ -43,8 +50,10 @@ function reb_J_7_1
         mass_matrix(6,5) = Rw*(n_A + n_B + n_Y + n_Z);
         mass_matrix(6,6) = -V;
 
-        % calculate the other IVODE variables
-        r = other_ivode_variables(T, n_A, n_B);
+        % calculate the rate
+        C_A = n_A/V;
+        C_B = n_B/V;
+        r = k_0_1*exp(-E_1/Re/T)*C_A*C_B;
 
         % Create right side vector
         rhs = [-V*r; -V*r; V*r; V*r; -V*r*dH_1; 0];
@@ -53,34 +62,19 @@ function reb_J_7_1
         derivs = mass_matrix\rhs;
     end
 
-    % calculate other IVODE variables
-    function r = other_ivode_variables(T, n_A, n_B)
-        C_A = n_A/V;
-        C_B = n_B/V;
-        r = k_0_1*exp(-E_1/Re/T)*C_A*C_B;
-    end
-
-    % calculate IVODE initial and final values
-    function [ind_0, dep_0, f_var, f_val] = initial_and_final_values()
-        % Initial values
-        ind_0 = 0.0;
-        dep_0 = [190.0; 190.0; 0.0; 0.0; 450.0; 7.0];
-    
-        % Stopping criterion
-        f_var = 0;
-        f_val = 2.0;
-    end
-
-    % solve the reactor design equations
+    % reactor model
     function [t, n_A, n_B, n_Y, n_Z, T, P] = profiles()
-        % get the initial values and stopping criterion
-        [ind_0, dep_0, f_var, f_val] = initial_and_final_values();
+        % set the initial and final values
+        ind_0 = 0.0;
+        dep_0 = [n_A_0; n_B_0; n_Y_0; n_Z_0; T_0; P_0];
+        f_var = 0;
+        f_val = t_f;
 
         % solve the IVODEs
         odes_are_stiff = false;
         [t, dep, flag] = solve_ivodes(ind_0, dep_0, f_var, f_val...
             , @derivatives, odes_are_stiff);
-    
+
         % Check that the solution was found
         if flag <= 0
             disp(' ')
@@ -96,10 +90,10 @@ function reb_J_7_1
         P = dep(:,6);
     end
 
-    % complete the assignment
-    % # get the solution of the reactor design equations
+    % perform the analysis
+    % solve the reactor design equations
     [t, n_A, n_B, n_Y, n_Z, T, P] = profiles();
-
+ 
     % Tabulate the results
     results_table = table(t,n_A,n_B,n_Y,n_Z,T,P);
 
@@ -108,6 +102,6 @@ function reb_J_7_1
     disp(results_table)
 
     % Save the results
-    results_file = "../results/reb_J_7_1_results.csv";
+    results_file = "../results/reb_J_6_1_results.csv";
     writetable(results_table,results_file);
 end

@@ -1,0 +1,40 @@
+rule reb_J_6_1:
+    input:
+        "reb_J_6_1/matlab/results/reb_J_6_1_results.csv",
+        "reb_J_6_1/python/results/reb_J_6_1_results.csv",
+        "../RE_Basics/problem_statements/reb_J_6_1.qmd",
+        "../RE_Basics/results/reb_J_6_1_results.csv"
+
+rule reb_J_6_1_python:
+    input:
+        "reb_J_6_1/python/code/reb_J_6_1.py"
+    output:
+        "reb_J_6_1/python/results/reb_J_6_1_results.csv"
+    shell:
+        """
+        python reb_J_6_1/python/code/reb_J_6_1.py
+        """
+
+rule reb_J_6_1_matlab:
+    input:
+        "reb_J_6_1/matlab/code/reb_J_6_1.m"
+    output:
+        "reb_J_6_1/matlab/results/reb_J_6_1_results.csv"
+    shell:
+        """
+        matlab -nodisplay -r "cd('reb_J_6_1/matlab/code');\
+        reb_J_6_1;exit"
+        """
+
+rule reb_J_6_1_re_basics:
+    input:
+        "reb_J_6_1/problem_statement.qmd",
+        "reb_J_6_1/python/results/reb_J_6_1_results.csv"
+    output:
+        "../RE_Basics/problem_statements/reb_J_6_1.qmd",
+        "../RE_Basics/results/reb_J_6_1_results.csv"
+    shell:
+        """
+        cp reb_J_6_1/problem_statement.qmd "../RE_Basics/problem_statements/reb_J_6_1.qmd"
+        cp reb_J_6_1/python/results/reb_J_6_1_results.csv ../RE_Basics/results/reb_J_6_1_results.csv
+        """
