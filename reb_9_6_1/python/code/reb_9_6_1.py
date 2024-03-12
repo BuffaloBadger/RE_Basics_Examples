@@ -99,7 +99,7 @@ def perform_the_analysis():
     plt.figure() 
     plt.plot(t,CA,label='A')
     plt.plot(t,CB,label='B')
-    plt.plot(t,CY,label='Y')
+    plt.plot(t,CY,linestyle=':',linewidth=4, label='Y')
     plt.plot(t,CZ,label='Z')
     plt.xlabel("$Time \; (h)$")
     plt.ylabel("$Concentration \; (mol \; L^{-1})$")

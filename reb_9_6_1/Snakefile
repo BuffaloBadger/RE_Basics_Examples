@@ -41,7 +41,10 @@ rule reb_9_6_1_matlab:
 
 rule reb_9_6_1_re_basics:
     input:
-
+        "reb_9_6_1/python/results/reb_9_6_1_concentrations.png",
+        "reb_9_6_1/python/results/reb_9_6_1_temperature.png",
+        "reb_9_6_1/python/results/reb_9_6_1_rate.png",
+        "reb_9_6_1/problem_statement.qmd"
     output:
         "../RE_Basics/results/reb_9_6_1_concentrations.png",
         "../RE_Basics/results/reb_9_6_1_temperature.png",
