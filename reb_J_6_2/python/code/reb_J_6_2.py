@@ -44,24 +44,6 @@ def derivatives(z, dep):
     # return the derivatives
     return [dnDotAdz, dnDotZdz, dTdz]
 
-# implicit equation for IVODE initial value as residual
-def residual(guess):
-    # make the guess available to all functions
-    global T_in
-    T_in = guess[0]
-
-    # solve the reactor design equations
-    z, nDot_A, nDot_Z, T = profiles()
-
-    # extract the calculated final temperature
-    Tf = T[-1]
-
-    # evaluate the residual
-    residual = Tf - T_out
-
-    # return the residual
-    return residual
-
 # reactor model function
 def profiles():
     # set the initial values
@@ -87,6 +69,24 @@ def profiles():
 
     # return all profiles
     return z, nDot_A, nDot_Z, T
+
+# implicit equation for IVODE initial value as residual
+def residual(guess):
+    # make the guess available to all functions
+    global T_in
+    T_in = guess[0]
+
+    # solve the reactor design equations
+    z, nDot_A, nDot_Z, T = profiles()
+
+    # extract the calculated final temperature
+    Tf = T[-1]
+
+    # evaluate the residual
+    residual = Tf - T_out
+
+    # return the residual
+    return residual
 
 # complete the assignment
 def perform_the_analysis():
