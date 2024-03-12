@@ -8,32 +8,27 @@ rule reb_9_6_1:
         "reb_9_6_1/python/results/reb_9_6_1_concentrations.png",
         "reb_9_6_1/python/results/reb_9_6_1_temperature.png",
         "reb_9_6_1/python/results/reb_9_6_1_rate.png",
-        "../RE_Basics/Graphics/reb_9_6_1_concentrations.png",
-        "../RE_Basics/Graphics/reb_9_6_1_temperature.png",
-        "../RE_Basics/Graphics/reb_9_6_1_rate.png"
+        "../RE_Basics/results/reb_9_6_1_concentrations.png",
+        "../RE_Basics/results/reb_9_6_1_temperature.png",
+        "../RE_Basics/results/reb_9_6_1_rate.png",
+        "../RE_Basics/problem_statements/reb_9_6_1.qmd"
 
 rule reb_9_6_1_python:
     input:
-        "reb_9_6_1/python/code/reb_9_6_1_calculations.py"
+        "reb_9_6_1/python/code/reb_9_6_1.py"
     output:
         "reb_9_6_1/python/results/reb_9_6_1_results.csv",
         "reb_9_6_1/python/results/reb_9_6_1_concentrations.png",
         "reb_9_6_1/python/results/reb_9_6_1_temperature.png",
-        "reb_9_6_1/python/results/reb_9_6_1_rate.png",
-        "../RE_Basics/Graphics/reb_9_6_1_concentrations.png",
-        "../RE_Basics/Graphics/reb_9_6_1_temperature.png",
-        "../RE_Basics/Graphics/reb_9_6_1_rate.png"
+        "reb_9_6_1/python/results/reb_9_6_1_rate.png"
     shell:
         """
-        python3 reb_9_6_1/python/code/reb_9_6_1_calculations.py
-        cp reb_9_6_1/python/results/reb_9_6_1_concentrations.png ../RE_Basics/Graphics
-        cp reb_9_6_1/Results/reb_9_6_1_rate.png ../RE_Basics/Graphics
-        cp reb_9_6_1/Results/reb_9_6_1_temperature.png ../RE_Basics/Graphics
+        python3 reb_9_6_1/python/code/reb_9_6_1.py
         """
 
 rule reb_9_6_1_matlab:
     input:
-        "reb_9_6_1/matlab/code/reb_9_6_1_calculations.m"
+        "reb_9_6_1/matlab/code/reb_9_6_1.m"
     output:
         "reb_9_6_1/matlab/results/reb_9_6_1_results.csv",
         "reb_9_6_1/matlab/results/reb_9_6_1_concentrations.png",
@@ -41,6 +36,21 @@ rule reb_9_6_1_matlab:
         "reb_9_6_1/matlab/results/reb_9_6_1_rate.png"
     shell:
         """
-        matlab -nodisplay -r "cd('reb_9_6_1/matlab/code');\
-        reb_9_6_1_calculations;exit"
+        matlab -nodisplay -r "cd('reb_9_6_1/matlab/code');reb_9_6_1;exit"
+        """
+
+rule reb_9_6_1_re_basics:
+    input:
+
+    output:
+        "../RE_Basics/results/reb_9_6_1_concentrations.png",
+        "../RE_Basics/results/reb_9_6_1_temperature.png",
+        "../RE_Basics/results/reb_9_6_1_rate.png",
+        "../RE_Basics/problem_statements/reb_9_6_1.qmd"
+    shell:
+        """
+        cp reb_9_6_1/python/results/reb_9_6_1_concentrations.png ../RE_Basics/results
+        cp reb_9_6_1/python/results/reb_9_6_1_temperature.png ../RE_Basics/results
+        cp reb_9_6_1/python/results/reb_9_6_1_rate.png ../RE_Basics/results
+        cp reb_9_6_1/problem_statement.qmd ../RE_Basics/problem_statements/reb_9_6_1.qmd
         """
