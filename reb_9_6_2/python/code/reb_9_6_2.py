@@ -99,7 +99,7 @@ def profiles():
     # return all profiles
     return t, nA, nB, nX, nY, nZ, T, Te
 
-# residuals function
+# implicit equation for IVODE initial value as residual
 def residual(guess):
     # make the guess available to all functions
     global T0

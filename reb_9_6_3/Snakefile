@@ -1,19 +1,47 @@
 rule reb_9_6_3:
     input:
-        "reb_9_6_3/Results/reb_9_6_3_results.csv",
-        "reb_9_6_3/Results/reb_9_6_3_yield_plot.png",
-        "../RE_Basics/Graphics/reb_9_6_3_yield_plot.png"
+        "reb_9_6_3/matlab/results/reb_9_6_3_results.csv",
+        "reb_9_6_3/matlab/results/reb_9_6_3_yield_vs_t.png",
+        "reb_9_6_3/python/results/reb_9_6_3_results.csv",
+        "reb_9_6_3/python/results/reb_9_6_3_yield_vs_t.png",
+        "../RE_Basics/results/reb_9_6_3_results.csv",
+        "../RE_Basics/results/reb_9_6_3_yield_vs_t.png",
+        "../RE_Basics/problem_statements/reb_9_6_3.qmd"
 
-rule reb_9_6_3_results:
+rule reb_9_6_3_matlab:
     input:
-        "reb_9_6_3/Code/reb_9_6_3_calculations.m",
-        "reb_9_6_3/Code/reb_9_6_3_response.m"
+        "reb_9_6_3/matlab/code/reb_9_6_3.m"
     output:
-        "reb_9_6_3/Results/reb_9_6_3_results.csv",
-        "reb_9_6_3/Results/reb_9_6_3_yield_plot.png",
-        "../RE_Basics/Graphics/reb_9_6_3_yield_plot.png"
+        "reb_9_6_3/matlab/results/reb_9_6_3_results.csv",
+        "reb_9_6_3/matlab/results/reb_9_6_3_yield_vs_t.png"
     shell:
         """
-        matlab -nodisplay -r "cd('/Users/lund/Projects/Kinetics/RE_Basics_Examples/reb_9_6_3/Code');reb_9_6_3_calculations;exit"
-        cp reb_9_6_3/Results/reb_9_6_3_yield_plot.png ../RE_Basics/Graphics
+        matlab -nodisplay -r "cd('reb_9_6_3/matlab/code');reb_9_6_3;exit"
+        """
+
+rule reb_9_6_3_python:
+    input:
+        "reb_9_6_3/python/code/reb_9_6_3.py"
+    output:
+        "reb_9_6_3/python/results/reb_9_6_3_results.csv",
+        "reb_9_6_3/python/results/reb_9_6_3_yield_vs_t.png"
+    shell:
+        """
+        python3 reb_9_6_3/python/code/reb_9_6_3.py
+        """
+
+rule reb_9_6_3_re_basics:
+    input:
+        "reb_9_6_3/python/results/reb_9_6_3_results.csv",
+        "reb_9_6_3/python/results/reb_9_6_3_yield_vs_t.png",
+        "reb_9_6_3/problem_statement.qmd"
+    output:
+        "../RE_Basics/results/reb_9_6_3_results.csv",
+        "../RE_Basics/results/reb_9_6_3_yield_vs_t.png",
+        "../RE_Basics/problem_statements/reb_9_6_3.qmd"
+    shell:
+        """
+        cp reb_9_6_3/python/results/reb_9_6_3_results.csv ../RE_Basics/results/reb_9_6_3_results.csv
+        cp reb_9_6_3/python/results/reb_9_6_3_yield_vs_t.png ../RE_Basics/results/reb_9_6_3_yield_vs_t.png
+        cp reb_9_6_3/problem_statement.qmd ../RE_Basics/problem_statements/reb_9_6_3.qmd
         """
