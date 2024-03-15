@@ -7,7 +7,8 @@ from score_utils import solve_ivodes
 import scipy as sp
 import pandas as pd
 
-# given and known constants
+# given, known and calculated constants available to all functions
+# given
 V = 10.0E3 # cm^3
 Ve = 1.4E3 # cm^3
 U = 138. # cal /ft^2 /min /K
@@ -28,9 +29,14 @@ k0_2 = 2.38E13 # /min
 E_2 = 25.3E3 # cal /mol
 t_rxn = 30. # min
 fA_f = 0.45
+# known
 Re = 1.987 # cal /mol /K
+# calculated
+nA_0 = CA_0*V
+nB_0 = CB_0*V
+nA_f = nA_0*(1 - fA_f)
 
-# make missing initial value or IVODE constant available to all functions
+# current value of T0 available to all functions
 T0 = float('nan')
 
 # derivatives function
@@ -70,8 +76,6 @@ def derivatives(ind, dep):
 # reactor model
 def profiles():
 	# set the initial values
-    nA_0 = CA_0*V
-    nB_0 = CB_0*V
     ind_0 = 0.0
     dep_0 = np.array([nA_0, nB_0, 0.0, 0.0, 0.0, T0, Te_in])
 
@@ -109,10 +113,10 @@ def residual(guess):
     t, nA, nB, nX, nY, nZ, T, Te = profiles()
 
     # extract the calculated molar amount
-    nA_f = nA[-1]
+    nA_f_calc = nA[-1]
 
     # evaluate the residual
-    residual = nA_f - CA_0*V*(1-fA_f)
+    residual = nA_f_calc - nA_f
 
     # return the residual
     return residual
@@ -143,12 +147,14 @@ def perform_the_analysis():
     Tf = T[-1] - 273.15
     Te_out = Te[-1] - 273.15
     sel_X_Z = nX[-1]/nZ[-1]
+    fA_calc = 100*(nA_0 - nA[-1])/nA_0
 
     # tabulate the results
     data = [['T0', f'{T0}', '°C'],
     ['Tf', f'{Tf}', '°C'],
     ['Te_out',f'{Te_out}', '°C'],
-    ['sel_X_Z',f'{sel_X_Z}',' ']]
+    ['sel_X_Z',f'{sel_X_Z}','mol X per mol Z'],
+    ['fA_calc',f'{fA_calc}', '%']]
     results_df = pd.DataFrame(data, columns=['item','value','units'])
 
     # display the results
