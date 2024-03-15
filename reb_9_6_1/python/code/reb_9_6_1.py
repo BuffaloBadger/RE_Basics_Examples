@@ -7,7 +7,8 @@ import pandas as pd
 from score_utils import solve_ivodes
 import matplotlib.pyplot as plt
 
-# given and known constants
+# given, known, and calculated constants available to all functions
+# given
 dH = -101.2E3 # J/mol
 k_0 = 5.11e4 * 3600 # L/mol/h
 E = 74.8e3 # J/mol
@@ -18,13 +19,19 @@ CB_0 = 3.2 # mol/L
 Cp = 1.23 * 4.184 # J/g/K
 rho = 1.02 * 1000.0 # g/L
 t_f = 2.0 # h
+# known
 Re = 8.314 # J/mol/K
+# calculated
+nA_0 = CA_0*V
+nB_0 = CB_0*V
 
 # derivatives function
-def derivatives(ind, dep):
+def derivatives(ind, dep): # ind not needed
 	# extract the dependent variables for this integration step
     nA = dep[0]
     nB = dep[1]
+    # nY = dep[2] # not needed to evaluate the derivatives
+    # nZ = dep[3] # not needed to evaluate the derivatives
     T = dep[4]
 
     # calculate the rate
@@ -46,8 +53,6 @@ def derivatives(ind, dep):
 # reactor model
 def profiles():
     # set the initial values
-    nA_0 = CA_0*V
-    nB_0 = CB_0*V
     ind_0 = 0.0
     dep_0 = np.array([nA_0, nB_0, 0.0, 0.0, T_0])
 
