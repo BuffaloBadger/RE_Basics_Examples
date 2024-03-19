@@ -1,6 +1,7 @@
 function reb_J_6_1
 %REB_J_6_1 Calculations for Example J.6.1 of Reaction Engineering Basics
-    % given and known constants
+
+    % given and known constants available to all functions
     n_A_0 = 190.; % mol
     n_B_0 = 190.; % mol
     n_Y_0 = 0.; % mol
@@ -20,14 +21,14 @@ function reb_J_6_1
     Rw = 8.206E-5; % m^3 atm/mol/K
 
     % reactor design equations as derivative expressions
-    function derivs = derivatives(t, dep)
+    function derivs = derivatives(~, dep)
         % extract the dependent variables for this integration step
         n_A = dep(1);
         n_B = dep(2);
         n_Y = dep(3);
         n_Z = dep(4);
         T = dep(5);
-        P = dep(6);
+        % P = dep(6); not needed to evaluate the derivatives
 
         % create empty mass matrix
         mass_matrix = zeros(6,6);
@@ -90,18 +91,23 @@ function reb_J_6_1
         P = dep(:,6);
     end
 
+    % function that performs the analysis
+    function perform_the_analysis()
+        % solve the reactor design equations
+        [t, n_A, n_B, n_Y, n_Z, T, P] = profiles();
+     
+        % Tabulate the results
+        results_table = table(t,n_A,n_B,n_Y,n_Z,T,P);
+    
+        % Display the results
+        disp(' ')
+        disp(results_table)
+    
+        % Save the results
+        results_file = "../results/reb_J_6_1_results.csv";
+        writetable(results_table,results_file);
+    end
+    
     % perform the analysis
-    % solve the reactor design equations
-    [t, n_A, n_B, n_Y, n_Z, T, P] = profiles();
- 
-    % Tabulate the results
-    results_table = table(t,n_A,n_B,n_Y,n_Z,T,P);
-
-    % Display the results
-    disp(' ')
-    disp(results_table)
-
-    % Save the results
-    results_file = "../results/reb_J_6_1_results.csv";
-    writetable(results_table,results_file);
+    perform_the_analysis();
 end

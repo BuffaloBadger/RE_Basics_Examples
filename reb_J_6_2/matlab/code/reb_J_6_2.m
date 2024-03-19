@@ -1,6 +1,7 @@
 function reb_J_6_2
 %REB_J_6_2 Calculations for Example J.6.2 of Reaction Engineering Basics
-    % given and known constants
+
+    % given and known constants available to all functions
     T_out = 400.; % K
     D = 1. ; % in
     k_0 = 7.49E9*61.02; % in^3 /mol /min
@@ -18,7 +19,7 @@ function reb_J_6_2
     % make T_in available in all functions
     T_in = nan;
 
-    % reactor design equations as derivative expressions
+    % derivatives function
     function derivs = derivatives(~, dep)
         % extract ind and dep vars for this integration step
         nDot_A = dep(1);
@@ -38,7 +39,7 @@ function reb_J_6_2
 
     end
 
-    % implicit equation for IVODE initial value as residual
+    % residual function
     function resid = residual(guess)
         % make the guess available to all functions
         T_in = guess;
@@ -80,42 +81,47 @@ function reb_J_6_2
         T = dep(:,3);
     end
 
-    % perform the analysis
+    % function that perform the analysis
+    function perform_the_analysis()
 
-    % calculate the inlet temperature
-    % initial guess
-    initial_guess = T_out - 100.0;
-
-    % solve the implicit equation for Tin
-    [T_in, flag, message] = solve_ates(@residual, initial_guess);
-
-    % check that the solution converged
-    if flag <= 0
+        % calculate the inlet temperature
+        % initial guess
+        initial_guess = T_out - 100.0;
+    
+        % solve the implicit equation for Tin
+        [T_in, flag, message] = solve_ates(@residual, initial_guess);
+    
+        % check that the solution converged
+        if flag <= 0
+            disp(' ')
+            disp(['The ATE solver did not converge: ',message])
+        end
+    
+        % solve the reactor design equations
+        [z, nDot_A, nDot_Z, T] = profiles();
+    
+        % tabulate the results
+        item = "T_in";
+        value = T_in;
+        units = "K";
+        Tin_results_table = table(item,value,units);
+        profile_results_table = table(z, nDot_A, nDot_Z, T);
+    
+        % display the results
         disp(' ')
-        disp(['The ATE solver did not converge: ',message])
+        disp(['Inlet Temperature: ', num2str(T_in,3), ' K'])
+        disp(' ')
+        disp('Molar flow and Temperature Profiles')
+        disp(profile_results_table)
+    
+        % Save the results
+        Tin_results_file = "../results/reb_J_6_2_Tin_results.csv";
+        writetable(Tin_results_table,Tin_results_file);
+        profile_results_file ...
+            = "../results/reb_J_6_2_profile_results.csv";
+        writetable(profile_results_table,profile_results_file);
     end
 
-    % solve the reactor design equations
-    [z, nDot_A, nDot_Z, T] = profiles();
-
-    % tabulate the results
-    item = "T_in";
-    value = T_in;
-    units = "K";
-    Tin_results_table = table(item,value,units);
-    profile_results_table = table(z, nDot_A, nDot_Z, T);
-
-    % display the results
-    disp(' ')
-    disp(['Inlet Temperature: ', num2str(T_in,3), ' K'])
-    disp(' ')
-    disp('Molar flow and Temperature Profiles')
-    disp(profile_results_table)
-
-    % Save the results
-    Tin_results_file = "../results/reb_J_6_2_Tin_results.csv";
-    writetable(Tin_results_table,Tin_results_file);
-    profile_results_file ...
-        = "../results/reb_J_6_2_profile_results.csv";
-    writetable(profile_results_table,profile_results_file);
+    % perform the analysis
+    perform_the_analysis()
 end

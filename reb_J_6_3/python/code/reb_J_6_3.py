@@ -20,10 +20,10 @@ k_0 = 4.2E15 # cm^3 /mol /min
 E = 18000. # cal /mol
 Re = 1.987 # cal /mol /K
 
-# make IVODE constant available to all functions
+# make Vdot available to all functions
 Vdot = float('nan')
 
-# reactor design equations as derivative expressions
+# derivatives function
 def derivatives(z,dep):
     # extract the dependent variables for this integration step
     nDot_A = dep[0]
@@ -41,7 +41,7 @@ def derivatives(z,dep):
     # return the derivatives
     return [dnDotAdz, dnDotZdz, dTdz]
 
-# implicit equation for the IVODE constant as residual
+# residual function
 def residual(guess):
     # allow this function to set Vdot
     global Vdot
@@ -59,7 +59,7 @@ def residual(guess):
     # return the residual
     return resid
 
-# reactor model
+# reactor model function
 def profiles():
     # set the initial values
     nDot_A_in = Vdot*C_A_in
@@ -87,7 +87,7 @@ def profiles():
     # return all profiles
     return z, nDot_A, nDot_Z, T
 
-# complete the assignment
+# function that performs the analysis
 def perform_the_analysis():
     # calculate Vdot and make it available to all functions
     global Vdot

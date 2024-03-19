@@ -26,7 +26,7 @@ Rw = 0.08206*61.02 # in^3 atm /mol /K
 # make T_in available in all functions
 T_in = float('nan')
 
-# reactor design equations as derivative expressions
+# derivatives function
 def derivatives(z, dep):
     # extract the dependent variables for this integration step
     nDot_A = dep[0]
@@ -70,7 +70,7 @@ def profiles():
     # return all profiles
     return z, nDot_A, nDot_Z, T
 
-# implicit equation for IVODE initial value as residual
+# residual function
 def residual(guess):
     # make the guess available to all functions
     global T_in

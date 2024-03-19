@@ -1,6 +1,7 @@
 function reb_J_6_3
 %REB_J_6_3 Calculations for Example J.6.3 of Reaction Engineering Basics
-    % given and known constants
+
+    % given and known constants available in all functions
     T_f = 325.; % K
     D = 5.; % cm
     dH = -14000.; % cal /mol
@@ -13,14 +14,14 @@ function reb_J_6_3
     E = 18000.; % cal /mol
     Re = 1.987; % cal /mol /K
     
-    % make IVODE constant available to all functions
+    % make Vdot available to all functions
     Vdot = nan;
 
-    % reactor design equations as derivative expressions
+    % derivatives function
     function derivs = derivatives(~, dep)
         % extract the dependent variables for this integration step
         nDot_A = dep(1);
-        nDot_Z = dep(2);
+        % nDot_Z = dep(2); not needed to evaluate derivatives
         T = dep(3);
     
         % calculate rate
@@ -35,7 +36,7 @@ function reb_J_6_3
         derivs = [dnDotAdz; dnDotZdz; dTdz];
     end
 
-    % implicit equation for the IVODE constant as residual
+    % residual function
     function resid = residual(guess)
         % set Vdot
         Vdot = guess;
@@ -50,7 +51,7 @@ function reb_J_6_3
         resid = T_f - T_f_calc;
     end
 
-    % reactor model
+    % reactor model function
     function [z, nDot_A, nDot_Z, T] = profiles()
         % set the intial values
         nDot_A_in = Vdot*C_A_in;
@@ -79,40 +80,45 @@ function reb_J_6_3
         T = dep(:,3);
     end
 
-    % perform the analysis
-    % initial guess for Vdot
-    initial_guess = 1150.;
-
-    % solve the implicit equation for Vdot
-    [Vdot, flag, message] = solve_ates(@residual, initial_guess);
-
-    % check that the solution converged
-    if flag <= 0
+    % function that performs the analysis
+    function perform_the_analysis()
+        % initial guess for Vdot
+        initial_guess = 1150.;
+    
+        % solve the implicit equation for Vdot
+        [Vdot, flag, message] = solve_ates(@residual, initial_guess);
+    
+        % check that the solution converged
+        if flag <= 0
+            disp(' ')
+            disp(['The ATE solver did not converge: ',message])
+        end
+    
+        % solve the reactor design equations
+        [z, nDot_A, nDot_Z, T] = profiles();
+    
+        % tabulate the results
+        item = "Vdot";
+        value = Vdot;
+        units = "cm^3^ min^-1^";
+        Tin_results_table = table(item,value,units);
+        profile_results_table = table(z, nDot_A, nDot_Z, T);
+    
+        % display the results
         disp(' ')
-        disp(['The ATE solver did not converge: ',message])
+        disp(['Volumetric Flow Rate: ', num2str(Vdot,3), ' cm^3/min'])
+        disp(' ')
+        disp('Molar flow and Temperature Profiles')
+        disp(profile_results_table)
+    
+        % Save the results
+        Vdot_results_file = "../results/reb_J_6_3_Vdot_results.csv";
+        writetable(Tin_results_table,Vdot_results_file);
+        profile_results_file ...
+            = "../results/reb_J_6_3_profile_results.csv";
+        writetable(profile_results_table,profile_results_file);
     end
 
-    % solve the reactor design equations
-    [z, nDot_A, nDot_Z, T] = profiles();
-
-    % tabulate the results
-    item = "Vdot";
-    value = Vdot;
-    units = "cm^3^ min^-1^";
-    Tin_results_table = table(item,value,units);
-    profile_results_table = table(z, nDot_A, nDot_Z, T);
-
-    % display the results
-    disp(' ')
-    disp(['Volumetric Flow Rate: ', num2str(Vdot,3), ' cm^3/min'])
-    disp(' ')
-    disp('Molar flow and Temperature Profiles')
-    disp(profile_results_table)
-
-    % Save the results
-    Vdot_results_file = "../results/reb_J_6_3_Vdot_results.csv";
-    writetable(Tin_results_table,Vdot_results_file);
-    profile_results_file ...
-        = "../results/reb_J_6_3_profile_results.csv";
-    writetable(profile_results_table,profile_results_file);
+    % perform the analysis
+    perform_the_analysis();
 end
