@@ -134,39 +134,11 @@ function reb_9_6_2
         T_f = T(end) - 273.15;
         Tex_out = Tex(end) - 273.15;
         sel_X_Z = nX(end)/nZ(end);
-        fA_calc = 100*(nA_0 - nA(end))/nA_0;
-
-        % lower temperature
-        T_lower = 55 + 273.15;
-
-        % initial values
-        ind_0 = 0.0;
-        dep_0 = [nA_0; nB_0; 0.0; 0.0; 0.0; T_lower; Tex_in];
-    
-        % define the stopping criterion
-        f_var = 1;
-        f_val = nA_f;
-         
-        % solve the IVODEs
-        odes_are_stiff = false;
-        [t, dep, flag] = solve_ivodes(ind_0, dep_0, f_var, f_val...
-                                            , @derivatives, odes_are_stiff);
-    
-        % check that the solution was found
-        if flag <= 0
-            disp(' ')
-            disp('WARNING: The ODE solution may not be accurate!')
-        end
-        
-        nX = dep(:,2);
-        nZ = dep(:,4);
-        sel_X_Z_lower = nX(end)/nZ(end);
 
         % tabulate the results
-        item = ["T0";"T_f";"Te_f";"sel_X_Z";"fA_calc";"sel_lower";"t_lower"];
-        value = [T_0; T_f; Tex_out; sel_X_Z; fA_calc; sel_X_Z_lower; t(end)];
-        units = ["°C"; "°C"; "°C"; "mol X per mol Z"; "%"; "mol X per mol Z"...
-            ; "min"];
+        item = ["T0";"T_f";"Te_f";"sel_X_Z"];
+        value = [T_0; T_f; Tex_out; sel_X_Z];
+        units = ["°C"; "°C"; "°C"; "mol X per mol Z"];
         results_table = table(item,value,units);
     
         % display the results
@@ -175,11 +147,6 @@ function reb_9_6_2
         disp(['Final Temperature: ',num2str(T_f,3), ' °C'])
         disp(['Outlet Coolant Temperature: ',num2str(Tex_out,3), ' °C'])
         disp(['Selectivity: ',num2str(sel_X_Z,3), ' mol X per mol Z'])
-        disp(' ')
-        disp(['Results with an initial temperature of '...
-            , num2str(T_lower - 273.15,3), ' °C']);
-        disp(['Selectivity: ',num2str(sel_X_Z_lower,3), ' mol X per mol Z'])
-        disp(['Reaction Time: ', num2str(t(end),3), ' min'])
     
         % save the results
         writetable(results_table,'../results/reb_9_6_2_results.csv');

@@ -144,39 +144,12 @@ def perform_the_analysis():
     T_f = T[-1] - 273.15
     Tex_out = Tex[-1] - 273.15
     sel_X_Z = nX[-1]/nZ[-1]
-    fA_calc = 100*(nA_0 - nA[-1])/nA_0
-
-    # lower temperature
-    T_lower = 55 + 273.15
-
-    # initial values
-    ind_0 = 0.0
-    dep_0 = np.array([nA_0, nB_0, 0.0, 0.0, 0.0, T_lower, Tex_in])
-
-	# define the stopping criterion
-    f_var = 1
-    f_val = nA_f
-     
-	# solve the IVODEs
-    t, dep, success, message = solve_ivodes(ind_0, dep_0, f_var, f_val
-                                        , derivatives)
-
-    # check that a solution was found
-    if not(success):
-        print(f"An IVODE solution was NOT obtained: {message}")
-    
-    nX = dep[2,:]
-    nZ = dep[4,:]
-    sel_X_Z_lower = nX[-1]/nZ[-1]
 
     # tabulate the results
     data = [['T0', f'{T_0}', '°C'],
     ['Tf', f'{T_f}', '°C'],
     ['Te_out',f'{Tex_out}', '°C'],
-    ['sel_X_Z',f'{sel_X_Z}','mol X per mol Z'],
-    ['fA_calc',f'{fA_calc}', '%'],
-    ['sel_lower',f'{sel_X_Z_lower}','mol X per mol Z'],
-    ['t_lower',f'{t[-1]}', 'min']]
+    ['sel_X_Z',f'{sel_X_Z}','mol X per mol Z']]
     results_df = pd.DataFrame(data, columns=['item','value','units'])
 
     # display the results
@@ -185,10 +158,6 @@ def perform_the_analysis():
     print(f'Final Temperature: {T_f:.3g} °C')
     print(f'Outlet Coolant Temperature: {Tex_out:.3g} °C')
     print(f'Selectivity: {sel_X_Z:.3g} mol X per mol Z')
-    print(' ')
-    print(f'Results with an initial temperature of {T_lower - 273.15:.3g} °C')
-    print(f'Selectivity: {sel_X_Z_lower:.3g} mol X per mol Z')
-    print(f'Reaction Time: {t[-1]:.3g} min')
 
     # save the results
     results_df.to_csv('reb_9_6_2/python/results/reb_9_6_2_results.csv'
