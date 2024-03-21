@@ -1,11 +1,11 @@
 function reb_9_6_1
-%REB_9_6_1 Calculations for Example 9.6.1 of Reaction Engineering Basics
+%RE_1B_9_6_1 Calculations for E_1xample 9.6.1 of Reaction E_1ngineering Basics
 
     % given, known and calculated constants available to all functions
     % given
-    dH = -101.2E3; % J/mol
-    k_0 = 5.11e4 * 3600; % L/mol/h
-    E = 74.8e3; % J/mol
+    dH_1 = -101.2E3; % J/mol
+    k_0_1 = 5.11e4 * 3600; % L/mol/h
+    E_1 = 74.8e3; % J/mol
     T_0 = 180 + 273.15; % K
     V = 1900.0; % L
     CA_0 = 2.9; % mol/L
@@ -21,27 +21,25 @@ function reb_9_6_1
 
     % derivatives function
     function derivs = derivatives(~, dep) % ind not needed
-        % Extract the dependent variables for this integration step
+        % extract necessary dependent variables for this integration step
         nA = dep(1);
         nB = dep(2);
-        % nY = dep(3); % not needed to evaluate the derivatives
-        % nZ = dep(4); % not needed to evaluate the derivatives
         T = dep(5);
         
-        % Calculate the rate
+        % calculate the rate
         CA = nA/V;
         CB = nB/V;
-        k = k_0*exp(-E/Re/T);
+        k = k_0_1*exp(-E_1/Re/T);
         r = k*CA*CB;
 
-        % Evaluate the derivatives
+        % evaluate the derivatives
         dAdt = -V*r;
         dBdt = -V*r;
         dYdt = V*r;
         dZdt = V*r;
-        dTdt = -r*dH/rho/Cp;
+        dTdt = -r*dH_1/rho/Cp;
 
-        % Return the derivatives
+        % return the derivatives
         derivs = [dAdt; dBdt; dYdt; dZdt; dTdt];
     end
 
@@ -60,10 +58,10 @@ function reb_9_6_1
         [t, dep, flag] = solve_ivodes(ind_0, dep_0, f_var, f_val...
             , @derivatives, odes_are_stiff);
     
-        % Check that the solution was found
+        % check that the solution was found
         if flag <= 0
             disp(' ')
-            disp('WARNING: The ODE solution may not be accurate!')
+            disp('WARNING: The IVODE solution may not be accurate!')
         end
 
         % extract and return the dependent variable profiles
@@ -76,24 +74,26 @@ function reb_9_6_1
 
     % function that performs the analysis
     function perform_the_analysis()
-
         % solve the reactor design equations
         [t, nA, nB, nY, nZ, T] = profiles();
     
-        % Calculate the other quantities of interest
+        % calculate the other quantities of interest
         CA = nA/V;
         CB = nB/V;
         CY = nY/V;
         CZ = nZ/V;
-        k = k_0*exp(-E/Re./T);
+        k = k_0_1*exp(-E_1/Re./T);
         r = k.*CA.*CB;
         T_C = T - 273.15;
     
-        % Tabulate the results
+        % tabulate the results
         results_table = table(t,nA,nB,nY,nZ,T_C,r);
+
+        % save the results
+        writetable(results_table, '../results/reb_9_6_1_results.csv');
     
-        % Display the results
-        conc_plot = figure;
+        % display and save the graphs
+        figure; % concentration profiles
         hold("on")
         plot(t,CA,t,CB,t,CY,'LineWidth',2)
         plot(t,CZ,':','LineWidth',4)
@@ -101,24 +101,21 @@ function reb_9_6_1
         xlabel('Time (h)','FontSize', 14)
         ylabel('Concentration (mol/L)','FontSize', 14)
         legend({'A','B','Y','Z'}, 'Location', 'east', 'FontSize', 14)
+        saveas(gcf, '../results/reb_9_6_1_concentrations.png')
     
-        temp_plot = figure;
+        figure; % temperature profile
         plot(t,T_C,'k','LineWidth',2)
         set(gca, 'FontSize', 14);
         xlabel('Time (h)','FontSize', 14)
         ylabel('Temperature (°C)','FontSize', 14)
+        saveas(gcf, '../results/reb_9_6_1_temperature.png')
     
-        rate_plot = figure;
+        figure; % rate profile
         plot(t,r,'k','LineWidth',2)
         set(gca, 'FontSize', 14);
         xlabel('Time (h)','FontSize', 14)
         ylabel('Rate (mol/L/h)','FontSize', 14)
-    
-        % Save the results
-        saveas(conc_plot, '../results/reb_9_6_1_concentrations.png')
-        saveas(temp_plot, '../results/reb_9_6_1_temperature.png')
-        saveas(rate_plot, '../results/reb_9_6_1_rate.png')
-        writetable(results_table, '../results/reb_9_6_1_results.csv');
+        saveas(gcf, '../results/reb_9_6_1_rate.png')
     end
 
     % perform the analysis

@@ -10,15 +10,15 @@ import pandas as pd
 # given, known and calculated constants available to all functions
 # given
 V = 10.0E3 # cm^3
-Ve = 1.4E3 # cm^3
-U = 138. # cal /ft^2 /min /K
-A = 1200./929. # ft^2
-Te_in = 40. + 273.15 # K
-mDot_e = 100. # g /min
+Vex = 1.4E3 # cm^3
+Uex = 138. # cal /ft^2 /min /K
+Aex = 1200./929. # ft^2
+Tex_in = 40. + 273.15 # K
+mDot_ex = 100. # g /min
 rho = 1.0 # g /cm^3
-rho_e = 1.0 # g /cm^3
+rho_ex = 1.0 # g /cm^3
 Cp = 1.0 # cal /g /K
-Cp_e = 1.0 # cal /g /K
+Cp_ex = 1.0 # cal /g /K
 CA_0 = 5.0E-3 # mol /cm^3
 CB_0 = 7.0E-3 # mol /cm^3
 dH_1 = -16.7E3 # cal /mol
@@ -27,7 +27,7 @@ k0_1 = 9.74E12 # cm^3 /mol /min
 E_1 = 20.1E3 # cal /mol
 k0_2 = 2.38E13 # /min
 E_2 = 25.3E3 # cal /mol
-t_rxn = 30. # min
+t_f = 30. # min
 fA_f = 0.45
 # known
 Re = 1.987 # cal /mol /K
@@ -37,18 +37,15 @@ nB_0 = CB_0*V
 nA_f = nA_0*(1 - fA_f)
 
 # current value of T0 available to all functions
-T0 = float('nan')
+T_0 = float('nan')
 
 # derivatives function
 def derivatives(ind, dep):
-	# extract the dependent variables for this integration step
+	# extract necessary dependent variables for this integration step
     nA = dep[0]
     nB = dep[1]
-    nX = dep[2]
-    nY = dep[3]
-    nZ = dep[4]
     T = dep[5]
-    Te = dep[6]
+    Tex = dep[6]
 
 	# calculate the rate
     CA = nA/V
@@ -59,7 +56,7 @@ def derivatives(ind, dep):
     r_2 = k_2*CA
 
     # calculate the rate of heat exchange
-    Qdot = U*A*(Te - T)
+    Qdot = Uex*Aex*(Tex - T)
 
 	# evaluate the derivatives
     dnAdt = -(r_1 + r_2)*V
@@ -68,24 +65,24 @@ def derivatives(ind, dep):
     dnYdt = r_1*V
     dnZdt = r_2*V
     dTdt = (Qdot-(r_1*dH_1 + r_2*dH_2)*V)/rho/V/Cp
-    dTedt = (-Qdot - mDot_e*Cp_e*(Te - Te_in))/rho_e/Ve/Cp_e
+    dTexdt = (-Qdot - mDot_ex*Cp_ex*(Tex - Tex_in))/rho_ex/Vex/Cp_ex
 
 	# return the derivatives
-    return [dnAdt, dnBdt, dnXdt, dnYdt, dnZdt, dTdt, dTedt]
+    return [dnAdt, dnBdt, dnXdt, dnYdt, dnZdt, dTdt, dTexdt]
 
-# reactor model
+# reactor model function
 def profiles():
 	# set the initial values
     ind_0 = 0.0
-    dep_0 = np.array([nA_0, nB_0, 0.0, 0.0, 0.0, T0, Te_in])
+    dep_0 = np.array([nA_0, nB_0, 0.0, 0.0, 0.0, T_0, Tex_in])
 
 	# define the stopping criterion
     f_var = 0
-    f_val = t_rxn
+    f_val = t_f
      
 	# solve the IVODEs
     t, dep, success, message = solve_ivodes(ind_0, dep_0, f_var, f_val
-                                        , derivatives, True)
+                                        , derivatives)
 
     # check that a solution was found
     if not(success):
@@ -98,36 +95,36 @@ def profiles():
     nY = dep[3,:]
     nZ = dep[4,:]
     T = dep[5,:]
-    Te = dep[6,:]
+    Tex = dep[6,:]
 
     # return all profiles
-    return t, nA, nB, nX, nY, nZ, T, Te
+    return t, nA, nB, nX, nY, nZ, T, Tex
 
-# implicit equation for IVODE initial value as residual
+# residual function
 def residual(guess):
     # make the guess available to all functions
-    global T0
-    T0 = guess[0]
+    global T_0
+    T_0 = guess[0]
 
     # solve the reactor design equations
-    t, nA, nB, nX, nY, nZ, T, Te = profiles()
+    _, nA, _, _, _, _, _, _ = profiles()
 
     # extract the calculated molar amount
     nA_f_calc = nA[-1]
 
     # evaluate the residual
-    residual = nA_f_calc - nA_f
+    resid = nA_f_calc - nA_f
 
     # return the residual
-    return residual
+    return resid
 
-# perform the analysis
+# function that performs the analysis
 def perform_the_analysis():
     # allow this function to set T0
-    global T0
+    global T_0
 
     # set initial guess for T0
-    initial_guess = Te_in + 20
+    initial_guess = Tex_in + 20
 
     # solve the implict equation for T0
     soln = sp.optimize.root(residual,initial_guess)
@@ -137,37 +134,66 @@ def perform_the_analysis():
         print(f"The initial temperature was NOT found: {soln.message}")
 
     # extract the result
-    T0 = soln.x[0]
+    T_0 = soln.x[0]
 
     # solve the reactor design equations
-    t, nA, nB, nX, nY, nZ, T, Te = profiles()
+    _, nA, _, nX, _, nZ, T, Tex = profiles()
 
     # calculate the other quantities of interest
-    T0 = T0 - 273.15
-    Tf = T[-1] - 273.15
-    Te_out = Te[-1] - 273.15
+    T_0 = T_0 - 273.15
+    T_f = T[-1] - 273.15
+    Tex_out = Tex[-1] - 273.15
     sel_X_Z = nX[-1]/nZ[-1]
     fA_calc = 100*(nA_0 - nA[-1])/nA_0
 
+    # lower temperature
+    T_lower = 55 + 273.15
+
+    # initial values
+    ind_0 = 0.0
+    dep_0 = np.array([nA_0, nB_0, 0.0, 0.0, 0.0, T_lower, Tex_in])
+
+	# define the stopping criterion
+    f_var = 1
+    f_val = nA_f
+     
+	# solve the IVODEs
+    t, dep, success, message = solve_ivodes(ind_0, dep_0, f_var, f_val
+                                        , derivatives)
+
+    # check that a solution was found
+    if not(success):
+        print(f"An IVODE solution was NOT obtained: {message}")
+    
+    nX = dep[2,:]
+    nZ = dep[4,:]
+    sel_X_Z_lower = nX[-1]/nZ[-1]
+
     # tabulate the results
-    data = [['T0', f'{T0}', '°C'],
-    ['Tf', f'{Tf}', '°C'],
-    ['Te_out',f'{Te_out}', '°C'],
+    data = [['T0', f'{T_0}', '°C'],
+    ['Tf', f'{T_f}', '°C'],
+    ['Te_out',f'{Tex_out}', '°C'],
     ['sel_X_Z',f'{sel_X_Z}','mol X per mol Z'],
-    ['fA_calc',f'{fA_calc}', '%']]
+    ['fA_calc',f'{fA_calc}', '%'],
+    ['sel_lower',f'{sel_X_Z_lower}','mol X per mol Z'],
+    ['t_lower',f'{t[-1]}', 'min']]
     results_df = pd.DataFrame(data, columns=['item','value','units'])
 
     # display the results
     print(' ')
-    print(f'Initial Temperature: {T0:.3g} °C')   
-    print(f'Final Temperature: {Tf:.3g} °C')
-    print(f'Outlet Coolant Temperature: {Te_out:.3g} °C')
+    print(f'Initial Temperature: {T_0:.3g} °C')   
+    print(f'Final Temperature: {T_f:.3g} °C')
+    print(f'Outlet Coolant Temperature: {Tex_out:.3g} °C')
     print(f'Selectivity: {sel_X_Z:.3g} mol X per mol Z')
     print(' ')
+    print(f'Results with an initial temperature of {T_lower - 273.15:.3g} °C')
+    print(f'Selectivity: {sel_X_Z_lower:.3g} mol X per mol Z')
+    print(f'Reaction Time: {t[-1]:.3g} min')
 
     # save the results
     results_df.to_csv('reb_9_6_2/python/results/reb_9_6_2_results.csv'
                       , index=False)
+
     return
 
 if __name__=="__main__":

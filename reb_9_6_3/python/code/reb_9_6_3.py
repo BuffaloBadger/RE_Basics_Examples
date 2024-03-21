@@ -8,16 +8,17 @@ import scipy as sp
 import pandas as pd
 import matplotlib.pyplot as plt
 
-# given and known constants
+# given, known, and calculated constants available to all functions
+# given
 PA_0 = 1. # atm
 PB_0 = 2. # atm
 T_0 = 25 + 273.14 # K
 V = 2. # L
-A = 600. # cm^2
-U = 0.6 # cal /cm^2 /min /K
-Te = 30 + 273.15 # K
-k0_1 =  3.34E9 # mol /cm^3 /min /atm^2
-k0_2 = 4.99E9 # mol /cm^3 /min /atm^2
+Aex = 600. # cm^2
+Uex = 0.6 # cal /cm^2 /min /K
+Tex = 30 + 273.15 # K
+k_0_1 =  3.34E9 # mol /cm^3 /min /atm^2
+k_0_2 = 4.99E9 # mol /cm^3 /min /atm^2
 E_1 = 20.5E3 # cal /mol
 E_2 = 21.8E3 # cal /mol
 dH_1 = -6300. # cal /mol
@@ -27,35 +28,35 @@ Cp_B = 8.6 # cal /mol /K
 Cp_D = 10.7 # cal /mol /K
 Cp_Z = 5.2 # cal /mol /K
 Cp_U = 10.3 # cal /mol /K
+# known
 Re = 1.987 # cal /mol /K
 Rw = 82.057 # cm^3 atm /mol /K
-# constant initial molar amounts
+# calculated
 nA_0 = PA_0*V/Rw/T_0
 nB_0 = PB_0*V/Rw/T_0
-P0 = PA_0 + PB_0
+P_0 = PA_0 + PB_0
 
 # derivatives function
 def derivatives(ind, dep):
-	# extract the dependent variables for this integration step
+	# extract necessary dependent variables for this integration step
     nA = dep[0]
     nB = dep[1]
     nD = dep[2]
     nZ = dep[3]
     nU = dep[4]
     T = dep[5]
-    P = dep[6]
 
 	# calculate the rate
     PA = nA*Rw*T/V
     PB = nB*Rw*T/V
     PD = nD*Rw*T/V
-    k1 = k0_1*math.exp(-E_1/Re/T)
-    k2 = k0_2*math.exp(-E_2/Re/T)
-    r1 = k1*PA*PB
-    r2 = k2*PD*PB
+    k_1 = k_0_1*math.exp(-E_1/Re/T)
+    k_2 = k_0_2*math.exp(-E_2/Re/T)
+    r_1 = k_1*PA*PB
+    r_2 = k_2*PD*PB
 
     # calculate the rate of heat exchange
-    Qdot = U*A*(Te - T)
+    Qdot = Uex*Aex*(Tex - T)
 
 	# Create mass matrix, setting all elements to zero
     mass_matrix = np.zeros((7,7))
@@ -81,12 +82,12 @@ def derivatives(ind, dep):
     mass_matrix[6,6] = -V
 
     # Create right side vector
-    rhs1 = -r1*V
-    rhs2 = (-r1 -r2)*V
-    rhs3 = (r1-r2)*V
-    rhs4 = (r1+r1)*V
-    rhs5 = r2*V
-    rhs6 = Qdot -(r1*dH_1 + r2*dH_2)*V
+    rhs1 = -r_1*V
+    rhs2 = (-r_1 -r_2)*V
+    rhs3 = (r_1-r_2)*V
+    rhs4 = (r_1+r_1)*V
+    rhs5 = r_2*V
+    rhs6 = Qdot -(r_1*dH_1 + r_2*dH_2)*V
     rhs7 = 0.0
     rhs = np.array([rhs1, rhs2, rhs3, rhs4, rhs5, rhs6, rhs7])
 
@@ -96,15 +97,15 @@ def derivatives(ind, dep):
     # Return the derivatives
     return derivs
 
-# reactor model
-def profiles(t_rxn):
+# reactor model function
+def profiles(t_f):
 	# set the initial values
     ind_0 = 0.0
-    dep_0 = np.array([nA_0, nB_0, 0.0, 0.0, 0.0, T_0, P0])
+    dep_0 = np.array([nA_0, nB_0, 0.0, 0.0, 0.0, T_0, P_0])
 
 	# define the stopping criterion
     f_var = 0
-    f_val = t_rxn
+    f_val = t_f
      
 	# solve the IVODEs
     t, dep, success, message = solve_ivodes(ind_0, dep_0, f_var, f_val
@@ -126,7 +127,7 @@ def profiles(t_rxn):
     # return all profiles
     return t, nA, nB, nD, nZ, nU, T, P
 
-# perform the analysis
+# function that performs the analysis
 def perform_the_analysis():
     # set a rango of reaction times
     times = np.linspace(1,60.0,1000)
@@ -144,7 +145,7 @@ def perform_the_analysis():
     t_max = times[i_max]
 
     # solve the reactor design equations at the optimum reaction time
-    t, nA, nB, nD, nZ, nU, T, P = profiles(t_max)
+    _, nA, _, nD, _, _, _, _ = profiles(t_max)
 
     # calculate the other quantities of interest
     yield_max = nD[-1]/nA_0

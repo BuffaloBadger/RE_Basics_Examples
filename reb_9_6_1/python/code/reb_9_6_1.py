@@ -1,4 +1,4 @@
-"""Calculations for Example 9.6.1 of Reaction Engineering Basics"""
+"""Calculations for E_1xample 9.6.1 of Reaction E_1ngineering Basics"""
 
 # import libraries
 import math
@@ -9,9 +9,9 @@ import matplotlib.pyplot as plt
 
 # given, known, and calculated constants available to all functions
 # given
-dH = -101.2E3 # J/mol
-k_0 = 5.11e4 * 3600 # L/mol/h
-E = 74.8e3 # J/mol
+dH_1 = -101.2E3 # J/mol
+k_0_1 = 5.11e4 * 3600 # L/mol/h
+E_1 = 74.8e3 # J/mol
 T_0 = 180 + 273.15 # K
 V = 1900.0 # L
 CA_0 = 2.9 # mol/L
@@ -27,17 +27,15 @@ nB_0 = CB_0*V
 
 # derivatives function
 def derivatives(ind, dep): # ind not needed
-	# extract the dependent variables for this integration step
+	# extract necessary dependent variables for this integration step
     nA = dep[0]
     nB = dep[1]
-    # nY = dep[2] # not needed to evaluate the derivatives
-    # nZ = dep[3] # not needed to evaluate the derivatives
     T = dep[4]
 
     # calculate the rate
     CA = nA/V
     CB = nB/V
-    k = k_0*math.exp(-E/Re/T)
+    k = k_0_1*math.exp(-E_1/Re/T)
     r = k*CA*CB
 
     # evaluate the derivatives
@@ -45,12 +43,12 @@ def derivatives(ind, dep): # ind not needed
     dnBdt = -V*r
     dnYdt = V*r
     dnZdt = V*r
-    dTdt = -r*dH/rho/Cp
+    dTdt = -r*dH_1/rho/Cp
 
     # return the derivatives
     return [dnAdt, dnBdt, dnYdt, dnZdt, dTdt]
 
-# reactor model
+# reactor model function
 def profiles():
     # set the initial values
     ind_0 = 0.0
@@ -78,7 +76,7 @@ def profiles():
     # return all profiles
     return t, nA, nB, nY, nZ, T
 
-# perform the analysis
+# function that performs the analysis
 def perform_the_analysis():
     # solve the reactor design equations
     t, nA, nB, nY, nZ, T = profiles()
@@ -88,7 +86,7 @@ def perform_the_analysis():
     CB = nB/V
     CY = nY/V
     CZ = nZ/V
-    k = k_0*np.exp(-E/Re/T)
+    k = k_0_1*np.exp(-E_1/Re/T)
     r = k*CA*CB
     T_C = T - 273.15
     
@@ -101,25 +99,25 @@ def perform_the_analysis():
                       , index=False)
     
     # display and save the graphs
-    plt.figure() 
+    plt.figure() # concentration profiles
     plt.plot(t,CA,label='A')
     plt.plot(t,CB,label='B')
-    plt.plot(t,CY,linestyle=':',linewidth=4, label='Y')
-    plt.plot(t,CZ,label='Z')
+    plt.plot(t,CY, label='Y')
+    plt.plot(t,CZ,linestyle=':',linewidth=4,label='Z')
     plt.xlabel("$Time \; (h)$")
     plt.ylabel("$Concentration \; (mol \; L^{-1})$")
     plt.legend()
     plt.savefig('reb_9_6_1/python/results/reb_9_6_1_concentrations.png')
     plt.show()
 
-    plt.figure()
+    plt.figure() # temperature profile
     plt.plot(t,T_C)
     plt.xlabel("$Time \; (h)$")
     plt.ylabel("$Temperature \; (°C)$")
     plt.savefig('reb_9_6_1/python/results/reb_9_6_1_temperature.png')
     plt.show()
 
-    plt.figure(3)
+    plt.figure() # rate profile
     plt.plot(t,r)
     plt.xlabel("$Time \; (h)$")
     plt.ylabel("$Rate \; (mol \; L^{-1} \; h^{-1})$")
