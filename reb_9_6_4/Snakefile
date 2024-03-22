@@ -15,7 +15,9 @@ rule reb_9_6_4:
         "../RE_Basics/results/reb_9_6_4_net_rate_vs_coolant_flow.png",
         "../RE_Basics/results/reb_9_6_4_conversion_profile.png",
         "../RE_Basics/results/reb_9_6_4_temperature_profile.png",
-        "../RE_Basics/results/reb_9_6_4_inst_rate_profile.png"
+        "../RE_Basics/results/reb_9_6_4_inst_rate_profile.png",
+        "../SCoRE/code/reb_9_6_4.py",
+        "../SCoRE/code/reb_9_6_4.m"
 
 rule reb_9_6_4_matlab:
     input:
@@ -33,7 +35,8 @@ rule reb_9_6_4_matlab:
 
 rule reb_9_6_4_python:
     input:
-        "reb_9_6_4/python/code/reb_9_6_4.py"
+        "reb_9_6_4/python/code/reb_9_6_4.py",
+        "reb_9_6_4/python/code/reb_9_6_4_discussion.py"
     output:
         "reb_9_6_4/python/results/reb_9_6_4_results.csv",
         "reb_9_6_4/python/results/reb_9_6_4_net_rate_vs_coolant_flow.png",
@@ -43,6 +46,7 @@ rule reb_9_6_4_python:
     shell:
         """
         python3 reb_9_6_4/python/code/reb_9_6_4.py
+        python3 reb_9_6_4/python/code/reb_9_6_4_discussion.py
         """
 
 rule reb_9_6_4_re_basics:
@@ -52,14 +56,18 @@ rule reb_9_6_4_re_basics:
         "reb_9_6_4/python/results/reb_9_6_4_net_rate_vs_coolant_flow.png",
         "reb_9_6_4/python/results/reb_9_6_4_conversion_profile.png",
         "reb_9_6_4/python/results/reb_9_6_4_temperature_profile.png",
-        "reb_9_6_4/python/results/reb_9_6_4_inst_rate_profile.png"
+        "reb_9_6_4/python/results/reb_9_6_4_inst_rate_profile.png",
+        "reb_9_6_4/python/code/reb_9_6_4.py",
+        "reb_9_6_4/matlab/code/reb_9_6_4.m"
     output:
         "../RE_Basics/problem_statements/reb_9_6_4.qmd",
         "../RE_Basics/results/reb_9_6_4_results.csv",
         "../RE_Basics/results/reb_9_6_4_net_rate_vs_coolant_flow.png",
         "../RE_Basics/results/reb_9_6_4_conversion_profile.png",
         "../RE_Basics/results/reb_9_6_4_temperature_profile.png",
-        "../RE_Basics/results/reb_9_6_4_inst_rate_profile.png"
+        "../RE_Basics/results/reb_9_6_4_inst_rate_profile.png",
+        "../SCoRE/code/reb_9_6_4.py",
+        "../SCoRE/code/reb_9_6_4.m"
     shell:
         """
         cp reb_9_6_4/problem_statement.qmd ../RE_Basics/problem_statements/reb_9_6_4.qmd
@@ -68,4 +76,6 @@ rule reb_9_6_4_re_basics:
         cp reb_9_6_4/python/results/reb_9_6_4_conversion_profile.png ../RE_Basics/results
         cp reb_9_6_4/python/results/reb_9_6_4_temperature_profile.png ../RE_Basics/results
         cp reb_9_6_4/python/results/reb_9_6_4_inst_rate_profile.png ../RE_Basics/results
+        cp reb_9_6_4/python/code/reb_9_6_4.py ../SCoRE/code
+        cp reb_9_6_4/matlab/code/reb_9_6_4.m ../SCoRE/code
         """

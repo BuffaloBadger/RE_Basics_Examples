@@ -13,6 +13,7 @@ V = 10.0E3 # cm^3
 Vex = 1.4E3 # cm^3
 Uex = 138. # cal /ft^2 /min /K
 Aex = 1200./929. # ft^2
+Tex_0 = 40. + 273.15 # K
 Tex_in = 40. + 273.15 # K
 mDot_ex = 100. # g /min
 rho = 1.0 # g /cm^3
@@ -74,7 +75,7 @@ def derivatives(ind, dep):
 def profiles():
 	# set the initial values
     ind_0 = 0.0
-    dep_0 = np.array([nA_0, nB_0, 0.0, 0.0, 0.0, T_0, Tex_in])
+    dep_0 = np.array([nA_0, nB_0, 0.0, 0.0, 0.0, T_0, Tex_0])
 
 	# define the stopping criterion
     f_var = 0

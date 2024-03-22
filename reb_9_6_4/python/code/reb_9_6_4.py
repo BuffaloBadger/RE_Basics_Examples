@@ -178,14 +178,13 @@ def perform_the_analysis():
     nZ = np.concatenate((nZ_1, nZ_2))
     T = np.concatenate((T_1, T_2))
     
-    # calculate the conversion and instantaneous rate
+    # calculate the conversion vs time at the optimum coolant flow rate
     pct_conversion = 100*(nA_0 - nA)/nA_0
-    r_inst = k_0_1*np.exp(-E_1/Re/T)*nA/V*1000
     
     # tabulate the results
     max_net_rate = nZ[-1]/(t[-1] + t_turn)
-    data = [["Optimum Coolant Flow", f"{mDot_max:.3g}", "g min^-1^"],
-            ["Maximum Net Rate", f"{max_net_rate:.3g}", "mol min^-1^"]]
+    data = [["Optimum Coolant Flow", f"{mDot_max}", "g min^-1^"],
+            ["Maximum Net Rate", f"{max_net_rate}", "mol min^-1^"]]
     results_df = pd.DataFrame(data, columns=['item','value','units'])
 
     # display the results
@@ -218,14 +217,6 @@ def perform_the_analysis():
     plt.xlabel("Reaction Time (min)")
     plt.ylabel("Temperature (°C)")
     plt.savefig('reb_9_6_4/python/results/reb_9_6_4_temperature_profile.png')
-    plt.show()
-
-    # calculate and plot instantaneous rate profile for discussion
-    plt.figure() # instantaneous rate profile
-    plt.plot(t,r_inst)
-    plt.xlabel("Reaction Time (min)")
-    plt.ylabel("Instantaneous Rate (mol/L/min)")
-    plt.savefig('reb_9_6_4/python/results/reb_9_6_4_inst_rate_profile.png')
     plt.show()
 
     return

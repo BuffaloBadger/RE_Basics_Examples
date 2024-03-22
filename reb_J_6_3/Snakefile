@@ -6,8 +6,9 @@ rule reb_J_6_3:
         "reb_J_6_3/python/results/reb_J_6_3_profile_results.csv",
         "../RE_Basics/problem_statements/reb_J_6_3.qmd",
         "../RE_Basics/results/reb_J_6_3_Vdot_results.csv",
-        "../RE_Basics/results/reb_J_6_3_profile_results.csv"
-
+        "../RE_Basics/results/reb_J_6_3_profile_results.csv",
+        "../SCoRE/code/reb_J_6_3.py",
+        "../SCoRE/code/reb_J_6_3.m"
 rule reb_J_6_3_python:
     input:
         "reb_J_6_3/python/code/reb_J_6_3.py"
@@ -35,14 +36,20 @@ rule reb_J_6_3_re_basics:
     input:
         "reb_J_6_3/problem_statement.qmd",
         "reb_J_6_3/python/results/reb_J_6_3_Vdot_results.csv",
-        "reb_J_6_3/python/results/reb_J_6_3_profile_results.csv"
+        "reb_J_6_3/python/results/reb_J_6_3_profile_results.csv",
+        "reb_J_6_3/python/code/reb_J_6_3.py",
+        "reb_J_6_3/matlab/code/reb_J_6_3.m"
     output:
         "../RE_Basics/problem_statements/reb_J_6_3.qmd",
         "../RE_Basics/results/reb_J_6_3_Vdot_results.csv",
-        "../RE_Basics/results/reb_J_6_3_profile_results.csv"
+        "../RE_Basics/results/reb_J_6_3_profile_results.csv",
+        "../SCoRE/code/reb_J_6_3.py",
+        "../SCoRE/code/reb_J_6_3.m"
     shell:
         """
         cp reb_J_6_3/problem_statement.qmd ../RE_Basics/problem_statements/reb_J_6_3.qmd
         cp reb_J_6_3/python/results/reb_J_6_3_Vdot_results.csv ../RE_Basics/results/reb_J_6_3_Vdot_results.csv
         cp reb_J_6_3/python/results/reb_J_6_3_profile_results.csv ../RE_Basics/results/reb_J_6_3_profile_results.csv
+        cp reb_J_6_3/python/code/reb_J_6_3.py ../SCoRE/code
+        cp reb_J_6_3/matlab/code/reb_J_6_3.m ../SCoRE/code
         """

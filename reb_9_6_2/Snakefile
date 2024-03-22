@@ -3,7 +3,9 @@ rule reb_9_6_2:
         "reb_9_6_2/matlab/results/reb_9_6_2_results.csv",
         "reb_9_6_2/python/results/reb_9_6_2_results.csv",
         "../RE_Basics/results/reb_9_6_2_results.csv",
-        "../RE_Basics/problem_statements/reb_9_6_2.qmd"
+        "../RE_Basics/problem_statements/reb_9_6_2.qmd",
+        "../SCoRE/code/reb_9_6_2.py",
+        "../SCoRE/code/reb_9_6_2.m"
 
 rule reb_9_6_2_matlab:
     input:
@@ -30,12 +32,18 @@ rule reb_9_6_2_python:
 rule reb_9_6_2_re_basics:
     input:
         "reb_9_6_2/python/results/reb_9_6_2_results.csv",
-        "reb_9_6_2/problem_statement.qmd"
+        "reb_9_6_2/problem_statement.qmd",
+        "reb_9_6_2/python/code/reb_9_6_2.py",
+        "reb_9_6_2/matlab/code/reb_9_6_2.m"
     output:
         "../RE_Basics/results/reb_9_6_2_results.csv",
-        "../RE_Basics/problem_statements/reb_9_6_2.qmd"
+        "../RE_Basics/problem_statements/reb_9_6_2.qmd",
+        "../SCoRE/code/reb_9_6_2.py",
+        "../SCoRE/code/reb_9_6_2.m"
     shell:
         """
         cp reb_9_6_2/python/results/reb_9_6_2_results.csv ../RE_Basics/results/reb_9_6_2_results.csv
         cp reb_9_6_2/problem_statement.qmd ../RE_Basics/problem_statements/reb_9_6_2.qmd
+        cp reb_9_6_2/python/code/reb_9_6_2.py ../SCoRE/code
+        cp reb_9_6_2/matlab/code/reb_9_6_2.m ../SCoRE/code
         """
