@@ -4,7 +4,6 @@ rule reb_9_6_4:
         "reb_9_6_4/matlab/results/reb_9_6_4_net_rate_vs_coolant_flow.png",
         "reb_9_6_4/matlab/results/reb_9_6_4_conversion_profile.png",
         "reb_9_6_4/matlab/results/reb_9_6_4_temperature_profile.png",
-        "reb_9_6_4/matlab/results/reb_9_6_4_inst_rate_profile.png",
         "reb_9_6_4/python/results/reb_9_6_4_results.csv",
         "reb_9_6_4/python/results/reb_9_6_4_net_rate_vs_coolant_flow.png",
         "reb_9_6_4/python/results/reb_9_6_4_conversion_profile.png",
@@ -26,8 +25,7 @@ rule reb_9_6_4_matlab:
         "reb_9_6_4/matlab/results/reb_9_6_4_results.csv",
         "reb_9_6_4/matlab/results/reb_9_6_4_net_rate_vs_coolant_flow.png",
         "reb_9_6_4/matlab/results/reb_9_6_4_conversion_profile.png",
-        "reb_9_6_4/matlab/results/reb_9_6_4_temperature_profile.png",
-        "reb_9_6_4/matlab/results/reb_9_6_4_inst_rate_profile.png"
+        "reb_9_6_4/matlab/results/reb_9_6_4_temperature_profile.png"
     shell:
         """
         matlab -nodisplay -r "cd('reb_9_6_4/matlab/code');reb_9_6_4;exit"

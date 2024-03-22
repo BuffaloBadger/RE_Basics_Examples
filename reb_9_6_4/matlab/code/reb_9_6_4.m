@@ -178,9 +178,8 @@ function reb_9_6_4
         nA = [nA_1; nA_2];
         T = [T_1; T_2];
 
-        % calculate the conversion and instantaneous rate
+        % calculate the conversion vs time at the optimum cooland flow rate
         pct_conversion = 100*(nA_0 - nA)/nA_0;
-        r_inst = k_0_1*exp(-E_1/Re./T).*nA/V*1000.;
     
         % tabulate the results
         item = ["Optimum Coolant Flow Rate";"Maximum Net Rate"];
@@ -218,13 +217,6 @@ function reb_9_6_4
         xlabel('Reaction Time (min)','FontSize', 14)
         ylabel('Temperature (°C)','FontSize', 14)
         saveas(gcf,"../results/reb_9_6_4_temperature_profile.png")
-
-        figure; % instantaneous rate profile
-        plot(t, r_inst, 'LineWidth', 2)
-        set(gca, 'FontSize', 14);
-        xlabel('Reaction Time (min)','FontSize', 14)
-        ylabel('Instantaneous Rate (mmol/L/min)','FontSize', 14)
-        saveas(gcf,"../results/reb_9_6_4_inst_rate_profile.png")
    
     end
 
