@@ -112,10 +112,10 @@ function reb_J_6_3
         disp(profile_results_table)
     
         % Save the results
-        Vdot_results_file = "../results/reb_J_6_3_Vdot_results.csv";
+        Vdot_results_file = "Vdot_results.csv";
         writetable(Tin_results_table,Vdot_results_file);
         profile_results_file ...
-            = "../results/reb_J_6_3_profile_results.csv";
+            = "profile_results.csv";
         writetable(profile_results_table,profile_results_file);
     end
 
