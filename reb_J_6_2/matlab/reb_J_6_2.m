@@ -115,10 +115,10 @@ function reb_J_6_2
         disp(profile_results_table)
     
         % Save the results
-        Tin_results_file = "../results/reb_J_6_2_Tin_results.csv";
+        Tin_results_file = "Tin_results.csv";
         writetable(Tin_results_table,Tin_results_file);
         profile_results_file ...
-            = "../results/reb_J_6_2_profile_results.csv";
+            = "profile_results.csv";
         writetable(profile_results_table,profile_results_file);
     end
 

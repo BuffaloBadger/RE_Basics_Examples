@@ -1,4 +1,4 @@
-"""Calculations for Reaction Engineering Basics Example 9.6.2"""
+"""Calculations for Reaction Engineering Basics Example 9.6.2 Discussion"""
 
 # import libraries
 import numpy as np

@@ -123,9 +123,9 @@ def perform_the_analysis():
     print(profile_results_df.to_string(index=False))
 
     # save the results
-    Tin_results_file_spec = './reb_J_6_2/python/results/reb_J_6_2_Tin_results.csv'
+    Tin_results_file_spec = './reb_J_6_2/python/Tin_results.csv'
     profile_results_file_spec = \
-            './reb_J_6_2/python/results/reb_J_6_2_profile_results.csv'
+            './reb_J_6_2/python/profile_results.csv'
     Tin_results_df.to_csv(Tin_results_file_spec, index=False)
     profile_results_df.to_csv(profile_results_file_spec, index=False)
 
