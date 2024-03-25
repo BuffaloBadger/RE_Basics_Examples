@@ -149,7 +149,7 @@ function reb_9_6_2
         disp(['Selectivity: ',num2str(sel_X_Z,3), ' mol X per mol Z'])
     
         % save the results
-        writetable(results_table,'../results/reb_9_6_2_results.csv');
+        writetable(results_table,'results.csv');
     end
 
     % perform the analysis

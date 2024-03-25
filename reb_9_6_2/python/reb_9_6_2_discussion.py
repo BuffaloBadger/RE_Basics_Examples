@@ -30,7 +30,7 @@ nZ = dep[4,:]
 sel_X_Z = nX[-1]/nZ[-1]
 
 # read in the results from the assignment
-results_df = pd.read_csv('reb_9_6_2/python/results/reb_9_6_2_results.csv')
+results_df = pd.read_csv('reb_9_6_2/python/results.csv')
 
 # add the new results
 n_rows = len(results_df.index)
@@ -45,4 +45,4 @@ print(f'Selectivity: {sel_X_Z:.3g} mol X per mol Z')
 print(f'Reaction Time: {t[-1]:.3g} min')
 
 # save the results
-results_df.to_csv('reb_9_6_2/python/results/reb_9_6_2_results.csv', index=False)
+results_df.to_csv('reb_9_6_2/python/results.csv', index=False)

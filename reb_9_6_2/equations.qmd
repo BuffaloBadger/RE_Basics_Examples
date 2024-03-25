@@ -1,0 +1,16 @@
+
+$$
+A + B \rightarrow X + Y \tag{1}
+$$
+
+$$
+A \rightarrow Z \tag{2}
+$$
+
+$$
+r_1 = k_1C_AC_B \tag{3}
+$$
+
+$$
+r_2 = k_2C_A \tag{4}
+$$

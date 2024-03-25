@@ -161,7 +161,7 @@ def perform_the_analysis():
     print(f'Selectivity: {sel_X_Z:.3g} mol X per mol Z')
 
     # save the results
-    results_df.to_csv('reb_9_6_2/python/results/reb_9_6_2_results.csv'
+    results_df.to_csv('reb_9_6_2/python/results.csv'
                       , index=False)
 
     return
