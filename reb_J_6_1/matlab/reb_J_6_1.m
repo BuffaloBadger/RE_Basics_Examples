@@ -17,7 +17,7 @@ function reb_J_6_1
     Cp_Z = 5.7; % cal/mol/K
     k_0_1 = 83; % m^3 /mol /h
     E_1 = 10200; % cal/mol
-    Re = 1.987; % cal/mol
+    Re = 1.987; % cal/mol/K
     Rw = 8.206E-5; % m^3 atm/mol/K
 
     % reactor design equations as derivative expressions
@@ -104,7 +104,7 @@ function reb_J_6_1
         disp(results_table)
     
         % Save the results
-        results_file = "../results/reb_J_6_1_results.csv";
+        results_file = "results.csv";
         writetable(results_table,results_file);
     end
     

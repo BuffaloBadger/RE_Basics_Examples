@@ -23,7 +23,7 @@ Cp_Y = 12.1 # cal/mol/K
 Cp_Z = 5.7 # cal/mol/K
 k_0_1 = 83 # m^3 /mol /h
 E_1 = 10200 # cal/mol
-Re = 1.987 # cal/mol
+Re = 1.987 # cal/mol/K
 Rw = 8.206E-5 # m^3 atm/mol/K
 
 # derivatives function
@@ -113,7 +113,7 @@ def perform_the_analysis():
     print(' ')
 
     # save the results
-    file_spec = './reb_J_6_1/python/results/reb_J_6_1_results.csv'
+    file_spec = './reb_J_6_1/python/results.csv'
     results_df.to_csv(file_spec, index=False)
 
 if __name__=="__main__":

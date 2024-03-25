@@ -1,48 +1,64 @@
 rule reb_J_6_1:
     input:
-        "reb_J_6_1/python/results/reb_J_6_1_results.csv",
-        "reb_J_6_1/matlab/results/reb_J_6_1_results.csv",
-        "../RE_Basics/problem_statements/reb_J_6_1.qmd",
-        "../RE_Basics/results/reb_J_6_1_results.csv",
-        "../SCoRE/code/reb_J_6_1.py",
-        "../SCoRE/code/reb_J_6_1.m"
+        "reb_J_6_1/python/results.csv",
+        "reb_J_6_1/matlab/results.csv",
+        "../RE_Basics/examples/reb_J_6_1/narrative.qmd",
+        "../RE_Basics/examples/reb_J_6_1/equations.qmd",
+        "../RE_Basics/examples/reb_J_6_1/results.csv",
+        "../SCoRE/reb_examples/reb_J_6_1/reb_J_6_1.py",
+        "../SCoRE/reb_examples/reb_J_6_1/reb_J_6_1.m"
 
 rule reb_J_6_1_python:
     input:
-        "reb_J_6_1/python/code/reb_J_6_1.py"
+        "reb_J_6_1/python/reb_J_6_1.py"
     output:
-        "reb_J_6_1/python/results/reb_J_6_1_results.csv"
+        "reb_J_6_1/python/results.csv"
     shell:
         """
-        python reb_J_6_1/python/code/reb_J_6_1.py
+        python reb_J_6_1/python/reb_J_6_1.py
         """
 
 rule reb_J_6_1_matlab:
     input:
-        "reb_J_6_1/matlab/code/reb_J_6_1.m"
+        "reb_J_6_1/matlab/reb_J_6_1.m"
     output:
-        "reb_J_6_1/matlab/results/reb_J_6_1_results.csv"
+        "reb_J_6_1/matlab/results.csv"
     shell:
         """
-        matlab -nodisplay -r "cd('reb_J_6_1/matlab/code');\
-        reb_J_6_1;exit"
+        matlab -nodisplay -r "cd('reb_J_6_1/matlab');reb_J_6_1;exit"
         """
 
 rule reb_J_6_1_re_basics:
     input:
-        "reb_J_6_1/problem_statement.qmd",
-        "reb_J_6_1/python/results/reb_J_6_1_results.csv",
-        "reb_J_6_1/python/code/reb_J_6_1.py",
-        "reb_J_6_1/matlab/code/reb_J_6_1.m"
+        "reb_J_6_1/narrative.qmd",
+        "reb_J_6_1/equations.qmd",
+        "reb_J_6_1/python/results.csv",
+        "reb_J_6_1/python/reb_J_6_1.py",
+        "reb_J_6_1/matlab/reb_J_6_1.m"
     output:
-        "../RE_Basics/problem_statements/reb_J_6_1.qmd",
-        "../RE_Basics/results/reb_J_6_1_results.csv",
-        "../SCoRE/code/reb_J_6_1.py",
-        "../SCoRE/code/reb_J_6_1.m"
+        "../RE_Basics/examples/reb_J_6_1/narrative.qmd",
+        "../RE_Basics/examples/reb_J_6_1/equations.qmd",
+        "../RE_Basics/examples/reb_J_6_1/results.csv"
     shell:
         """
-        cp reb_J_6_1/problem_statement.qmd "../RE_Basics/problem_statements/reb_J_6_1.qmd"
-        cp reb_J_6_1/python/results/reb_J_6_1_results.csv ../RE_Basics/results/reb_J_6_1_results.csv
-        cp reb_J_6_1/python/code/reb_J_6_1.py ../SCoRE/code
-        cp reb_J_6_1/matlab/code/reb_J_6_1.m ../SCoRE/code
+        rm -rf ../RE_Basics/examples/reb_J_6_1
+        mkdir ../RE_Basics/examples/reb_J_6_1
+        cp reb_J_6_1/narrative.qmd "../RE_Basics/examples/reb_J_6_1/narrative.qmd"
+        cp reb_J_6_1/equations.qmd "../RE_Basics/examples/reb_J_6_1/equations.qmd"
+        cp reb_J_6_1/python/results.csv ../RE_Basics/examples/reb_J_6_1/results.csv
+        """
+
+rule reb_J_6_1_score:
+    input:
+        "reb_J_6_1/python/reb_J_6_1.py",
+        "reb_J_6_1/matlab/reb_J_6_1.m"
+    output:
+        "../SCoRE/reb_examples/reb_J_6_1/reb_J_6_1.py",
+        "../SCoRE/reb_examples/reb_J_6_1/reb_J_6_1.m"
+    shell:
+        """
+        rm -rf ../SCoRE/reb_examples/reb_J_6_1
+        mkdir ../SCoRE/reb_examples/reb_J_6_1
+        cp reb_J_6_1/python/reb_J_6_1.py ../SCoRE/reb_examples/reb_J_6_1
+        cp reb_J_6_1/matlab/reb_J_6_1.m ../SCoRE/reb_examples/reb_J_6_1
         """

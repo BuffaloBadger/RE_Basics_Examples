@@ -1,0 +1,30 @@
+
+$$
+\frac{dn_A}{dt} = -Vr_1 \tag{1}
+$$
+
+$$
+\frac{dn_B}{dt} = -Vr_1 \tag{2}
+$$
+
+$$
+\frac{dn_Y}{dt} = Vr_1 \tag{3}
+$$
+
+$$
+\frac{dn_Z}{dt} = Vr_1 \tag{4}
+$$
+
+$$
+\left(n_A \hat{C}_{p,A} + n_B \hat{C}_{p,B} + n_Y \hat{C}_{p,Y} + n_Z \hat{C}_{p,Z} \right) \frac{dT}{dt} - V\frac{dP}{dt} = -Vr_1 \Delta H_1 \tag{5}
+$$
+
+$$
+\begin{align}
+RT\frac{dn_A}{dt} + RT\frac{dn_B}{dt} &+ RT\frac{dn_Y}{dt} + RT\frac{dn_Z}{dt} \\&+ R\left(n_A + n_B + n_Y + n_Z\right)\frac{dT}{dt} - V\frac{dP}{dt} = 0
+\end{align} \tag{6}
+$$
+
+$$
+r_1 = k_{0,1} \exp{\left( \frac{-E_1}{RT} \right)} C_AC_B \tag{7}
+$$
