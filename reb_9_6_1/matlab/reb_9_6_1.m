@@ -90,7 +90,7 @@ function reb_9_6_1
         results_table = table(t,nA,nB,nY,nZ,T_C,r);
 
         % save the results
-        writetable(results_table, '../results/reb_9_6_1_results.csv');
+        writetable(results_table, 'results.csv');
     
         % display and save the graphs
         figure; % concentration profiles
@@ -101,21 +101,21 @@ function reb_9_6_1
         xlabel('Time (h)','FontSize', 14)
         ylabel('Concentration (mol/L)','FontSize', 14)
         legend({'A','B','Y','Z'}, 'Location', 'east', 'FontSize', 14)
-        saveas(gcf, '../results/reb_9_6_1_concentrations.png')
+        saveas(gcf, 'concentrations.png')
     
         figure; % temperature profile
         plot(t,T_C,'k','LineWidth',2)
         set(gca, 'FontSize', 14);
         xlabel('Time (h)','FontSize', 14)
         ylabel('Temperature (°C)','FontSize', 14)
-        saveas(gcf, '../results/reb_9_6_1_temperature.png')
+        saveas(gcf, 'temperature.png')
     
         figure; % rate profile
         plot(t,r,'k','LineWidth',2)
         set(gca, 'FontSize', 14);
         xlabel('Time (h)','FontSize', 14)
         ylabel('Rate (mol/L/h)','FontSize', 14)
-        saveas(gcf, '../results/reb_9_6_1_rate.png')
+        saveas(gcf, 'rate.png')
     end
 
     % perform the analysis

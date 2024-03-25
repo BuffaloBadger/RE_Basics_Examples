@@ -95,7 +95,7 @@ def perform_the_analysis():
                    , 'nY':nY, 'nZ':nZ, 'T':T_C, 'r':r})
 
     # save the results
-    results_df.to_csv("reb_9_6_1/python/results/reb_9_6_1_results.csv"
+    results_df.to_csv("reb_9_6_1/python/results.csv"
                       , index=False)
     
     # display and save the graphs
@@ -107,21 +107,21 @@ def perform_the_analysis():
     plt.xlabel("$Time \; (h)$")
     plt.ylabel("$Concentration \; (mol \; L^{-1})$")
     plt.legend()
-    plt.savefig('reb_9_6_1/python/results/reb_9_6_1_concentrations.png')
+    plt.savefig('reb_9_6_1/python/concentrations.png')
     plt.show()
 
     plt.figure() # temperature profile
     plt.plot(t,T_C)
     plt.xlabel("$Time \; (h)$")
     plt.ylabel("$Temperature \; (°C)$")
-    plt.savefig('reb_9_6_1/python/results/reb_9_6_1_temperature.png')
+    plt.savefig('reb_9_6_1/python/temperature.png')
     plt.show()
 
     plt.figure() # rate profile
     plt.plot(t,r)
     plt.xlabel("$Time \; (h)$")
     plt.ylabel("$Rate \; (mol \; L^{-1} \; h^{-1})$")
-    plt.savefig('reb_9_6_1/python/results/reb_9_6_1_rate.png')
+    plt.savefig('reb_9_6_1/python/rate.png')
     plt.show()
 
     return

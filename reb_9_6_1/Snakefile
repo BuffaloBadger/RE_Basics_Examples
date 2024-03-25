@@ -1,67 +1,82 @@
 rule reb_9_6_1:
     input:
-        "reb_9_6_1/matlab/results/reb_9_6_1_results.csv",
-        "reb_9_6_1/matlab/results/reb_9_6_1_concentrations.png",
-        "reb_9_6_1/matlab/results/reb_9_6_1_temperature.png",
-        "reb_9_6_1/matlab/results/reb_9_6_1_rate.png",
-        "reb_9_6_1/python/results/reb_9_6_1_results.csv",
-        "reb_9_6_1/python/results/reb_9_6_1_concentrations.png",
-        "reb_9_6_1/python/results/reb_9_6_1_temperature.png",
-        "reb_9_6_1/python/results/reb_9_6_1_rate.png",
-        "../RE_Basics/results/reb_9_6_1_concentrations.png",
-        "../RE_Basics/results/reb_9_6_1_temperature.png",
-        "../RE_Basics/results/reb_9_6_1_rate.png",
-        "../RE_Basics/problem_statements/reb_9_6_1.qmd",
-        "../SCoRE/code/reb_9_6_1.py",
-        "../SCoRE/code/reb_9_6_1.m"
+        "reb_9_6_1/matlab/results.csv",
+        "reb_9_6_1/matlab/concentrations.png",
+        "reb_9_6_1/matlab/temperature.png",
+        "reb_9_6_1/matlab/rate.png",
+        "reb_9_6_1/python/results.csv",
+        "reb_9_6_1/python/concentrations.png",
+        "reb_9_6_1/python/temperature.png",
+        "reb_9_6_1/python/rate.png",
+        "../RE_Basics/examples/reb_9_6_1/concentrations.png",
+        "../RE_Basics/examples/reb_9_6_1/temperature.png",
+        "../RE_Basics/examples/reb_9_6_1/rate.png",
+        "../RE_Basics/examples/reb_9_6_1/narrative.qmd",
+        "../RE_Basics/examples/reb_9_6_1/equations.qmd",
+        "../SCoRE/reb_examples/reb_9_6_1/reb_9_6_1.py",
+        "../SCoRE/reb_examples/reb_9_6_1/reb_9_6_1.m"
 
 rule reb_9_6_1_python:
     input:
-        "reb_9_6_1/python/code/reb_9_6_1.py"
+        "reb_9_6_1/python/reb_9_6_1.py"
     output:
-        "reb_9_6_1/python/results/reb_9_6_1_results.csv",
-        "reb_9_6_1/python/results/reb_9_6_1_concentrations.png",
-        "reb_9_6_1/python/results/reb_9_6_1_temperature.png",
-        "reb_9_6_1/python/results/reb_9_6_1_rate.png"
+        "reb_9_6_1/python/results.csv",
+        "reb_9_6_1/python/concentrations.png",
+        "reb_9_6_1/python/temperature.png",
+        "reb_9_6_1/python/rate.png"
     shell:
         """
-        python3 reb_9_6_1/python/code/reb_9_6_1.py
+        python3 reb_9_6_1/python/reb_9_6_1.py
         """
 
 rule reb_9_6_1_matlab:
     input:
-        "reb_9_6_1/matlab/code/reb_9_6_1.m"
+        "reb_9_6_1/matlab/reb_9_6_1.m"
     output:
-        "reb_9_6_1/matlab/results/reb_9_6_1_results.csv",
-        "reb_9_6_1/matlab/results/reb_9_6_1_concentrations.png",
-        "reb_9_6_1/matlab/results/reb_9_6_1_temperature.png",
-        "reb_9_6_1/matlab/results/reb_9_6_1_rate.png"
+        "reb_9_6_1/matlab/results.csv",
+        "reb_9_6_1/matlab/concentrations.png",
+        "reb_9_6_1/matlab/temperature.png",
+        "reb_9_6_1/matlab/rate.png"
     shell:
         """
-        matlab -nodisplay -r "cd('reb_9_6_1/matlab/code');reb_9_6_1;exit"
+        matlab -nodisplay -r "cd('reb_9_6_1/matlab');reb_9_6_1;exit"
         """
 
 rule reb_9_6_1_re_basics:
     input:
-        "reb_9_6_1/python/results/reb_9_6_1_concentrations.png",
-        "reb_9_6_1/python/results/reb_9_6_1_temperature.png",
-        "reb_9_6_1/python/results/reb_9_6_1_rate.png",
-        "reb_9_6_1/problem_statement.qmd",
-        "reb_9_6_1/python/code/reb_9_6_1.py",
-        "reb_9_6_1/matlab/code/reb_9_6_1.m"
+        "reb_9_6_1/python/concentrations.png",
+        "reb_9_6_1/python/temperature.png",
+        "reb_9_6_1/python/rate.png",
+        "reb_9_6_1/narrative.qmd",
+        "reb_9_6_1/equations.qmd"
     output:
-        "../RE_Basics/results/reb_9_6_1_concentrations.png",
-        "../RE_Basics/results/reb_9_6_1_temperature.png",
-        "../RE_Basics/results/reb_9_6_1_rate.png",
-        "../RE_Basics/problem_statements/reb_9_6_1.qmd",
-        "../SCoRE/code/reb_9_6_1.py",
-        "../SCoRE/code/reb_9_6_1.m"
+        "../RE_Basics/examples/reb_9_6_1/concentrations.png",
+        "../RE_Basics/examples/reb_9_6_1/temperature.png",
+        "../RE_Basics/examples/reb_9_6_1/rate.png",
+        "../RE_Basics/examples/reb_9_6_1/narrative.qmd",
+        "../RE_Basics/examples/reb_9_6_1/equations.qmd"
     shell:
         """
-        cp reb_9_6_1/python/results/reb_9_6_1_concentrations.png ../RE_Basics/results
-        cp reb_9_6_1/python/results/reb_9_6_1_temperature.png ../RE_Basics/results
-        cp reb_9_6_1/python/results/reb_9_6_1_rate.png ../RE_Basics/results
-        cp reb_9_6_1/problem_statement.qmd ../RE_Basics/problem_statements/reb_9_6_1.qmd
-        cp reb_9_6_1/python/code/reb_9_6_1.py ../SCoRE/code
-        cp reb_9_6_1/matlab/code/reb_9_6_1.m ../SCoRE/code
+        rm -rf ../RE_Basics/examples/reb_9_6_1
+        mkdir ../RE_Basics/examples/reb_9_6_1
+        cp reb_9_6_1/python/concentrations.png ../RE_Basics/examples/reb_9_6_1
+        cp reb_9_6_1/python/temperature.png ../RE_Basics/examples/reb_9_6_1
+        cp reb_9_6_1/python/rate.png ../RE_Basics/examples/reb_9_6_1
+        cp reb_9_6_1/narrative.qmd ../RE_Basics/examples/reb_9_6_1
+        cp reb_9_6_1/equations.qmd ../RE_Basics/examples/reb_9_6_1
+        """
+
+rule reb_9_6_1_score:
+    input:
+        "reb_9_6_1/python/reb_9_6_1.py",
+        "reb_9_6_1/matlab/reb_9_6_1.m"
+    output:
+        "../SCoRE/reb_examples/reb_9_6_1/reb_9_6_1.py",
+        "../SCoRE/reb_examples/reb_9_6_1/reb_9_6_1.m"
+    shell:
+        """
+        rm -rf ../SCoRE/reb_examples/reb_9_6_1
+        mkdir ../SCoRE/reb_examples/reb_9_6_1
+        cp reb_9_6_1/python/reb_9_6_1.py ../SCoRE/reb_examples/reb_9_6_1
+        cp reb_9_6_1/matlab/reb_9_6_1.m ../SCoRE/reb_examples/reb_9_6_1
         """
