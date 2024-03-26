@@ -142,6 +142,9 @@ def second_stage_profiles(t_0, nA_0, nZ_0, T_0, Tex_0):
 
 # function that performs the analysis
 def perform_the_analysis():
+    # solve the reactor design equations for the first stage
+    t_1, nA_1, nZ_1, T_1, Tex_1 = first_stage_profiles()
+
     # allow this function to set mDot_ex
     global mDot_ex
 
@@ -155,9 +158,8 @@ def perform_the_analysis():
         mDot_ex = coolant_flows[i]
 
         # solve the reactor design equations
-        t1, nA1, nZ1, T1, Tex1 = first_stage_profiles()
-        t, _, nZ, _, _ = second_stage_profiles(t1[-1], nA1[-1], nZ1[-1]
-                                                , T1[-1], Tex1[-1])
+        t, _, nZ, _, _ = second_stage_profiles(t_1[-1], nA_1[-1], nZ_1[-1]
+                                                , T_1[-1], Tex_1[-1])
         
         # calculate the net rate
         net_rates[i] = nZ[-1]/(t[-1] + t_turn)
@@ -168,7 +170,6 @@ def perform_the_analysis():
 
     # solve the reactor design equations using the optimum coolant flow
     mDot_ex = mDot_max
-    t_1, nA_1, nZ_1, T_1, Tex_1 = first_stage_profiles()
     t_2, nA_2, nZ_2, T_2, _ = second_stage_profiles(t_1[-1], nA_1[-1], nZ_1[-1]
                                                 , T_1[-1], Tex_1[-1])
     

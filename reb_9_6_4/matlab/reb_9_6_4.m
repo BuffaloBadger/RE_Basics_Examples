@@ -141,6 +141,9 @@ function reb_9_6_4
 
     % function that performs the analysis
         function perform_the_analysis()
+
+        % solve the reactor equations for the first stage
+        [t_1, nA_1, nZ_1, T_1, Te_1] = first_stage_profiles();
     
         % choose a range of coolant flow rates
         coolant_flows = linspace(100.0, 250.0, 100);
@@ -151,9 +154,6 @@ function reb_9_6_4
 
             % set the coolant flow rate to be used in the calculations
             mDot_ex = coolant_flows(i);
-
-            % solve the reactor design equations for the first stage
-            [t_1, nA_1, nZ_1, T_1, Te_1] = first_stage_profiles();
 
             % solve the reactor design equations for the second stage
             [t, ~, nZ, ~, ~] = second_stage_profiles(t_1(end)...
@@ -169,7 +169,6 @@ function reb_9_6_4
 
         % solve the reactor design equations using the optimum coolant flow
         mDot_ex = mDot_max;
-        [t_1, nA_1, nZ_1, T_1, Te_1] = first_stage_profiles();
         [t_2, nA_2, ~, T_2, ~] = second_stage_profiles(t_1(end)...
                 , nA_1(end), nZ_1(end), T_1(end), Te_1(end));
 
