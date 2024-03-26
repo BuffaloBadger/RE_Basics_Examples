@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 import reb_9_6_4
 
 # read and set the optimum coolant flow rate
-results_df = pd.read_csv('reb_9_6_4/python/results/reb_9_6_4_results.csv')
+results_df = pd.read_csv('reb_9_6_4/python/results.csv')
 reb_9_6_4.mDot_ex=results_df.iat[0,1]
 
 # solve the reactor design equations using the optimum coolant flow
@@ -31,5 +31,5 @@ plt.figure() # instantaneous rate profile
 plt.plot(t,r_inst)
 plt.xlabel("Reaction Time (min)")
 plt.ylabel("Instantaneous Rate (mmol/L/min)")
-plt.savefig('reb_9_6_4/python/results/reb_9_6_4_inst_rate_profile.png')
+plt.savefig('reb_9_6_4/python/inst_rate_profile.png')
 plt.show()

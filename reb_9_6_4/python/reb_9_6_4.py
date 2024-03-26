@@ -193,7 +193,7 @@ def perform_the_analysis():
     print(f"Maximum Net Rate: {max_net_rate} mol /min")
 
     # save the results
-    results_df.to_csv('reb_9_6_4/python/results/reb_9_6_4_results.csv'
+    results_df.to_csv('reb_9_6_4/python/results.csv'
                       , index=False)
 
     # display and save the graphs
@@ -202,21 +202,21 @@ def perform_the_analysis():
     plt.xlabel("Coolant Flow (g/min)")
     plt.ylabel("Net Rate (mol/min)")
     plt.savefig(
-        'reb_9_6_4/python/results/reb_9_6_4_net_rate_vs_coolant_flow.png')
+        'reb_9_6_4/python/net_rate_vs_coolant_flow.png')
     plt.show()
 
     plt.figure() # conversion profile
     plt.plot(t,pct_conversion)
     plt.xlabel("Reaction Time (min)")
     plt.ylabel("Conversion (%)")
-    plt.savefig('reb_9_6_4/python/results/reb_9_6_4_conversion_profile.png')
+    plt.savefig('reb_9_6_4/python/conversion_profile.png')
     plt.show()
 
     plt.figure() # temperature profile
     plt.plot(t,T - 273.15)
     plt.xlabel("Reaction Time (min)")
     plt.ylabel("Temperature (°C)")
-    plt.savefig('reb_9_6_4/python/results/reb_9_6_4_temperature_profile.png')
+    plt.savefig('reb_9_6_4/python/temperature_profile.png')
     plt.show()
 
     return

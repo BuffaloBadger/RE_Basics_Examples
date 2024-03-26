@@ -1,79 +1,94 @@
 rule reb_9_6_4:
     input:
-        "reb_9_6_4/matlab/results/reb_9_6_4_results.csv",
-        "reb_9_6_4/matlab/results/reb_9_6_4_net_rate_vs_coolant_flow.png",
-        "reb_9_6_4/matlab/results/reb_9_6_4_conversion_profile.png",
-        "reb_9_6_4/matlab/results/reb_9_6_4_temperature_profile.png",
-        "reb_9_6_4/python/results/reb_9_6_4_results.csv",
-        "reb_9_6_4/python/results/reb_9_6_4_net_rate_vs_coolant_flow.png",
-        "reb_9_6_4/python/results/reb_9_6_4_conversion_profile.png",
-        "reb_9_6_4/python/results/reb_9_6_4_temperature_profile.png",
-        "reb_9_6_4/python/results/reb_9_6_4_inst_rate_profile.png",
-        "../RE_Basics/problem_statements/reb_9_6_4.qmd",
-        "../RE_Basics/results/reb_9_6_4_results.csv",
-        "../RE_Basics/results/reb_9_6_4_net_rate_vs_coolant_flow.png",
-        "../RE_Basics/results/reb_9_6_4_conversion_profile.png",
-        "../RE_Basics/results/reb_9_6_4_temperature_profile.png",
-        "../RE_Basics/results/reb_9_6_4_inst_rate_profile.png",
-        "../SCoRE/code/reb_9_6_4.py",
-        "../SCoRE/code/reb_9_6_4.m"
+        "reb_9_6_4/matlab/results.csv",
+        "reb_9_6_4/matlab/net_rate_vs_coolant_flow.png",
+        "reb_9_6_4/matlab/conversion_profile.png",
+        "reb_9_6_4/matlab/temperature_profile.png",
+        "reb_9_6_4/python/results.csv",
+        "reb_9_6_4/python/net_rate_vs_coolant_flow.png",
+        "reb_9_6_4/python/conversion_profile.png",
+        "reb_9_6_4/python/temperature_profile.png",
+        "reb_9_6_4/python/inst_rate_profile.png",
+        "../RE_Basics/examples/reb_9_6_4/narrative.qmd",
+        "../RE_Basics/examples/reb_9_6_4/narrative_2.qmd",
+        "../RE_Basics/examples/reb_9_6_4/equations.qmd",
+        "../RE_Basics/examples/reb_9_6_4/results.csv",
+        "../RE_Basics/examples/reb_9_6_4/net_rate_vs_coolant_flow.png",
+        "../RE_Basics/examples/reb_9_6_4/conversion_profile.png",
+        "../RE_Basics/examples/reb_9_6_4/temperature_profile.png",
+        "../RE_Basics/examples/reb_9_6_4/inst_rate_profile.png",
+        "../SCoRE/reb_examples/reb_9_6_4/reb_9_6_4.py",
+        "../SCoRE/reb_examples/reb_9_6_4/reb_9_6_4.m"
 
 rule reb_9_6_4_matlab:
     input:
-        "reb_9_6_4/matlab/code/reb_9_6_4.m"
+        "reb_9_6_4/matlab/reb_9_6_4.m"
     output:
-        "reb_9_6_4/matlab/results/reb_9_6_4_results.csv",
-        "reb_9_6_4/matlab/results/reb_9_6_4_net_rate_vs_coolant_flow.png",
-        "reb_9_6_4/matlab/results/reb_9_6_4_conversion_profile.png",
-        "reb_9_6_4/matlab/results/reb_9_6_4_temperature_profile.png"
+        "reb_9_6_4/matlab/results.csv",
+        "reb_9_6_4/matlab/net_rate_vs_coolant_flow.png",
+        "reb_9_6_4/matlab/conversion_profile.png",
+        "reb_9_6_4/matlab/temperature_profile.png"
     shell:
         """
-        matlab -nodisplay -r "cd('reb_9_6_4/matlab/code');reb_9_6_4;exit"
+        matlab -nodisplay -r "cd('reb_9_6_4/matlab');reb_9_6_4;exit"
         """
 
 rule reb_9_6_4_python:
     input:
-        "reb_9_6_4/python/code/reb_9_6_4.py",
-        "reb_9_6_4/python/code/reb_9_6_4_discussion.py"
+        "reb_9_6_4/python/reb_9_6_4.py",
+        "reb_9_6_4/python/reb_9_6_4_discussion.py"
     output:
-        "reb_9_6_4/python/results/reb_9_6_4_results.csv",
-        "reb_9_6_4/python/results/reb_9_6_4_net_rate_vs_coolant_flow.png",
-        "reb_9_6_4/python/results/reb_9_6_4_conversion_profile.png",
-        "reb_9_6_4/python/results/reb_9_6_4_temperature_profile.png",
-        "reb_9_6_4/python/results/reb_9_6_4_inst_rate_profile.png"
+        "reb_9_6_4/python/results.csv",
+        "reb_9_6_4/python/net_rate_vs_coolant_flow.png",
+        "reb_9_6_4/python/conversion_profile.png",
+        "reb_9_6_4/python/temperature_profile.png",
+        "reb_9_6_4/python/inst_rate_profile.png"
     shell:
         """
-        python3 reb_9_6_4/python/code/reb_9_6_4.py
-        python3 reb_9_6_4/python/code/reb_9_6_4_discussion.py
+        python3 reb_9_6_4/python/reb_9_6_4.py
+        python3 reb_9_6_4/python/reb_9_6_4_discussion.py
         """
 
 rule reb_9_6_4_re_basics:
     input: 
-        "reb_9_6_4/problem_statement.qmd",
-        "reb_9_6_4/python/results/reb_9_6_4_results.csv",
-        "reb_9_6_4/python/results/reb_9_6_4_net_rate_vs_coolant_flow.png",
-        "reb_9_6_4/python/results/reb_9_6_4_conversion_profile.png",
-        "reb_9_6_4/python/results/reb_9_6_4_temperature_profile.png",
-        "reb_9_6_4/python/results/reb_9_6_4_inst_rate_profile.png",
-        "reb_9_6_4/python/code/reb_9_6_4.py",
-        "reb_9_6_4/matlab/code/reb_9_6_4.m"
+        "reb_9_6_4/narrative.qmd",
+        "reb_9_6_4/narrative_2.qmd",
+        "reb_9_6_4/equations.qmd",
+        "reb_9_6_4/python/results.csv",
+        "reb_9_6_4/python/net_rate_vs_coolant_flow.png",
+        "reb_9_6_4/python/conversion_profile.png",
+        "reb_9_6_4/python/temperature_profile.png",
+        "reb_9_6_4/python/inst_rate_profile.png"
     output:
-        "../RE_Basics/problem_statements/reb_9_6_4.qmd",
-        "../RE_Basics/results/reb_9_6_4_results.csv",
-        "../RE_Basics/results/reb_9_6_4_net_rate_vs_coolant_flow.png",
-        "../RE_Basics/results/reb_9_6_4_conversion_profile.png",
-        "../RE_Basics/results/reb_9_6_4_temperature_profile.png",
-        "../RE_Basics/results/reb_9_6_4_inst_rate_profile.png",
-        "../SCoRE/code/reb_9_6_4.py",
-        "../SCoRE/code/reb_9_6_4.m"
+        "../RE_Basics/examples/reb_9_6_4/narrative.qmd",
+        "../RE_Basics/examples/reb_9_6_4/narrative_2.qmd",
+        "../RE_Basics/examples/reb_9_6_4/equations.qmd",
+        "../RE_Basics/examples/reb_9_6_4/results.csv",
+        "../RE_Basics/examples/reb_9_6_4/net_rate_vs_coolant_flow.png",
+        "../RE_Basics/examples/reb_9_6_4/conversion_profile.png",
+        "../RE_Basics/examples/reb_9_6_4/temperature_profile.png",
+        "../RE_Basics/examples/reb_9_6_4/inst_rate_profile.png"
     shell:
         """
-        cp reb_9_6_4/problem_statement.qmd ../RE_Basics/problem_statements/reb_9_6_4.qmd
-        cp reb_9_6_4/python/results/reb_9_6_4_results.csv ../RE_Basics/results
-        cp reb_9_6_4/python/results/reb_9_6_4_net_rate_vs_coolant_flow.png ../RE_Basics/results
-        cp reb_9_6_4/python/results/reb_9_6_4_conversion_profile.png ../RE_Basics/results
-        cp reb_9_6_4/python/results/reb_9_6_4_temperature_profile.png ../RE_Basics/results
-        cp reb_9_6_4/python/results/reb_9_6_4_inst_rate_profile.png ../RE_Basics/results
-        cp reb_9_6_4/python/code/reb_9_6_4.py ../SCoRE/code
-        cp reb_9_6_4/matlab/code/reb_9_6_4.m ../SCoRE/code
+        cp reb_9_6_4/narrative.qmd ../RE_Basics/examples/reb_9_6_4
+        cp reb_9_6_4/narrative_2.qmd ../RE_Basics/examples/reb_9_6_4
+        cp reb_9_6_4/equations.qmd ../RE_Basics/examples/reb_9_6_4
+        cp reb_9_6_4/python/results.csv ../RE_Basics/examples/reb_9_6_4
+        cp reb_9_6_4/python/net_rate_vs_coolant_flow.png ../RE_Basics/examples/reb_9_6_4
+        cp reb_9_6_4/python/conversion_profile.png ../RE_Basics/examples/reb_9_6_4
+        cp reb_9_6_4/python/temperature_profile.png ../RE_Basics/examples/reb_9_6_4
+        cp reb_9_6_4/python/inst_rate_profile.png ../RE_Basics/examples/reb_9_6_4
+        """
+
+rule reb_9_6_4_re_score:
+    input: 
+        "reb_9_6_4/python/reb_9_6_4.py",
+        "reb_9_6_4/matlab/reb_9_6_4.m"
+    output:
+        "../SCoRE/reb_examples/reb_9_6_4/reb_9_6_4.py",
+        "../SCoRE/reb_examples/reb_9_6_4/reb_9_6_4.m"
+    shell:
+        """
+        cp reb_9_6_4/python/reb_9_6_4.py ../SCoRE/reb_examples/reb_9_6_4
+        cp reb_9_6_4/matlab/reb_9_6_4.m ../SCoRE/reb_examples/reb_9_6_4
         """

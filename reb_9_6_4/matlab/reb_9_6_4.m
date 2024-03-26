@@ -194,7 +194,7 @@ function reb_9_6_4
         disp(['Maximum Net Rate: ', num2str(r_net_max,3), ' mol/L/min'])
 
         % save the results
-        writetable(results_table,'../results/reb_9_6_4_results.csv');
+        writetable(results_table,'results.csv');
     
         % display and save the graphs
         figure; % net rate vs coolant flow
@@ -202,21 +202,21 @@ function reb_9_6_4
         set(gca, 'FontSize', 14);
         xlabel('Coolant Flow Rate (g/min)','FontSize', 14)
         ylabel('Net Rate (mol/min)','FontSize', 14)
-        saveas(gcf,"../results/reb_9_6_4_net_rate_vs_coolant_flow.png")
+        saveas(gcf,"net_rate_vs_coolant_flow.png")
 
         figure; % conversion profile
         plot(t, pct_conversion, 'LineWidth', 2)
         set(gca, 'FontSize', 14);
         xlabel('Reaction Time (min)','FontSize', 14)
         ylabel('Conversion (%)','FontSize', 14)
-        saveas(gcf,"../results/reb_9_6_4_conversion_profile.png")
+        saveas(gcf,"conversion_profile.png")
 
         figure; % temperature profile
         plot(t, T - 273.15, 'LineWidth', 2)
         set(gca, 'FontSize', 14);
         xlabel('Reaction Time (min)','FontSize', 14)
         ylabel('Temperature (°C)','FontSize', 14)
-        saveas(gcf,"../results/reb_9_6_4_temperature_profile.png")
+        saveas(gcf,"temperature_profile.png")
    
     end
 
