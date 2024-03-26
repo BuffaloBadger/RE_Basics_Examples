@@ -165,7 +165,7 @@ def perform_the_analysis():
     print(' ')
 
     # save the results
-    results_df.to_csv('reb_9_6_3/python/results/reb_9_6_3_results.csv'
+    results_df.to_csv('reb_9_6_3/python/results.csv'
                       , index=False)
     
     # plot the yield vs. the reaction time
@@ -175,7 +175,7 @@ def perform_the_analysis():
     plt.ylabel("Yield (mol D per initial mol A)")
 
     # show and save the graph
-    plt.savefig('reb_9_6_3/python/results/reb_9_6_3_yield_vs_t.png')
+    plt.savefig('reb_9_6_3/python/yield_vs_t.png')
     plt.show()
     return
 

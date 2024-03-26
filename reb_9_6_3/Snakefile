@@ -1,55 +1,70 @@
 rule reb_9_6_3:
     input:
-        "reb_9_6_3/matlab/results/reb_9_6_3_results.csv",
-        "reb_9_6_3/matlab/results/reb_9_6_3_yield_vs_t.png",
-        "reb_9_6_3/python/results/reb_9_6_3_results.csv",
-        "reb_9_6_3/python/results/reb_9_6_3_yield_vs_t.png",
-        "../RE_Basics/results/reb_9_6_3_results.csv",
-        "../RE_Basics/results/reb_9_6_3_yield_vs_t.png",
-        "../RE_Basics/problem_statements/reb_9_6_3.qmd",
-        "../SCoRE/code/reb_9_6_3.py",
-        "../SCoRE/code/reb_9_6_3.m"
+        "reb_9_6_3/matlab/results.csv",
+        "reb_9_6_3/matlab/yield_vs_t.png",
+        "reb_9_6_3/python/results.csv",
+        "reb_9_6_3/python/yield_vs_t.png",
+        "../RE_Basics/examples/reb_9_6_3/results.csv",
+        "../RE_Basics/examples/reb_9_6_3/yield_vs_t.png",
+        "../RE_Basics/examples/reb_9_6_3/narrative.qmd",
+        "../RE_Basics/examples/reb_9_6_3/equations.qmd",
+        "../SCoRE/reb_examples/reb_9_6_3/reb_9_6_3.py",
+        "../SCoRE/reb_examples/reb_9_6_3/reb_9_6_3.m"
 
 rule reb_9_6_3_matlab:
     input:
-        "reb_9_6_3/matlab/code/reb_9_6_3.m"
+        "reb_9_6_3/matlab/reb_9_6_3.m"
     output:
-        "reb_9_6_3/matlab/results/reb_9_6_3_results.csv",
-        "reb_9_6_3/matlab/results/reb_9_6_3_yield_vs_t.png"
+        "reb_9_6_3/matlab/results.csv",
+        "reb_9_6_3/matlab/yield_vs_t.png"
     shell:
         """
-        matlab -nodisplay -r "cd('reb_9_6_3/matlab/code');reb_9_6_3;exit"
+        matlab -nodisplay -r "cd('reb_9_6_3/matlab');reb_9_6_3;exit"
         """
 
 rule reb_9_6_3_python:
     input:
-        "reb_9_6_3/python/code/reb_9_6_3.py"
+        "reb_9_6_3/python/reb_9_6_3.py"
     output:
-        "reb_9_6_3/python/results/reb_9_6_3_results.csv",
-        "reb_9_6_3/python/results/reb_9_6_3_yield_vs_t.png"
+        "reb_9_6_3/python/results.csv",
+        "reb_9_6_3/python/yield_vs_t.png"
     shell:
         """
-        python3 reb_9_6_3/python/code/reb_9_6_3.py
+        python3 reb_9_6_3/python/reb_9_6_3.py
         """
 
 rule reb_9_6_3_re_basics:
     input:
-        "reb_9_6_3/python/results/reb_9_6_3_results.csv",
-        "reb_9_6_3/python/results/reb_9_6_3_yield_vs_t.png",
-        "reb_9_6_3/problem_statement.qmd",
-        "reb_9_6_3/python/code/reb_9_6_3.py",
-        "reb_9_6_3/matlab/code/reb_9_6_3.m"
+        "reb_9_6_3/python/results.csv",
+        "reb_9_6_3/python/yield_vs_t.png",
+        "reb_9_6_3/narrative.qmd",
+        "reb_9_6_3/equations.qmd"
     output:
-        "../RE_Basics/results/reb_9_6_3_results.csv",
-        "../RE_Basics/results/reb_9_6_3_yield_vs_t.png",
-        "../RE_Basics/problem_statements/reb_9_6_3.qmd",
-        "../SCoRE/code/reb_9_6_3.py",
-        "../SCoRE/code/reb_9_6_3.m"
+        "../RE_Basics/examples/reb_9_6_3/results.csv",
+        "../RE_Basics/examples/reb_9_6_3/yield_vs_t.png",
+        "../RE_Basics/examples/reb_9_6_3/narrative.qmd",
+        "../RE_Basics/examples/reb_9_6_3/equations.qmd"
     shell:
         """
-        cp reb_9_6_3/python/results/reb_9_6_3_results.csv ../RE_Basics/results/reb_9_6_3_results.csv
-        cp reb_9_6_3/python/results/reb_9_6_3_yield_vs_t.png ../RE_Basics/results/reb_9_6_3_yield_vs_t.png
-        cp reb_9_6_3/problem_statement.qmd ../RE_Basics/problem_statements/reb_9_6_3.qmd
-        cp reb_9_6_3/python/code/reb_9_6_3.py ../SCoRE/code
-        cp reb_9_6_3/matlab/code/reb_9_6_3.m ../SCoRE/code
+        rm -rf ../RE_Basics/examples/reb_9_6_3
+        mkdir ../RE_Basics/examples/reb_9_6_3
+        cp reb_9_6_3/python/results.csv ../RE_Basics/examples/reb_9_6_3
+        cp reb_9_6_3/python/yield_vs_t.png ../RE_Basics/examples/reb_9_6_3
+        cp reb_9_6_3/narrative.qmd ../RE_Basics/examples/reb_9_6_3
+        cp reb_9_6_3/equations.qmd ../RE_Basics/examples/reb_9_6_3
+        """
+
+rule reb_9_6_3_score:
+    input:
+        "reb_9_6_3/python/reb_9_6_3.py",
+        "reb_9_6_3/matlab/reb_9_6_3.m"
+    output:
+        "../SCoRE/reb_examples/reb_9_6_3/reb_9_6_3.py",
+        "../SCoRE/reb_examples/reb_9_6_3/reb_9_6_3.m"
+    shell:
+        """
+        rm -rf ../SCoRE/reb_examples/reb_9_6_3
+        mkdir ../SCoRE/reb_examples/reb_9_6_3
+        cp reb_9_6_3/python/reb_9_6_3.py ../SCoRE/reb_examples/reb_9_6_3
+        cp reb_9_6_3/matlab/reb_9_6_3.m ../SCoRE/reb_examples/reb_9_6_3
         """

@@ -1,0 +1,16 @@
+
+$$
+A + B \rightarrow D + Z \tag{1}
+$$
+
+$$
+D + B \rightarrow U + Z \tag{2}
+$$
+
+$$
+r_1 = k_{0,1} \exp{\left(\frac{-E_1}{RT}\right)}P_AP_B \tag{3}
+$$
+
+$$
+r_2 = k_{0,2} \exp{\left(\frac{-E_2}{RT}\right)}P_DP_B \tag{4}
+$$

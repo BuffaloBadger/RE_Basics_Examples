@@ -159,7 +159,7 @@ function reb_9_6_3
         disp(' ')
     
         % save the results
-        writetable(results_table,'../results/reb_9_6_3_results.csv');
+        writetable(results_table,'results.csv');
     
         % plot the yield vs. the reaction time
         figure; 
@@ -169,7 +169,7 @@ function reb_9_6_3
         ylabel('Yield (mol D per initial mol A)', 'FontSize', 14)
     
         % save the graph
-        saveas(gcf,"../results/reb_9_6_3_yield_vs_t.png")
+        saveas(gcf,"yield_vs_t.png")
     end
 
     % perform the analysis
