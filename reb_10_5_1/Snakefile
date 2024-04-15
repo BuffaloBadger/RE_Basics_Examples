@@ -1,0 +1,70 @@
+rule reb_10_5_1:
+    input:
+        "reb_10_5_1/matlab/concentration_profile.png",
+        "reb_10_5_1/matlab/temperature_profile.png",
+        "reb_10_5_1/python/concentration_profile.png",
+        "reb_10_5_1/python/temperature_profile.png",
+        "../RE_Basics/examples/reb_10_5_1/concentration_profile.png",
+        "../RE_Basics/examples/reb_10_5_1/temperature_profile.png",
+        "../RE_Basics/examples/reb_10_5_1/narrative.qmd",
+        "../RE_Basics/examples/reb_10_5_1/equations.qmd",
+        "../SCoRE/reb_examples/reb_10_5_1/reb_10_5_1.py",
+        "../SCoRE/reb_examples/reb_10_5_1/reb_10_5_1.m"
+
+rule reb_10_5_1_python:
+    input:
+        "reb_10_5_1/python/reb_10_5_1.py"
+    output:
+        "reb_10_5_1/python/concentration_profile.png",
+        "reb_10_5_1/python/temperature_profile.png"
+    shell:
+        """
+        python3 reb_10_5_1/python/reb_10_5_1.py
+        """
+
+rule reb_10_5_1_matlab:
+    input:
+        "reb_10_5_1/matlab/reb_10_5_1.m"
+    output:
+        "reb_10_5_1/matlab/concentration_profile.png",
+        "reb_10_5_1/matlab/temperature_profile.png"
+    shell:
+        """
+        matlab -nodisplay -r "cd('reb_10_5_1/matlab');reb_10_5_1;exit"
+        """
+
+rule reb_10_5_1_re_basics:
+    input:
+        "reb_10_5_1/python/concentration_profile.png",
+        "reb_10_5_1/python/temperature_profile.png",
+        "reb_10_5_1/narrative.qmd",
+        "reb_10_5_1/equations.qmd"
+    output:
+        "../RE_Basics/examples/reb_10_5_1/concentration_profile.png",
+        "../RE_Basics/examples/reb_10_5_1/temperature_profile.png",
+        "../RE_Basics/examples/reb_10_5_1/narrative.qmd",
+        "../RE_Basics/examples/reb_10_5_1/equations.qmd"
+    shell:
+        """
+        rm -rf ../RE_Basics/examples/reb_10_5_1
+        mkdir ../RE_Basics/examples/reb_10_5_1
+        cp reb_10_5_1/python/concentration_profile.png ../RE_Basics/examples/reb_10_5_1
+        cp reb_10_5_1/python/temperature_profile.png ../RE_Basics/examples/reb_10_5_1
+        cp reb_10_5_1/narrative.qmd ../RE_Basics/examples/reb_10_5_1
+        cp reb_10_5_1/equations.qmd ../RE_Basics/examples/reb_10_5_1
+        """
+
+rule reb_10_5_1_score:
+    input:
+        "reb_10_5_1/python/reb_10_5_1.py",
+        "reb_10_5_1/matlab/reb_10_5_1.m"
+    output:
+        "../SCoRE/reb_examples/reb_10_5_1/reb_10_5_1.py",
+        "../SCoRE/reb_examples/reb_10_5_1/reb_10_5_1.m"
+    shell:
+        """
+        rm -rf ../SCoRE/reb_examples/reb_10_5_1
+        mkdir ../SCoRE/reb_examples/reb_10_5_1
+        cp reb_10_5_1/python/reb_10_5_1.py ../SCoRE/reb_examples/reb_10_5_1
+        cp reb_10_5_1/matlab/reb_10_5_1.m ../SCoRE/reb_examples/reb_10_5_1
+        """
