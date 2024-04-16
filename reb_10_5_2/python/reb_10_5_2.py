@@ -140,7 +140,7 @@ def perform_the_analysis():
     Y_DfromB = 100.0*Y_DfromB
     
     # tabulate, display and save the results
-    results_df = pd.DataFrame({'t_add':t_add , 'f_B':f_B, 'Y_DfromB':Y_DfromB})
+    results_df = pd.DataFrame({'t_add':add_times , 'f_B':f_B, 'Y_DfromB':Y_DfromB})
     print(results_df)
     results_df.to_csv("reb_10_5_2/python/results.csv", index=False)
 
