@@ -104,13 +104,6 @@ def perform_the_analysis():
     # solve the reactor design equations
     t, nA, nB, nS, nW, T, Tex = profiles()
 
-    results_df = pd.DataFrame({'t':t , 'nA':nA, 'nB':nB
-                   , 'nY':nS, 'nZ':nW, 'T':T, 'Tex':Tex})
-
-    # save the results
-    results_df.to_csv("reb_10_5_1/python/results.csv"
-                      , index=False)
-
     # calculate the other quantities of interest
     V = Vdot_in*t + V_0
     CA = nA/V

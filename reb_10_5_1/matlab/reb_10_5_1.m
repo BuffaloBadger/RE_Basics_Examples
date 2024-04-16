@@ -100,10 +100,7 @@ function reb_10_5_1
     % function that performs the analysis
     function perform_the_analysis()
         % solve the reactor design equations
-        [t, nA, nB, nS, nW, T, Tex] = profiles();
-
-        results_table = table(t, nA, nB, nS, nW, T, Tex);
-        writetable(results_table,'results.csv');
+        [t, nA, ~, ~, ~, T, ~] = profiles();
     
         % calculate the other quantities of interest
         V = Vdot_in*t + V_0;
