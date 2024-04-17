@@ -81,7 +81,7 @@ def profiles():
     f_val = t_add
      
     # solve the IVODEs
-    t, dep, success, message = solve_ivodes(ind_0, dep_0, f_var, f_val
+    t1, dep1, success, message = solve_ivodes(ind_0, dep_0, f_var, f_val
                                         , derivatives, False)
 
     # check that a solution was found
@@ -89,14 +89,15 @@ def profiles():
         print(f"A stage 1 IVODE solution was NOT obtained: {message}")
     
     # set the initial values for stage 2
-    ind_0 = t[-1]
-    dep_0 = np.array([dep[0,-1], dep[1,-1], dep[2,-1], dep[3,-1], dep[4,-1]])
+    ind_0 = t1[-1]
+    dep_0 = np.array([dep1[0,-1], dep1[1,-1], dep1[2,-1], dep1[3,-1]
+                      , dep1[4,-1]])
 
     # define the stopping criterion
     f_val = t_f
      
-    # solve the IVODEs
-    t, dep, success, message = solve_ivodes(ind_0, dep_0, f_var, f_val
+    # solve the IVODEs for stage 2
+    t2, dep2, success, message = solve_ivodes(ind_0, dep_0, f_var, f_val
                                         , derivatives, False)
 
     # check that a solution was found
@@ -104,11 +105,12 @@ def profiles():
         print(f"A stage 2 IVODE solution was NOT obtained: {message}")
 
     # extract the dependent variable profiles
-    nA = dep[0,:]
-    nB = dep[1,:]
-    nD = dep[2,:]
-    nU = dep[3,:]
-    T = dep[4,:]
+    t = np.concatenate((t1, t2))
+    nA = np.concatenate((dep1[0,:], dep2[0,:]))
+    nB = np.concatenate((dep1[1,:], dep2[1,:]))
+    nD = np.concatenate((dep1[2,:], dep2[2,:]))
+    nU = np.concatenate((dep1[3,:], dep2[3,:]))
+    T = np.concatenate((dep1[4,:], dep2[4,:]))
 
     # return all profiles
     return t, nA, nB, nD, nU, T
@@ -121,6 +123,7 @@ def perform_the_analysis():
     # set the add times and allocate storage for the quantities of interest
     add_times = np.array([1.0, 3.0, 5.0, 7.0])
     f_B = np.zeros(4)
+    S_DoverU = np.zeros(4)
     Y_DfromB = np.zeros(4)
 
     for iAdd in range(0,4):
@@ -132,6 +135,7 @@ def perform_the_analysis():
 
         # calculate the quantities of interest
         f_B[iAdd] = (V_B*CB_in - nB[-1])/(V_B*CB_in)
+        S_DoverU[iAdd] = nD[-1]/nU[-1]
         Y_DfromB[iAdd] = nD[-1]/(V_B*CB_in)
 
 
@@ -140,7 +144,8 @@ def perform_the_analysis():
     Y_DfromB = 100.0*Y_DfromB
     
     # tabulate, display and save the results
-    results_df = pd.DataFrame({'t_add':add_times , 'f_B':f_B, 'Y_DfromB':Y_DfromB})
+    results_df = pd.DataFrame({'t_add':add_times , 'f_B':f_B
+                               ,'S_DoverU':S_DoverU, 'Y_DfromB':Y_DfromB})
     print(results_df)
     results_df.to_csv("reb_10_5_2/python/results.csv", index=False)
 

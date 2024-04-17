@@ -80,7 +80,7 @@ function reb_10_5_2
         
         % solve the IVODEs for the first stage
         odes_are_stiff = false;
-        [t, dep, flag] = solve_ivodes(ind_0, dep_0, f_var, f_val...
+        [t1, dep1, flag] = solve_ivodes(ind_0, dep_0, f_var, f_val...
             , @derivatives, odes_are_stiff);
     
         % check that the solution was found
@@ -90,14 +90,14 @@ function reb_10_5_2
         end
 
         % set the initial values for the second stage
-        ind_0 = t(end);
-        dep_0 = dep(end,1:5)';
+        ind_0 = t1(end);
+        dep_0 = dep1(end,1:5)';
 
         % define the stopping criterion for the second stage
         f_val = t_f;
 
         % solve the design equations for the second stage
-        [t, dep, flag] = solve_ivodes(ind_0, dep_0, f_var, f_val...
+        [t2, dep2, flag] = solve_ivodes(ind_0, dep_0, f_var, f_val...
             , @derivatives, odes_are_stiff);
 
         % check that the solution was found
@@ -106,12 +106,13 @@ function reb_10_5_2
             disp('WARNING: Stage 2 solution may not be accurate!')
         end
 
-        % extract and return the dependent variable profiles
-        nA = dep(:,1);
-        nB = dep(:,2);
-        nD = dep(:,3);
-        nU = dep(:,4);
-        T = dep(:,5);
+        % combine the stages and return the profiles
+        t = [t1; t2];
+        nA = [dep1(:,1); dep2(:,1)];
+        nB = [dep1(:,2); dep2(:,2)];
+        nD = [dep1(:,3); dep2(:,3)];
+        nU = [dep1(:,4); dep2(:,4)];
+        T = [dep1(:,5); dep2(:,5)];
     end
 
     % function that performs the analysis
@@ -121,6 +122,7 @@ function reb_10_5_2
 
         % allocate storage for the results
         f_B = nan(4,1);
+        S_DoverU = nan(4,1);
         Y_DfromB = nan(4,1);
 
         % loop through the add times
@@ -129,10 +131,11 @@ function reb_10_5_2
             t_add = add_times(iAdd);
 
             % solve the reactor design equations
-            [~, ~, nB, nD, ~, ~] = profiles();
+            [~, ~, nB, nD, nU, ~] = profiles();
 
             % calculate the quantities of interest
             f_B(iAdd) = (V_B*CB_in - nB(end))/V_B/CB_in;
+            S_DoverU(iAdd) = nD(end)/nU(end);
             Y_DfromB(iAdd) = nD(end)/V_B/CB_in;
         end
 
@@ -141,7 +144,7 @@ function reb_10_5_2
         Y_DfromB = 100.0*Y_DfromB;
 
         % tabulate, display and save the results
-        results_table = table(add_times, f_B, Y_DfromB);
+        results_table = table(add_times, f_B, S_DoverU, Y_DfromB);
         disp(results_table)
         writetable(results_table,'results.csv');
     end
