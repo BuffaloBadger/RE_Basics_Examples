@@ -1,0 +1,8 @@
+
+$$
+\left(CH_3CO\right)_2O + H_2O \rightarrow 2 CH_3CO_2H \tag{1}
+$$
+
+$$
+r_1 = k_1C_{\left(CH_3CO\right)_2O} \tag{2}
+$$

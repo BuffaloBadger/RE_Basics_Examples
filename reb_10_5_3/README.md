@@ -1,0 +1,1 @@
+This example is a slightly modified version of AFCoKaRE Example 32.1 The modification was removing the fixed exchange fluid temperature and replacing it with an inlet temperature, flow rate and heat capacity.
