@@ -43,8 +43,8 @@ rule reb_J_6_1_re_basics:
         """
         rm -rf ../RE_Basics/examples/reb_J_6_1
         mkdir ../RE_Basics/examples/reb_J_6_1
-        cp reb_J_6_1/narrative.qmd "../RE_Basics/examples/reb_J_6_1/narrative.qmd"
-        cp reb_J_6_1/equations.qmd "../RE_Basics/examples/reb_J_6_1/equations.qmd"
+        cp reb_J_6_1/narrative.qmd ../RE_Basics/examples/reb_J_6_1/narrative.qmd
+        cp reb_J_6_1/equations.qmd ../RE_Basics/examples/reb_J_6_1/equations.qmd
         cp reb_J_6_1/python/results.csv ../RE_Basics/examples/reb_J_6_1/results.csv
         """
 

@@ -1,13 +1,1 @@
 Equations (1), (2), and (3) are representative of a set of ATEs that an engineer might generate and need to solve when completing a reaction engineering assignment. For this example, suppose that the engineer needs to find the values of $\dot{n}_A$, $\dot{n}_Z$, and $T$ by solving the ATEs. For this example we will also assume that the engineer knows the rate expression for $r$ that is used in the solution that follows and the constant values of the following quantities: $\dot n_{A,in}$ = 500 mol h^-1^, $V$ = 500 L, $\dot n_{Z,in}$ = 0 mol h^-1^, $\breve{C}_p$ = 1170 cal L^-1^ K^-1^, $\dot{V}$ = 250 L h^-1^, $T_{in}$ = 423 K, $\Delta H$ = 18,200 cal mol^-1^, $k_0$ = 1.14 x 10^9^ L mol^-1^ h^-1^, and $E$ = 16,200 cal mol^-1^.
-
-$$
-\dot n_{A,in} =  \dot n_A + Vr \tag{1}
-$$
-
-$$
-\dot n_{Z,in} = \dot n_Z - Vr \tag{2}
-$$
-
-$$
-\breve{C}_p \dot{V}\left(  T - T_{in} \right) = - Vr\Delta H \tag{3}
-$$

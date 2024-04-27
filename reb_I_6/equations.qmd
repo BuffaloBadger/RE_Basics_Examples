@@ -1,0 +1,12 @@
+
+$$
+\dot n_{A,in} =  \dot n_A + Vr \tag{1}
+$$
+
+$$
+\dot n_{Z,in} = \dot n_Z - Vr \tag{2}
+$$
+
+$$
+\breve{C}_p \dot{V}\left(  T - T_{in} \right) = - Vr\Delta H \tag{3}
+$$
