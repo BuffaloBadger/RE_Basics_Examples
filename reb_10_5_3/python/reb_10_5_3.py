@@ -24,7 +24,7 @@ Tex_0 = 60 + 273.15 # K
 Cp = 2.68 # J/cm^3/K
 V_A = 350 # cm^3
 T_in = 21 + 273.15 # K
-f_A = 0.99
+T_f = 65 + 273.15 # K
 T_max = 95 + 273.15 #K
 rho_A = 1.082 # g/cm^3
 rho_W = 1.0 # g/cm^3
@@ -43,7 +43,6 @@ V_0 = VW_0 + VZ_0 + Vacid
 m_ex = Vdot_ex*rho_ex
 nW_0 = VW_0*rho_W/M_W
 nZ_0 = VZ_0*rho_Z*M_Z
-nA_f = V_A*rho_A/M_A*(1-f_A)
 
 # make Vdot_in available to all functions
 Vdot_in = float('nan')
@@ -114,31 +113,30 @@ def profiles():
     T = dep[3,:]
     Tex = dep[4,:]
 
-    if nA[-1] > nA_f:
-        # set the initial values for stage 2
-        ind_0 = t[-1]
-        dep_0 = np.array([dep[0,-1], dep[1,-1], dep[2,-1], dep[3,-1]\
-                          , dep[4,-1]])
+    # set the initial values for stage 2
+    ind_0 = t[-1]
+    dep_0 = np.array([dep[0,-1], dep[1,-1], dep[2,-1], dep[3,-1]\
+                        , dep[4,-1]])
 
-        # define the stopping criterion
-        f_var = 1
-        f_val = nA_f
-     
-        # solve the IVODEs for stage 2
-        t2, dep2, success, message = solve_ivodes(ind_0, dep_0, f_var, f_val
-                                        , derivatives, True)
+    # define the stopping criterion
+    f_var = 4
+    f_val = T_f
+    
+    # solve the IVODEs for stage 2
+    t2, dep2, success, message = solve_ivodes(ind_0, dep_0, f_var, f_val
+                                    , derivatives, True)
 
-        # check that a solution was found
-        if not(success):
-            print(f"A stage 2 IVODE solution was NOT obtained: {message}")
+    # check that a solution was found
+    if not(success):
+        print(f"A stage 2 IVODE solution was NOT obtained: {message}")
 
-        # extract the dependent variable profiles
-        t = np.concatenate((t, t2))
-        nA = np.concatenate((nA, dep2[0,:]))
-        nW = np.concatenate((nW, dep2[1,:]))
-        nZ = np.concatenate((nZ, dep2[2,:]))
-        T = np.concatenate((T, dep2[3,:]))
-        Tex = np.concatenate((Tex, dep2[4,:]))
+    # extract the dependent variable profiles
+    t = np.concatenate((t, t2))
+    nA = np.concatenate((nA, dep2[0,:]))
+    nW = np.concatenate((nW, dep2[1,:]))
+    nZ = np.concatenate((nZ, dep2[2,:]))
+    T = np.concatenate((T, dep2[3,:]))
+    Tex = np.concatenate((Tex, dep2[4,:]))
 
     # return all profiles
     return t, nA, nW, nZ, T, Tex
@@ -149,7 +147,7 @@ def perform_the_analysis():
     global Vdot_in
 
     # set feed rates and allocate storage
-    feed_rates = np.linspace(35,40,100)
+    feed_rates = np.linspace(37,41,100)
     t_proc = 1E20*np.ones(100)
 
     for iFeed in range(0,100):
@@ -165,13 +163,14 @@ def perform_the_analysis():
 
     # find the optimum
     t_opt = np.min(t_proc)
-    Vdot_opt = V_A/t_opt
+    i_opt = np.argmin(t_proc)
+    Vdot_opt = feed_rates[i_opt]
     t_sb = V_A/Vdot_opt
     
     # solve the reactor design equations using the optimum feed rate
     Vdot_in = Vdot_opt
     t, nA, nW, nZ, T, Tex = profiles()
-    pct_conv = 100*(V_A*rho_A/M_A - nA[-1])/(V_A*rho_A/M_A)
+    f_A = 100*(V_A*rho_A/M_A - nA[-1])/(V_A*rho_A/M_A)
 
     # tabulate results
     data = [["Minimum Processing Time",f"{t_opt}","min"]
@@ -179,7 +178,7 @@ def perform_the_analysis():
             ,["Optimum Feed Rate",f"{Vdot_opt}","cm^3^ min^-1^"]
             ,["Maximum Temperature",f"{np.max(T)-273.15}","°C"]
             ,["Maximum Cooling Water Temperature",f"{np.max(Tex)-273.15}","°C"]
-            ,["Acetic Anhydride Conversion",f"{pct_conv}","%"]]
+            ,["Acetic Anhydride Conversion",f"{f_A}","%"]]
     results_df = pd.DataFrame(data, columns=['item','value','units'])
     print(results_df)
     results_df.to_csv('reb_10_5_3/python/results.csv',index=False)

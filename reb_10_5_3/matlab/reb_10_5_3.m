@@ -19,7 +19,7 @@ function reb_10_5_3
     Cp = 2.68; % J/cm^3/K
     V_A = 350.0; % cm^3
     T_in = 21 + 273.15; % K
-    f_A = 0.99;
+    T_f = 65 + 273.15; % K
     T_max = 95 + 273.15; % K
     rho_A = 1.082; % g/cm^3
     rho_W = 1.0; % g/cm^3
@@ -38,7 +38,7 @@ function reb_10_5_3
     m_ex = Vdot_ex*rho_ex;
     nW_0 = VW_0*rho_W/M_W;
     nZ_0 = VZ_0*rho_Z/M_Z;
-    nA_f = V_A*rho_A/M_A*(1-f_A);
+    
 
     % make Vdot_in available to all functions
     Vdot_in = nan(1,1);
@@ -116,41 +116,38 @@ function reb_10_5_3
         T = dep(:,4);
         T_ex = dep(:,5);
 
-        if (nA(end) > nA_f) % continue in batch mode
+        % set the initial values for the second stage
+        ind_0 = t(end);
+        dep_0 = dep(end,1:5)';
 
-            % set the initial values for the second stage
-            ind_0 = t(end);
-            dep_0 = dep(end,1:5)';
+        % define the stopping criterion for the second stage
+        f_var = 4;
+        f_val = T_f;
 
-            % define the stopping criterion for the second stage
-            f_var = 1;
-            f_val = nA_f;
+        % solve the design equations for the second stage
+        [t2, dep2, flag] = solve_ivodes(ind_0, dep_0, f_var, f_val...
+            , @derivatives, odes_are_stiff);
 
-            % solve the design equations for the second stage
-            [t2, dep2, flag] = solve_ivodes(ind_0, dep_0, f_var, f_val...
-                , @derivatives, odes_are_stiff);
-
-            % check that the solution was found
-            if flag <= 0
-                disp(' ')
-                disp('WARNING: Stage 2 solution may not be accurate!')
-            end
-
-            % combine the stages and return the profiles
-            t = [t; t2];
-            nA = [nA; dep2(:,1)];
-            nW = [nW; dep2(:,2)];
-            nZ = [nZ; dep2(:,3)];
-            T = [T; dep2(:,4)];
-            T_ex = [T_ex; dep2(:,5)];
+        % check that the solution was found
+        if flag <= 0
+            disp(' ')
+            disp('WARNING: Stage 2 solution may not be accurate!')
         end
+
+        % combine the stages and return the profiles
+        t = [t; t2];
+        nA = [nA; dep2(:,1)];
+        nW = [nW; dep2(:,2)];
+        nZ = [nZ; dep2(:,3)];
+        T = [T; dep2(:,4)];
+        T_ex = [T_ex; dep2(:,5)];
     end
 
     % function that performs the analysis
     function perform_the_analysis()
         % set a range of feed rates
         %feed_rates = linspace(30,300,100);
-        feed_rates = linspace(35,40,100);
+        feed_rates = linspace(37,41,100);
 
         % allocate storage for the results
         t_proc = nan(100,1);
@@ -170,18 +167,15 @@ function reb_10_5_3
             end
         end
 
-        % find minimum processing time
-        [t_proc_min,i_opt] = min(t_proc);
+        % find the optimum
+        [t_opt,i_opt] = min(t_proc);
+        Vdot_opt = feed_rates(i_opt);
+        t_sb = V_A/Vdot_opt;
 
-        % set the feed rate to the value that gives the minimum
-        % processing time
-        Vdot_in = feed_rates(i_opt);
-
-        % calculate the semi-batch processing time
-        t_sb = V_A/Vdot_in;
-
-        % solve the reactor design equations
+        % solve the reactor design equations using the optimum feed rate
+        Vdot_in = Vdot_opt;
         [t, nA, ~, ~, T, Tex] = profiles();
+        f_A = 100*(V_A*rho_A/M_A - nA(end))/(V_A*rho_A/M_A);
 
         % tabulate the results
         item = ["Minimum Processing Time"...
@@ -190,12 +184,12 @@ function reb_10_5_3
             ; "Maximum Temperature"...
             ; "Maximum Cooling Water Temperature"...
             ; "Acetic Anhydride Conversion"];
-        value = [t_proc_min...
+        value = [t_opt...
             ; t_sb...
             ; Vdot_in...
             ; max(T - 273.15)...
             ; (max(Tex - 273.15))...
-            ; 100*(V_A*rho_A/M_A - nA(end))/(V_A*rho_A/M_A)];
+            ; f_A];
         units = ["min"...
             ; "min"...
             ; "cm^3^ min^-1^"...
