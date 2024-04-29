@@ -1,78 +1,78 @@
-function reb_I_6_calculations
-%REB_I_6_CALCULATIONS solve 3 ATEs in Reaction Engineering Basics 
-%   Example I.6
-
-    % Set filepath
-    filepath_to_results = '../results/';
-
-    % Given and known constants
-    n_A_in = 500.; % mol/h
-    V_fluid = 500.; % L
-    n_Z_in = 0.; % mol/h
-    Cp_vol = 1170.; % cal/L/K
-    V_flow = 250.; % L/h
-    T_in_K = 423.; % K
-    dH_rxn = 18200.; % cal/mol
-    k_0 = 1.14E9; % L/mol/h
-    E = 16200.; % cal/mol
-    Re = 1.987; % cal/mol/K
-
-    % Residuals function
-    function residuals = eval_resids(guess)
-        % Extract the guess values
-        n_A_guess = guess(1);
-        n_Z_guess = guess(2);
-        T_guess_K = guess(3);
-
-        % Calculate the concentration of A
-        C_A = n_A_guess/V_flow;
-
-        % Calculate the rate
-        r = k_0*exp(-E/Re/T_guess_K)*C_A^2;
+function reb_I_6
+    %REB_I_6 Calculations for Example I.6 of Reaction Engineering Basics
+        % given and known constants
+    
+        % Given and known constants
+        n_A_in = 500.; % mol/h
+        V_fluid = 500.; % L
+        n_Z_in = 0.; % mol/h
+        Cp_vol = 1170.; % cal/L/K
+        V_flow = 250.; % L/h
+        T_in_K = 423.; % K
+        dH_rxn = 18200.; % cal/mol
+        k_0 = 1.14E9; % L/mol/h
+        E = 16200.; % cal/mol
+        Re = 1.987; % cal/mol/K
+    
+        % residuals function
+        function resids = residuals(guess)
+            % extract the individual guesses
+            n_A_guess = guess(1);
+            n_Z_guess = guess(2);
+            T_guess_K = guess(3);
+    
+            % Calculate the concentration of A
+            C_A = n_A_guess/V_flow;
+    
+            % Calculate the rate
+            r = k_0*exp(-E/Re/T_guess_K)*C_A^2;
+            
+            % Evaluate the residuals
+            residual_1 = n_A_in - n_A_guess - V_fluid*r;
+            residual_2 = n_Z_in - n_Z_guess + V_fluid*r;
+            residual_3 = Cp_vol*V_flow*(T_guess_K - T_in_K)...
+                + V_fluid*r*dH_rxn;
+    
+            % Return the residuals
+            resids = [residual_1; residual_2; residual_3];
+        end
+    
+        % reactor model
+        function soln = unknowns()
+    
+            % set the initial guess
+            init_guess = [n_A_in/2; n_A_in/2; T_in_K - 1.];
+            
+            % solve the ATEs
+            [soln, flag, message] = solve_ates(@residuals, init_guess);
         
-        % Evaluate the residuals
-        residual_1 = n_A_in - n_A_guess - V_fluid*r;
-        residual_2 = n_Z_in - n_Z_guess + V_fluid*r;
-        residual_3 = Cp_vol*V_flow*(T_guess_K - T_in_K)...
-            + V_fluid*r*dH_rxn;
-
-        % Return the residuals
-        residuals = [residual_1; residual_2; residual_3];
-    end
-
-    % Initial guess
-    init_guess = [n_A_in/2; n_A_in/2; T_in_K - 1.];
-
-    % Solve the ATEs
-    [soln, flag, message] = solve_ates(@eval_resids, init_guess);
-
-    % Check that the solution is converged
-    if flag <= 0
+            % check that the solution was found
+            if flag <= 0
+                disp(' ')
+                disp(['WARNING: The ATE solver did not converge: ',message])
+            end
+        end
+    
+        % perform the analysis
+    
+        % call the model function
+        soln = unknowns();
+    
+        % Extract the solution
+        n_A_out = soln(1);
+        n_Z_out = soln(2);
+        T_out_K = soln(3);
+    
+        % tabulate the results
+        item = ["Flow Rate of A";"Flow Rate of Z";"Temperature"];
+        value = [n_A_out;n_Z_out;T_out_K-273.15];
+        units = ["mol h^-1^";"mol h^-1^";"°C"];
+        results_table = table(item,value,units);
+    
+        % display the results
         disp(' ')
-        disp(['The ATE solver did not converge: ',message])
+        disp(results_table)
+    
+        % save the results
+        writetable(results_table,'results.csv');
     end
-
-    % Calculate the residuals
-    residuals = eval_resids(soln);
-
-    % Extract the solution
-    n_A_out = soln(1);
-    n_Z_out = soln(2);
-    T_out_K = soln(3);
-
-    % Display the solution
-    disp(' ')
-    disp(['Flow Rate of A: ',num2str(n_A_out,3),' mol/h'])
-    disp(['Flow Rate of Z: ',num2str(n_Z_out,3),' mol/h'])
-    disp(['Temperature: ',num2str(T_out_K-273.15,3),' °C'])
-
-    % Save the results
-    results_file = strcat(filepath_to_results,"reb_I_6_results.csv");
-    item = ["Flow Rate of A";"Flow Rate of Z";"Temperature"...
-        ;"Residual 1"; "Residual 2"; "Residual 3"];
-    value = [n_A_out;n_Z_out;temp_out_K-273.15; residuals];
-    units = ["mol h^-1^";"mol h^-1^";"°C";"";"";""];
-    results_table = table(item,value,units);
-    writetable(results_table,results_file);
-
-end

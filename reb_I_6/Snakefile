@@ -1,7 +1,7 @@
 rule reb_I_6:
     input:
-        "reb_I_6/matlab/results/reb_I_6_results.csv",
-        "reb_I_6/python/results/reb_I_6_results.csv",
+        "reb_I_6/matlab/results.csv",
+        "reb_I_6/python/results.csv",
         "../RE_Basics/examples/reb_I_6/narrative.qmd",
         "../RE_Basics/examples/reb_I_6/equations.qmd",
         "../RE_Basics/examples/reb_I_6/results.csv",
@@ -10,12 +10,14 @@ rule reb_I_6:
 
 rule reb_I_6_python:
     input:
-        "reb_I_6/python/reb_I_6.py"
+        "reb_I_6/python/reb_I_6.py",
+        "reb_I_6/python/reb_I_6_discussion.py"
     output:
         "reb_I_6/python/results.csv"
     shell:
         """
         python reb_I_6/reb_I_6.py
+        python reb_I_6/reb_I_6_discussion.py
         """
 
 rule reb_I_6_matlab:
@@ -34,7 +36,7 @@ rule reb_I_6_re_basics:
         "reb_I_6/equations.qmd",
         "reb_I_6/python/results.csv",
         "reb_I_6/python/reb_I_6.py",
-        "reb_I_6/python/reb_I_6.m"
+        "reb_I_6/matlab/reb_I_6.m"
     output:
         "../RE_Basics/examples/reb_I_6/narrative.qmd",
         "../RE_Basics/examples/reb_I_6/equations.qmd",
@@ -51,14 +53,14 @@ rule reb_I_6_re_basics:
 rule reb_I_6_score:
     input: 
         "reb_I_6/python/reb_I_6.py",
-        "reb_I_6/python/reb_I_6.m"
+        "reb_I_6/matlab/reb_I_6.m"
     output:
         "../SCoRE/reb_examples/reb_I_6/reb_I_6.py",
         "../SCoRE/reb_examples/reb_I_6/reb_I_6.m"
     shell:
-    """
-    rm -rf ../SCoRE/reb_examples/reb_I_6
-    mkdir ../SCoRE/reb_examples/reb_I_6
-    cp reb_I_6/python/reb_I_6.py ../SCoRE/reb_examples/reb_I_6
-    cp reb_I_6/python/reb_I_6.m ../SCoRE/reb_examples/reb_I_6
-    """
+        """
+        rm -rf ../SCoRE/reb_examples/reb_I_6
+        mkdir ../SCoRE/reb_examples/reb_I_6
+        cp reb_I_6/python/reb_I_6.py ../SCoRE/reb_examples/reb_I_6
+        cp reb_I_6/matlab/reb_I_6.m ../SCoRE/reb_examples/reb_I_6
+        """
