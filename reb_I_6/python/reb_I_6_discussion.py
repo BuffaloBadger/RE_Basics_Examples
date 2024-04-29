@@ -12,6 +12,7 @@ sol[2] = sol[2] + 273.15
 
 # calculate the residuals
 residuals = reb_I_6.residuals(sol)
+sol[2] = sol[2] - 273.15
 
 # add the new results
 n_rows = len(results_df.index)
