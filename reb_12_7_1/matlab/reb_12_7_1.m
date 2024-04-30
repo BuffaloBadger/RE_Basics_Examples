@@ -67,34 +67,39 @@ function reb_12_7_1
             residual_5];
     end
 
+    % function that performs the analysis
+    function perform_the_analysis()
+        % set the initial guess
+        init_guess = [0.5*nA_in; 0.5*nA_in; 0.1*nA_in; 0.1*nA_in;
+        T_in + 10.0];
+    
+        % solve the reactor design equations
+        soln = unknowns(init_guess);
+    
+        % extract the individual values
+        nA = soln(1);
+        nD = soln(3);
+        nU = soln(4);
+        T = soln(5);
+    
+        % calculate the other quantities of interest
+        fA = 100*(nA_in - nA)/nA_in;
+        S_D_U = nD/nU;
+    
+        % tabulate the results
+        item = ["Conversion";"Selectivity";"Temperature"];
+        value = [fA; S_D_U; T];
+        units = ["%";"mol D per mol U";"K"];
+        results_table = table(item,value,units);
+    
+        % display the results
+        disp(' ')
+        disp(results_table)
+    
+        % save the results
+        writetable(results_table,'results.csv');
+    end
+
     % perform the analysis
-    % set the initial guess
-    init_guess = [0.5*nA_in; 0.5*nA_in; 0.1*nA_in; 0.1*nA_in;
-    T_in + 10.0];
-
-    % solve the reactor design equations
-    soln = unknowns(init_guess);
-
-    % extract the individual values
-    nA = soln(1);
-    nD = soln(3);
-    nU = soln(4);
-    T = soln(5);
-
-    % calculate the other quantities of interest
-    fA = 100*(nA_in - nA)/nA_in;
-    S_D_U = nD/nU;
-
-    % tabulate the results
-    item = ["Conversion";"Selectivity";"Temperature"];
-    value = [fA; S_D_U; T];
-    units = ["%";"mol D per mol U";"K"];
-    results_table = table(item,value,units);
-
-    % display the results
-    disp(' ')
-    disp(results_table)
-
-    % save the results
-    writetable(results_table,'results.csv');
+    perform_the_analysis();
 end
