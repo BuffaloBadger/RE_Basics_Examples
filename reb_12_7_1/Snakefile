@@ -1,0 +1,64 @@
+rule reb_12_7_1:
+    input:
+        "reb_12_7_1/matlab/results.csv",
+        "reb_12_7_1/python/results.csv",
+        "../RE_Basics/examples/reb_12_7_1/results.csv",
+        "../RE_Basics/examples/reb_12_7_1/narrative.qmd",
+        "../RE_Basics/examples/reb_12_7_1/equations.qmd",
+        "../SCoRE/reb_examples/reb_12_7_1/reb_12_7_1.py",
+        "../SCoRE/reb_examples/reb_12_7_1/reb_12_7_1.m"
+
+rule reb_12_7_1_python:
+    input:
+        "reb_12_7_1/python/reb_12_7_1.py",
+        "reb_12_7_1/python/reb_12_7_1_discussion.py"
+    output:
+        "reb_12_7_1/python/results.csv"
+    shell:
+        """
+        python3 reb_12_7_1/python/reb_12_7_1.py
+        python3 reb_12_7_1/python/reb_12_7_1_discussion.py
+        """
+
+rule reb_12_7_1_matlab:
+    input:
+        "reb_12_7_1/matlab/reb_12_7_1.m"
+    output:
+        "reb_12_7_1/matlab/results.csv"
+    shell:
+        """
+        matlab -nodisplay -r "cd('reb_12_7_1/matlab');reb_12_7_1;exit"
+        """
+
+rule reb_12_7_1_re_basics:
+    input:
+        "reb_12_7_1/python/results.csv",
+        "reb_12_7_1/narrative.qmd",
+        "reb_12_7_1/equations.qmd"
+    output:
+        "../RE_Basics/examples/reb_12_7_1/results.csv",
+        "../RE_Basics/examples/reb_12_7_1/narrative.qmd",
+        "../RE_Basics/examples/reb_12_7_1/equations.qmd"
+    shell:
+        """
+        rm -rf ../RE_Basics/examples/reb_12_7_1
+        mkdir ../RE_Basics/examples/reb_12_7_1
+        cp reb_12_7_1/python/results.csv ../RE_Basics/examples/reb_12_7_1
+        cp reb_12_7_1/narrative.qmd ../RE_Basics/examples/reb_12_7_1
+        cp reb_12_7_1/equations.qmd ../RE_Basics/examples/reb_12_7_1
+        """
+
+rule reb_12_7_1_score:
+    input:
+        "reb_12_7_1/python/reb_12_7_1.py",
+        "reb_12_7_1/matlab/reb_12_7_1.m"
+    output:
+        "../SCoRE/reb_examples/reb_12_7_1/reb_12_7_1.py",
+        "../SCoRE/reb_examples/reb_12_7_1/reb_12_7_1.m"
+    shell:
+        """
+        rm -rf ../SCoRE/reb_examples/reb_12_7_1
+        mkdir ../SCoRE/reb_examples/reb_12_7_1
+        cp reb_12_7_1/python/reb_12_7_1.py ../SCoRE/reb_examples/reb_12_7_1
+        cp reb_12_7_1/matlab/reb_12_7_1.m ../SCoRE/reb_examples/reb_12_7_1
+        """

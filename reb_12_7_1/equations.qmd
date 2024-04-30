@@ -1,0 +1,15 @@
+$$
+A + B \rightarrow D \tag{1}
+$$
+
+$$
+A + B \rightarrow U \tag{2}
+$$
+
+$$
+r_1 = k_1 C_AC_B \tag{3}
+$$
+
+$$
+r_2 = k_2 C_AC_B \tag{4}
+$$
