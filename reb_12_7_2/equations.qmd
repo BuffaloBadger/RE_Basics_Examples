@@ -1,0 +1,7 @@
+$$
+A + B \rightarrow Z \tag{1}
+$$
+
+$$
+r_1 = k_1C_AC_B \tag{2}
+$$
