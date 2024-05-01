@@ -1,0 +1,11 @@
+$$
+A + B \rightarrow Z \tag{1}
+$$
+
+$$
+r_1 = k_1C_AC_B\left( 1 - \frac{C_Z}{K_1C_AC_B}\right) \tag{2}
+$$
+
+$$
+K_1 = K_{0,1}\exp{\frac{-\Delta H_1}{RT}} \tag{3}
+$$
