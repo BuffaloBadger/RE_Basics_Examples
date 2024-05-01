@@ -88,8 +88,8 @@ function reb_12_7_2
     
         % tabulate the results
         item = ["yA";"yB";"yI";"yZ";"T"];
-        value = [yA; yB; yI; yZ; T];
-        units = ["";"";"";"";"°C"];
+        value = [100*yA; 100*yB; 100*yI; 100*yZ; T];
+        units = ["%";"%";"%";"%";"°C"];
         results_table = table(item,value,units);
     
         % display the results

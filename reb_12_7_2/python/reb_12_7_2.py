@@ -94,8 +94,8 @@ def perform_the_analysis():
     yZ = nZ/nTot
 
     # tabulate the results
-    data = [['yA',f'{yA}',''],['yB',f'{yB}',''],['yI',f'{yI}','']
-         ,['yZ',f'{yZ}',''],['T',f'{T}','°C']]
+    data = [['yA',f'{100*yA}','%'],['yB',f'{100*yB}','%'],['yI',f'{100*yI}','%']
+         ,['yZ',f'{100*yZ}','%'],['T',f'{T}','°C']]
     results_df = pd.DataFrame(data, columns=['item','value','units'])
 
     # display the results
