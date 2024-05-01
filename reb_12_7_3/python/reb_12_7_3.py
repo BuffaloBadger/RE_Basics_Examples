@@ -92,7 +92,7 @@ def perform_the_analysis():
     # plot the results
     plt.figure(1) 
     plt.plot(T_in_range-273.15, fA_range)
-    plt.xlabel("T_in (°C)")
+    plt.xlabel("Inlet Temperature (°C)")
     plt.ylabel("Conversion of A (%)")
 
     # save and show the figure
