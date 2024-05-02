@@ -1,12 +1,14 @@
 rule reb_12_7_4:
     input:
         "reb_12_7_4/python/results.csv",
+        "reb_12_7_4/python/discussion_results.csv",
         "reb_12_7_4/python/T_vs_Tin.png",
         "reb_12_7_4/python/f_vs_Tin.png",
         "reb_12_7_4/matlab/results.csv",
         "../RE_Basics/examples/reb_12_7_4/narrative.qmd",
         "../RE_Basics/examples/reb_12_7_4/equations.qmd",
         "../RE_Basics/examples/reb_12_7_4/results.csv",
+        "../RE_Basics/examples/reb_12_7_4/discussion_results.csv",
         "../RE_Basics/examples/reb_12_7_4/T_vs_Tin.png",
         "../RE_Basics/examples/reb_12_7_4/f_vs_Tin.png",
         "../SCoRE/reb_examples/reb_12_7_4/reb_12_7_4.py",
@@ -24,9 +26,11 @@ rule reb_12_7_4_matlab:
 
 rule reb_12_7_4_python:
     input:
-        "reb_12_7_4/python/reb_12_7_4.py"
+        "reb_12_7_4/python/reb_12_7_4.py",
+        "reb_12_7_4/python/reb_12_7_4_discussion.py"
     output:
         "reb_12_7_4/python/results.csv",
+        "reb_12_7_4/python/discussion_results.csv",
         "reb_12_7_4/python/T_vs_Tin.png",
         "reb_12_7_4/python/f_vs_Tin.png"
     shell:
@@ -46,6 +50,7 @@ rule reb_12_7_4_re_basics:
         "../RE_Basics/examples/reb_12_7_4/narrative.qmd",
         "../RE_Basics/examples/reb_12_7_4/equations.qmd",
         "../RE_Basics/examples/reb_12_7_4/results.csv",
+        "../RE_Basics/examples/reb_12_7_4/discussion_results.csv",
         "../RE_Basics/examples/reb_12_7_4/T_vs_Tin.png",
         "../RE_Basics/examples/reb_12_7_4/f_vs_Tin.png"
     shell:
@@ -55,6 +60,7 @@ rule reb_12_7_4_re_basics:
         cp reb_12_7_4/narrative.qmd ../RE_Basics/examples/reb_12_7_4
         cp reb_12_7_4/equations.qmd ../RE_Basics/examples/reb_12_7_4
         cp reb_12_7_4/python/results.csv ../RE_Basics/examples/reb_12_7_4
+        cp reb_12_7_4/python/discussion_results.csv ../RE_Basics/examples/reb_12_7_4
         cp reb_12_7_4/python/T_vs_Tin.png ../RE_Basics/examples/reb_12_7_4
         cp reb_12_7_4/python/f_vs_Tin.png ../RE_Basics/examples/reb_12_7_4
         """
