@@ -126,6 +126,8 @@ def perform_the_analysis():
     plt.plot(Tin_range[i_ignition+1:i_extinction]
              , T_range[i_ignition+1:i_extinction],'k--')
     plt.plot(Tin_range[i_extinction+1:-1], T_range[i_extinction+1:-1],'k-')
+    plt.axvline(Tin_range[i_extinction],c='r',ls='--')
+    plt.axvline(Tin_range[i_ignition],c='r',ls='-')
     plt.xlabel("Inlet Temperature (°C)")
     plt.ylabel("Outlet Temperature (°C)")
     plt.savefig('reb_12_7_4/python/T_vs_Tin.png')
@@ -137,6 +139,8 @@ def perform_the_analysis():
     plt.plot(Tin_range[i_ignition+1:i_extinction]
              , f_range[i_ignition+1:i_extinction],'k--')
     plt.plot(Tin_range[i_extinction+1:-1], f_range[i_extinction+1:-1],'k-')
+    plt.axvline(Tin_range[i_extinction],c='r',ls='--')
+    plt.axvline(Tin_range[i_ignition],c='r',ls='-')
     plt.xlabel("Inlet Temperature (°C)")
     plt.ylabel("Conversion (%)")
     plt.savefig('reb_12_7_4/python/f_vs_Tin.png')
