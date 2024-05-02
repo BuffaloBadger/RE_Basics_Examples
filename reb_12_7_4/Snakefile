@@ -1,0 +1,75 @@
+rule reb_12_7_4:
+    input:
+        "reb_12_7_4/python/results.csv",
+        "reb_12_7_4/python/T_vs_Tin.png",
+        "reb_12_7_4/python/f_vs_Tin.png",
+        "reb_12_7_4/matlab/results.csv",
+        "../RE_Basics/examples/reb_12_7_4/narrative.qmd",
+        "../RE_Basics/examples/reb_12_7_4/equations.qmd",
+        "../RE_Basics/examples/reb_12_7_4/results.csv",
+        "../RE_Basics/examples/reb_12_7_4/T_vs_Tin.png",
+        "../RE_Basics/examples/reb_12_7_4/f_vs_Tin.png",
+        "../SCoRE/reb_examples/reb_12_7_4/reb_12_7_4.py",
+        "../SCoRE/reb_examples/reb_12_7_4/reb_12_7_4.m"
+
+rule reb_12_7_4_matlab:
+    input:
+        "reb_12_7_4/matlab/reb_12_7_4.m"
+    output:
+        "reb_12_7_4/matlab/results.csv"
+    shell:
+        """
+        matlab -nodisplay -r "cd('reb_12_7_4/matlab');reb_12_7_4;exit"
+        """
+
+rule reb_12_7_4_python:
+    input:
+        "reb_12_7_4/python/reb_12_7_4.py"
+    output:
+        "reb_12_7_4/python/results.csv",
+        "reb_12_7_4/python/T_vs_Tin.png",
+        "reb_12_7_4/python/f_vs_Tin.png"
+    shell:
+        """
+        python3 reb_12_7_4/python/reb_12_7_4.py
+        python3 reb_12_7_4/python/reb_12_7_4_discussion.py
+        """
+
+rule reb_12_7_4_re_basics:
+    input:
+        "reb_12_7_4/narrative.qmd",
+        "reb_12_7_4/equations.qmd",
+        "reb_12_7_4/python/results.csv",
+        "reb_12_7_4/python/T_vs_Tin.png",
+        "reb_12_7_4/python/f_vs_Tin.png"
+    output:
+        "../RE_Basics/examples/reb_12_7_4/narrative.qmd",
+        "../RE_Basics/examples/reb_12_7_4/equations.qmd",
+        "../RE_Basics/examples/reb_12_7_4/results.csv",
+        "../RE_Basics/examples/reb_12_7_4/T_vs_Tin.png",
+        "../RE_Basics/examples/reb_12_7_4/f_vs_Tin.png"
+    shell:
+        """
+        rm -rf ../RE_Basics/examples/reb_12_7_4
+        mkdir ../RE_Basics/examples/reb_12_7_4
+        cp reb_12_7_4/narrative.qmd ../RE_Basics/examples/reb_12_7_4
+        cp reb_12_7_4/equations.qmd ../RE_Basics/examples/reb_12_7_4
+        cp reb_12_7_4/python/results.csv ../RE_Basics/examples/reb_12_7_4
+        cp reb_12_7_4/python/T_vs_Tin.png ../RE_Basics/examples/reb_12_7_4
+        cp reb_12_7_4/python/f_vs_Tin.png ../RE_Basics/examples/reb_12_7_4
+        """
+
+rule reb_12_7_4_score:
+    input:
+        "reb_12_7_4/python/reb_12_7_4.py",
+        "reb_12_7_4/matlab/reb_12_7_4.m"
+    output:
+        "../SCoRE/reb_examples/reb_12_7_4/reb_12_7_4.py",
+        "../SCoRE/reb_examples/reb_12_7_4/reb_12_7_4.m"
+    shell:
+        """
+        rm -rf ../SCoRE/reb_examples/reb_12_7_4
+        mkdir ../SCoRE/reb_examples/reb_12_7_4
+        cp reb_12_7_4/python/reb_12_7_4.py ../SCoRE/reb_examples/reb_12_7_4
+        cp reb_12_7_4/matlab/reb_12_7_4.m ../SCoRE/reb_examples/reb_12_7_4
+        """
