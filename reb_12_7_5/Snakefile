@@ -1,0 +1,82 @@
+rule reb_12_7_5:
+    input:
+        "reb_12_7_5/python/CB_vs_t.png",
+        "reb_12_7_5/python/T_vs_t.png",
+        "reb_12_7_5/python/Te_vs_t.png",
+        "reb_12_7_5/matlab/CB_vs_t.png",
+        "reb_12_7_5/matlab/T_vs_t.png",
+        "reb_12_7_5/matlab/Te_vs_t.png",
+        "../RE_Basics/examples/reb_12_7_5/narrative.qmd",
+        "../RE_Basics/examples/reb_12_7_5/data.qmd",
+        "../RE_Basics/examples/reb_12_7_5/equations.qmd",
+        "../RE_Basics/examples/reb_12_7_5/CB_vs_t.png",
+        "../RE_Basics/examples/reb_12_7_5/T_vs_t.png",
+        "../RE_Basics/examples/reb_12_7_5/Te_vs_t.png",
+        "../SCoRE/reb_examples/reb_12_7_5/reb_12_7_5.m",
+        "../SCoRE/reb_examples/reb_12_7_5/reb_12_7_5.py"
+
+rule reb_12_7_5_matlab:
+    input:
+        "reb_12_7_5/matlab/reb_12_7_5.m"
+    output:
+        "reb_12_7_5/matlab/CB_vs_t.png",
+        "reb_12_7_5/matlab/T_vs_t.png",
+        "reb_12_7_5/matlab/Te_vs_t.png"
+    shell:
+        """
+        matlab -nodisplay -r "cd('reb_12_7_5/matlab');reb_12_7_5;exit"
+        """
+
+rule reb_12_7_5_python:
+    input:
+        "reb_12_7_5/python/reb_12_7_5.py"
+    output:
+        "reb_12_7_5/python/CB_vs_t.png",
+        "reb_12_7_5/python/T_vs_t.png",
+        "reb_12_7_5/python/Te_vs_t.png"
+    shell:
+        """
+        python3 reb_12_7_5/python/reb_12_7_5.py
+        """
+
+rule reb_12_7_5_re_basics:
+    input:
+        "reb_12_7_5/narrative.qmd",
+        "reb_12_7_5/data.qmd",
+        "reb_12_7_5/equations.qmd",
+        "reb_12_7_5/python/CB_vs_t.png",
+        "reb_12_7_5/python/T_vs_t.png",
+        "reb_12_7_5/python/Te_vs_t.png"
+    output:
+        "../RE_Basics/examples/reb_12_7_5/narrative.qmd",
+        "../RE_Basics/examples/reb_12_7_5/data.qmd",
+        "../RE_Basics/examples/reb_12_7_5/equations.qmd",
+        "../RE_Basics/examples/reb_12_7_5/CB_vs_t.png",
+        "../RE_Basics/examples/reb_12_7_5/T_vs_t.png",
+        "../RE_Basics/examples/reb_12_7_5/Te_vs_t.png"
+    shell:
+        """
+        rm -rf ../RE_Basics/examples/reb_12_7_5
+        mkdir ../RE_Basics/examples/reb_12_7_5
+        cp reb_12_7_5/narrative.qmd ../RE_Basics/examples/reb_12_7_5
+        cp reb_12_7_5/data.qmd ../RE_Basics/examples/reb_12_7_5
+        cp reb_12_7_5/equations.qmd ../RE_Basics/examples/reb_12_7_5
+        cp reb_12_7_5/python/CB_vs_t.png ../RE_Basics/examples/reb_12_7_5
+        cp reb_12_7_5/python/T_vs_t.png ../RE_Basics/examples/reb_12_7_5
+        cp reb_12_7_5/python/Te_vs_t.png ../RE_Basics/examples/reb_12_7_5
+        """
+
+rule reb_12_7_5_score:
+    input:
+        "reb_12_7_5/python/reb_12_7_5.py",
+        "reb_12_7_5/matlab/reb_12_7_5.m"
+    output:
+        "../SCoRE/reb_examples/reb_12_7_5/reb_12_7_5.py",
+        "../SCoRE/reb_examples/reb_12_7_5/reb_12_7_5.m"
+    shell:
+        """
+        rm -rf ../SCoRE/reb_examples/reb_12_7_5
+        mkdir ../SCoRE/reb_examples/reb_12_7_5
+        cp reb_12_7_5/python/reb_12_7_5.py ../SCoRE/reb_examples/reb_12_7_5
+        cp reb_12_7_5/matlab/reb_12_7_5.m ../SCoRE/reb_examples/reb_12_7_5
+        """

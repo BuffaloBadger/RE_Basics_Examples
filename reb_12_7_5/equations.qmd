@@ -1,0 +1,12 @@
+
+$$
+A + B \rightarrow W + Z \tag{1}
+$$
+
+$$
+A + B \rightarrow X + Z \tag{2}
+$$
+
+$$
+A + B \rightarrow Y + Z \tag{3}
+$$
