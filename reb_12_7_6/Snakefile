@@ -1,0 +1,82 @@
+rule reb_12_7_6:
+    input:
+        "reb_12_7_6/python/steady_state_data.csv",
+        "reb_12_7_6/python/unsteady.png",
+        "reb_12_7_6/python/ignition.png",
+        "reb_12_7_6/python/extinction.png",
+        "reb_12_7_6/matlab/unsteady.png",
+        "reb_12_7_6/matlab/ignition.png",
+        "reb_12_7_6/matlab/extinction.png",
+        "../RE_Basics/examples/reb_12_7_6/narrative.qmd",
+        "../RE_Basics/examples/reb_12_7_6/equations.qmd",
+        "../RE_Basics/examples/reb_12_7_6/unsteady.png",
+        "../RE_Basics/examples/reb_12_7_6/ignition.png",
+        "../RE_Basics/examples/reb_12_7_6/extinction.png",
+        "../SCoRE/reb_examples/reb_12_7_6/reb_12_7_6.m",
+        "../SCoRE/reb_examples/reb_12_7_6/reb_12_7_6.py"
+
+rule reb_12_7_6_matlab:
+    input:
+        "reb_12_7_6/matlab/reb_12_7_6.m"
+    output:
+        "reb_12_7_6/matlab/unsteady.png",
+        "reb_12_7_6/matlab/ignition.png",
+        "reb_12_7_6/matlab/extinction.png"
+    shell:
+        """
+        matlab -nodisplay -r "cd('reb_12_7_6/matlab');reb_12_7_6;exit"
+        """
+
+rule reb_12_7_6_python:
+    input:
+        "reb_12_7_6/python/reb_12_7_6_data_generation.py",
+        "reb_12_7_6/python/reb_12_7_6.py"
+    output:
+        "reb_12_7_6/python/steady_state_data.csv",
+        "reb_12_7_6/python/unsteady.png",
+        "reb_12_7_6/python/ignition.png",
+        "reb_12_7_6/python/extinction.png"
+    shell:
+        """
+        python3 reb_12_7_6/python/reb_12_7_6_data_generation.py
+        python3 reb_12_7_6/python/reb_12_7_6.py
+        """
+
+rule reb_12_7_6_re_basics:
+    input:
+        "reb_12_7_6/narrative.qmd",
+        "reb_12_7_6/equations.qmd",
+        "reb_12_7_6/python/unsteady.png",
+        "reb_12_7_6/python/ignition.png",
+        "reb_12_7_6/python/extinction.png"
+    output:
+        "../RE_Basics/examples/reb_12_7_6/narrative.qmd",
+        "../RE_Basics/examples/reb_12_7_6/equations.qmd",
+        "../RE_Basics/examples/reb_12_7_6/unsteady.png",
+        "../RE_Basics/examples/reb_12_7_6/ignition.png",
+        "../RE_Basics/examples/reb_12_7_6/extinction.png"
+    shell:
+        """
+        rm -rf ../RE_Basics/examples/reb_12_7_6
+        mkdir ../RE_Basics/examples/reb_12_7_6
+        cp reb_12_7_6/narrative.qmd ../RE_Basics/examples/reb_12_7_6
+        cp reb_12_7_6/equations.qmd ../RE_Basics/examples/reb_12_7_6
+        cp reb_12_7_6/python/unsteady.png ../RE_Basics/examples/reb_12_7_6
+        cp reb_12_7_6/python/ignition.png ../RE_Basics/examples/reb_12_7_6
+        cp reb_12_7_6/python/extinction.png ../RE_Basics/examples/reb_12_7_6
+        """
+
+rule reb_12_7_6_score:
+    input:
+        "reb_12_7_6/matlab/reb_12_7_6.m",
+        "reb_12_7_6/python/reb_12_7_6.py"
+    output:
+        "../SCoRE/reb_examples/reb_12_7_6/reb_12_7_6.m",
+        "../SCoRE/reb_examples/reb_12_7_6/reb_12_7_6.py"
+    shell:
+        """
+        rm -rf ../SCoRE/reb_examples/reb_12_7_6
+        mkdir ../SCoRE/reb_examples/reb_12_7_6
+        cp reb_12_7_6/python/reb_12_7_6.py ../SCoRE/reb_examples/reb_12_7_6
+        cp reb_12_7_6/matlab/reb_12_7_6.m ../SCoRE/reb_examples/reb_12_7_6
+        """
