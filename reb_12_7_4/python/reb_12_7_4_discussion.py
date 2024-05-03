@@ -118,8 +118,8 @@ def perform_the_analysis():
             iLast = i
     
     # tabulate, show, and save the ignition and extinction points
-    data = [['Extinction Point',f'{Tin_range[i_extinction]}','°C']
-            ,['Ignition Point',f'{Tin_range[i_ignition]}','°C']]
+    data = [['Extinction Point',f'{T_range[i_extinction]}','°C']
+            ,['Ignition Point',f'{T_range[i_ignition]}','°C']]
     results_df = pd.DataFrame(data, columns=['item' ,'value','units'])
     print(results_df)
     results_df.to_csv('reb_12_7_4/python/discussion_results.csv',index=False)
