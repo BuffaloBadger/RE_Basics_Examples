@@ -4,6 +4,7 @@ rule reb_12_7_6:
         "reb_12_7_6/python/unsteady.png",
         "reb_12_7_6/python/ignition.png",
         "reb_12_7_6/python/extinction.png",
+        "reb_12_7_6/python/heat_vs_T.png",
         "reb_12_7_6/matlab/unsteady.png",
         "reb_12_7_6/matlab/ignition.png",
         "reb_12_7_6/matlab/extinction.png",
@@ -11,6 +12,7 @@ rule reb_12_7_6:
         "../RE_Basics/examples/reb_12_7_6/equations.qmd",
         "../RE_Basics/examples/reb_12_7_6/unsteady.png",
         "../RE_Basics/examples/reb_12_7_6/ignition.png",
+        "../RE_Basics/examples/reb_12_7_6/heat_vs_T.png",
         "../RE_Basics/examples/reb_12_7_6/extinction.png",
         "../SCoRE/reb_examples/reb_12_7_6/reb_12_7_6.m",
         "../SCoRE/reb_examples/reb_12_7_6/reb_12_7_6.py"
@@ -30,16 +32,19 @@ rule reb_12_7_6_matlab:
 rule reb_12_7_6_python:
     input:
         "reb_12_7_6/python/reb_12_7_6_data_generation.py",
-        "reb_12_7_6/python/reb_12_7_6.py"
+        "reb_12_7_6/python/reb_12_7_6.py",
+        "reb_12_7_6/python/reb_12_7_6_discussion.py"
     output:
         "reb_12_7_6/python/steady_state_data.csv",
         "reb_12_7_6/python/unsteady.png",
         "reb_12_7_6/python/ignition.png",
-        "reb_12_7_6/python/extinction.png"
+        "reb_12_7_6/python/extinction.png",
+        "reb_12_7_6/python/heat_vs_T.png"
     shell:
         """
         python3 reb_12_7_6/python/reb_12_7_6_data_generation.py
         python3 reb_12_7_6/python/reb_12_7_6.py
+        python3 reb_12_7_6/python/reb_12_7_6_discussion.py
         """
 
 rule reb_12_7_6_re_basics:
@@ -54,7 +59,8 @@ rule reb_12_7_6_re_basics:
         "../RE_Basics/examples/reb_12_7_6/equations.qmd",
         "../RE_Basics/examples/reb_12_7_6/unsteady.png",
         "../RE_Basics/examples/reb_12_7_6/ignition.png",
-        "../RE_Basics/examples/reb_12_7_6/extinction.png"
+        "../RE_Basics/examples/reb_12_7_6/extinction.png",
+        "../RE_Basics/examples/reb_12_7_6/heat_vs_T.png"
     shell:
         """
         rm -rf ../RE_Basics/examples/reb_12_7_6
@@ -64,6 +70,7 @@ rule reb_12_7_6_re_basics:
         cp reb_12_7_6/python/unsteady.png ../RE_Basics/examples/reb_12_7_6
         cp reb_12_7_6/python/ignition.png ../RE_Basics/examples/reb_12_7_6
         cp reb_12_7_6/python/extinction.png ../RE_Basics/examples/reb_12_7_6
+        cp reb_12_7_6/python/heat_vs_T.png ../RE_Basics/examples/reb_12_7_6
         """
 
 rule reb_12_7_6_score:
