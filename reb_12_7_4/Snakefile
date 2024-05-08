@@ -4,6 +4,8 @@ rule reb_12_7_4:
         "reb_12_7_4/python/discussion_results.csv",
         "reb_12_7_4/python/T_vs_Tin.png",
         "reb_12_7_4/python/f_vs_Tin.png",
+        "reb_12_7_4/python/hysteresis.png",
+        "reb_12_7_4/python/initial_steady_states.png",
         "reb_12_7_4/matlab/results.csv",
         "../RE_Basics/examples/reb_12_7_4/narrative.qmd",
         "../RE_Basics/examples/reb_12_7_4/equations.qmd",
@@ -11,6 +13,8 @@ rule reb_12_7_4:
         "../RE_Basics/examples/reb_12_7_4/discussion_results.csv",
         "../RE_Basics/examples/reb_12_7_4/T_vs_Tin.png",
         "../RE_Basics/examples/reb_12_7_4/f_vs_Tin.png",
+        "../RE_Basics/examples/reb_12_7_4/hysteresis.png",
+        "../RE_Basics/examples/reb_12_7_4/initial_steady_states.png",
         "../SCoRE/reb_examples/reb_12_7_4/reb_12_7_4.py",
         "../SCoRE/reb_examples/reb_12_7_4/reb_12_7_4.m"
 
@@ -32,7 +36,9 @@ rule reb_12_7_4_python:
         "reb_12_7_4/python/results.csv",
         "reb_12_7_4/python/discussion_results.csv",
         "reb_12_7_4/python/T_vs_Tin.png",
-        "reb_12_7_4/python/f_vs_Tin.png"
+        "reb_12_7_4/python/f_vs_Tin.png",
+        "reb_12_7_4/python/hysteresis.png",
+        "reb_12_7_4/python/initial_steady_states.png"
     shell:
         """
         python3 reb_12_7_4/python/reb_12_7_4.py
@@ -45,14 +51,18 @@ rule reb_12_7_4_re_basics:
         "reb_12_7_4/equations.qmd",
         "reb_12_7_4/python/results.csv",
         "reb_12_7_4/python/T_vs_Tin.png",
-        "reb_12_7_4/python/f_vs_Tin.png"
+        "reb_12_7_4/python/f_vs_Tin.png",
+        "reb_12_7_4/python/hysteresis.png",
+        "reb_12_7_4/python/initial_steady_states.png"
     output:
         "../RE_Basics/examples/reb_12_7_4/narrative.qmd",
         "../RE_Basics/examples/reb_12_7_4/equations.qmd",
         "../RE_Basics/examples/reb_12_7_4/results.csv",
         "../RE_Basics/examples/reb_12_7_4/discussion_results.csv",
         "../RE_Basics/examples/reb_12_7_4/T_vs_Tin.png",
-        "../RE_Basics/examples/reb_12_7_4/f_vs_Tin.png"
+        "../RE_Basics/examples/reb_12_7_4/f_vs_Tin.png",
+        "../RE_Basics/examples/reb_12_7_4/hysteresis.png",
+        "../RE_Basics/examples/reb_12_7_4/initial_steady_states.png"
     shell:
         """
         rm -rf ../RE_Basics/examples/reb_12_7_4
@@ -63,6 +73,8 @@ rule reb_12_7_4_re_basics:
         cp reb_12_7_4/python/discussion_results.csv ../RE_Basics/examples/reb_12_7_4
         cp reb_12_7_4/python/T_vs_Tin.png ../RE_Basics/examples/reb_12_7_4
         cp reb_12_7_4/python/f_vs_Tin.png ../RE_Basics/examples/reb_12_7_4
+        cp reb_12_7_4/python/hysteresis.png ../RE_Basics/examples/reb_12_7_4
+        cp reb_12_7_4/python/initial_steady_states.png ../RE_Basics/examples/reb_12_7_4
         """
 
 rule reb_12_7_4_score:

@@ -118,8 +118,12 @@ def perform_the_analysis():
             iLast = i
     
     # tabulate, show, and save the ignition and extinction points
-    data = [['Extinction Point',f'{T_range[i_extinction]}','°C']
-            ,['Ignition Point',f'{T_range[i_ignition]}','°C']]
+    data = [['Extinction Point Feed T',f'{Tin_range[i_extinction]}','°C']
+            ,['Extinction Point T',f'{T_range[i_extinction]}','°C']
+            ,['Extinction Point Conversion',f'{f_range[i_extinction]}','%']
+            ,['Ignition Point Feed T',f'{Tin_range[i_ignition]}','°C']
+            ,['Ignition Point T',f'{T_range[i_ignition]}','°C']
+            ,['Ignition Point Conversion',f'{f_range[i_ignition]}','%']]
     results_df = pd.DataFrame(data, columns=['item' ,'value','units'])
     print(results_df)
     results_df.to_csv('reb_12_7_4/python/discussion_results.csv',index=False)
@@ -149,6 +153,37 @@ def perform_the_analysis():
     plt.ylabel("Conversion (%)")
     plt.savefig('reb_12_7_4/python/f_vs_Tin.png')
     plt.show()
+
+    # histeresis
+    plt.figure(3) 
+    plt.plot(Tin_range[0:i_ignition], T_range[0:i_ignition],'k-')
+    plt.plot(Tin_range[i_extinction+1:-1], T_range[i_extinction+1:-1],'k-')
+    plt.axvline(Tin_range[i_extinction],c='r',ls='--')
+    plt.axvline(Tin_range[i_ignition],c='r',ls='-')
+    plt.xlabel("Inlet Temperature (°C)")
+    plt.ylabel("Outlet Temperature (°C)")
+    plt.savefig('reb_12_7_4/python/hysteresis.png')
+    plt.show()
+
+    # pre-perturbation steady states
+    plt.figure(4) 
+    plt.plot(Tin_range[0:i_ignition], T_range[0:i_ignition],'k-')
+    plt.plot(Tin_range[i_ignition+1:i_extinction]
+             , T_range[i_ignition+1:i_extinction],'k--')
+    plt.plot(Tin_range[i_extinction+1:-1], T_range[i_extinction+1:-1],'k-')
+    plt.plot(50.0, 138.0,'ro')
+    plt.text(50, 150 ,'u',weight=1000)
+    plt.plot(89, 96.0, 'ro')
+    plt.text(93, 91,'ign',weight=1000)
+    plt.plot(6, 200.0, 'ro')
+    plt.text(9,195,'ext',weight=1000)
+    plt.axvline(Tin_range[i_extinction],c='r',ls='--')
+    plt.axvline(Tin_range[i_ignition],c='r',ls='-')
+    plt.xlabel("Inlet Temperature (°C)")
+    plt.ylabel("Outlet Temperature (°C)")
+    plt.savefig('reb_12_7_4/python/initial_steady_states.png')
+    plt.show()
+
 	
     return
 
