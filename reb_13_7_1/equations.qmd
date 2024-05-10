@@ -1,0 +1,8 @@
+
+$$
+A + B \rightarrow Z \tag{1}
+$$
+
+$$
+r_1 = k_1 P_A P_B \tag{2}
+$$

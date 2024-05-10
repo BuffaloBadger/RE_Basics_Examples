@@ -1,0 +1,62 @@
+rule reb_13_7_1:
+    input:
+        "../RE_Basics/examples/reb_13_7_1/narrative.qmd",
+        "../RE_Basics/examples/reb_13_7_1/equations.qmd",
+        "../RE_Basics/examples/reb_13_7_1/results.csv",
+        "reb_13_7_1/matlab/results.csv",
+        "reb_13_7_1/python/results.csv",
+        "../SCoRE/reb_examples/reb_13_7_1/reb_13_7_1.m",
+        "../SCoRE/reb_examples/reb_13_7_1/reb_13_7_1.py"
+
+rule reb_13_7_1_python:
+    input:
+        "reb_13_7_1/python/reb_13_7_1.py"
+    output:
+        "reb_13_7_1/python/results.csv"
+    shell:
+        """
+        python3 reb_13_7_1/python/reb_13_7_1.py
+        """
+
+rule reb_13_7_1_matlab:
+    input:
+        "reb_13_7_1/matlab/reb_13_7_1.m"
+    output:
+        "reb_13_7_1/matlab/results.csv"
+    shell:
+        """
+        matlab -nodisplay -r "cd('reb_13_7_1/matlab');reb_13_7_1;exit"
+        """
+
+rule reb_13_7_1_re_basics:
+    input:
+        "reb_13_7_1/narrative.qmd",
+        "reb_13_7_1/equations.qmd",
+        "reb_13_7_1/python/results.csv"
+    output:
+        "../RE_Basics/examples/reb_13_7_1/narrative.qmd",
+        "../RE_Basics/examples/reb_13_7_1/equations.qmd",
+        "../RE_Basics/examples/reb_13_7_1/results.csv"
+    shell:
+        """
+        rm -rf ../RE_Basics/examples/reb_13_7_1
+        mkdir ../RE_Basics/examples/reb_13_7_1
+        cp reb_13_7_1/narrative.qmd ../RE_Basics/examples/reb_13_7_1
+        cp reb_13_7_1/equations.qmd ../RE_Basics/examples/reb_13_7_1
+        cp reb_13_7_1/python/results.csv ../RE_Basics/examples/reb_13_7_1
+        """
+
+rule reb_13_7_1_score:
+    input:
+        "reb_13_7_1/matlab/reb_13_7_1.m",
+        "reb_13_7_1/python/reb_13_7_1.py"
+    output:
+        "../SCoRE/reb_examples/reb_13_7_1/reb_13_7_1.m",
+        "../SCoRE/reb_examples/reb_13_7_1/reb_13_7_1.py"
+    shell:
+        """
+        rm -rf ../SCoRE/reb_examples/reb_13_7_1
+        mkdir ../SCoRE/reb_examples/reb_13_7_1
+        cp reb_13_7_1/matlab/reb_13_7_1.m ../SCoRE/reb_examples/reb_13_7_1
+        cp reb_13_7_1/python/reb_13_7_1.py ../SCoRE/reb_examples/reb_13_7_1
+        """
