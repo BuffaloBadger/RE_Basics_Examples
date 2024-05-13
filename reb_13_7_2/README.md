@@ -1,0 +1,1 @@
+This example was adapted from AFCoKaRE Example 26.3.
