@@ -1,0 +1,12 @@
+
+$$
+CO + H_2O \rightleftarrows CO_2 + H_2 \tag{1}
+$$
+
+$$
+r_1 = k_1 \left( P_{CO} P_{H_2O} - \frac{P_{CO_2}P_{H_2}}{K_1} \right) \tag{2}
+$$
+
+$$
+K_1 = K_{0,1} \exp{ \left( \frac{-\Delta H}{RT} \right)} \tag{3}
+$$

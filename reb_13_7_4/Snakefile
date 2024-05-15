@@ -1,0 +1,78 @@
+rule reb_13_7_4:
+    input:
+        "reb_13_7_4/matlab/results.csv",
+        "reb_13_7_4/matlab/V_vs_H2O_in.png",
+        "reb_13_7_4/matlab/T_vs_H2O_in.png",
+        "reb_13_7_4/python/results.csv",
+        "reb_13_7_4/python/V_vs_H2O_in.png",
+        "reb_13_7_4/python/T_vs_H2O_in.png",
+        "../RE_Basics/examples/reb_13_7_4/narrative.qmd",
+        "../RE_Basics/examples/reb_13_7_4/equations.qmd",
+        "../RE_Basics/examples/reb_13_7_4/results.csv",
+        "../RE_Basics/examples/reb_13_7_4/V_vs_H2O_in.png",
+        "../RE_Basics/examples/reb_13_7_4/T_vs_H2O_in.png",
+        "../SCoRE/reb_examples/reb_13_7_4/reb_13_7_4.py",
+        "../SCoRE/reb_examples/reb_13_7_4/reb_13_7_4.m"
+
+rule reb_13_7_4_python:
+    input:
+        "reb_13_7_4/python/reb_13_7_4.py"
+    output:
+        "reb_13_7_4/python/results.csv",
+        "reb_13_7_4/python/V_vs_H2O_in.png",
+        "reb_13_7_4/python/T_vs_H2O_in.png"
+    shell:
+        """
+        python3 reb_13_7_4/python/reb_13_7_4.py
+        """
+
+rule reb_13_7_4_matlab:
+    input:
+        "reb_13_7_4/matlab/reb_13_7_4.m"
+    output:
+        "reb_13_7_4/matlab/results.csv",
+        "reb_13_7_4/matlab/V_vs_H2O_in.png",
+        "reb_13_7_4/matlab/T_vs_H2O_in.png"
+    shell:
+        """
+        matlab -nodisplay -r "cd('reb_13_7_4/matlab');reb_13_7_4;exit"
+        """
+
+rule reb_13_7_4_re_basics:
+    input:
+        "reb_13_7_4/narrative.qmd",
+        "reb_13_7_4/equations.qmd",
+        "reb_13_7_4/python/results.csv",
+        "reb_13_7_4/python/V_vs_H2O_in.png",
+        "reb_13_7_4/python/T_vs_H2O_in.png"
+    output:
+        "../RE_Basics/examples/reb_13_7_4/narrative.qmd",
+        "../RE_Basics/examples/reb_13_7_4/equations.qmd",
+        "../RE_Basics/examples/reb_13_7_4/results.csv",
+        "../RE_Basics/examples/reb_13_7_4/V_vs_H2O_in.png",
+        "../RE_Basics/examples/reb_13_7_4/T_vs_H2O_in.png"
+    shell:
+        """
+        rm -rf ../RE_Basics/examples/reb_13_7_4
+        mkdir ../RE_Basics/examples/reb_13_7_4
+        cp reb_13_7_4/narrative.qmd ../RE_Basics/examples/reb_13_7_4
+        cp reb_13_7_4/equations.qmd ../RE_Basics/examples/reb_13_7_4
+        cp reb_13_7_4/python/results.csv ../RE_Basics/examples/reb_13_7_4
+        cp reb_13_7_4/python/V_vs_H2O_in.png ../RE_Basics/examples/reb_13_7_4
+        cp reb_13_7_4/python/T_vs_H2O_in.png ../RE_Basics/examples/reb_13_7_4
+        """
+
+rule reb_13_7_4_score:
+    input:
+        "reb_13_7_4/python/reb_13_7_4.py",
+        "reb_13_7_4/matlab/reb_13_7_4.m"
+    output:
+        "../SCoRE/reb_examples/reb_13_7_4/reb_13_7_4.py",
+        "../SCoRE/reb_examples/reb_13_7_4/reb_13_7_4.m"
+    shell:
+        """
+        rm -rf ../SCoRE/reb_examples/reb_13_7_4
+        mkdir ../SCoRE/reb_examples/reb_13_7_4
+        cp reb_13_7_4/python/reb_13_7_4.py ../SCoRE/reb_examples/reb_13_7_4
+        cp reb_13_7_4/matlab/reb_13_7_4.m ../SCoRE/reb_examples/reb_13_7_4
+        """
