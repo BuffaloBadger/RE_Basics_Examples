@@ -1,0 +1,86 @@
+rule reb_13_7_5:
+    input:
+        "reb_13_7_5/matlab/t_131_min_profiles.png",
+        "reb_13_7_5/matlab/t_262_min_profiles.png",
+        "reb_13_7_5/matlab/t_393_min_profiles.png",
+        "reb_13_7_5/matlab/t_524_min_profiles.png",
+        "reb_13_7_5/python/t_131_min_profiles.png",
+        "reb_13_7_5/python/t_262_min_profiles.png",
+        "reb_13_7_5/python/t_393_min_profiles.png",
+        "reb_13_7_5/python/t_524_min_profiles.png",
+        "../RE_Basics/examples/reb_13_7_5/narrative.qmd",
+        "../RE_Basics/examples/reb_13_7_5/equations.qmd",
+        "../RE_Basics/examples/reb_13_7_5/t_131_min_profiles.png",
+        "../RE_Basics/examples/reb_13_7_5/t_262_min_profiles.png",
+        "../RE_Basics/examples/reb_13_7_5/t_393_min_profiles.png",
+        "../RE_Basics/examples/reb_13_7_5/t_524_min_profiles.png",
+        "../SCoRE/reb_examples/reb_13_7_5/reb_13_7_5.m",
+        "../SCoRE/reb_examples/reb_13_7_5/reb_13_7_5.py"
+
+rule reb_13_7_5_python:
+    input:
+        "reb_13_7_5/python/reb_13_7_5.py"
+    output:
+        "reb_13_7_5/python/t_131_min_profiles.png",
+        "reb_13_7_5/python/t_262_min_profiles.png",
+        "reb_13_7_5/python/t_393_min_profiles.png",
+        "reb_13_7_5/python/t_524_min_profiles.png"
+    shell:
+        """
+        python3 reb_13_7_5/python/reb_13_7_5.py
+        """
+
+rule reb_13_7_5_matlab:
+    input:
+        "reb_13_7_5/matlab/reb_13_7_5.m"
+    output:
+        "reb_13_7_5/matlab/t_131_min_profiles.png",
+        "reb_13_7_5/matlab/t_262_min_profiles.png",
+        "reb_13_7_5/matlab/t_393_min_profiles.png",
+        "reb_13_7_5/matlab/t_524_min_profiles.png"
+    shell:
+        """
+        matlab -nodisplay -r "cd('reb_13_7_5/matlab');reb_13_7_5;exit"
+        """
+
+rule reb_13_7_5_re_basics:
+    input:
+        "reb_13_7_5/narrative.qmd",
+        "reb_13_7_5/equations.qmd",
+        "reb_13_7_5/python/t_131_min_profiles.png",
+        "reb_13_7_5/python/t_262_min_profiles.png",
+        "reb_13_7_5/python/t_393_min_profiles.png",
+        "reb_13_7_5/python/t_524_min_profiles.png"
+    output:
+        "../RE_Basics/examples/reb_13_7_5/narrative.qmd",
+        "../RE_Basics/examples/reb_13_7_5/equations.qmd",
+        "../RE_Basics/examples/reb_13_7_5/t_131_min_profiles.png",
+        "../RE_Basics/examples/reb_13_7_5/t_262_min_profiles.png",
+        "../RE_Basics/examples/reb_13_7_5/t_393_min_profiles.png",
+        "../RE_Basics/examples/reb_13_7_5/t_524_min_profiles.png"
+    shell:
+        """
+        rm -rf ../RE_Basics/examples/reb_13_7_5
+        mkdir ../RE_Basics/examples/reb_13_7_5
+        cp reb_13_7_5/narrative.qmd ../RE_Basics/examples/reb_13_7_5
+        cp reb_13_7_5/equations.qmd ../RE_Basics/examples/reb_13_7_5
+        cp reb_13_7_5/python/t_131_min_profiles.png ../RE_Basics/examples/reb_13_7_5
+        cp reb_13_7_5/python/t_262_min_profiles.png ../RE_Basics/examples/reb_13_7_5
+        cp reb_13_7_5/python/t_393_min_profiles.png ../RE_Basics/examples/reb_13_7_5
+        cp reb_13_7_5/python/t_524_min_profiles.png ../RE_Basics/examples/reb_13_7_5
+        """
+
+rule reb_13_7_5_score:
+    input:
+        "reb_13_7_5/python/reb_13_7_5.py",
+        "reb_13_7_5/matlab/reb_13_7_5.m"
+    output:
+        "../SCoRE/reb_examples/reb_13_7_5/reb_13_7_5.m",
+        "../SCoRE/reb_examples/reb_13_7_5/reb_13_7_5.py"
+    shell:
+        """
+        rm -rf ../SCoRE/reb_examples/reb_13_7_5
+        mkdir ../SCoRE/reb_examples/reb_13_7_5
+        cp reb_13_7_5/matlab/reb_13_7_5.m ../SCoRE/reb_examples/reb_13_7_5
+        cp reb_13_7_5/python/reb_13_7_5.py ../SCoRE/reb_examples/reb_13_7_5
+        """
