@@ -1,0 +1,1 @@
+This was adapted from AFCoKaRE Example 38.1. Some of the properties were set close to values in examples in Satterfield's heterogeneous catalysis book.
