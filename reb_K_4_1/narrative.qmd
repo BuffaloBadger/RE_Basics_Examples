@@ -6,7 +6,7 @@ $$
 
 ### Assignment Summary
 
-**Given and Known Constants**: $D$ = 5 cm, $\Delta H$ = -14,000 cal mol^-1^, $\dot{V}$ = 500 cm^3^ min^-1^, $\breve{C}_p$ = 1.3 cal cm^-3^ K^-1^, $R_R$ = 1.3, $\dot{n}_{A,feed}$ = 1.0 mol min^-1^, $\dot{n}_{Z,feed}$ = 0, $L$ = 50 cm, $T_{feed}$ = 300 K, $k_0$ = 4.2 x 10^15^ cm^3^ mol^-1^ min^-1^, and $E$ = 18,000 cal mol^-1^.
+**Given and Known Constants**: $D$ = 5 cm, $\Delta H$ = -14,000 cal mol^-1^, $\dot{V}_{feed}$ = 500 cm^3^ min^-1^, $\breve{C}_p$ = 1.3 cal cm^-3^ K^-1^, $R_R$ = 1.3, $\dot{n}_{A,feed}$ = 1.0 mol min^-1^, $\dot{n}_{Z,feed}$ = 0, $L$ = 50 cm, $T_{feed}$ = 300 K, $k_0$ = 4.2 x 10^15^ cm^3^ mol^-1^ min^-1^, and $E$ = 18,000 cal mol^-1^.
 
 **Reactor System**: Adiabatic, steady-state, recycle PFR.
 
