@@ -138,13 +138,13 @@ def perform_the_analysis():
         = unknowns(initial_guess)
     
     # tabulate the results
-    data = [['A in',nDotA_in,'mol min^-1^']
-            ,['Z in',nDotZ_in,'mol min^-1^']
-            ,['T in',T_in,'K']
-            ,['T r',T_r,'K']
-            ,['A prod',nDotA_prod,'mol min^-1^']
-            ,['A prod',nDotZ_prod,'mol min^-1^']
-            ,['T prod',T_prod,'K']]
+    data = [['$\dot{n}_{A in}$',nDotA_in,'mol min^-1^']
+            ,['$\dot{n}_{Z_in}$',nDotZ_in,'mol min^-1^']
+            ,['$T_{in}$',T_in,'K']
+            ,['$T_r$',T_r,'K']
+            ,['$\dot{n}_{A,prod}$',nDotA_prod,'mol min^-1^']
+            ,['$\dot{n}_{Z,prod}$',nDotZ_prod,'mol min^-1^']
+            ,['$T_{prod}$',T_prod,'K']]
     results_df = pd.DataFrame(data, columns=['item','value','units'])
 
     # display the results

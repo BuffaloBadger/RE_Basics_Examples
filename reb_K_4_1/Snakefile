@@ -28,7 +28,8 @@ rule reb_K_4_1_matlab:
 
 rule reb_K_4_1_re_basics:
     input:
-        "reb_K_4_1/narrative.qmd"
+        "reb_K_4_1/narrative.qmd",
+        "reb_K_4_1/python/results.csv"
     output:
         "../RE_Basics/examples/reb_K_4_1/narrative.qmd",
         "../RE_Basics/examples/reb_K_4_1/results.csv"
