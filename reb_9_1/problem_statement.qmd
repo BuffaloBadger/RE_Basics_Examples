@@ -1,9 +1,0 @@
-Kinetics data for liquid-phase reaction (1) were generated using an ideal, isothermal, 1 L BSTR. Specifically 12 experiments were performed wherein the temperature and initial concentration of reagent A were set after which the concentration of reagent A was measured at six reaction times, giving a set of 72 experimental data points. The rate expression shown in equation (2), where the rate coefficient is expected to display Arrhenius temperature dependence, has been proposed for this reaction. Assess the accuracy of that first order rate expression using a response function and compare the results to an assessment using a differential data analysis.
-
-$$
-A \rightarrow Z \tag{1}
-$$
-
-$$
-r = k C_A \tag{2}
-$$

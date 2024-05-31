@@ -1,1 +1,0 @@
-This example was made up. The kinetics parameters were chosen to give reasonable reaction times at the experimental conditions.
