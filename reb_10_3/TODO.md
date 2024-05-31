@@ -1,1 +1,0 @@
-Snakemake does not work for the 2 parameter calculations.
