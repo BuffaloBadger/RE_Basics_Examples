@@ -1,8 +1,0 @@
-
-The hydrolysis of acetic anhydride, reaction (1), can run away thermally in a batch reactor, but this can be prevented using semi-batch operation. Suppose the rate can be described using a rate expression that is first order in acetic anhydride with a pre-exponential factor of 1.192 x 1015 min^-1^ and an activation energy of 97,600 J mol^-1^. The heat of reaction may be taken to be constant and equal to -58,615 J mol^-1^. The reacting fluid in the semi-batch reactor for the process is cooled by an external fluid uniformly maintained at 60 °C; the product of the heat transfer area and the heat transfer coefficient, $UA$, equals 260 cal min^-1^ K^-1^. The reactor operates at atmospheric pressure and initially contains 67 cm^3^ of water, 283 cm^3^ of acetic acid (the solvent and product) and 0.30 cm3 of sulfuric acid at 60 °C. The heat capacity of the fluid in the reactor may be taken to be constant and equal to 2.68 J cm^-3^ K^-1^. Acetic anhydride at 21 °C is fed to the reactor at a rate of 64.5 cm^3^ min^-1^ for the first 5.5 minutes of operation, after which the reaction continues in batch mode. The solution may be assumed to be ideal with a constant density. Plot (a) the temperature of the fluid in the reactor and (b) the concentration of acetic anhydride in the reactor as a function of processing time.
-
-$$
-\left(CH_3CO\right)_2O + H_2O \rightarrow 2 CH_3CO_2H
-$$
-
-This is AFCoKaRE Example 32.1

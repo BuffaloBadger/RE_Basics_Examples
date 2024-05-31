@@ -1,9 +1,0 @@
-Preliminary experiments have indicated that gas-phase reaction (1) is irreversible and that the rate is not affected by the concentration of the product Z. To generate kinetics data, experiments were performed in blocks where the temperature of every experiment in the block was the same. An ideal CSTR operating at 3 atm was used for all experiments. The feed in every experiment contained only reagents A and B. The space time and the mole fraction of A were varied from experiment to experiment, and the outlet concentration of Z was measured. The block of experiments where the temperature was equal to 450 °C is presented below. Use those data to assess the accuracy of the rate expression shown in equation (2) where the power-law reaction orders, $\alpha_A$ and $\alpha_B$, must be estimated along with the rate coefficient, $k$.
-
-$$
-A + B \rightarrow Z \tag{1}
-$$
-
-$$
-r = kP_A^{\alpha_A} P_B^{\alpha_B} \tag{2}
-$$
