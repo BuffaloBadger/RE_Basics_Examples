@@ -1,1 +1,0 @@
-This problem was adapted from AFCoKaRE Example 13.2. The data were generated using Vm = 1.15E-4 mmol/mL/min and Km = 0.0021 mmol/mL
