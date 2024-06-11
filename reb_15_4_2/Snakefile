@@ -1,0 +1,66 @@
+rule reb_15_4_2:
+    input:
+        "reb_15_4_2/matlab/results.csv",
+        "reb_15_4_2/python/results.csv",
+        "../RE_Basics/examples/reb_15_4_2/narrative.qmd",
+        "../RE_Basics/examples/reb_15_4_2/equations.qmd",
+        "../RE_Basics/examples/reb_15_4_2/network_schematic.png",
+        "../RE_Basics/examples/reb_15_4_2/results.csv",
+        "../SCoRE/reb_examples/reb_15_4_2/reb_15_4_2.py",
+        "../SCoRE/reb_examples/reb_15_4_2/reb_15_4_2.m"
+
+rule reb_15_4_2_python:
+    input:
+        "reb_15_4-2/python/reb_15_4_2.py"
+    output:
+        "reb_15_4_2/python/results.csv"
+    shell:
+        """
+        python3 reb_15_4_2/python/reb_15_4_2.py
+        """
+
+rule reb_15_4_2_matlab:
+    input:
+        "reb_15_4_2/matlab/reb_15_4-2.m"
+    output:
+        "reb_15_4_2/matlab/results.csv"
+    shell:
+        """
+        matlab -nodisplay -r "cd('reb_15_4_1/matlab');reb_15_4_1;exit"
+        """
+
+rule reb_15_4_2_re_basics:
+    input:
+        "reb_15_4_2/narrative.qmd",
+        "reb_15_4_2/equations.qmd",
+        "reb_15_4_2/network_schematic.png",
+        "reb_15_4_2/python/results.csv"
+    output:
+        "../RE_Basics/examples/reb_15_4_2/narrative.qmd",
+        "../RE_Basics/examples/reb_15_4_2/equations.qmd",
+        "../RE_Basics/examples/reb_15_4_2/network_schematic.png",
+        "../RE_Basics/examples/reb_15_4_2/results.csv"
+    shell:
+        """
+        rm -rf ../RE_Basics/examples/reb_15_4_2
+        mkdir ../RE_Basics/examples/reb_15_4_2
+        cp reb_15_4_2/narrative.qmd ../RE_Basics/examples/reb_15_4_2
+        cp reb_15_4_2/equations.qmd ../RE_Basics/examples/reb_15_4_2
+        cp reb_15_4_2/network_schematic.png ../RE_Basics/examples/reb_15_4_2
+        cp reb_15_4_2/python/results.csv ../RE_Basics/examples/reb_15_4_2
+        """
+
+rule reb_15_4_2_score:
+    input:
+        "reb_15_4_2/python/reb_15_4_2.py",
+        "reb_15_4_2/matlab/reb_15_4_2.m"
+    output:
+        "../SCoRE/reb_examples/reb_15_4_2/reb_15_4_2.py",
+        "../SCoRE/reb_examples/reb_15_4_2/reb_15_4_2.m"
+    shell:
+        """
+        rm -rf ../SCoRE/reb_examples/reb_15_4_2
+        mkdir ../SCoRE/reb_examples/reb_15_4_2
+        cp reb_15_4_2/python/reb_15_4_2.py ../SCoRE/reb_examples/reb_15_4_2
+        cp reb_15_4_2/matlab/reb_15_4_2.m ../SCoRE/reb_examples/reb_15_4_2
+        """
