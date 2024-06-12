@@ -125,7 +125,7 @@ function reb_15_4_3
         item = ["Minimum Total Volume";"Optimum Reactor 1 Volume"
             "Optimum Reactor 2 Volume"];
         value = [min_total_V; opt_V_R1; opt_V_R2];
-        units = ["l";"l";"l"];
+        units = ["L";"L";"L"];
         results_table = table(item,value,units);
 
         % display the results

@@ -133,9 +133,9 @@ def perform_the_analysis():
     min_total_V =  opt_V_R1 + opt_V_R2
 
     # tabulate the results
-    data = [['Minimum Total Volume', min_total_V, 'l']
-         ,['Optimum Reactor 1 Volume', opt_V_R1, 'l']
-         ,['Optimum Reactor 2 Volume', opt_V_R2, 'l']]
+    data = [['Minimum Total Volume', min_total_V, 'L']
+         ,['Optimum Reactor 1 Volume', opt_V_R1, 'L']
+         ,['Optimum Reactor 2 Volume', opt_V_R2, 'L']]
     results_df = pd.DataFrame(data, columns=['item','value','units'])
 
     # display the results
