@@ -26,7 +26,7 @@ rule reb_15_4_2_matlab:
         "reb_15_4_2/matlab/results.csv"
     shell:
         """
-        matlab -nodisplay -r "cd('reb_15_4_1/matlab');reb_15_4_1;exit"
+        matlab -nodisplay -r "cd('reb_15_4_3/matlab');reb_15_4_3;exit"
         """
 
 rule reb_15_4_2_re_basics:

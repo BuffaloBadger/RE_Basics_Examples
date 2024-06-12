@@ -1,0 +1,70 @@
+rule reb_15_4_3:
+    input:
+        "reb_15_4_3/matlab/results.csv",
+        "reb_15_4_3/matlab/volume_plot.png",
+        "reb_15_4_3/python/results.csv",
+        "reb_15_4_3/python/volume_plot.png",
+        "../RE_Basics/examples/reb_15_4_3/narrative.qmd",
+        "../RE_Basics/examples/reb_15_4_3/equations.qmd",
+        "../RE_Basics/examples/reb_15_4_3/results.csv",
+        "../RE_Basics/examples/reb_15_4_3/volume_plot.png",
+        "../SCoRE/reb_examples/reb_15_4_3/reb_15_4_3.py",
+        "../SCoRE/reb_examples/reb_15_4_3/reb_15_4_3.m"
+
+rule reb_15_4_3_python:
+    input:
+        "reb_15_4_3/python/reb_15_4_3.py"
+    output:
+        "reb_15_4_3/python/results.csv",
+        "reb_15_4_3/python/volume_plot.png"
+    shell:
+        """
+        python3 reb_15_4_3/python/reb_15_4_3.py
+        """
+
+rule reb_15_4_3_matlab:
+    input:
+        "reb_15_4_3/matlab/reb_15_4_3.m"
+    output:
+        "reb_15_4_3/matlab/results.csv",
+        "reb_15_4_3/matlab/volume_plot.png"
+    shell:
+        """
+        matlab -nodisplay -r "cd('reb_15_4_3/matlab');reb_15_4_3;exit"
+        """
+
+rule reb_15_4_3_re_basics:
+    input:
+        "reb_15_4_3/narrative.qmd",
+        "reb_15_4_3/equations.qmd",
+        "reb_15_4_3/python/results.csv",
+        "reb_15_4_3/python/volume_plot.png"
+    output:
+        "../RE_Basics/examples/reb_15_4_3/narrative.qmd",
+        "../RE_Basics/examples/reb_15_4_3/equations.qmd",
+        "../RE_Basics/examples/reb_15_4_3/results.csv",
+        "../RE_Basics/examples/reb_15_4_3/volume_plot.png"
+    shell:
+        """
+        rm -rf ../RE_Basics/examples/reb_15_4_3
+        mkdir ../RE_Basics/examples/reb_15_4_3
+        cp reb_15_4_3/narrative.qmd ../RE_Basics/examples/reb_15_4_3
+        cp reb_15_4_3/equations.qmd ../RE_Basics/examples/reb_15_4_3
+        cp reb_15_4_3/python/results.csv ../RE_Basics/examples/reb_15_4_3
+        cp reb_15_4_3/python/volume_plot.png ../RE_Basics/examples/reb_15_4_3
+        """
+
+rule reb_15_4_3_score:
+    input:
+        "reb_15_4_3/python/reb_15_4_3.py",
+        "reb_15_4_3/matlab/reb_15_4_3.m"
+    output:
+        "../SCoRE/reb_examples/reb_15_4_3/reb_15_4_3.py",
+        "../SCoRE/reb_examples/reb_15_4_3/reb_15_4_3.m"
+    shell:
+        """
+        rm -rf ../SCoRE/reb_examples/reb_15_4_3
+        mkdir ../SCoRE/reb_examples/reb_15_4_3/
+        cp reb_15_4_3/python/reb_15_4_3.py ../SCoRE/reb_examples/reb_15_4_3/
+        cp reb_15_4_3/matlab/reb_15_4_3.m ../SCoRE/reb_examples/reb_15_4_3/
+        """
