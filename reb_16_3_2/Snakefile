@@ -1,0 +1,70 @@
+rule reb_16_3_2:
+    input:
+        "reb_16_3_2/python/results.csv",
+        "reb_16_3_2/python/multiplicity_plot.png",
+        "reb_16_3_2/matlab/results.csv",
+        "../RE_Basics/examples/reb_16_3_2/narrative.qmd",
+        "../RE_Basics/examples/reb_16_3_2/equations.qmd",
+        "../RE_Basics/examples/reb_16_3_2/results.csv",
+        "../RE_Basics/examples/reb_16_3_2/multiplicity_plot.png",
+        "../SCoRE/reb_examples/reb_16_3_2/reb_16_3_2.py",
+        "../SCoRE/reb_examples/reb_16_3_2/reb_16_3_2.m"
+
+rule reb_16_3_2_python:
+    input:
+        "reb_16_3_2/python/reb_16_3_2.py",
+        "reb_16_3_2/python/reb_16_3_2_discussion.py"
+    output:
+        "reb_16_3_2/python/results.csv",
+        "reb_16_3_2/python/multiplicity_plot.png"
+    shell:
+        """
+        python3 reb_16_3_2/python/reb_16_3_2.py
+        python3 reb_16_3_2/python/reb_16_3_2_discussion.py
+        """
+
+rule reb_16_3_2_matlab:
+    input:
+        "reb_16_3_2/matlab/reb_16_3_2.m"
+    output:
+        "reb_16_3_2/matlab/results.csv"
+    shell:
+        """
+        matlab -nodisplay -r "cd('reb_16_3_2/matlab');reb_16_3_2;exit"
+        """
+
+rule reb_16_3_2_re_basics:
+    input:
+        "reb_16_3_2/narrative.qmd",
+        "reb_16_3_2/equations.qmd",
+        "reb_16_3_2/python/results.csv",
+        "reb_16_3_2/python/multiplicity_plot.png"
+    output:
+        "../RE_Basics/examples/reb_16_3_2/narrative.qmd",
+        "../RE_Basics/examples/reb_16_3_2/equations.qmd",
+        "../RE_Basics/examples/reb_16_3_2/results.csv",
+        "../RE_Basics/examples/reb_16_3_2/multiplicity_plot.png"
+    shell:
+        """
+        rm -rf ../RE_Basics/examples/reb_16_3_2
+        mkdir ../RE_Basics/examples/reb_16_3_2
+        cp reb_16_3_2/narrative.qmd ../RE_Basics/examples/reb_16_3_2
+        cp reb_16_3_2/equations.qmd ../RE_Basics/examples/reb_16_3_2
+        cp reb_16_3_2/python/results.csv ../RE_Basics/examples/reb_16_3_2
+        cp reb_16_3_2/python/multiplicity_plot.png ../RE_Basics/examples/reb_16_3_2
+        """
+
+rule reb_16_3_2_score:
+    input:
+        "reb_16_3_2/python/reb_16_3_2.py",
+        "reb_16_3_2/matlab/reb_16_3_2.m"
+    output:
+        "../SCoRE/reb_examples/reb_16_3_2/reb_16_3_2.py",
+        "../SCoRE/reb_examples/reb_16_3_2/reb_16_3_2.m"
+    shell:
+        """
+        rm -rf ../SCoRE/reb_examples/reb_16_3_2
+        mkdir ../SCoRE/reb_examples/reb_16_3_2
+        cp reb_16_3_2/python/reb_16_3_2.py ../SCoRE/reb_examples/reb_16_3_2
+        cp reb_16_3_2/matlab/reb_16_3_2.m ../SCoRE/reb_examples/reb_16_3_2
+        """
