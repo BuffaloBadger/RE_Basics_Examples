@@ -15,9 +15,9 @@ yB_0 = 0.5
 T_0 = 300 # K
 P = 2.5 # atm
 Cp_i = 25.8 # cal/mol/K
-dH = -9800 # cal/mol
-k_0 = 2.83e4 # /s
-E = 12000.0 # cal/mol
+dH = -8600 # cal/mol
+k_0 = 8.12e2 # /s
+E = 9500.0 # cal/mol
 UA = 13.6 # cal /K /s
 nDotY_0 = 0
 nDotZ_0 = 0
@@ -130,7 +130,7 @@ def perform_the_analysis():
     fA_low_conversion = 100*(nDotA_0 - nDotA[-1])/nDotA_0
 
     # repeat with a guess for a medium conversion steady state
-    initial_guess = np.array([T_0 + 35, T_0 + 80])
+    initial_guess = np.array([T_0 + 40, T_0 + 80])
     soln = sp.optimize.root(residuals,initial_guess)
     if not(soln.success):
         print(f"The heat exchanger equations were not solved: {soln.message}")
