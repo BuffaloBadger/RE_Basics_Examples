@@ -116,8 +116,8 @@ def perform_the_analysis():
     plt.figure(1) 
     plt.plot(T_1_range - 273.15, T_2_pfr - 273.15, color = 'r', label = 'PFR')
     plt.plot(T_1_range - 273.15, T_2_he - 273.15, color = 'b', label = 'Heat Exchanger')
-    plt.xlabel("T1 (°C)")
-    plt.ylabel("T2 (°C)")
+    plt.xlabel("$T_1$ (°C)")
+    plt.ylabel("$T_2$ (°C)")
     plt.legend()
     plt.tight_layout()
 
