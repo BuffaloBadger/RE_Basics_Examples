@@ -1,4 +1,4 @@
-A reaction engineer has been given an assignment that requires analyzing the use of an adiabatic, steady-state, recycle PFR like that in @fig-example_K_4_1_schematic for reaction (1). The engineer summarized the assignment as shown below.
+A reaction engineer has been given an assignment (see [Example -@sec-example_17_3_1]) that requires analyzing the use of an adiabatic, steady-state, recycle PFR like that in @fig-example_K_4_1_schematic for reaction (1). The engineer summarized the assignment as shown below.
 
 $$
 A \rightarrow Z \tag{1}
@@ -6,8 +6,8 @@ $$
 
 ### Assignment Summary
 
-**Given and Known Constants**: $D$ = 5 cm, $\Delta H$ = -14,000 cal mol^-1^, $\dot{V}_{feed}$ = 500 cm^3^ min^-1^, $\breve{C}_p$ = 1.3 cal cm^-3^ K^-1^, $R_R$ = 1.3, $\dot{n}_{A,feed}$ = 1.0 mol min^-1^, $\dot{n}_{Z,feed}$ = 0, $L$ = 50 cm, $T_{feed}$ = 300 K, $k_0$ = 4.2 x 10^15^ cm^3^ mol^-1^ min^-1^, and $E$ = 18,000 cal mol^-1^.
+**Given and Known Constants**: $\Delta H_1$ = -14 kcal mol^-1^, $k_{0,1}$ = 4.2 x 10^15^ cm^3^ mol^-1^ min^-1^, $E_1$ = 18 kcal mol^-1^, $\breve{C}_p$ = 1.3 cal cm^-3^ K^-1^, $C_{A,0}$ = 2 M, $C_{Z,0}$ = 0 M, $\dot{V}_0$ = 500 cm^3^ min^-1^, $T_0$ = 300K, $R_R$ = 1.3, $D$ = 5 cm, $L$ = 50 cm, and $R$ = 1.987 cal mol^-1^ K^-1^.
 
 **Reactor System**: Adiabatic, steady-state, recycle PFR.
 
-**Quantities of Interest**: $\dot{n}_{A,prod}$, $\dot{n}_{Z,prod}$, and $T_{prod}$.
+**Quantities of Interest**: $\dot{n}_{A,3}$, $\dot{n}_{Z,3}$, and $T_3$.

@@ -5,84 +5,46 @@ import numpy as np
 from score_utils import solve_ivodes
 import scipy as sp
 import pandas as pd
-import matplotlib.pyplot as plt
 
 # constants available to all functions
 # given
-D = 5. # cm
-dH = -14000. # cal /mol
-Vdot_feed = 500. # cm^3 /min
+dH_1 = -14000. # cal /mol
+k0_1 = 4.2E15 # cm^3 /mol /min
+E_1 = 18000. # cal /mol
 Cp = 1.3 # cal /cm^3 /K
-R_R = 1.3 #
-nDotA_feed = 1.0 # mol /min
-nDotZ_feed = 0.0
+CA_0 = 2.0E-3 # mol /cm^3
+CZ_0 = 0.0 # mol /cm^3
+Vdot_0 = 500. # cm^3 /min
+T_0 = 300. # K
+R_R = 1.3
+D = 5. # cm
 L = 50. # cm
-T_feed = 300. # K
-k_0 = 4.2E15 # cm^3 /mol /min
-E = 18000. # cal /mol
 # known
 R = 1.987 # cal /mol /K
-# calculated
-Vdot_prod = Vdot_feed
-Vdot_r = R_R*Vdot_prod
-Vdot_in = Vdot_feed + Vdot_r
 
-# other equipment model
-def unknowns(initial_guess):
-    # solve the other equipment mole and energy balances
-    soln = sp.optimize.root(residuals,initial_guess)
+# derivatives function
+def derivatives(ind, dep):
+	# extract the dependent variables for this integration step
+    nDot_A = dep[0]
+    nDot_Z = dep[1]
+    T = dep[2]
 
-    # check that the solution is converged
-    if not(soln.success):
-        print(f"The initial temperature was NOT found: {soln.message}")
-    
-    # extract the results
-    nDotA_in = soln.x[0]
-    nDotZ_in = soln.x[1]
-    T_in = soln.x[2]
-    T_r = soln.x[3]
-    nDotA_prod = soln.x[4]
-    nDotZ_prod = soln.x[5]
-    T_prod = soln.x[6]
+	# calculate other unknown quantities
+    Vdot_3 = Vdot_0
+    Vdot_4 = R_R*Vdot_3
+    Vdot = Vdot_3 + Vdot_4
+    k_1 = k0_1*np.exp(-E_1/R/T)
+    CA = nDot_A/Vdot
+    CZ = nDot_Z/Vdot
+    r_1 = k_1*CA*CZ
 
-    # return the results
-    return nDotA_in, nDotZ_in, T_in, T_r, nDotA_prod, nDotZ_prod, T_prod
+	# evaluate the derivatives
+    dnDotAdz = -np.pi*D**2/4*r_1
+    dnDotZdz = np.pi*D**2/4*r_1
+    dTdz = -np.pi*D**2/4*r_1*dH_1/Vdot/Cp
 
-# residuals function
-def residuals(guess):
-    # extract the individual guesses
-    nDotA_in = guess[0]
-    nDotZ_in = guess[1]
-    T_in = guess[2]
-    T_r = guess[3]
-    nDotA_prod = guess[4]
-    nDotZ_prod = guess[5]
-    T_prod = guess[6]
-
-    # solve the reactor design equations
-    dep_0 = np.array([nDotA_in, nDotZ_in, T_in])
-    z, nDotA, nDotZ, T = profiles(dep_0)
-
-    # extract the calculated final values
-    nDotA_out = nDotA[-1]
-    nDotZ_out = nDotZ[-1]
-    T_out = T[-1]
-
-    # calculate molar recycle flows
-    nDotA_r = R_R*nDotA_prod
-    nDotZ_r = R_R*nDotZ_prod
-
-    # evaluate the residual
-    eps_1 = nDotA_feed + nDotA_r - nDotA_in
-    eps_2 = nDotZ_feed + nDotZ_r - nDotZ_in
-    eps_3 = Vdot_feed*Cp*(T_in - T_feed) + Vdot_r*Cp*(T_in - T_r)
-    eps_4 = nDotA_out - nDotA_r - nDotA_prod
-    eps_5 = nDotZ_out - nDotZ_r - nDotZ_prod
-    eps_6 = T_out - T_r
-    eps_7 = T_out - T_prod
-
-    # return the residualw
-    return eps_1, eps_2, eps_3, eps_4, eps_5, eps_6, eps_7
+	# return the derivatives
+    return dnDotAdz, dnDotZdz, dTdz
 
 # reactor model
 def profiles(dep_0):
@@ -109,42 +71,83 @@ def profiles(dep_0):
     # return all profiles
     return z, nDotA, nDotZ, T
 
-# derivatives function
-def derivatives(ind, dep):
-	# extract the dependent variables for this integration step
-    nDot_A = dep[0]
-    nDot_Z = dep[1]
-    T = dep[2]
+# splitter and mixer residuals function
+def residuals(guess):
+    # extract the individual guesses
+    nDotA_1 = guess[0]
+    nDotZ_1 = guess[1]
+    T_1 = guess[2]
+    T_4 = guess[3]
+    nDotA_3 = guess[4]
+    nDotZ_3 = guess[5]
+    T_3 = guess[6]
 
-	# calculate the rate
-    r = k_0*np.exp(-E/R/T)*nDot_A*nDot_Z/Vdot_in**2
+    # solve the reactor design equations
+    dep_0 = np.array([nDotA_1, nDotZ_1, T_1])
+    z, nDotA, nDotZ, T = profiles(dep_0)
 
-	# evaluate the derivatives
-    dnDotAdz = -np.pi*D**2/4*r
-    dnDotZdz = np.pi*D**2/4*r
-    dTdz = -np.pi*D**2/4*r*dH/Vdot_in/Cp
+    # calculate the other unknown quantities
+    nDotA_2 = nDotA[-1]
+    nDotZ_2 = nDotZ[-1]
+    T_2 = T[-1]
+    nDotA_0 = Vdot_0*CA_0
+    nDotZ_0 = Vdot_0*CZ_0
+    Vdot_3 = Vdot_0
+    Vdot_4 = R_R*Vdot_3
+    nDotA_4 = R_R*nDotA_3
+    nDotZ_4 = R_R*nDotZ_3
 
-	# return the derivatives
-    return dnDotAdz, dnDotZdz, dTdz
+    # evaluate the residual
+    eps_1 = nDotA_0 + nDotA_4 - nDotA_1
+    eps_2 = nDotZ_0 + nDotZ_4 - nDotZ_1
+    eps_3 = Vdot_0*Cp*(T_1 - T_0) + Vdot_4*Cp*(T_1 - T_4)
+    eps_4 = nDotA_2 - nDotA_4 - nDotA_3
+    eps_5 = nDotZ_2 - nDotZ_4 - nDotZ_3
+    eps_6 = T_2 - T_4
+    eps_7 = T_2 - T_3
+
+    # return the residualw
+    return eps_1, eps_2, eps_3, eps_4, eps_5, eps_6, eps_7
+
+# splitter and mixer model
+def unknowns(initial_guess):
+    # solve the other equipment mole and energy balances
+    soln = sp.optimize.root(residuals,initial_guess)
+
+    # check that the solution is converged
+    if not(soln.success):
+        print(f"The initial temperature was NOT found: {soln.message}")
+    
+    # extract the results
+    nDotA_1 = soln.x[0]
+    nDotZ_1 = soln.x[1]
+    T_1 = soln.x[2]
+    T_4 = soln.x[3]
+    nDotA_3 = soln.x[4]
+    nDotZ_3 = soln.x[5]
+    T_3 = soln.x[6]
+
+    # return the results
+    return nDotA_1, nDotZ_1, T_1, T_4, nDotA_3, nDotZ_3, T_3
 
 # perform the analysis
 def perform_the_analysis():
     # set initial guess for the unknowns
-    initial_guess = np.array([0.9*nDotA_feed, 0.1*nDotA_feed, T_feed + 10,
-            T_feed + 10, 0.1*nDotA_feed, 0.5*nDotA_feed, T_feed + 10])
+    nDotA_0 = Vdot_0*CA_0
+    initial_guess = np.array([0.9*nDotA_0, 0.1*nDotA_0, T_0 + 10,
+            T_0 + 10, 0.1*nDotA_0, 0.5*nDotA_0, T_0 + 10])
 
     # solve the other equipment mole and energy balances
-    nDotA_in, nDotZ_in, T_in, T_r, nDotA_prod, nDotZ_prod, T_prod \
-        = unknowns(initial_guess)
+    nDotA_1, nDotZ_1, T_1, T_4, nDotA_3, nDotZ_3, T_3 = unknowns(initial_guess)
     
     # tabulate the results
-    data = [['$\dot{n}_{A in}$',nDotA_in,'mol min^-1^']
-            ,['$\dot{n}_{Z_in}$',nDotZ_in,'mol min^-1^']
-            ,['$T_{in}$',T_in,'K']
-            ,['$T_r$',T_r,'K']
-            ,['$\dot{n}_{A,prod}$',nDotA_prod,'mol min^-1^']
-            ,['$\dot{n}_{Z,prod}$',nDotZ_prod,'mol min^-1^']
-            ,['$T_{prod}$',T_prod,'K']]
+    data = [['$\dot{n}_{A in}$',nDotA_1,'mol min^-1^']
+            ,['$\dot{n}_{Z_in}$',nDotZ_1,'mol min^-1^']
+            ,['$T_{in}$',T_1,'K']
+            ,['$T_r$',T_4,'K']
+            ,['$\dot{n}_{A,prod}$',nDotA_3,'mol min^-1^']
+            ,['$\dot{n}_{Z,prod}$',nDotZ_3,'mol min^-1^']
+            ,['$T_{prod}$',T_3,'K']]
     results_df = pd.DataFrame(data, columns=['item','value','units'])
 
     # display the results
