@@ -1,0 +1,68 @@
+rule reb_17_3_1:
+    input:
+        "reb_17_3_1/python/results.csv",
+        "reb_17_3_1/matlab/results.csv",
+        "../RE_Basics/examples/reb_17_3_1/narrative.qmd",
+        "../RE_Basics/examples/reb_17_3_1/equations.qmd",
+        "../RE_Basics/examples/reb_17_3_1/given.qmd",
+        "../RE_Basics/examples/reb_17_3_1/results.csv",
+        "../SCoRE/reb_examples/reb_17_3_1/reb_17_3_1.py",
+        "../SCoRE/reb_examples/reb_17_3_1/reb_17_3_1.m"
+
+rule reb_17_3_1_python:
+    input:
+        "reb_17_3_1/python/reb_17_3_1.py",
+        "reb_17_3_1/python/reb_17_3_1_discussion.py"
+    output:
+        "reb_17_3_1/python/results.csv"
+    shell:
+        """
+        python3 reb_17_3_1/python/reb_17_3_1.py
+        python3 reb_17_3_1/python/reb_17_3_1_discussion.py
+        """
+
+rule reb_17_3_1_matlab:
+    input:
+        "reb_17_3_1/matlab/reb_17_3_1.m"
+    output:
+        "reb_17_3_1/matlab/results.csv"
+    shell:
+        """
+        matlab -nodisplay -r "cd('reb_17_3_1/matlab');reb_17_3_1;exit"
+        """
+
+rule reb_17_3_1_re_basics:
+    input:
+        "reb_17_3_1/narrative.qmd",
+        "reb_17_3_1/equations.qmd",
+        "reb_17_3_1/given.qmd",
+        "reb_17_3_1/python/results.csv"
+    output:
+        "../RE_Basics/examples/reb_17_3_1/narrative.qmd",
+        "../RE_Basics/examples/reb_17_3_1/equations.qmd",
+        "../RE_Basics/examples/reb_17_3_1/given.qmd",
+        "../RE_Basics/examples/reb_17_3_1/results.csv"
+    shell:
+        """
+        rm -rf ../RE_Basics/examples/reb_17_3_1
+        mkdir ../RE_Basics/examples/reb_17_3_1
+        cp reb_17_3_1/narrative.qmd ../RE_Basics/examples/reb_17_3_1
+        cp reb_17_3_1/equations.qmd ../RE_Basics/examples/reb_17_3_1
+        cp reb_17_3_1/given.qmd ../RE_Basics/examples/reb_17_3_1
+        cp reb_17_3_1/python/results.csv ../RE_Basics/examples/reb_17_3_1
+        """
+
+rule reb_17_3_1_score:
+    input:
+        "reb_17_3_1/python/reb_17_3_1.py",
+        "reb_17_3_1/matlab/reb_17_3_1.m"
+    output:
+        "../SCoRE/reb_examples/reb_17_3_1/reb_17_3_1.py",
+        "../SCoRE/reb_examples/reb_17_3_1/reb_17_3_1.m"
+    shell:
+        """
+        rm -rf ../SCoRE/reb_examples/reb_17_3_1
+        mkdir ../SCoRE/reb_examples/reb_17_3_1
+        cp reb_17_3_1/python/reb_17_3_1.py ../SCoRE/reb_examples/reb_17_3_1
+        cp reb_17_3_1/matlab/reb_17_3_1.m ../SCoRE/reb_examples/reb_17_3_1
+        """
