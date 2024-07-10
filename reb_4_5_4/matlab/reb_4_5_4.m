@@ -3,8 +3,8 @@ function reb_4_5_4
     % an Arrhenius parameters function named Arrhenius_parameters was
     % written and saved in a folder in the Matlab path
 
-    % function that performs the analysis
-	function perform_the_analysis()
+    % function that performs the calculations
+	function perform_the_calculations()
     
         % define the ideal gas constant
         R = 8.314E-3; % kJ/mol/K
@@ -52,6 +52,6 @@ function reb_4_5_4
         writetable(results_table,'results.csv');
     end
 
-    % perform the analysis
-    perform_the_analysis()
+    % perform the calculations
+    perform_the_calculations()
 end

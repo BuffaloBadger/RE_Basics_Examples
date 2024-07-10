@@ -7,8 +7,8 @@ import math
 # an Arrhenius parameters function named Arrhenius_parameters was
 # written and added to the rebutils library
 
-# function that performs the analysis
-def perform_the_analysis():
+# function that performs the calculations
+def perform_the_calculations():
 
     # define the ideal gas constant
     R = 8.314E-3 # kJ/mol/K
@@ -54,4 +54,4 @@ def perform_the_analysis():
     return
 
 if __name__=="__main__":
-    perform_the_analysis()
+    perform_the_calculations()
