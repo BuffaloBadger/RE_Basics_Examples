@@ -1,0 +1,16 @@
+rule reb_L_7_1:
+    input:
+        "../RE_Basics/examples/reb_L_7_1/narrative.qmd"
+
+rule reb_L_7_1_re_basics:
+    input:
+        "reb_L_7_1/narrative.qmd"
+    output:
+        "../RE_Basics/examples/reb_L_7_1/narrative.qmd"
+    shell:
+        """
+        rm -rf ../RE_Basics/examples/reb_L_7_1
+        mkdir ../RE_Basics/examples/reb_L_7_1
+        cp reb_L_7_1/narrative.qmd ../RE_Basics/examples/reb_L_7_1
+        """
+

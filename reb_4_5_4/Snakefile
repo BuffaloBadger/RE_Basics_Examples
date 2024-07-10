@@ -1,21 +1,69 @@
-rule reb_4_4:
+rule reb_4_5_4:
     input:
-        "reb_4_4/Results/reb_4_4_results.csv",
-        "reb_4_4/Results/reb_4_4_Arrhenius_plot.png",
-        "../RE_Basics/Graphics/reb_4_4_Arrhenius_plot.png",
-        "../RE_Basics/Data/reb_4_4_data.csv"
+        "reb_4_5_4/python/results.csv",
+        "reb_4_5_4/python/Arrhenius_plot.png",
+        "../RE_Basics/examples/reb_4_5_4/results.csv",
+        "../RE_Basics/examples/reb_4_5_4/reb_4_5_4_data.csv",
+        "../RE_Basics/examples/reb_4_5_4/Arrhenius_plot.png",
+        "../SCoRE/reb_examples/reb_4_5_4/reb_4_5_4.m",
+        "../SCoRE/reb_examples/reb_4_5_4/reb_4_5_4.py"
 
-rule reb_4_4_results:
+rule reb_4_5_4_python:
     input:
-        "reb_4_4/Data/reb_4_4_data.csv",
-        "reb_4_4/Code/reb_4_4_calculations.py"
+        "reb_4_5_4/python/reb_4_5_4.py",
+        "reb_4_5_4/reb_4_5_4_data.csv"
     output:
-        "reb_4_4/Results/reb_4_4_results.csv",
-        "reb_4_4/Results/reb_4_4_Arrhenius_plot.png",
-        "../RE_Basics/Graphics/reb_4_4_Arrhenius_plot.png",
-        "../RE_Basics/Data/reb_4_4_data.csv"
+        "reb_4_5_4/python/results.csv",
+        "reb_4_5_4/python/Arrhenius_plot.png"
     shell:
         """
-        python3 reb_4_4/Code/reb_4_4_calculations.py
-        cp reb_4_4/Data/reb_4_4_data.csv ../RE_Basics/Data/reb_4_4_data.csv
+        python3 reb_4_5_4/python/reb_4_5_4.py
+        """
+
+rule reb_4_5_4_matlab:
+    input:
+        "reb_4_5_4/matlab/reb_4_5_4.m",
+        "reb_4_5_4/reb_4_5_4_data.csv"
+    output:
+        "reb_4_5_4/matlab/results.csv",
+        "reb_4_5_4/matlab/Arrhenius_plot.png"
+    shell:
+        """
+        matlab -nodisplay -r "cd('reb_4_5_4/matlab');reb_4_5_4;exit"
+        """
+
+rule reb_4_5_4_re_basics:
+    input:
+        "reb_4_5_4/narrative.qmd",
+        "reb_4_5_4/python/results.csv",
+        "reb_4_5_4/python/Arrhenius_plot.png",
+        "reb_4_5_4/reb_4_5_4_data.csv"
+    output:
+        "../RE_Basics/examples/reb_4_5_4/narrative.qmd",
+        "../RE_Basics/examples/reb_4_5_4/Arrhenius_plot.png",
+        "../RE_Basics/examples/reb_4_5_4/results.csv",
+        "../RE_Basics/examples/reb_4_5_4/reb_4_5_4_data.csv"
+    shell:
+        """
+        rm -rf ../RE_Basics/examples/reb_4_5_4
+        mkdir ../RE_Basics/examples/reb_4_5_4
+        cp reb_4_5_4/narrative.qmd ../RE_Basics/examples/reb_4_5_4
+        cp reb_4_5_4/python/Arrhenius_plot.png ../RE_Basics/examples/reb_4_5_4
+        cp reb_4_5_4/python/results.csv ../RE_Basics/examples/reb_4_5_4
+        cp reb_4_5_4/reb_4_5_4_data.csv ../RE_Basics/examples/reb_4_5_4
+        """
+
+rule reb_4_5_4_score:
+    input:
+        "reb_4_5_4/python/reb_4_5_4.py",
+        "reb_4_5_4/matlab/reb_4_5_4.m"
+    output:
+        "../SCoRE/reb_examples/reb_4_5_4/reb_4_5_4.py",
+        "../SCoRE/reb_examples/reb_4_5_4/reb_4_5_4.m"
+    shell:
+        """
+        rm -rf ../SCoRE/reb_examples/reb_4_5_4
+        mkdir ../SCoRE/reb_examples/reb_4_5_4
+        cp reb_4_5_4/python/reb_4_5_4.py ../SCoRE/reb_examples/reb_4_5_4
+        cp reb_4_5_4/matlab/reb_4_5_4.m ../SCoRE/reb_examples/reb_4_5_4
         """

@@ -1,0 +1,20 @@
+rule reb_L_7_2:
+    input:
+        "../RE_Basics/examples/reb_L_7_2/narrative.qmd",
+        "../RE_Basics/examples/reb_L_7_2/reb_L_7_2_data.csv"
+
+rule reb_L_7_2_re_basics:
+    input:
+        "reb_L_7_2/narrative.qmd",
+        "reb_L_7_2/reb_L_7_2_data.csv"
+    output:
+        "../RE_Basics/examples/reb_L_7_2/narrative.qmd",
+        "../RE_Basics/examples/reb_L_7_2/reb_L_7_2_data.csv"
+    shell:
+        """
+        rm -rf ../RE_Basics/examples/reb_L_7_2
+        mkdir ../RE_Basics/examples/reb_L_7_2
+        cp reb_L_7_2/narrative.qmd ../RE_Basics/examples/reb_L_7_2
+        cp reb_L_7_2/reb_L_7_2_data.csv ../RE_Basics/examples/reb_L_7_2
+        """
+
