@@ -1,4 +1,4 @@
-import rebutils as reb
+from score_utils import Arrhenius_parameters
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -20,7 +20,7 @@ def perform_the_calculations():
     k = df['k'].to_numpy()
 
     # calculate the Arrhenius parameters and statistics
-    k0, k0_ci, E, E_ci, r_squared = reb.Arrhenius_parameters(k,T,R)
+    k0, k0_ci, E, E_ci, r_squared = Arrhenius_parameters(k,T,R)
 
     # generate and save a model plot
     y_pred = k0*np.exp(-E/R/T)
