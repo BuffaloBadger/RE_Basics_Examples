@@ -1,13 +1,7 @@
 import numpy as np
 import pandas as pd
-import scipy as sp
-import rebutils as reb
-import math
 import random
-
-# Filenames for data
-reb_examples_filename = 'reb_19_1/Data/reb_19_1_data.csv'
-reb_filename = '../RE_Basics/Data/reb_19_1_data.csv'
+from score_utils import solve_ivodes
 
 # Constant inputs
 V = 1.0 # L
@@ -17,7 +11,7 @@ R = 8.314E-3 # kJ/mol/K
 def rate(conc_A, temp):
     k0 = 4.23E8
     E = 68.0
-    reaction_rate = k0*math.e**(-E/R/temp)*conc_A
+    reaction_rate = k0*np.exp(-E/R/temp)*conc_A
     return reaction_rate
 
 # Adjusted inputs
@@ -26,7 +20,7 @@ CA0_expt = np.array([0.5, 1.0, 1.5])
 t_reaction = np.array([5.0, 10.0, 15.0, 20.0, 25.0, 30.0])
 
 # Create empty dataframe for the results
-df = pd.DataFrame(columns=["Experiment","T", "CA0", "t", "CA"])
+df = pd.DataFrame(columns=["Experiment","T", "CA0", "tf", "CAf"])
 
 # Calculate the responses
 expt_number = 0
@@ -42,10 +36,10 @@ for CA0 in CA0_expt:
             # Solve the mole balances
             t0 = 0
             f_var = 0
-            soln = reb.solveIVODEs(t0, [CA0], f_var, time, mole_balances)
+            t, dep, success, message = solve_ivodes(t0, [CA0], f_var, time, mole_balances)
 
             # calculate the response
-            CA = soln.y[0,-1]
+            CA = dep[0,-1]
 
             # add +/- 0.01 M random "error"
             random_error = (2*random.random() - 1.0)*0.01
@@ -62,10 +56,5 @@ print("\n")
 print(df)
 
 # save the results
-
-print("\nSaving results to " + reb_examples_filename + "\n")
-df.to_csv(reb_examples_filename,index=False)
-
-print("\nSaving results to " + reb_filename + "\n")
-df.to_csv(reb_filename,index=False)
+df.to_csv('reb_19_5_1/python/reb_19_5_1_data.csv',index=False)
 

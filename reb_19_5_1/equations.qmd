@@ -1,0 +1,8 @@
+
+$$
+A \rightarrow Z \tag{1}
+$$
+
+$$
+r = k C_A \tag{2}
+$$
