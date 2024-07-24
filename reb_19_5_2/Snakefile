@@ -26,6 +26,8 @@ rule reb_19_5_2:
         "reb_19_5_2/python/reb_19_5_2_Arrhenius_lin.png",
         "reb_19_5_2/python/reb_19_5_2_Arrhenius_resp_fcn.csv",
         "reb_19_5_2/python/reb_19_5_2_Arrhenius_resp_fcn.png",
+        "../RE_Basics/examples/reb_19_5_2/narrative.qmd",
+        "../RE_Basics/examples/reb_19_5_2/equations.qmd",
         "../RE_Basics/examples/reb_19_5_2/reb_19_5_2_data.csv",
         "../RE_Basics/examples/reb_19_5_2/reb_19_5_2_data_475.csv",
         "../RE_Basics/examples/reb_19_5_2/reb_19_5_2_data_500.csv",
@@ -113,6 +115,8 @@ rule reb_19_5_2_matlab:
 
 rule reb_19_5_2_re_basics:
     input:
+        "reb_19_5_2/narrative.qmd",
+        "reb_19_5_2/equations.qmd",
         "reb_19_5_2/python/reb_19_5_2_data.csv",
         "reb_19_5_2/python/reb_19_5_2_data_475.csv",
         "reb_19_5_2/python/reb_19_5_2_data_500.csv",
@@ -139,6 +143,8 @@ rule reb_19_5_2_re_basics:
         "reb_19_5_2/python/reb_19_5_2_Arrhenius_resp_fcn.csv",
         "reb_19_5_2/python/reb_19_5_2_Arrhenius_resp_fcn.png"
     output:
+        "../RE_Basics/examples/reb_19_5_2/narrative.qmd",
+        "../RE_Basics/examples/reb_19_5_2/equations.qmd",
         "../RE_Basics/examples/reb_19_5_2/reb_19_5_2_data.csv",
         "../RE_Basics/examples/reb_19_5_2/reb_19_5_2_data_475.csv",
         "../RE_Basics/examples/reb_19_5_2/reb_19_5_2_data_500.csv",
@@ -168,6 +174,8 @@ rule reb_19_5_2_re_basics:
         """
         rm -rf ../RE_Basics/examples/reb_19_5_2
         mkdir ../RE_Basics/examples/reb_19_5_2
+        cp reb_19_5_2/narrative.qmd ../RE_Basics/examples/reb_19_5_2
+        cp reb_19_5_2/equations.qmd ../RE_Basics/examples/reb_19_5_2
         cp reb_19_5_2/python/reb_19_5_2_data.csv ../RE_Basics/examples/reb_19_5_2
         cp reb_19_5_2/python/reb_19_5_2_data_475.csv ../RE_Basics/examples/reb_19_5_2
         cp reb_19_5_2/python/reb_19_5_2_data_500.csv ../RE_Basics/examples/reb_19_5_2

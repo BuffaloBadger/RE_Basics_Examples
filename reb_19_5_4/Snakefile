@@ -5,6 +5,8 @@ rule reb_19_5_4:
         "reb_19_5_4/python/reb_19_5_4_parity.png",
         "reb_19_5_4/python/reb_19_5_4_residuals_vs_CS0.png",
         "reb_19_5_4/python/reb_19_5_4_residuals_vs_tf.png",
+        "../RE_Basics/examples/reb_19_5_4/narrative.qmd",
+        "../RE_Basics/examples/reb_19_5_4/equations.qmd",
         "../RE_Basics/examples/reb_19_5_4/reb_19_5_4_data.csv",
         "../RE_Basics/examples/reb_19_5_4/reb_19_5_4_results.csv",
         "../RE_Basics/examples/reb_19_5_4/reb_19_5_4_parity.png",
@@ -41,12 +43,16 @@ rule reb_19_5_4_matlab:
 
 rule reb_19_5_4_re_basics:
     input:
+        "reb_19_5_4/narrative.qmd",
+        "reb_19_5_4/equations.qmd",
         "reb_19_5_4/python/reb_19_5_4_data.csv",
         "reb_19_5_4/python/reb_19_5_4_results.csv",
         "reb_19_5_4/python/reb_19_5_4_parity.png",
         "reb_19_5_4/python/reb_19_5_4_residuals_vs_CS0.png",
         "reb_19_5_4/python/reb_19_5_4_residuals_vs_tf.png"
     output:
+        "../RE_Basics/examples/reb_19_5_4/narrative.qmd",
+        "../RE_Basics/examples/reb_19_5_4/equations.qmd",
         "../RE_Basics/examples/reb_19_5_4/reb_19_5_4_data.csv",
         "../RE_Basics/examples/reb_19_5_4/reb_19_5_4_results.csv",
         "../RE_Basics/examples/reb_19_5_4/reb_19_5_4_parity.png",
@@ -56,6 +62,8 @@ rule reb_19_5_4_re_basics:
         """
         rm -rf ../RE_Basics/examples/reb_19_5_4
         mkdir ../RE_Basics/examples/reb_19_5_4
+        cp reb_19_5_4/narrative.qmd ../RE_Basics/examples/reb_19_5_4
+        cp reb_19_5_4/equations.qmd ../RE_Basics/examples/reb_19_5_4
         cp reb_19_5_4/python/reb_19_5_4_data.csv ../RE_Basics/examples/reb_19_5_4
         cp reb_19_5_4/python/reb_19_5_4_results.csv ../RE_Basics/examples/reb_19_5_4
         cp reb_19_5_4/python/reb_19_5_4_parity.png ../RE_Basics/examples/reb_19_5_4
