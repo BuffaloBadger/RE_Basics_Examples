@@ -1,12 +1,10 @@
+"""Calculations for Reaction Engineering Basics Example 19.5.2"""
+
+# import libraries
 import pandas as pd
 import numpy as np
-import rebutils as reb
 import matplotlib.pyplot as plt
-
-# set filepaths
-filepath_to_data = './reb_19_2/Data/'
-filepath_to_results = './reb_19_2/Results/'
-filepath_to_figures = '../RE_Basics/Graphics/'
+import statsmodels.api as sm
 
 # given or known
 V = 500.0 # cc
@@ -14,7 +12,7 @@ R = 1.987E-3 # kcal/mol/K
 Rpv = 82.06 # cc atm/mol/K
 
 # read the data filenames
-df = pd.read_csv(filepath_to_data + 'reb_19_2_data_filenames.csv')
+df = pd.read_csv('reb_19_5_2/python/reb_19_5_2_data_filenames.csv')
 filenames = df['Data Filename'].to_numpy()
 
 # create a dataframe for the fitting results
@@ -23,7 +21,7 @@ parameter_estimates = pd.DataFrame(columns=['T', 'k', 'k_ll', 'k_ul', 'R_sq'])
 # process the data files
 for filename in filenames:
     # read the file
-    df = pd.read_csv(filepath_to_data + filename)
+    df = pd.read_csv('reb_19_5_2/python/' + filename)
     n_data = len(df.index)
 
     # extract the data as arrays
@@ -31,7 +29,7 @@ for filename in filenames:
     T_K = T[0]
     PA0 = df['PA0'].to_numpy()
     PB0 = df['PB0'].to_numpy()
-    t = df['t'].to_numpy()
+    t = df['tf'].to_numpy()
     f_A = df['fA'].to_numpy()
 
     # allocate storage for x and y
@@ -51,14 +49,17 @@ for filename in filenames:
             y[i] = 1/(nA0-nB0)*np.log(nA0*nB/nB0/nA)
 
     # fit y = mx to the data
-    beta, beta_ci, r_squared = reb.fitLinSR(x,y,False)
+        model = sm.OLS(y,x)
+        res = model.fit()
+        m = res.params[0]
+        m_ci = res.conf_int(alpha=0.05)
 
-    # add the fitting results to the dataframe
-    parameter_estimates.loc[len(parameter_estimates)] = [T_K - 273.15, beta[0],
-            beta_ci[0,0], beta_ci[0,1], r_squared]
+        # add the fitting results to the dataframe
+        parameter_estimates.loc[len(parameter_estimates)] = [T_K - 273.15
+            , m, m_ci[0,0], m_ci[0,1], res.rsquared]
     
-    # calculate the model-predicted y
-    y_model = beta[0]*x
+        # calculate the model-predicted y
+        y_model = m*x
     
     # create, show, and save a model plot
     plt.figure() 
@@ -71,15 +72,12 @@ for filename in filenames:
     plt.ticklabel_format(axis='x',style='plain')
     plt.xticks(rotation=25)
     plt.tight_layout()
-    filename = 'reb_19_2_model_' + T_as_text + '.png'
-    plt.savefig(filepath_to_results + filename)
-    plt.savefig(filepath_to_figures + filename)
+    filename = 'reb_19_5_2_linear_' + T_as_text + '.png'
+    plt.savefig('reb_19_5_2/python/' + filename)
     plt.show()
 
 # show and save the results
 print('\nParameter Estimates:\n')
 print(parameter_estimates)
-print('\nThese results are being saved as ' + filepath_to_results + \
-      'reb_19_2_lin_params.csv')
-parameter_estimates.to_csv(filepath_to_results + 'reb_19_2_lin_params.csv',\
+parameter_estimates.to_csv('reb_19_5_2/python/reb_19_5_2_lin_params.csv',\
     index=False)

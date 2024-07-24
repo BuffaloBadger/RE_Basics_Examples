@@ -55,7 +55,7 @@ rule reb_19_5_1:
         "../RE_Basics/examples/reb_19_5_1/reb_19_5_1_Arrhenius_diff.png",
         "../SCoRE/reb_examples/reb_19_5_1/reb_19_5_1_create_data_blocks.py",
         "../SCoRE/reb_examples/reb_19_5_1/reb_19_5_1_data_65.csv",
-        "../SCoRE/reb_examples/reb_19_5_1/reb_19_5_1_data_735.csv",
+        "../SCoRE/reb_examples/reb_19_5_1/reb_19_5_1_data_73.csv",
         "../SCoRE/reb_examples/reb_19_5_1/reb_19_5_1_data_82.csv",
         "../SCoRE/reb_examples/reb_19_5_1/reb_19_5_1_data_90.csv",
         "../SCoRE/reb_examples/reb_19_5_1/reb_19_5_1_data_filenames.csv",
@@ -214,13 +214,13 @@ rule reb_19_5_1_score:
     output:
         "../SCoRE/reb_examples/reb_19_5_1/reb_19_5_1_create_data_blocks.py",
         "../SCoRE/reb_examples/reb_19_5_1/reb_19_5_1_data_65.csv",
-        "../SCoRE/reb_examples/reb_19_5_1/reb_19_5_1_data_735.csv",
+        "../SCoRE/reb_examples/reb_19_5_1/reb_19_5_1_data_73.csv",
         "../SCoRE/reb_examples/reb_19_5_1/reb_19_5_1_data_82.csv",
         "../SCoRE/reb_examples/reb_19_5_1/reb_19_5_1_data_90.csv",
         "../SCoRE/reb_examples/reb_19_5_1/reb_19_5_1_data_filenames.csv",
         "../SCoRE/reb_examples/reb_19_5_1/reb_19_5_1_resp_fcn.py",
         "../SCoRE/reb_examples/reb_19_5_1/reb_19_5_1_diff.py",
-        "../SCoRE/reb_examples/reb_19_5_1_Arrhenius.py"
+        "../SCoRE/reb_examples/reb_19_5_1/reb_19_5_1_Arrhenius.py"
     shell:
         """
         rm -rf ../SCoRE/reb_examples/reb_19_5_1

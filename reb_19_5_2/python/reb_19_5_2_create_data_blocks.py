@@ -1,13 +1,10 @@
 import pandas as pd
 import numpy as np
 
-# filepaths
-filepath_to_data = './reb_19_2/Data/'
-filepath_to_results = './reb_19_2/Results/'
-
 # read the data from the .csv file
-df = pd.read_csv(filepath_to_data + 'reb_19_2_data.csv')
-    # columns: T, PA0, PB0, t, fA
+df = pd.read_csv('reb_19_5_2/python/reb_19_5_2_data.csv')
+    # columns: T, PA0, PB0, tf, fA
+
 # get the temperatures used in the experiments
 block_temperatures = df['T'].unique() + 273.15
 
@@ -23,11 +20,11 @@ for T_K in block_temperatures:
 
     # save the block
     T_as_text = format(T_K-273.15,'.0f')
-    filename = 'reb_19_2_data_' + T_as_text + '.csv'
-    block.to_csv(filepath_to_data + filename,index=False)
+    filename = 'reb_19_5_2_data_' + T_as_text + '.csv'
+    block.to_csv('reb_19_5_2/python/' + filename,index=False)
 
     # save the filename
     filenames.loc[len(filenames.index)] = [filename]
 
 # save the data file filenames
-filenames.to_csv(filepath_to_data + 'reb_19_2_data_filenames.csv',index=False)
+filenames.to_csv('reb_19_5_2/python/reb_19_5_2_data_filenames.csv',index=False)

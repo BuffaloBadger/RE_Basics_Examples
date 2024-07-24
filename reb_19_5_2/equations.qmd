@@ -1,0 +1,8 @@
+
+$$
+A + B \rightarrow Y + Z \tag{1}
+$$
+
+$$
+r = k P_A P_B \tag{2}
+$$
