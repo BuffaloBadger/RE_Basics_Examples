@@ -27,7 +27,7 @@ PAin = np.array([2.0, 3.0, 4.0])
 t_reaction = np.arange(1.0, 25, 1.0)
 
 # Create empty dataframe for the results
-df = pd.DataFrame(columns=["PA0", "t", "P"])
+df = pd.DataFrame(columns=["PA0", "tf", "Pf"])
 
 # Calculate the responses
 for PA0 in PAin:
@@ -69,10 +69,4 @@ print("\n")
 print(df)
 
 # save the results
-filename = "./reb_19_3/Data/reb_19_3_data.csv"
-print("\nSaving results to " + filename + "\n")
-df.to_csv(filename,index=False)
-
-filename = "../RE_Basics/Data/reb_19_3_data.csv"
-print("\nSaving results to " + filename + "\n")
-df.to_csv(filename,index=False)
+df.to_csv('reb_19_5_3/python/reb_19_5_3_data.csv',index=False)
