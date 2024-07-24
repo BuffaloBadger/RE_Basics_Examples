@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
-import rebutils as reb
 import random
+from score_utils import solve_ivodes
 
 # Constant inputs
 Rpv = 82.06 # cc atm/mol/K
@@ -46,12 +46,12 @@ for PA0 in PAin:
         n0 = [PA0*V/Rpv/T, PB0*V/Rpv/T, 0.0]
         f_var = 0
         f_val = time
-        soln = reb.solveIVODEs(t0, n0, f_var, f_val, mole_balances)
+        t, dep, success, message = solve_ivodes(t0, n0, f_var, f_val, mole_balances, False)
 
         # calculate the response
-        nA = soln.y[0,-1]
-        nB = soln.y[1,-1]
-        nZ = soln.y[2,-1]
+        nA = dep[0,-1]
+        nB = dep[1,-1]
+        nZ = dep[2,-1]
         P = (nA + nB + nZ)*Rpv*T/V
 
         # add +/- 0.05 atm random "error"

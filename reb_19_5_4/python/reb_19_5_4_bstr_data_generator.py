@@ -1,8 +1,7 @@
 import numpy as np
 import pandas as pd
 import scipy as sp
-import rebutils as reb
-import math
+from score_utils import solve_ivodes
 import random
 
 # Constant inputs
@@ -22,7 +21,7 @@ CS0 = np.array([15.0, 10.0, 5.0]) * 1E-3 # mmol/mL
 t_reaction = np.linspace(5.0, 120.0, 24) # min
 
 # Create empty dataframe for the results
-df = pd.DataFrame(columns=["CS0", "t", "CP"])
+df = pd.DataFrame(columns=["CS0", "tf", "CPf"])
 
 # Calculate the responses
 for CS_init in CS0:
@@ -39,10 +38,10 @@ for CS_init in CS0:
         n0 = np.array([CS_init*V, 0.0, 0.0])
         f_var = 0
         f_val = time
-        soln = reb.solveIVODEs(t0, n0, f_var, f_val, mole_balances)
+        t, dep, success, message = solve_ivodes(t0, n0, f_var, f_val, mole_balances, False)
 
         # calculate the response
-        CP = soln.y[1,-1]/V
+        CP = dep[1,-1]/V
 
         # add +/- 0.01 random "error"
         random_error = (2*random.random() - 1.0)*0.0004
@@ -63,10 +62,4 @@ print("\n")
 print(df)
 
 # save the results
-filename = "reb_19_4/Data/reb_19_4_data.csv"
-print("\nSaving results to " + filename + "\n")
-df.to_csv(filename,index=False)
-
-filename = "../RE_Basics/Data/reb_19_4_data.csv"
-print("\nSaving results to " + filename + "\n")
-df.to_csv(filename,index=False)
+df.to_csv('reb_19_5_4/python/reb_19_5_4_data.csv',index=False)
