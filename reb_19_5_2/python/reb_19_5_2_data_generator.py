@@ -71,5 +71,5 @@ print("\n")
 print(df)
 
 # save the results
-filename = "./reb_19_5_2/python/reb_19_5_2_data.csv"
+filename = "./reb_19_5_2/reb_19_5_2_data.csv"
 df.to_csv(filename,index=False)

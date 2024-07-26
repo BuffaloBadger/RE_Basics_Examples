@@ -1,0 +1,238 @@
+rule reb_19_5_2:
+    input:
+        "reb_19_5_2/python/reb_19_5_2_data.csv",
+        "reb_19_5_2/python/reb_19_5_2_data_filenames.csv",
+        "reb_19_5_2/python/reb_19_5_2_data_475.csv",
+        "reb_19_5_2/python/reb_19_5_2_data_500.csv",
+        "reb_19_5_2/python/reb_19_5_2_data_525.csv",
+        "reb_19_5_2/python/reb_19_5_2_parity_475.png",
+        "reb_19_5_2/python/reb_19_5_2_parity_500.png",
+        "reb_19_5_2/python/reb_19_5_2_parity_525.png",
+        "reb_19_5_2/python/reb_19_5_2_residual_PA0_475.png",
+        "reb_19_5_2/python/reb_19_5_2_residual_PA0_500.png",
+        "reb_19_5_2/python/reb_19_5_2_residual_PA0_525.png",
+        "reb_19_5_2/python/reb_19_5_2_residual_PB0_475.png",
+        "reb_19_5_2/python/reb_19_5_2_residual_PB0_500.png",
+        "reb_19_5_2/python/reb_19_5_2_residual_PB0_525.png",
+        "reb_19_5_2/python/reb_19_5_2_residual_tf_475.png",
+        "reb_19_5_2/python/reb_19_5_2_residual_tf_500.png",
+        "reb_19_5_2/python/reb_19_5_2_residual_tf_525.png",
+        "reb_19_5_2/python/reb_19_5_2_resp_fcn_params.csv",
+        "reb_19_5_2/python/reb_19_5_2_lin_params.csv",
+        "reb_19_5_2/python/reb_19_5_2_linear_475.png",
+        "reb_19_5_2/python/reb_19_5_2_linear_500.png",
+        "reb_19_5_2/python/reb_19_5_2_linear_525.png",
+        "reb_19_5_2/python/reb_19_5_2_Arrhenius_lin.csv",
+        "reb_19_5_2/python/reb_19_5_2_Arrhenius_lin.png",
+        "reb_19_5_2/python/reb_19_5_2_Arrhenius_resp_fcn.csv",
+        "reb_19_5_2/python/reb_19_5_2_Arrhenius_resp_fcn.png",
+        "../RE_Basics/examples/reb_19_5_2/narrative.qmd",
+        "../RE_Basics/examples/reb_19_5_2/equations.qmd",
+        "../RE_Basics/examples/reb_19_5_2/reb_19_5_2_data.csv",
+        "../RE_Basics/examples/reb_19_5_2/reb_19_5_2_data_475.csv",
+        "../RE_Basics/examples/reb_19_5_2/reb_19_5_2_data_500.csv",
+        "../RE_Basics/examples/reb_19_5_2/reb_19_5_2_data_525.csv",
+        "../RE_Basics/examples/reb_19_5_2/reb_19_5_2_linear_475.png",
+        "../RE_Basics/examples/reb_19_5_2/reb_19_5_2_linear_500.png",
+        "../RE_Basics/examples/reb_19_5_2/reb_19_5_2_linear_525.png",
+        "../RE_Basics/examples/reb_19_5_2/reb_19_5_2_parity_475.png",
+        "../RE_Basics/examples/reb_19_5_2/reb_19_5_2_parity_500.png",
+        "../RE_Basics/examples/reb_19_5_2/reb_19_5_2_parity_525.png",
+        "../RE_Basics/examples/reb_19_5_2/reb_19_5_2_residual_PA0_475.png",
+        "../RE_Basics/examples/reb_19_5_2/reb_19_5_2_residual_PA0_500.png",
+        "../RE_Basics/examples/reb_19_5_2/reb_19_5_2_residual_PA0_525.png",
+        "../RE_Basics/examples/reb_19_5_2/reb_19_5_2_residual_PB0_475.png",
+        "../RE_Basics/examples/reb_19_5_2/reb_19_5_2_residual_PB0_500.png",
+        "../RE_Basics/examples/reb_19_5_2/reb_19_5_2_residual_PB0_525.png",
+        "../RE_Basics/examples/reb_19_5_2/reb_19_5_2_residual_tf_475.png",
+        "../RE_Basics/examples/reb_19_5_2/reb_19_5_2_residual_tf_500.png",
+        "../RE_Basics/examples/reb_19_5_2/reb_19_5_2_residual_tf_525.png",
+        "../RE_Basics/examples/reb_19_5_2/reb_19_5_2_resp_fcn_params.csv",
+        "../RE_Basics/examples/reb_19_5_2/reb_19_5_2_Arrhenius_lin.png",
+        "../RE_Basics/examples/reb_19_5_2/reb_19_5_2_Arrhenius_resp_fcn.png",
+        "../RE_Basics/examples/reb_19_5_2/reb_19_5_2_Arrhenius_lin.csv",
+        "../RE_Basics/examples/reb_19_5_2/reb_19_5_2_Arrhenius_resp_fcn.csv",
+        "../SCoRE/reb_examples/reb_19_5_2/reb_19_5_2_data_filenames.csv",
+        "../SCoRE/reb_examples/reb_19_5_2/reb_19_5_2_create_data_blocks.py",
+        "../SCoRE/reb_examples/reb_19_5_2/reb_19_5_2_data_475.csv",
+        "../SCoRE/reb_examples/reb_19_5_2/reb_19_5_2_data_500.csv",
+        "../SCoRE/reb_examples/reb_19_5_2/reb_19_5_2_data_525.csv",
+        "../SCoRE/reb_examples/reb_19_5_2/reb_19_5_2_data_filenames.csv",
+        "../SCoRE/reb_examples/reb_19_5_2/reb_19_5_2_resp_fcn.py",
+        "../SCoRE/reb_examples/reb_19_5_2/reb_19_5_2_linear.py",
+        "../SCoRE/reb_examples/reb_19_5_2/reb_19_5_2_Arrhenius.py"
+
+rule reb_19_5_2_python:
+    input: 
+        "reb_19_5_2/python/reb_19_5_2_data_generator.py",
+        "reb_19_5_2/python/reb_19_5_2_create_data_blocks.py",
+        "reb_19_5_2/python/reb_19_5_2_resp_fcn.py",
+        "reb_19_5_2/python/reb_19_5_2_linear.py",
+        "reb_19_5_2/python/reb_19_5_2_Arrhenius.py"
+    output:
+        "reb_19_5_2/python/reb_19_5_2_data.csv",
+        "reb_19_5_2/python/reb_19_5_2_data_filenames.csv",
+        "reb_19_5_2/python/reb_19_5_2_data_475.csv",
+        "reb_19_5_2/python/reb_19_5_2_data_500.csv",
+        "reb_19_5_2/python/reb_19_5_2_data_525.csv",
+        "reb_19_5_2/python/reb_19_5_2_parity_475.png",
+        "reb_19_5_2/python/reb_19_5_2_parity_500.png",
+        "reb_19_5_2/python/reb_19_5_2_parity_525.png",
+        "reb_19_5_2/python/reb_19_5_2_residual_PA0_475.png",
+        "reb_19_5_2/python/reb_19_5_2_residual_PA0_500.png",
+        "reb_19_5_2/python/reb_19_5_2_residual_PA0_525.png",
+        "reb_19_5_2/python/reb_19_5_2_residual_PB0_475.png",
+        "reb_19_5_2/python/reb_19_5_2_residual_PB0_500.png",
+        "reb_19_5_2/python/reb_19_5_2_residual_PB0_525.png",
+        "reb_19_5_2/python/reb_19_5_2_residual_tf_475.png",
+        "reb_19_5_2/python/reb_19_5_2_residual_tf_500.png",
+        "reb_19_5_2/python/reb_19_5_2_residual_tf_525.png",
+        "reb_19_5_2/python/reb_19_5_2_resp_fcn_params.csv",
+        "reb_19_5_2/python/reb_19_5_2_lin_params.csv",
+        "reb_19_5_2/python/reb_19_5_2_linear_475.png",
+        "reb_19_5_2/python/reb_19_5_2_linear_500.png",
+        "reb_19_5_2/python/reb_19_5_2_linear_525.png",
+        "reb_19_5_2/python/reb_19_5_2_Arrhenius_lin.csv",
+        "reb_19_5_2/python/reb_19_5_2_Arrhenius_lin.png",
+        "reb_19_5_2/python/reb_19_5_2_Arrhenius_resp_fcn.csv",
+        "reb_19_5_2/python/reb_19_5_2_Arrhenius_resp_fcn.png"
+    shell:
+        """
+        python3 reb_19_5_2/python/reb_19_5_2_data_generator.py
+        python3 reb_19_5_2/python/reb_19_5_2_create_data_blocks.py
+        python3 reb_19_5_2/python/reb_19_5_2_resp_fcn.py
+        python3 reb_19_5_2/python/reb_19_5_2_linear.py
+        python3 reb_19_5_2/python/reb_19_5_2_Arrhenius.py
+        """ 
+
+rule reb_19_5_2_matlab:
+    input:
+    output:
+    shell:
+        """
+        
+        """
+
+rule reb_19_5_2_re_basics:
+    input:
+        "reb_19_5_2/narrative.qmd",
+        "reb_19_5_2/equations.qmd",
+        "reb_19_5_2/python/reb_19_5_2_data.csv",
+        "reb_19_5_2/python/reb_19_5_2_data_475.csv",
+        "reb_19_5_2/python/reb_19_5_2_data_500.csv",
+        "reb_19_5_2/python/reb_19_5_2_data_525.csv",
+        "reb_19_5_2/python/reb_19_5_2_parity_475.png",
+        "reb_19_5_2/python/reb_19_5_2_parity_500.png",
+        "reb_19_5_2/python/reb_19_5_2_parity_525.png",
+        "reb_19_5_2/python/reb_19_5_2_residual_PA0_475.png",
+        "reb_19_5_2/python/reb_19_5_2_residual_PA0_500.png",
+        "reb_19_5_2/python/reb_19_5_2_residual_PA0_525.png",
+        "reb_19_5_2/python/reb_19_5_2_residual_PB0_475.png",
+        "reb_19_5_2/python/reb_19_5_2_residual_PB0_500.png",
+        "reb_19_5_2/python/reb_19_5_2_residual_PB0_525.png",
+        "reb_19_5_2/python/reb_19_5_2_residual_tf_475.png",
+        "reb_19_5_2/python/reb_19_5_2_residual_tf_500.png",
+        "reb_19_5_2/python/reb_19_5_2_residual_tf_525.png",
+        "reb_19_5_2/python/reb_19_5_2_resp_fcn_params.csv",
+        "reb_19_5_2/python/reb_19_5_2_lin_params.csv",
+        "reb_19_5_2/python/reb_19_5_2_linear_475.png",
+        "reb_19_5_2/python/reb_19_5_2_linear_500.png",
+        "reb_19_5_2/python/reb_19_5_2_linear_525.png",
+        "reb_19_5_2/python/reb_19_5_2_Arrhenius_lin.csv",
+        "reb_19_5_2/python/reb_19_5_2_Arrhenius_lin.png",
+        "reb_19_5_2/python/reb_19_5_2_Arrhenius_resp_fcn.csv",
+        "reb_19_5_2/python/reb_19_5_2_Arrhenius_resp_fcn.png"
+    output:
+        "../RE_Basics/examples/reb_19_5_2/narrative.qmd",
+        "../RE_Basics/examples/reb_19_5_2/equations.qmd",
+        "../RE_Basics/examples/reb_19_5_2/reb_19_5_2_data.csv",
+        "../RE_Basics/examples/reb_19_5_2/reb_19_5_2_data_475.csv",
+        "../RE_Basics/examples/reb_19_5_2/reb_19_5_2_data_500.csv",
+        "../RE_Basics/examples/reb_19_5_2/reb_19_5_2_data_525.csv",
+        "../RE_Basics/examples/reb_19_5_2/reb_19_5_2_parity_475.png",
+        "../RE_Basics/examples/reb_19_5_2/reb_19_5_2_parity_500.png",
+        "../RE_Basics/examples/reb_19_5_2/reb_19_5_2_parity_525.png",
+        "../RE_Basics/examples/reb_19_5_2/reb_19_5_2_residual_PA0_475.png",
+        "../RE_Basics/examples/reb_19_5_2/reb_19_5_2_residual_PA0_500.png",
+        "../RE_Basics/examples/reb_19_5_2/reb_19_5_2_residual_PA0_525.png",
+        "../RE_Basics/examples/reb_19_5_2/reb_19_5_2_residual_PB0_475.png",
+        "../RE_Basics/examples/reb_19_5_2/reb_19_5_2_residual_PB0_500.png",
+        "../RE_Basics/examples/reb_19_5_2/reb_19_5_2_residual_PB0_525.png",
+        "../RE_Basics/examples/reb_19_5_2/reb_19_5_2_residual_tf_475.png",
+        "../RE_Basics/examples/reb_19_5_2/reb_19_5_2_residual_tf_500.png",
+        "../RE_Basics/examples/reb_19_5_2/reb_19_5_2_residual_tf_525.png",
+        "../RE_Basics/examples/reb_19_5_2/reb_19_5_2_resp_fcn_params.csv",
+        "../RE_Basics/examples/reb_19_5_2/reb_19_5_2_lin_params.csv",
+        "../RE_Basics/examples/reb_19_5_2/reb_19_5_2_linear_475.png",
+        "../RE_Basics/examples/reb_19_5_2/reb_19_5_2_linear_500.png",
+        "../RE_Basics/examples/reb_19_5_2/reb_19_5_2_linear_525.png",
+        "../RE_Basics/examples/reb_19_5_2/reb_19_5_2_Arrhenius_lin.png",
+        "../RE_Basics/examples/reb_19_5_2/reb_19_5_2_Arrhenius_resp_fcn.png",
+        "../RE_Basics/examples/reb_19_5_2/reb_19_5_2_Arrhenius_lin.csv",
+        "../RE_Basics/examples/reb_19_5_2/reb_19_5_2_Arrhenius_resp_fcn.csv"
+    shell:
+        """
+        rm -rf ../RE_Basics/examples/reb_19_5_2
+        mkdir ../RE_Basics/examples/reb_19_5_2
+        cp reb_19_5_2/narrative.qmd ../RE_Basics/examples/reb_19_5_2
+        cp reb_19_5_2/equations.qmd ../RE_Basics/examples/reb_19_5_2
+        cp reb_19_5_2/python/reb_19_5_2_data.csv ../RE_Basics/examples/reb_19_5_2
+        cp reb_19_5_2/python/reb_19_5_2_data_475.csv ../RE_Basics/examples/reb_19_5_2
+        cp reb_19_5_2/python/reb_19_5_2_data_500.csv ../RE_Basics/examples/reb_19_5_2
+        cp reb_19_5_2/python/reb_19_5_2_data_525.csv ../RE_Basics/examples/reb_19_5_2
+        cp reb_19_5_2/python/reb_19_5_2_parity_475.png ../RE_Basics/examples/reb_19_5_2
+        cp reb_19_5_2/python/reb_19_5_2_parity_500.png ../RE_Basics/examples/reb_19_5_2
+        cp reb_19_5_2/python/reb_19_5_2_parity_525.png ../RE_Basics/examples/reb_19_5_2
+        cp reb_19_5_2/python/reb_19_5_2_residual_PA0_475.png ../RE_Basics/examples/reb_19_5_2
+        cp reb_19_5_2/python/reb_19_5_2_residual_PA0_500.png ../RE_Basics/examples/reb_19_5_2
+        cp reb_19_5_2/python/reb_19_5_2_residual_PA0_525.png ../RE_Basics/examples/reb_19_5_2
+        cp reb_19_5_2/python/reb_19_5_2_residual_PB0_475.png ../RE_Basics/examples/reb_19_5_2
+        cp reb_19_5_2/python/reb_19_5_2_residual_PB0_500.png ../RE_Basics/examples/reb_19_5_2
+        cp reb_19_5_2/python/reb_19_5_2_residual_PB0_525.png ../RE_Basics/examples/reb_19_5_2
+        cp reb_19_5_2/python/reb_19_5_2_residual_tf_475.png ../RE_Basics/examples/reb_19_5_2
+        cp reb_19_5_2/python/reb_19_5_2_residual_tf_500.png ../RE_Basics/examples/reb_19_5_2
+        cp reb_19_5_2/python/reb_19_5_2_residual_tf_525.png ../RE_Basics/examples/reb_19_5_2
+        cp reb_19_5_2/python/reb_19_5_2_resp_fcn_params.csv ../RE_Basics/examples/reb_19_5_2
+        cp reb_19_5_2/python/reb_19_5_2_lin_params.csv ../RE_Basics/examples/reb_19_5_2
+        cp reb_19_5_2/python/reb_19_5_2_linear_475.png ../RE_Basics/examples/reb_19_5_2
+        cp reb_19_5_2/python/reb_19_5_2_linear_500.png ../RE_Basics/examples/reb_19_5_2
+        cp reb_19_5_2/python/reb_19_5_2_linear_525.png ../RE_Basics/examples/reb_19_5_2
+        cp reb_19_5_2/python/reb_19_5_2_Arrhenius_lin.csv ../RE_Basics/examples/reb_19_5_2
+        cp reb_19_5_2/python/reb_19_5_2_Arrhenius_lin.png ../RE_Basics/examples/reb_19_5_2
+        cp reb_19_5_2/python/reb_19_5_2_Arrhenius_resp_fcn.csv ../RE_Basics/examples/reb_19_5_2
+        cp reb_19_5_2/python/reb_19_5_2_Arrhenius_resp_fcn.png ../RE_Basics/examples/reb_19_5_2
+        """
+
+rule reb_19_5_2_score:
+    input:
+        "reb_19_5_2/python/reb_19_5_2_data_filenames.csv",
+        "reb_19_5_2/python/reb_19_5_2_create_data_blocks.py",
+        "reb_19_5_2/python/reb_19_5_2_resp_fcn.py",
+        "reb_19_5_2/python/reb_19_5_2_data_475.csv",
+        "reb_19_5_2/python/reb_19_5_2_data_500.csv",
+        "reb_19_5_2/python/reb_19_5_2_data_525.csv",
+        "reb_19_5_2/python/reb_19_5_2_linear.py",
+        "reb_19_5_2/python/reb_19_5_2_Arrhenius.py"
+    output:
+        "../SCoRE/reb_examples/reb_19_5_2/reb_19_5_2_data_filenames.csv",
+        "../SCoRE/reb_examples/reb_19_5_2/reb_19_5_2_create_data_blocks.py",
+        "../SCoRE/reb_examples/reb_19_5_2/reb_19_5_2_data_475.csv",
+        "../SCoRE/reb_examples/reb_19_5_2/reb_19_5_2_data_500.csv",
+        "../SCoRE/reb_examples/reb_19_5_2/reb_19_5_2_data_525.csv",
+        "../SCoRE/reb_examples/reb_19_5_2/reb_19_5_2_resp_fcn.py",
+        "../SCoRE/reb_examples/reb_19_5_2/reb_19_5_2_linear.py",
+        "../SCoRE/reb_examples/reb_19_5_2/reb_19_5_2_Arrhenius.py"
+    shell:
+        """
+        rm -rf ../SCoRE/reb_examples/reb_19_5_2
+        mkdir ../SCoRE/reb_examples/reb_19_5_2
+        cp reb_19_5_2/python/reb_19_5_2_data_filenames.csv ../SCoRE/reb_examples/reb_19_5_2
+        cp reb_19_5_2/python/reb_19_5_2_create_data_blocks.py ../SCoRE/reb_examples/reb_19_5_2
+        cp reb_19_5_2/python/reb_19_5_2_resp_fcn.py ../SCoRE/reb_examples/reb_19_5_2
+        cp reb_19_5_2/python/reb_19_5_2_data_475.csv ../SCoRE/reb_examples/reb_19_5_2
+        cp reb_19_5_2/python/reb_19_5_2_data_500.csv ../SCoRE/reb_examples/reb_19_5_2
+        cp reb_19_5_2/python/reb_19_5_2_data_525.csv ../SCoRE/reb_examples/reb_19_5_2
+        cp reb_19_5_2/python/reb_19_5_2_linear.py ../SCoRE/reb_examples/reb_19_5_2
+        cp reb_19_5_2/python/reb_19_5_2_Arrhenius.py ../SCoRE/reb_examples/reb_19_5_2
+        """
+
