@@ -23,6 +23,28 @@ rule reb_19_5_1:
         "reb_19_5_1/python/reb_19_5_1_Arrhenius_resp_fcn.png",
         "reb_19_5_1/python/reb_19_5_1_Arrhenius_diff.csv",
         "reb_19_5_1/python/reb_19_5_1_Arrhenius_diff.png",
+        "reb_19_5_1/matlab/reb_19_5_1_resp_fcn_params.csv",
+        "reb_19_5_1/matlab/reb_19_5_1_resp_fcn_parity_65.png",
+        "reb_19_5_1/matlab/reb_19_5_1_resp_fcn_residual_CA0_65.png",
+        "reb_19_5_1/matlab/reb_19_5_1_resp_fcn_residual_tf_65.png",
+        "reb_19_5_1/matlab/reb_19_5_1_resp_fcn_parity_73.png",
+        "reb_19_5_1/matlab/reb_19_5_1_resp_fcn_residual_CA0_73.png",
+        "reb_19_5_1/matlab/reb_19_5_1_resp_fcn_residual_tf_73.png",
+        "reb_19_5_1/matlab/reb_19_5_1_resp_fcn_parity_82.png",
+        "reb_19_5_1/matlab/reb_19_5_1_resp_fcn_residual_CA0_82.png",
+        "reb_19_5_1/matlab/reb_19_5_1_resp_fcn_residual_tf_82.png",
+        "reb_19_5_1/matlab/reb_19_5_1_resp_fcn_parity_90.png",
+        "reb_19_5_1/matlab/reb_19_5_1_resp_fcn_residual_CA0_90.png",
+        "reb_19_5_1/matlab/reb_19_5_1_resp_fcn_residual_tf_90.png",
+        "reb_19_5_1/matlab/reb_19_5_1_model_65.png",
+        "reb_19_5_1/matlab/reb_19_5_1_model_73.png",
+        "reb_19_5_1/matlab/reb_19_5_1_model_82.png",
+        "reb_19_5_1/matlab/reb_19_5_1_model_90.png",
+        "reb_19_5_1/matlab/reb_19_5_1_diff_params.csv",
+        "reb_19_5_1/matlab/reb_19_5_1_Arrhenius_resp_fcn.csv",
+        "reb_19_5_1/matlab/reb_19_5_1_Arrhenius_resp_fcn.png",
+        "reb_19_5_1/matlab/reb_19_5_1_Arrhenius_diff.csv",
+        "reb_19_5_1/matlab/reb_19_5_1_Arrhenius_diff.png",
         "../RE_Basics/examples/reb_19_5_1/reb_19_5_1_data.csv",
         "../RE_Basics/examples/reb_19_5_1/narrative.qmd",
         "../RE_Basics/examples/reb_19_5_1/equations.qmd",
@@ -49,7 +71,10 @@ rule reb_19_5_1:
         "../RE_Basics/examples/reb_19_5_1/reb_19_5_1_Arrhenius_diff.csv",
         "../RE_Basics/examples/reb_19_5_1/reb_19_5_1_Arrhenius_diff.png",
         "../SCoRE/reb_examples/reb_19_5_1/reb_19_5_1.py",
-        "../SCoRE/reb_examples/reb_19_5_1/reb_19_5_1_diff.py"
+        "../SCoRE/reb_examples/reb_19_5_1/reb_19_5_1_diff.py",
+        "../SCoRE/reb_examples/reb_19_5_1/reb_19_5_1.m",
+        "../SCoRE/reb_examples/reb_19_5_1/reb_19_5_1_diff.m",
+        "../SCoRE/reb_examples/reb_19_5_1/reb_19_5_1_data.csv"
 
 rule reb_19_5_1_python:
     input:
@@ -90,9 +115,35 @@ rule reb_19_5_1_python:
 
 rule reb_19_5_1_matlab:
     input:
+        "reb_19_5_1/matlab/reb_19_5_1.m",
+        "reb_19_5_1/matlab/reb_19_5_1_diff.m"
     output:
+        "reb_19_5_1/matlab/reb_19_5_1_resp_fcn_params.csv",
+        "reb_19_5_1/matlab/reb_19_5_1_resp_fcn_parity_65.png",
+        "reb_19_5_1/matlab/reb_19_5_1_resp_fcn_residual_CA0_65.png",
+        "reb_19_5_1/matlab/reb_19_5_1_resp_fcn_residual_tf_65.png",
+        "reb_19_5_1/matlab/reb_19_5_1_resp_fcn_parity_73.png",
+        "reb_19_5_1/matlab/reb_19_5_1_resp_fcn_residual_CA0_73.png",
+        "reb_19_5_1/matlab/reb_19_5_1_resp_fcn_residual_tf_73.png",
+        "reb_19_5_1/matlab/reb_19_5_1_resp_fcn_parity_82.png",
+        "reb_19_5_1/matlab/reb_19_5_1_resp_fcn_residual_CA0_82.png",
+        "reb_19_5_1/matlab/reb_19_5_1_resp_fcn_residual_tf_82.png",
+        "reb_19_5_1/matlab/reb_19_5_1_resp_fcn_parity_90.png",
+        "reb_19_5_1/matlab/reb_19_5_1_resp_fcn_residual_CA0_90.png",
+        "reb_19_5_1/matlab/reb_19_5_1_resp_fcn_residual_tf_90.png",
+        "reb_19_5_1/matlab/reb_19_5_1_model_65.png",
+        "reb_19_5_1/matlab/reb_19_5_1_model_73.png",
+        "reb_19_5_1/matlab/reb_19_5_1_model_82.png",
+        "reb_19_5_1/matlab/reb_19_5_1_model_90.png",
+        "reb_19_5_1/matlab/reb_19_5_1_diff_params.csv",
+        "reb_19_5_1/matlab/reb_19_5_1_Arrhenius_resp_fcn.csv",
+        "reb_19_5_1/matlab/reb_19_5_1_Arrhenius_resp_fcn.png",
+        "reb_19_5_1/matlab/reb_19_5_1_Arrhenius_diff.csv",
+        "reb_19_5_1/matlab/reb_19_5_1_Arrhenius_diff.png",
     shell:
         """
+        matlab -nodisplay -r "cd('reb_19_5_1/matlab');reb_19_5_1;exit"
+        matlab -nodisplay -r "cd('reb_19_5_1/matlab');reb_19_5_1_diff;exit"
         """
 
 rule reb_19_5_1_re_basics:
@@ -183,10 +234,15 @@ rule reb_19_5_1_score:
     input:
         "reb_19_5_1/reb_19_5_1_data.csv",
         "reb_19_5_1/python/reb_19_5_1.py",
-        "reb_19_5_1/python/reb_19_5_1_diff.py"
+        "reb_19_5_1/python/reb_19_5_1_diff.py",
+        "reb_19_5_1/matlab/reb_19_5_1.m",
+        "reb_19_5_1/matlab/reb_19_5_1_diff.m"
     output:
         "../SCoRE/reb_examples/reb_19_5_1/reb_19_5_1.py",
-        "../SCoRE/reb_examples/reb_19_5_1/reb_19_5_1_diff.py"
+        "../SCoRE/reb_examples/reb_19_5_1/reb_19_5_1_diff.py",
+        "../SCoRE/reb_examples/reb_19_5_1/reb_19_5_1.m",
+        "../SCoRE/reb_examples/reb_19_5_1/reb_19_5_1_diff.m",
+        "../SCoRE/reb_examples/reb_19_5_1/reb_19_5_1_data.csv"
     shell:
         """
         rm -rf ../SCoRE/reb_examples/reb_19_5_1
@@ -194,5 +250,7 @@ rule reb_19_5_1_score:
         cp reb_19_5_1/reb_19_5_1_data.csv ../SCoRE/reb_examples/reb_19_5_1
         cp reb_19_5_1/python/reb_19_5_1.py ../SCoRE/reb_examples/reb_19_5_1
         cp reb_19_5_1/python/reb_19_5_1_diff.py ../SCoRE/reb_examples/reb_19_5_1
+        cp reb_19_5_1/matlab/reb_19_5_1.m ../SCoRE/reb_examples/reb_19_5_1
+        cp reb_19_5_1/matlab/reb_19_5_1_diff.m ../SCoRE/reb_examples/reb_19_5_1
         """
 
