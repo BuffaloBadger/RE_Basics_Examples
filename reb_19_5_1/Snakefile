@@ -1,11 +1,6 @@
 rule reb_19_5_1:
     input:
-        "reb_19_5_1/python/reb_19_5_1_data.csv",
-        "reb_19_5_1/python/reb_19_5_1_data_65.csv",
-        "reb_19_5_1/python/reb_19_5_1_data_73.csv",
-        "reb_19_5_1/python/reb_19_5_1_data_82.csv",
-        "reb_19_5_1/python/reb_19_5_1_data_90.csv",
-        "reb_19_5_1/python/reb_19_5_1_data_filenames.csv",
+        "reb_19_5_1/reb_19_5_1_data.csv",
         "reb_19_5_1/python/reb_19_5_1_resp_fcn_params.csv",
         "reb_19_5_1/python/reb_19_5_1_resp_fcn_parity_65.png",
         "reb_19_5_1/python/reb_19_5_1_resp_fcn_residual_CA0_65.png",
@@ -53,29 +48,16 @@ rule reb_19_5_1:
         "../RE_Basics/examples/reb_19_5_1/reb_19_5_1_Arrhenius_resp_fcn.png",
         "../RE_Basics/examples/reb_19_5_1/reb_19_5_1_Arrhenius_diff.csv",
         "../RE_Basics/examples/reb_19_5_1/reb_19_5_1_Arrhenius_diff.png",
-        "../SCoRE/reb_examples/reb_19_5_1/reb_19_5_1_create_data_blocks.py",
-        "../SCoRE/reb_examples/reb_19_5_1/reb_19_5_1_data_65.csv",
-        "../SCoRE/reb_examples/reb_19_5_1/reb_19_5_1_data_73.csv",
-        "../SCoRE/reb_examples/reb_19_5_1/reb_19_5_1_data_82.csv",
-        "../SCoRE/reb_examples/reb_19_5_1/reb_19_5_1_data_90.csv",
-        "../SCoRE/reb_examples/reb_19_5_1/reb_19_5_1_data_filenames.csv",
-        "../SCoRE/reb_examples/reb_19_5_1/reb_19_5_1_resp_fcn.py",
+        "../SCoRE/reb_examples/reb_19_5_1/reb_19_5_1.py",
         "../SCoRE/reb_examples/reb_19_5_1/reb_19_5_1_diff.py"
 
 rule reb_19_5_1_python:
     input:
         "reb_19_5_1/python/reb_19_5_1_data_generator.py",
-        "reb_19_5_1/python/reb_19_5_1_create_data_blocks.py",
-        "reb_19_5_1/python/reb_19_5_1_resp_fcn.py",
-        "reb_19_5_1/python/reb_19_5_1_diff.py",
-        "reb_19_5_1/python/reb_19_5_1_Arrhenius.py"
+        "reb_19_5_1/python/reb_19_5_1.py",
+        "reb_19_5_1/python/reb_19_5_1_diff.py"
     output:
-        "reb_19_5_1/python/reb_19_5_1_data.csv",
-        "reb_19_5_1/python/reb_19_5_1_data_65.csv",
-        "reb_19_5_1/python/reb_19_5_1_data_73.csv",
-        "reb_19_5_1/python/reb_19_5_1_data_82.csv",
-        "reb_19_5_1/python/reb_19_5_1_data_90.csv",
-        "reb_19_5_1/python/reb_19_5_1_data_filenames.csv",
+        "reb_19_5_1/reb_19_5_1_data.csv",
         "reb_19_5_1/python/reb_19_5_1_resp_fcn_params.csv",
         "reb_19_5_1/python/reb_19_5_1_resp_fcn_parity_65.png",
         "reb_19_5_1/python/reb_19_5_1_resp_fcn_residual_CA0_65.png",
@@ -102,10 +84,8 @@ rule reb_19_5_1_python:
     shell:
         """
         python3 reb_19_5_1/python/reb_19_5_1_data_generator.py
-        python3 reb_19_5_1/python/reb_19_5_1_create_data_blocks.py
-        python3 reb_19_5_1/python/reb_19_5_1_resp_fcn.py
+        python3 reb_19_5_1/python/reb_19_5_1.py
         python3 reb_19_5_1/python/reb_19_5_1_diff.py
-        python3 reb_19_5_1/python/reb_19_5_1_Arrhenius.py
         """
 
 rule reb_19_5_1_matlab:
@@ -201,39 +181,18 @@ rule reb_19_5_1_re_basics:
 
 rule reb_19_5_1_score:
     input:
-        "reb_19_5_1/python/reb_19_5_1_data.csv",
-        "reb_19_5_1/python/reb_19_5_1_create_data_blocks.py",
-        "reb_19_5_1/python/reb_19_5_1_data_65.csv",
-        "reb_19_5_1/python/reb_19_5_1_data_73.csv",
-        "reb_19_5_1/python/reb_19_5_1_data_82.csv",
-        "reb_19_5_1/python/reb_19_5_1_data_90.csv",
-        "reb_19_5_1/python/reb_19_5_1_data_filenames.csv",
-        "reb_19_5_1/python/reb_19_5_1_resp_fcn.py",
-        "reb_19_5_1/python/reb_19_5_1_diff.py",
-        "reb_19_5_1/python/reb_19_5_1_Arrhenius.py"
+        "reb_19_5_1/reb_19_5_1_data.csv",
+        "reb_19_5_1/python/reb_19_5_1.py",
+        "reb_19_5_1/python/reb_19_5_1_diff.py"
     output:
-        "../SCoRE/reb_examples/reb_19_5_1/reb_19_5_1_create_data_blocks.py",
-        "../SCoRE/reb_examples/reb_19_5_1/reb_19_5_1_data_65.csv",
-        "../SCoRE/reb_examples/reb_19_5_1/reb_19_5_1_data_73.csv",
-        "../SCoRE/reb_examples/reb_19_5_1/reb_19_5_1_data_82.csv",
-        "../SCoRE/reb_examples/reb_19_5_1/reb_19_5_1_data_90.csv",
-        "../SCoRE/reb_examples/reb_19_5_1/reb_19_5_1_data_filenames.csv",
-        "../SCoRE/reb_examples/reb_19_5_1/reb_19_5_1_resp_fcn.py",
-        "../SCoRE/reb_examples/reb_19_5_1/reb_19_5_1_diff.py",
-        "../SCoRE/reb_examples/reb_19_5_1/reb_19_5_1_Arrhenius.py"
+        "../SCoRE/reb_examples/reb_19_5_1/reb_19_5_1.py",
+        "../SCoRE/reb_examples/reb_19_5_1/reb_19_5_1_diff.py"
     shell:
         """
         rm -rf ../SCoRE/reb_examples/reb_19_5_1
         mkdir ../SCoRE/reb_examples/reb_19_5_1
-        cp reb_19_5_1/python/reb_19_5_1_data.csv ../SCoRE/reb_examples/reb_19_5_1
-        cp reb_19_5_1/python/reb_19_5_1_create_data_blocks.py ../SCoRE/reb_examples/reb_19_5_1
-        cp reb_19_5_1/python/reb_19_5_1_data_65.csv ../SCoRE/reb_examples/reb_19_5_1
-        cp reb_19_5_1/python/reb_19_5_1_data_73.csv ../SCoRE/reb_examples/reb_19_5_1
-        cp reb_19_5_1/python/reb_19_5_1_data_82.csv ../SCoRE/reb_examples/reb_19_5_1
-        cp reb_19_5_1/python/reb_19_5_1_data_90.csv ../SCoRE/reb_examples/reb_19_5_1
-        cp reb_19_5_1/python/reb_19_5_1_data_filenames.csv ../SCoRE/reb_examples/reb_19_5_1
-        cp reb_19_5_1/python/reb_19_5_1_resp_fcn.py ../SCoRE/reb_examples/reb_19_5_1
+        cp reb_19_5_1/reb_19_5_1_data.csv ../SCoRE/reb_examples/reb_19_5_1
+        cp reb_19_5_1/python/reb_19_5_1.py ../SCoRE/reb_examples/reb_19_5_1
         cp reb_19_5_1/python/reb_19_5_1_diff.py ../SCoRE/reb_examples/reb_19_5_1
-        cp reb_19_5_1/python/reb_19_5_1_Arrhenius.py ../SCoRE/reb_examples/reb_19_5_1
         """
 
