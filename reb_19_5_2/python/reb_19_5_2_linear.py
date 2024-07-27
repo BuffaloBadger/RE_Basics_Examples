@@ -66,8 +66,8 @@ for T in block_temperatures:
     
     # create, show, and save a model plot
     plt.figure() 
-    plt.plot(x, y_model, color = 'k', ls='-' , label = 'model')
-    plt.plot(x, y, color = 'r', marker='o', ls='', label = 'experiment')
+    plt.plot(x, y_model, color = 'r', ls='-' , label = 'model')
+    plt.plot(x, y, color = 'k', marker='o', ls='', label = 'experiment')
     plt.xlabel("x")
     plt.ylabel("y")
     T_as_text = format(T[0],'.0f')
@@ -113,8 +113,8 @@ result.to_csv("reb_19_5_2/python/reb_19_5_2_Arrhenius_params.csv",
 # create, show, and save an Arrhenius plot
 y_pred = k0*np.exp(-E/Re/T_block)
 plt.figure()
-plt.semilogy(1/T_block,k,color='r',marker='o', ls='none')
-plt.semilogy(1/T_block,y_pred,color='k')
+plt.semilogy(1/T_block,k,color='k',marker='o', ls='none')
+plt.semilogy(1/T_block,y_pred,color='r')
 plt.xlabel('T$^{-1}$ (K$^{-1}$)')
 plt.ylabel('k (min$^{-1}$)')
 plt.xticks(rotation=25)

@@ -1,6 +1,5 @@
 """Calculations for Reaction Engineering Basics Example 19.5.2"""
 
-
 #import libraries
 import pandas as pd
 import numpy as np
@@ -137,9 +136,9 @@ def perform_the_calculations():
         
     # create, show, and save a parity plot
     plt.figure() 
-    plt.plot(fA, fA_model, color = 'r', marker='o', ls='')
+    plt.plot(fA, fA_model, color = 'k', marker='o', ls='')
     plt.plot([min(fA),max(fA)],[min(fA),max(fA)], \
-        color = 'k', ls = '-')
+        color = 'r', ls = '-')
     plt.xlabel("$f_{A, expt}$")
     plt.ylabel("$f_{A, model}$")
     plt.tight_layout()
@@ -148,8 +147,8 @@ def perform_the_calculations():
 
     # create, show and save residuals plots
     plt.figure() 
-    plt.plot(PA0, residual, color = 'r', marker='o', ls='')
-    plt.axhline(y=0, color = 'k')
+    plt.plot(PA0, residual, color = 'k', marker='o', ls='')
+    plt.axhline(y=0, color = 'r')
     plt.xlabel("$P_{A,0}$ (atm)")
     plt.ylabel("Residual")
     plt.tight_layout()
@@ -157,8 +156,8 @@ def perform_the_calculations():
     plt.show()
 
     plt.figure() 
-    plt.plot(PB0, residual, color = 'r', marker='o', ls='')
-    plt.axhline(y=0, color = 'k')
+    plt.plot(PB0, residual, color = 'k', marker='o', ls='')
+    plt.axhline(y=0, color = 'r')
     plt.xlabel("$P_{B,0}$ (atm)")
     plt.ylabel("Residual")
     plt.tight_layout()
@@ -166,8 +165,8 @@ def perform_the_calculations():
     plt.show()
 
     plt.figure() 
-    plt.plot(tf, residual, color = 'r', marker='o', ls='')
-    plt.axhline(y=0, color = 'k')
+    plt.plot(tf, residual, color = 'k', marker='o', ls='')
+    plt.axhline(y=0, color = 'r')
     plt.xlabel("$t_f$ (min)")
     plt.ylabel("Residual")
     plt.tight_layout()
@@ -175,8 +174,8 @@ def perform_the_calculations():
     plt.show()
 
     plt.figure() 
-    plt.plot(T, residual, color = 'r', marker='o', ls='')
-    plt.axhline(y=0, color = 'k')
+    plt.plot(T, residual, color = 'k', marker='o', ls='')
+    plt.axhline(y=0, color = 'r')
     plt.xlabel("T (°C)")
     plt.ylabel("Residual")
     plt.tight_layout()
