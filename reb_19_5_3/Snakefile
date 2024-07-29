@@ -46,14 +46,14 @@ rule reb_19_5_3_matlab:
         "reb_19_5_3/matlab/reb_19_5_3_tf_residuals.png"
     shell:
         """
-         matlab -nodisplay -r "cd('reb_19_5_3/matlab');reb_19_5_3;exit"
+        matlab -nodisplay -r "cd('reb_19_5_3/matlab');reb_19_5_3;exit"
         """
 
 rule reb_19_5_3_re_basics:
     input:
         "reb_19_5_3/narrative.qmd",
         "reb_19_5_3/equations.qmd",
-        "reb_19_5_3/python/reb_19_5_3_data.csv",
+        "reb_19_5_3/reb_19_5_3_data.csv",
         "reb_19_5_3/python/reb_19_5_3_results.csv",
         "reb_19_5_3/python/reb_19_5_3_parity.png",
         "reb_19_5_3/python/reb_19_5_3_PA0_residuals.png",

@@ -86,7 +86,7 @@ def predicted_responses(adj_inputs, log_Vmax_guess, log_Km_guess):
 # function that performs the calculations
 def perform_the_calculations():
     # Read the experimental data into a dataframe
-    df = pd.read_csv('reb_19_5_4/python/reb_19_5_4_data.csv')
+    df = pd.read_csv('reb_19_5_4/reb_19_5_4_data.csv')
             # columns: CS0, tf, CPf
 
     # extract the data as arrays
@@ -139,8 +139,8 @@ def perform_the_calculations():
 
     # create a parity plot
     plt.figure(1) 
-    plt.plot(CPf, CP_model, color = 'r', marker='o', ls='')
-    plt.plot([np.min(CPf), np.max(CPf)], [np.min(CPf), np.max(CPf)], color = 'k')
+    plt.plot(CPf, CP_model, color = 'k', marker='o', ls='')
+    plt.plot([np.min(CPf), np.max(CPf)], [np.min(CPf), np.max(CPf)], color = 'r')
     plt.xlabel("experimental response (mmol L$^{-1}$)")
     plt.ylabel("model-predicted response (mmol L$^{-1}$)")
 
@@ -150,24 +150,24 @@ def perform_the_calculations():
 
     # create a residuals plot for the reaction time
     plt.figure(2) 
-    plt.plot(tf, residuals, color = 'r', marker='o', ls='')
-    plt.axhline(y=0, color = 'k')
+    plt.plot(tf, residuals, color = 'k', marker='o', ls='')
+    plt.axhline(y=0, color = 'r')
     plt.xlabel("Reaction time (s)")
     plt.ylabel("Residual (mmol L$^{-1}$)")
 
     # save and show the residuals plot for the reaction time
-    plt.savefig('reb_19_5_4/python/reb_19_5_4_residuals_vs_tf.png')
+    plt.savefig('reb_19_5_4/python/reb_19_5_4_tf_residuals.png')
     plt.show()
 
     # create a residuals plot for the initial substrate concentration
     plt.figure(3) 
-    plt.plot(CS0, residuals, color = 'r', marker='o', ls='')
-    plt.axhline(y=0, color = 'k')
+    plt.plot(CS0, residuals, color = 'k', marker='o', ls='')
+    plt.axhline(y=0, color = 'r')
     plt.xlabel("Initial Substrate Concentration (mmol L$^{-1}$)")
     plt.ylabel("Residual (mmol L$^{-1}$)")
 
     # save and show the residuals plot for the initial substrate concentrationfilename = filepath + 'reb_19_4_residuals_vs_CS.png'
-    plt.savefig('reb_19_5_4/python/reb_19_5_4_residuals_vs_CS0.png')
+    plt.savefig('reb_19_5_4/python/reb_19_5_4_CS0_residuals.png')
     plt.show()
 
 if __name__=="__main__":
