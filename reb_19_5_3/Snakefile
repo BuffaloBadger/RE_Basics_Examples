@@ -1,10 +1,14 @@
 rule reb_19_5_3:
     input: 
-        "reb_19_5_3/python/reb_19_5_3_data.csv",
+        "reb_19_5_3/reb_19_5_3_data.csv",
         "reb_19_5_3/python/reb_19_5_3_results.csv",
         "reb_19_5_3/python/reb_19_5_3_parity.png",
         "reb_19_5_3/python/reb_19_5_3_PA0_residuals.png",
         "reb_19_5_3/python/reb_19_5_3_tf_residuals.png",
+        "reb_19_5_3/matlab/reb_19_5_3_results.csv",
+        "reb_19_5_3/matlab/reb_19_5_3_parity.png",
+        "reb_19_5_3/matlab/reb_19_5_3_PA0_residuals.png",
+        "reb_19_5_3/matlab/reb_19_5_3_tf_residuals.png",
         "../RE_Basics/examples/reb_19_5_3/narrative.qmd",
         "../RE_Basics/examples/reb_19_5_3/equations.qmd",
         "../RE_Basics/examples/reb_19_5_3/reb_19_5_3_data.csv",
@@ -13,6 +17,7 @@ rule reb_19_5_3:
         "../RE_Basics/examples/reb_19_5_3/reb_19_5_3_PA0_residuals.png",
         "../RE_Basics/examples/reb_19_5_3/reb_19_5_3_tf_residuals.png",
         "../SCoRE/reb_examples/reb_19_5_3/reb_19_5_3.py",
+        "../SCoRE/reb_examples/reb_19_5_3/reb_19_5_3.m",
         "../SCoRE/reb_examples/reb_19_5_3/reb_19_5_3_data.csv"
 
 rule reb_19_5_3_python:
@@ -20,7 +25,7 @@ rule reb_19_5_3_python:
         "reb_19_5_3/python/reb_19_5_3_bstr_data_generator.py",
         "reb_19_5_3/python/reb_19_5_3.py"
     output:
-        "reb_19_5_3/python/reb_19_5_3_data.csv",
+        "reb_19_5_3/reb_19_5_3_data.csv",
         "reb_19_5_3/python/reb_19_5_3_results.csv",
         "reb_19_5_3/python/reb_19_5_3_parity.png",
         "reb_19_5_3/python/reb_19_5_3_PA0_residuals.png",
@@ -33,12 +38,15 @@ rule reb_19_5_3_python:
 
 rule reb_19_5_3_matlab:
     input:
-        
+        "reb_19_5_3/matlab/reb_19_5_3.m"
     output:
-        
+        "reb_19_5_3/matlab/reb_19_5_3_results.csv",
+        "reb_19_5_3/matlab/reb_19_5_3_parity.png",
+        "reb_19_5_3/matlab/reb_19_5_3_PA0_residuals.png",
+        "reb_19_5_3/matlab/reb_19_5_3_tf_residuals.png"
     shell:
         """
-        
+         matlab -nodisplay -r "cd('reb_19_5_3/matlab');reb_19_5_3;exit"
         """
 
 rule reb_19_5_3_re_basics:
@@ -64,7 +72,7 @@ rule reb_19_5_3_re_basics:
         mkdir ../RE_Basics/examples/reb_19_5_3
         cp reb_19_5_3/narrative.qmd ../RE_Basics/examples/reb_19_5_3
         cp reb_19_5_3/equations.qmd ../RE_Basics/examples/reb_19_5_3
-        cp reb_19_5_3/python/reb_19_5_3_data.csv ../RE_Basics/examples/reb_19_5_3
+        cp reb_19_5_3/reb_19_5_3_data.csv ../RE_Basics/examples/reb_19_5_3
         cp reb_19_5_3/python/reb_19_5_3_results.csv ../RE_Basics/examples/reb_19_5_3
         cp reb_19_5_3/python/reb_19_5_3_parity.png ../RE_Basics/examples/reb_19_5_3
         cp reb_19_5_3/python/reb_19_5_3_PA0_residuals.png ../RE_Basics/examples/reb_19_5_3
@@ -74,14 +82,17 @@ rule reb_19_5_3_re_basics:
 rule reb_19_5_3_score:
     input:
         "reb_19_5_3/python/reb_19_5_3.py",
-        "reb_19_5_3/python/reb_19_5_3_data.csv"
+        "reb_19_5_3/reb_19_5_3_data.csv",
+        "reb_19_5_3/matlab/reb_19_5_3.m"
     output:
         "../SCoRE/reb_examples/reb_19_5_3/reb_19_5_3.py",
-        "../SCoRE/reb_examples/reb_19_5_3/reb_19_5_3_data.csv"
+        "../SCoRE/reb_examples/reb_19_5_3/reb_19_5_3_data.csv",
+        "../SCoRE/reb_examples/reb_19_5_3/reb_19_5_3.m"
     shell:
         """
         rm -rf ../SCoRE/reb_examples/reb_19_5_3
         mkdir ../SCoRE/reb_examples/reb_19_5_3
         cp reb_19_5_3/python/reb_19_5_3.py ../SCoRE/reb_examples/reb_19_5_3
-        cp reb_19_5_3/python/reb_19_5_3_data.csv ../SCoRE/reb_examples/reb_19_5_3
+        cp reb_19_5_3/reb_19_5_3_data.csv ../SCoRE/reb_examples/reb_19_5_3
+        cp reb_19_5_3/matlab/reb_19_5_3.m ../SCoRE/reb_examples/reb_19_5_3
         """

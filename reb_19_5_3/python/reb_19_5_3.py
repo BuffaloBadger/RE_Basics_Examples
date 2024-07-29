@@ -99,7 +99,7 @@ def predicted_responses(adj_inputs, k_log_10):
 # function that performs the calculations
 def perform_the_calculations():
     # Read the experimental data into a dataframe
-    df = pd.read_csv('reb_19_5_3/python/reb_19_5_3_data.csv')
+    df = pd.read_csv('reb_19_5_3/reb_19_5_3_data.csv')
             # columns: PA0, tf, P
 
     # extract the data as arrays
@@ -112,10 +112,6 @@ def perform_the_calculations():
 
     # make a guess for log_10 of k
     par_guess = [-6.0]
-
-    # check the guess
-    check = predicted_responses(adjusted_inputs[0:1,:],par_guess[0])
-    print('\nPredicted pressure for first data point using guess: %.3g'%(check[0]))
 
     # estimate log_10 of k
     beta, beta_ci, r_squared = fit_to_SR_data(par_guess, adjusted_inputs, Pf, 
@@ -146,8 +142,8 @@ def perform_the_calculations():
 
     # create, display and save the parity plot
     plt.figure(1) 
-    plt.plot(Pf, P_model, color = 'r', marker='o', ls='')
-    plt.plot([np.min(Pf), np.max(Pf)], [np.min(Pf), np.max(Pf)], color = 'k')
+    plt.plot(Pf, P_model, color = 'k', marker='o', ls='')
+    plt.plot([np.min(Pf), np.max(Pf)], [np.min(Pf), np.max(Pf)], color = 'r')
     plt.xlabel("Measured Pressure (atm)")
     plt.ylabel("Predicted Pressure (atm)")
     plt.savefig('reb_19_5_3/python/reb_19_5_3_parity.png')
@@ -156,8 +152,8 @@ def perform_the_calculations():
     # create, display and save the residuals plots
     # residuals vs. PA0
     plt.figure(2) 
-    plt.plot(PA0, residuals, color = 'r', marker='o', ls='')
-    plt.axhline(y=0, color = 'k')
+    plt.plot(PA0, residuals, color = 'k', marker='o', ls='')
+    plt.axhline(y=0, color = 'r')
     plt.xlabel("Initial Partial Pressure of A (atm)")
     plt.ylabel("Residual (atm)")
     plt.savefig('reb_19_5_3/python/reb_19_5_3_PA0_residuals.png')
@@ -165,8 +161,8 @@ def perform_the_calculations():
 
     # residuals vs. tRxn
     plt.figure(2) 
-    plt.plot(tf, residuals, color = 'r', marker='o', ls='')
-    plt.axhline(y=0, color = 'k')
+    plt.plot(tf, residuals, color = 'k', marker='o', ls='')
+    plt.axhline(y=0, color = 'r')
     plt.xlabel("Reaction time (min)")
     plt.ylabel("Residual (atm)")
     plt.savefig('reb_19_5_3/python/reb_19_5_3_tf_residuals.png')
