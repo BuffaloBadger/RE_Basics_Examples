@@ -152,7 +152,7 @@ def perform_the_calculations():
     plt.figure(2) 
     plt.plot(tf, residuals, color = 'k', marker='o', ls='')
     plt.axhline(y=0, color = 'r')
-    plt.xlabel("Reaction time (s)")
+    plt.xlabel("Reaction time (min)")
     plt.ylabel("Residual (mmol L$^{-1}$)")
 
     # save and show the residuals plot for the reaction time

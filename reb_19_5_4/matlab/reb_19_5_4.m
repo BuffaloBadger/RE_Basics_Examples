@@ -148,7 +148,7 @@ function reb_19_5_4()
         plot(tf, residual,'ok','MarkerSize',10,'LineWidth',2)
         yline(0.0,'r','LineWidth',2)
         set(gca, 'FontSize', 14);
-        xlabel('Final time (s)','FontSize', 14)
+        xlabel('Final time (min)','FontSize', 14)
         ylabel('Residual (mmol/L)','FontSize', 14)
         saveas(gcf,'reb_19_5_4_tf_residuals.png')
 
