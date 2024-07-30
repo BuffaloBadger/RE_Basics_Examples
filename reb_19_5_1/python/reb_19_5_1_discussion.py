@@ -128,8 +128,8 @@ def perform_the_calculations():
         
     # create, show, and save a parity plot
     plt.figure() 
-    plt.plot(CAf, CAf_model, color = 'r', marker='o', ls='')
-    plt.plot([min(CAf),max(CAf)],[min(CAf),max(CAf)], color = 'k', ls = '-')
+    plt.plot(CAf, CAf_model, color = 'k', marker='o', ls='')
+    plt.plot([min(CAf),max(CAf)],[min(CAf),max(CAf)], color = 'r', ls = '-')
     plt.xlabel("$C_{A, expt}$ (M)")
     plt.ylabel("$C_{A, model}$ (M)")
     plt.tight_layout()
@@ -138,8 +138,8 @@ def perform_the_calculations():
 
     # create, show and save residuals plots
     plt.figure() 
-    plt.plot(CA0, residual, color = 'r', marker='o', ls='')
-    plt.axhline(y=0, color = 'k')
+    plt.plot(CA0, residual, color = 'k', marker='o', ls='')
+    plt.axhline(y=0, color = 'r')
     plt.xlabel("$C_{A,0}$ (M)")
     plt.ylabel("Residual (M)")
     plt.tight_layout()
@@ -147,8 +147,8 @@ def perform_the_calculations():
     plt.show()
 
     plt.figure() 
-    plt.plot(tf, residual, color = 'r', marker='o', ls='')
-    plt.axhline(y=0, color = 'k')
+    plt.plot(tf, residual, color = 'k', marker='o', ls='')
+    plt.axhline(y=0, color = 'r')
     plt.xlabel("$t_f$ (min)")
     plt.ylabel("Residual (M)")
     plt.tight_layout()
@@ -156,8 +156,8 @@ def perform_the_calculations():
     plt.show()
 
     plt.figure() 
-    plt.plot(T, residual, color = 'r', marker='o', ls='')
-    plt.axhline(y=0, color = 'k')
+    plt.plot(T, residual, color = 'k', marker='o', ls='')
+    plt.axhline(y=0, color = 'r')
     plt.xlabel("T (°C)")
     plt.ylabel("Residual (M)")
     plt.tight_layout()
