@@ -7,7 +7,7 @@ import random
 V = 0.1 # L
 
 # kinetics parameters
-k = 5.29E9*np.exp(-12100/1.987/(35 + 273.15))
+k = 5.29E9*np.exp(-12100/1.987/(35 + 273.15)) # 14 mol/L/min
 print('The rate coefficient used to generate these data was %.2g '%(k) + \
         'M min')
 

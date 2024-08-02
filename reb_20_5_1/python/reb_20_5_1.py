@@ -200,6 +200,8 @@ def perform_the_calculations():
         ['k_upper_limit', f'{k_ul:.3g}', 'L mol^-1^ min^-1^'],
         ['R_squared', f'{r_squared:.3g}', '']]
     result = pd.DataFrame(data, columns=['item','value','units'])
+    print(" ")
+    print(result)
     result.to_csv("reb_20_5_1/python/reb_20_5_1_results.csv", index=False)
 
 if __name__=="__main__":

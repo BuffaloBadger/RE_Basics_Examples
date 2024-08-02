@@ -1,0 +1,8 @@
+
+$$
+A \leftrightarrows Y + Z \tag{1}
+$$
+
+$$
+r = k_fC_A^2 - k_rC_YC_Z \tag{2}
+$$
