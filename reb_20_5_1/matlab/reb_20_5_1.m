@@ -5,11 +5,13 @@ function reb_20_5_1()
     V = 0.1; % L
 
     % globally available variables
-    Vdot_current = nan;
-    CA_0_current = nan;
-    CB_0_current = nan;
-    CY_0_current = nan;
-    CZ_0_current = nan;
+    Vdot = nan;
+    CA_0 = nan;
+    CB_0 = nan;
+    CY_0 = nan;
+    CZ_0 = nan;
+    CY_1 = nan;
+    i_expt_current = -1;
     k_current = nan;
 
     % residuals function
@@ -21,12 +23,12 @@ function reb_20_5_1()
         nZ_1 = guess(4);
 
         % calculate the other unknown quantities
-        nA_0 = CA_0_current*Vdot_current;
-        nB_0 = CB_0_current*Vdot_current;
-        nY_0 = CY_0_current*Vdot_current;
-        nZ_0 = CZ_0_current*Vdot_current;
-        CA_1 = nA_1/Vdot_current;
-        CB_1 = nB_1/Vdot_current;
+        nA_0 = CA_0(i_expt_current)*Vdot(i_expt_current);
+        nB_0 = CB_0(i_expt_current)*Vdot(i_expt_current);
+        nY_0 = CY_0(i_expt_current)*Vdot(i_expt_current);
+        nZ_0 = CZ_0(i_expt_current)*Vdot(i_expt_current);
+        CA_1 = nA_1/Vdot(i_expt_current);
+        CB_1 = nB_1/Vdot(i_expt_current);
         r = k_current*CA_1*CB_1;
     
         % evaluate the residuals
@@ -42,7 +44,16 @@ function reb_20_5_1()
     % CSTR model function
     function [nA_1, nB_1, nY_1, nZ_1] = unknowns()
         % guess the solution
-        initial_guess = [0.25; 0.25; 0.25; 0.25];
+        nA_0 = CA_0(i_expt_current)*Vdot(i_expt_current);
+        nB_0 = CB_0(i_expt_current)*Vdot(i_expt_current);
+        nY_0 = CY_0(i_expt_current)*Vdot(i_expt_current);
+        nZ_0 = CZ_0(i_expt_current)*Vdot(i_expt_current);
+        nY_1 = CY_1(i_expt_current)*Vdot(i_expt_current);
+        xi = nY_1 - nY_0;
+        nA_1 = nA_0 - xi;
+        nB_1 = nB_0 - xi;
+        nZ_1 = nZ_0 + xi;
+        initial_guess = [nA_1; nB_1; nY_1; nZ_1];
          
 	    % solve the ATEs
         [soln, flag, message] = solve_ates(@residuals, initial_guess);
@@ -73,18 +84,14 @@ function reb_20_5_1()
 
         % loop through the experiments
         for i = 1:n_expt
-            % get the inputs and make them globally available
-            Vdot_current = expt_inputs(i,1);
-            CA_0_current = expt_inputs(i,2);
-            CB_0_current = expt_inputs(i,3);
-            CY_0_current = expt_inputs(i,4);
-            CZ_0_current = expt_inputs(i,5);
+            % make the experiment index globally available
+            i_expt_current = i;
 
             % solve the BSTR design equations
             [~, ~, nY_1,~] = unknowns();
 
             % calculate the response
-            CY_1_model(i) = nY_1/Vdot_current;
+            CY_1_model(i) = nY_1/Vdot(i);
         end
     end
 
@@ -96,9 +103,13 @@ function reb_20_5_1()
         data = table2array(data_table(:,:));
 
         % extract the adjusted inputs and response
-        adj_inputs = data(:,1:5);
-        adj_inputs(:,1) = adj_inputs(:,1)*1.0E-3;
+        Vdot = data(:,1)*1.0E-3;
+        CA_0 = data(:,2);
+        CB_0 = data(:,3);
+        CY_0 = data(:,4);
+        CZ_0 = data(:,5);
         CY_1 = data(:,6);
+        adj_inputs = data(:,1:5);
 
         % guess the parameters
         par_guess = 0.0;
@@ -140,7 +151,6 @@ function reb_20_5_1()
 
         % create show, and save residuals plots
         figure
-        Vdot = adj_inputs(:,1);
         plot(Vdot, residual,'ok','MarkerSize',10,'LineWidth',2)
         yline(0.0,'r','LineWidth',2)
         set(gca, 'FontSize', 14);
@@ -148,9 +158,7 @@ function reb_20_5_1()
         ylabel('Residual (M)','FontSize', 14)
         saveas(gcf,'reb_20_5_1_Vdot_residual.png')
 
-        % create show, and save residuals plots
         figure
-        CA_0 = adj_inputs(:,2);
         plot(CA_0, residual,'ok','MarkerSize',10,'LineWidth',2)
         yline(0.0,'r','LineWidth',2)
         set(gca, 'FontSize', 14);
@@ -158,9 +166,7 @@ function reb_20_5_1()
         ylabel('Residual (M)','FontSize', 14)
         saveas(gcf,'reb_20_5_1_CA0_residual.png')
 
-        % create show, and save residuals plots
         figure
-        CB_0 = adj_inputs(:,3);
         plot(CB_0, residual,'ok','MarkerSize',10,'LineWidth',2)
         yline(0.0,'r','LineWidth',2)
         set(gca, 'FontSize', 14);
@@ -168,9 +174,7 @@ function reb_20_5_1()
         ylabel('Residual (M)','FontSize', 14)
         saveas(gcf,'reb_20_5_1_CB0_residual.png')
 
-        % create show, and save residuals plots
         figure
-        CY_0 = adj_inputs(:,4);
         plot(CY_0, residual,'ok','MarkerSize',10,'LineWidth',2)
         yline(0.0,'r','LineWidth',2)
         set(gca, 'FontSize', 14);
@@ -178,9 +182,7 @@ function reb_20_5_1()
         ylabel('Residual (M)','FontSize', 14)
         saveas(gcf,'reb_20_5_1_CY0_residual.png')
 
-        % create show, and save residuals plots
         figure
-        CZ_0 = adj_inputs(:,5);
         plot(CZ_0, residual,'ok','MarkerSize',10,'LineWidth',2)
         yline(0.0,'r','LineWidth',2)
         set(gca, 'FontSize', 14);

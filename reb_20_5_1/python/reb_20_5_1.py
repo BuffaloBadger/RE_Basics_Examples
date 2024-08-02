@@ -11,11 +11,13 @@ import matplotlib.pyplot as plt
 V = 0.1 # L
 
 # globally available variables
-Vdot_current = float('nan')
-CA_0_current = float('nan')
-CB_0_current = float('nan')
-CY_0_current = float('nan')
-CZ_0_current = float('nan')
+Vdot = float('nan')
+CA_0 = float('nan')
+CB_0 = float('nan')
+CY_0 = float('nan')
+CZ_0 = float('nan')
+CY_1 = float('nan')
+i_expt_current = 0
 k_current = float('nan')
 
 # residuals function
@@ -27,12 +29,12 @@ def residuals(guess):
     nZ_1 = guess[3]
 
     # calculate the other unknown quantities
-    nA_0 = CA_0_current*Vdot_current
-    nB_0 = CB_0_current*Vdot_current
-    nY_0 = CY_0_current*Vdot_current
-    nZ_0 = CZ_0_current*Vdot_current
-    CA_1 = nA_1/Vdot_current
-    CB_1 = nB_1/Vdot_current
+    nA_0 = CA_0[i_expt_current]*Vdot[i_expt_current]
+    nB_0 = CB_0[i_expt_current]*Vdot[i_expt_current]
+    nY_0 = CY_0[i_expt_current]*Vdot[i_expt_current]
+    nZ_0 = CZ_0[i_expt_current]*Vdot[i_expt_current]
+    CA_1 = nA_1/Vdot[i_expt_current]
+    CB_1 = nB_1/Vdot[i_expt_current]
     r = k_current*CA_1*CB_1
 
     # evaluate the residuals
@@ -47,7 +49,16 @@ def residuals(guess):
 # CSTR model function
 def unknowns():
     # guess the solution
-    initial_guess = np.array([0.25, 0.25, 0.25, 0.25])
+    nA_0 = CA_0[i_expt_current]*Vdot[i_expt_current]
+    nB_0 = CB_0[i_expt_current]*Vdot[i_expt_current]
+    nY_0 = CY_0[i_expt_current]*Vdot[i_expt_current]
+    nZ_0 = CZ_0[i_expt_current]*Vdot[i_expt_current]
+    nY_1 = CY_1[i_expt_current]*Vdot[i_expt_current]
+    xi = nY_1 - nY_0
+    nA_1 = nA_0 - xi
+    nB_1 = nB_0 - xi
+    nZ_1 = nZ_0 + xi
+    initial_guess = np.array([nA_1, nB_1, nY_1, nZ_1])
      
 	# solve the ATEs
     soln = sp.optimize.root(residuals,initial_guess)
@@ -76,20 +87,15 @@ def predicted_responses(adj_inputs, k_log_10):
 
     # loop through the experiments in the data set
     for i, input in enumerate(adj_inputs):
-        # make the adjusted input variables globally available
-        global Vdot_current, CA_0_current, CB_0_current, CY_0_current \
-            , CZ_0_current
-        Vdot_current = input[0]
-        CA_0_current = input[1]
-        CB_0_current = input[2]
-        CY_0_current = input[3]
-        CZ_0_current = input[4]
+        # make the experiment index globally available
+        global i_expt_current
+        i_expt_current = i
 
         # solve the reactor design equations
         nA_1, nB_1, nY_1, nZ_1 = unknowns()
         
         # calculate the model-predicted response
-        CY_1_model[i] = nY_1/Vdot_current
+        CY_1_model[i] = nY_1/Vdot[i]
 
     # return the responses
     return CY_1_model
