@@ -25,8 +25,8 @@ def perform_the_calculations():
     # generate and save a model plot
     y_pred = k0*np.exp(-E/R/T)
     plt.figure()
-    plt.semilogy(1/T,k,color='r',marker='o', ls='none')
-    plt.semilogy(1/T,y_pred,color='k')
+    plt.semilogy(1/T,k,color='k',marker='o', ls='none')
+    plt.semilogy(1/T,y_pred,color='r')
     plt.xlabel('T$^{-1}$ (K$^{-1}$)')
     plt.ylabel('k (L mol$^{-1}$ min$^{-1}$)')
     # save and show the figure
