@@ -1,11 +1,11 @@
 function reb_19_5_1()
 %reb_16_5_1 Reaction Engineering Basics Example 19.5.1
 
-    % given and known 
+    % given and known constants
     V = 1.0; % L
     R = 8.314E-3; % kJ /mol /K
 
-    % make k0, E, and T globally available
+    % globally available variables
     k0_current = nan;
     E_current = nan;
     T_current = nan;
@@ -89,15 +89,9 @@ function reb_19_5_1()
         end
     end
 
-    % function that performs the calculations
-    function perform_the_calculations()
-        % read the experimental data
-        data_table = readtable('../reb_19_5_1_data.csv'...
-            , 'VariableNamingRule', 'preserve');
-        adj_inputs = table2array(data_table(:,2:4));
-        adj_inputs(:,1) = adj_inputs(:,1) + 273.15;
-        CAf = table2array(data_table(:,5));
-
+    % quantities of interest function
+    function [k0, k0_CI, E, E_CI, r_squared, CAf_model, epsilon_expt]...
+            = quantities_of_interest(adj_inputs, CAf)
         % guess the log 10 of k0 and E
         guess = [2.0; 20.0];
 
@@ -108,15 +102,28 @@ function reb_19_5_1()
 
         % extract the results
         k0 = 10^beta(1);
-        k0ll = 10^betaCI(1,1);
-        k0ul = 10^betaCI(1,2);
+        k0_CI = 10.^betaCI(1,:);
         E = beta(2);
-        Ell = betaCI(2,1);
-        Eul = betaCI(2,2);
+        E_CI = betaCI(2,:);
 
         % calculate the predicted responses and experimental residuals
         CAf_model = predicted_responses(beta, adj_inputs);
         epsilon_expt = CAf - CAf_model;
+        
+    end
+
+    % master function
+    function perform_the_calculations()
+        % read the experimental data
+        data_table = readtable('../reb_19_5_1_data.csv'...
+            , 'VariableNamingRule', 'preserve');
+        adj_inputs = table2array(data_table(:,2:4));
+        adj_inputs(:,1) = adj_inputs(:,1) + 273.15;
+        CAf = table2array(data_table(:,5));
+
+        % calculate the quantities of interest
+        [k0, k0_CI, E, E_CI, r_squared, CAf_model, epsilon_expt]...
+            = quantities_of_interest(adj_inputs, CAf);
 
         % create, show, and save a parity plot
         figure
@@ -161,7 +168,8 @@ function reb_19_5_1()
         % tabulate, show, and save the results
         item = ["k0"; "k0_lower_limit"; "k0_upper_limit"; "E"; 
             "E_lower_limit"; "E_upper_limit"; "R_squared"];
-        value = [k0; k0ll; k0ul; E; Ell; Eul; r_squared];
+        value = [k0; k0_CI(1); k0_CI(2); E; E_CI(1); E_CI(2)...
+            ; r_squared];
         units = ["min^-1^"; "min^-1^"; "min^-1^"; "kJ mol^-1^";
             "kJ mol^-1^"; "kJ mol^-1^"; ""];
         results_table = table(item, value, units);

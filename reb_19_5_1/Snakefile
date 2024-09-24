@@ -6,6 +6,11 @@ rule reb_19_5_1:
         "reb_19_5_1/python/reb_19_5_1_residuals_CA0.png",
         "reb_19_5_1/python/reb_19_5_1_residuals_tf.png",
         "reb_19_5_1/python/reb_19_5_1_residuals_T.png",
+        "reb_19_5_1/matlab/reb_19_5_1_results.csv",
+        "reb_19_5_1/matlab/reb_19_5_1_parity.png",
+        "reb_19_5_1/matlab/reb_19_5_1_residuals_CA0.png",
+        "reb_19_5_1/matlab/reb_19_5_1_residuals_tf.png",
+        "reb_19_5_1/matlab/reb_19_5_1_residuals_T.png",
         "../RE_Basics/examples/reb_19_5_1/reb_19_5_1_data.csv",
         "../RE_Basics/examples/reb_19_5_1/narrative.qmd",
         "../RE_Basics/examples/reb_19_5_1/equations.qmd",
@@ -40,7 +45,7 @@ rule reb_19_5_1_matlab:
         "reb_19_5_1/matlab/reb_19_5_1.m"
     output:
         "reb_19_5_1/matlab/reb_19_5_1_results.csv",
-        "reb_19_5_1/matlab/reb_19_5_1_parity_65.png",
+        "reb_19_5_1/matlab/reb_19_5_1_parity.png",
         "reb_19_5_1/matlab/reb_19_5_1_residuals_CA0.png",
         "reb_19_5_1/matlab/reb_19_5_1_residuals_tf.png",
         "reb_19_5_1/matlab/reb_19_5_1_residuals_T.png"
