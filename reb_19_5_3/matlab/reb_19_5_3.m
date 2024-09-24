@@ -107,7 +107,7 @@ function reb_19_5_3()
     function [k0, k0_CI, E, E_CI, r_squared, Pf_model, epsilon_expt]...
             = quantities_of_interest(adj_inputs, Pf)
         % guess the parameters
-        par_guess = [1.0; 14.0];
+        par_guess = [1.0; 15.0];
 
         % estimate the parameters
         useRelErr = false;

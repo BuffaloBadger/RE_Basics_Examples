@@ -10,7 +10,6 @@ import matplotlib.pyplot as plt
 # given and known constants
 V = 100.0 # cm^3
 P0 = 6.0 # atm
-T = 275 + 273.15 # K
 R = 82.06 # cm^3 atm/mol/K
 Ren = 1.987E-3 # kcal/mol
 
@@ -28,8 +27,8 @@ def derivatives(t,dep):
 
     # calculate the rate
     k = k0_current*np.exp(-E_current/Ren/T_current)
-    PA = nA*R*T/V
-    PB = nB*R*T/V
+    PA = nA*R*T_current/V
+    PB = nB*R*T_current/V
     if PA <= 0:
         r = 0.0
     elif PB <=0:
@@ -104,8 +103,8 @@ def predicted_responses(adj_inputs, k0, E):
 
 # quantities of interest function
 def quantities_of_interest(adjusted_inputs, Pf):
-    # make a guess for log_10 of k and E
-    par_guess = [1.0, 15.0]
+    # make a guess for k0 and E
+    par_guess = [1.0, 14.0]
 
     # estimate k0 and E
     beta, beta_ci, r_squared = fit_to_SR_data(par_guess, adjusted_inputs, Pf, 
