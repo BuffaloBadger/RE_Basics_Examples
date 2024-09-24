@@ -1,0 +1,23 @@
+rule reb_19_5_5:
+    input:
+        "../RE_Basics/examples/reb_19_5_5/spreadsheet_screenshot.png",
+        "../RE_Basics/examples/reb_19_5_5/Arrhenius_screenshot.png",
+        "../RE_Basics/examples/reb_19_5_5/475C_model_plot.png"
+
+rule reb_19_5_5_re_basics:
+    input:
+        "reb_19_5_5/spreadsheet_screenshot.png",
+        "reb_19_5_5/Arrhenius_screenshot.png",
+        "reb_19_5_5/475C_model_plot.png"
+    output:
+        "../RE_Basics/examples/reb_19_5_5/spreadsheet_screenshot.png",
+        "../RE_Basics/examples/reb_19_5_5/Arrhenius_screenshot.png",
+        "../RE_Basics/examples/reb_19_5_5/475C_model_plot.png"
+    shell:
+        """
+        rm -rf ../RE_Basics/examples/reb_19_5_5
+        mkdir ../RE_Basics/examples/reb_19_5_5
+        cp reb_19_5_5/spreadsheet_screenshot.png ../RE_Basics/examples/reb_19_5_5
+        cp reb_19_5_5/Arrhenius_screenshot.png ../RE_Basics/examples/reb_19_5_5
+        cp reb_19_5_5/475C_model_plot.png ../RE_Basics/examples/reb_19_5_5
+        """
