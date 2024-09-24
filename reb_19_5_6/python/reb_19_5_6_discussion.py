@@ -1,5 +1,4 @@
-"""Calculations for Reaction Engineering Basics Example 19.5.1 Discussion"""
-
+"""Calculations for Reaction Engineering Basics Example 19.5.6 Discussion"""
 
 #import libraries
 import pandas as pd
@@ -107,80 +106,30 @@ def perform_the_calculations():
     # combine the adjusted inputs as a matrix
     adjusted_inputs = np.transpose(np.array([T_K, CA0, tf]))
 
-    # guess the parameters
-    par_guess = [3.69E8, 67.6]
-
-    # estimate the parameters
-    beta, beta_ci, r_squared = fit_to_SR_data(par_guess, adjusted_inputs 
-            , CAf,  predicted_responses, False)
-    
-    # extract the results
-    k0 = beta[0]
-    k0_ll = beta_ci[0,0]
-    k0_ul = beta_ci[0,1]
-    E = beta[1]
-    E_ll = beta_ci[1,0]
-    E_ul = beta_ci[1,1]
+    # estimated parameters
+    k0_resp_fcn = 3.67E8
+    E_resp_fcn = 67.6
+    k0_excel = np.exp(21.685)
+    E_excel = 72.936
         
-    # calculate the model-predicted y and the residuals
-    CAf_model = predicted_responses(adjusted_inputs, k0, E)
-    residual = CAf - CAf_model
+    # calculate the model-predicted y
+    CAf_resp_fcn = predicted_responses(adjusted_inputs, k0_resp_fcn, E_resp_fcn)
+    CAf_excel = predicted_responses(adjusted_inputs, k0_excel, E_excel)
         
     # create, show, and save a parity plot
     plt.figure() 
-    plt.plot(CAf, CAf_model, color = 'k', marker='o', ls='')
-    plt.plot([min(CAf),max(CAf)],[min(CAf),max(CAf)], color = 'r', ls = '-')
+    plt.scatter(CAf, CAf_resp_fcn, facecolor='none', edgecolor = 'b', marker='o'
+                , label='Full Model')
+    plt.scatter(CAf,CAf_excel, facecolors='none', edgecolors =  'r', marker='o'
+                , label = 'Approximate Model')
+    plt.plot([min(CAf),max(CAf)],[min(CAf),max(CAf)], color = 'k', ls = '-'
+             , label='Parity Line')
     plt.xlabel("$C_{A, expt}$ (M)")
     plt.ylabel("$C_{A, model}$ (M)")
+    plt.legend()
     plt.tight_layout()
-    plt.savefig('reb_19_5_1/python/reb_19_5_1_parity.png')
+    plt.savefig('reb_19_5_6/python/reb_19_5_6_parity.png')
     plt.show()
-
-    # create, show and save residuals plots
-    plt.figure() 
-    plt.plot(CA0, residual, color = 'k', marker='o', ls='')
-    plt.axhline(y=0, color = 'r')
-    plt.xlabel("$C_{A,0}$ (M)")
-    plt.ylabel("Residual (M)")
-    plt.tight_layout()
-    plt.savefig('reb_19_5_1/python/reb_19_5_1_residuals_CA0.png')
-    plt.show()
-
-    plt.figure() 
-    plt.plot(tf, residual, color = 'k', marker='o', ls='')
-    plt.axhline(y=0, color = 'r')
-    plt.xlabel("$t_f$ (min)")
-    plt.ylabel("Residual (M)")
-    plt.tight_layout()
-    plt.savefig('reb_19_5_1/python/reb_19_5_1_residuals_tf.png')
-    plt.show()
-
-    plt.figure() 
-    plt.plot(T, residual, color = 'k', marker='o', ls='')
-    plt.axhline(y=0, color = 'r')
-    plt.xlabel("T (°C)")
-    plt.ylabel("Residual (M)")
-    plt.tight_layout()
-    plt.savefig('reb_19_5_1/python/reb_19_5_1_residuals_T.png')
-    plt.show()
-
-    # report the results
-    print(' ')
-    print(f'k0: {k0:.3g} /min, 95% CI [{k0_ll:.3g}, {k0_ul:.3g}]')
-    print(f'E: {E:.3g} kJ/mol, 95% CI [{E_ll:.3g}, {E_ul:.3g}]')
-    print(f'R-squared: {r_squared:.3g}')
-    print(' ')
-
-    # save the results to a .csv file
-    data = [['k0', f'{k0:.3g}', 'min^-1^'],
-        ['k0_lower_limit', f'{k0_ll:.3g}', 'min^-1^'],
-        ['k0_upper_limit', f'{k0_ul:.3g}', 'min^-1^'],
-        ['E', f'{E:.3g}', 'kJ mol^-1^'],
-        ['E_lower_limit', f'{E_ll:.3g}', 'kJ mol^-1^'],
-        ['E_upper_limit', f'{E_ul:.3g}', 'kJ mol^-1^'],
-        ['R_squared', f'{r_squared:.3g}', '']]
-    result = pd.DataFrame(data, columns=['item','value','units'])
-    result.to_csv("reb_19_5_1/python/reb_19_5_1_Arrhenius.csv", index=False)
 
 if __name__=="__main__":
     perform_the_calculations()

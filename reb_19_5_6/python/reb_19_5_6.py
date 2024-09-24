@@ -72,15 +72,15 @@ def perform_the_calculations():
         T_as_text = format(T,'.0f')
         plt.legend(title='T = ' + T_as_text + '°C')
         plt.tight_layout()
-        f_name = 'reb_19_5_1_model_' + T_as_text + '.png'
-        plt.savefig('reb_19_5_1/python/' + f_name)
+        f_name = 'reb_19_5_6_model_' + T_as_text + '.png'
+        plt.savefig('reb_19_5_6/python/' + f_name)
         plt.show()
 
     # show and save the fitting results
     print('\nParameter Estimates:\n')
     print(parameter_estimates)
     parameter_estimates.to_csv(
-        'reb_19_5_1/python/reb_19_5_1_diff_params.csv', index=False)
+        'reb_19_5_6/python/reb_19_5_6_diff_params.csv', index=False)
     
     # fit the Arrhenius expression to the k vs T data
     T_block = parameter_estimates['T'].to_numpy() + 273.15
@@ -104,7 +104,7 @@ def perform_the_calculations():
         ['E_upper_limit', f'{E_ci[1]:.3g}', 'kJ mol^-1^'],
         ['R_squared', f'{r_squared:.3g}', '']]
     result = pd.DataFrame(data, columns=['item','value','units'])
-    result.to_csv("reb_19_5_1/python/reb_19_5_1_Arrhenius_diff.csv", 
+    result.to_csv("reb_19_5_6/python/reb_19_5_6_Arrhenius_diff.csv", 
                 index=False)
 
     # create, show, and save an Arrhenius plot
@@ -116,7 +116,7 @@ def perform_the_calculations():
     plt.ylabel('k (min$^{-1}$)')
     plt.xticks(rotation=25)
     plt.tight_layout()
-    plt.savefig('reb_19_5_1/python/reb_19_5_1_Arrhenius_diff.png')
+    plt.savefig('reb_19_5_6/python/reb_19_5_6_Arrhenius_diff.png')
     plt.show()
 
 if __name__=="__main__":
