@@ -1,6 +1,6 @@
 rule reb_19_5_6:
     input:
-        "reb_19_5_6/python/reb_19_5_6_parity.png"
+        "reb_19_5_6/python/reb_19_5_6_parity.png",
         "../RE_Basics/examples/reb_19_5_6/spreadsheet_model_plot.png",
         "../RE_Basics/examples/reb_19_5_6/Arrhenius_spreadsheet.png",
         "../RE_Basics/examples/reb_19_5_6/reb_19_5_6_parity.png"
@@ -18,7 +18,7 @@ rule reb_19_5_6_python:
 rule reb_19_5_6_re_basics:
     input:
         "reb_19_5_6/spreadsheet_model_plot.png",
-        "reb_19_5_6/reb_19_5_6/Arrhenius_spreadsheet.png",
+        "reb_19_5_6/Arrhenius_spreadsheet.png",
         "reb_19_5_6/python/reb_19_5_6_parity.png"
     output:
         "../RE_Basics/examples/reb_19_5_6/spreadsheet_model_plot.png",
@@ -29,6 +29,6 @@ rule reb_19_5_6_re_basics:
         rm -rf ../RE_Basics/examples/reb_19_5_6
         mkdir ../RE_Basics/examples/reb_19_5_6
         cp reb_19_5_6/spreadsheet_model_plot.png ../RE_Basics/examples/reb_19_5_6
-        cp reb_19_5_6/reb_19_5_6/Arrhenius_spreadsheet.png ../RE_Basics/examples/reb_19_5_6
+        cp reb_19_5_6/Arrhenius_spreadsheet.png ../RE_Basics/examples/reb_19_5_6
         cp reb_19_5_6/python/reb_19_5_6_parity.png  ../RE_Basics/examples/reb_19_5_6
         """
