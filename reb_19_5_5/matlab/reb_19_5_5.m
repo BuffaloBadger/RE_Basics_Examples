@@ -1,4 +1,4 @@
-function reb_19_5_2_linear()
+function reb_19_5_5()
 %reb_16_5_2_linear Reaction Engineering Basics Example 19.5.2
 
     % given and known
@@ -9,7 +9,7 @@ function reb_19_5_2_linear()
     % function that performs the calculations
     function perform_the_calculations()
         % read the experimental data
-        data_file = '../reb_19_5_2_data.csv';
+        data_file = '../../reb_19_5_2/reb_19_5_2_data.csv';
         data_table = readtable(data_file, 'VariableNamingRule'...
             , 'preserve');
         data = table2array(data_table(:,:));
@@ -44,6 +44,14 @@ function reb_19_5_2_linear()
             y = nan(nData,1);
 
             % calculate x and y
+            nA0 = PA0(1:nData)*V/Rpv./T_K(1:nData);
+            nB0 = PB0(1:nData)*V/Rpv./T_K(1:nData);
+            nA = nA0.*(1-fA(1:nData));
+            nB = nB0 - nA0 + nA;
+            y = 1./(nA0-nB0).*log(nA0.*nB./nB0./nA);
+            a = table(nA0,nB0,nA,nB,y);
+            writetable(a,'a.csv');
+
             for i = 1:nData 
                 nA0 = PA0(i)*V/Rpv/T_K(i);
                 nB0 = PB0(i)*V/Rpv/T_K(i);
