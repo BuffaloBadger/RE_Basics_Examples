@@ -1,12 +1,12 @@
 function reb_19_5_2()
-%reb_16_5_1 Reaction Engineering Basics Example 19.5.2
+%reb_19_5_2 Reaction Engineering Basics Example 19.5.2
 
-    % given and known 
+    % given and known constants
     V = 500.0; % cc
     Re = 1.987E-3; % kcal /mol /K
     Rpv = 82.06; % cc atm /mol /K
 
-    % make current k0, E, and T available to all functions
+    % globally available variables
     k0_current = nan;
     E_current = nan;
     T_current = nan;
@@ -36,11 +36,11 @@ function reb_19_5_2()
     end
 
     % BSTR model function
-    function [t, nA, nB, nY, nZ] = profiles(PA0, PB0, tf)
+    function [t, nA, nB, nY, nZ] = profiles(T, PA0, PB0, tf)
         % initial values and stopping criterion
         ind_0 = 0.0;
-        nA0 = PA0*V/Rpv/T_current;
-        nB0 = PB0*V/Rpv/T_current;
+        nA0 = PA0*V/Rpv/T;
+        nB0 = PB0*V/Rpv/T;
         dep_0 = [nA0; nB0; 0.0; 0.0];
 
         % stopping criterion
@@ -79,14 +79,16 @@ function reb_19_5_2()
 
         % loop through the experiments
         for i = 1:n_expt
-            % get the inputs
+            % make the temperature globally available
             T_current = expt_inputs(i,1);
+
+            % get the other experimental inputs
             PA0 = expt_inputs(i,2);
             PB0 = expt_inputs(i,3);
             tf = expt_inputs(i,4);
 
             % solve the BSTR design equations
-            [~, nA, ~, ~, ~] = profiles(PA0, PB0, tf);
+            [~, nA, ~, ~, ~] = profiles(T_current, PA0, PB0, tf);
 
             % calculate the response
             nA0 = PA0*V/Rpv/T_current;
@@ -95,7 +97,29 @@ function reb_19_5_2()
         end
     end
 
-    % function that performs the calculations
+    % quantities of interest function
+    function [k0, k0_CI, E, E_CI, r_squared, fA_model, epsilon_expt]...
+            = quantities_of_interest(adj_inputs, fA)
+        % guess the parameters
+        par_guess = [1.0; 20.0];
+
+        % estimate the parameters
+        useRelErr = false;
+        [beta, betaCI, r_squared] = fit_to_SR_data(par_guess...
+                , adj_inputs, fA, @predicted_responses, useRelErr);
+
+        % extract the results
+        k0 = beta(1);
+        k0_CI = betaCI(1,:);
+        E = beta(2);
+        E_CI = betaCI(2,:);
+        
+        % calculate the model-predicted response and the residuals
+        fA_model = predicted_responses(beta, adj_inputs);
+        epsilon_expt = fA - fA_model;
+    end
+
+    % master function
     function perform_the_calculations()
         % read the experimental data
         data_file = '../reb_19_5_2_data.csv';
@@ -108,25 +132,9 @@ function reb_19_5_2()
         adj_inputs(:,1) = adj_inputs(:,1) + 273.15;
         fA = data(:,5);
 
-        % guess the parameters
-        par_guess = [0.0; 20.0];
-
-        % estimate the parameters
-        useRelErr = false;
-        [beta, betaCI, r_squared] = fit_to_SR_data(par_guess...
-                , adj_inputs, fA, @predicted_responses, useRelErr);
-
-        % extract the results
-        k0 = beta(1);
-        k0_ll = betaCI(1,1);
-        k0_ul = betaCI(1,2);
-        E = beta(2);
-        E_ll = betaCI(2,1);
-        E_ul = betaCI(2,2);
-        
-        % calculate the model-predicted response and the residuals
-        fA_model = predicted_responses(beta, adj_inputs);
-        residual = fA - fA_model;
+        % calculate the quantities of interest
+        [k0, k0_CI, E, E_CI, r_squared, fA_model, epsilon_expt]...
+            = quantities_of_interest(adj_inputs, fA);
 
         % create, show, and save a parity plot
         figure
@@ -143,7 +151,7 @@ function reb_19_5_2()
         % create show, and save residuals plots
         figure
         tf = adj_inputs(:,4);
-        plot(tf, residual,'ok','MarkerSize',10,'LineWidth',2)
+        plot(tf, epsilon_expt,'ok','MarkerSize',10,'LineWidth',2)
         yline(0.0,'r','LineWidth',2)
         set(gca, 'FontSize', 14);
         xlabel('Elapsed Time (min)','FontSize', 14)
@@ -152,7 +160,7 @@ function reb_19_5_2()
 
         figure
         PA0 = adj_inputs(:,2);
-        plot(PA0, residual,'ok','MarkerSize',10,'LineWidth',2)
+        plot(PA0, epsilon_expt,'ok','MarkerSize',10,'LineWidth',2)
         yline(0.0,'r','LineWidth',2)
         set(gca, 'FontSize', 14);
         xlabel('PA0 (atm)','FontSize', 14)
@@ -161,7 +169,7 @@ function reb_19_5_2()
 
         figure
         PB0 = adj_inputs(:,3);
-        plot(PB0, residual,'ok','MarkerSize',10,'LineWidth',2)
+        plot(PB0, epsilon_expt,'ok','MarkerSize',10,'LineWidth',2)
         yline(0.0,'r','LineWidth',2)
         set(gca, 'FontSize', 14);
         xlabel('PB0 (atm)','FontSize', 14)
@@ -170,7 +178,7 @@ function reb_19_5_2()
 
         figure
         T = adj_inputs(:,1);
-        plot(T, residual,'ok','MarkerSize',10,'LineWidth',2)
+        plot(T, epsilon_expt,'ok','MarkerSize',10,'LineWidth',2)
         yline(0.0,'r','LineWidth',2)
         set(gca, 'FontSize', 14);
         xlabel('T (C)','FontSize', 14)
@@ -180,7 +188,7 @@ function reb_19_5_2()
         % tabulate, show, and save the results
         item = ["k0"; "k0_lower_limit"; "k0_upper_limit"; "E"; 
             "E_lower_limit"; "E_upper_limit"; "R_squared"];
-        value = [k0; k0_ll; k0_ul; E; E_ll; E_ul;
+        value = [k0; k0_CI(1); k0_CI(2); E; E_CI(1); E_CI(2);
              r_squared];
         units = ["mol cm^-3^ min^-1^ atm^-2^"; 
             "mol cm^-3^ min^-1^ atm^-2^"; "mol cm^-3^ min^-1^ atm^-2^^";

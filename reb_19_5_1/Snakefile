@@ -42,7 +42,8 @@ rule reb_19_5_1_python:
 
 rule reb_19_5_1_matlab:
     input:
-        "reb_19_5_1/matlab/reb_19_5_1.m"
+        "reb_19_5_1/matlab/reb_19_5_1.m",
+        "reb_19_5_1/reb_19_5_1_data.csv"
     output:
         "reb_19_5_1/matlab/reb_19_5_1_results.csv",
         "reb_19_5_1/matlab/reb_19_5_1_parity.png",

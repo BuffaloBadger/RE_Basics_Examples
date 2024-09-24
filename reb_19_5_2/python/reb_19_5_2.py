@@ -12,7 +12,7 @@ V = 500.0 # cc
 Re = 1.987E-3 # kcal/mol/K
 Rpv = 82.06 # cc atm/mol/K
 
-# make current values of k0, E and T available to all functions
+# globally available variables
 k0_current = float('nan')
 E_current = float('nan')
 T_current = float('nan')
@@ -42,11 +42,11 @@ def derivatives(t,dep):
     return ddt
 
 # BSTR model function
-def profiles(PA0, PB0, tf):
+def profiles(T, PA0, PB0, tf):
     # set initial values and stopping criterion
     t0 = 0
-    nA0 = PA0*V/Rpv/T_current
-    nB0 = PB0*V/Rpv/T_current
+    nA0 = PA0*V/Rpv/T
+    nB0 = PB0*V/Rpv/T
     dep0 = np.array([nA0, nB0, 0.0, 0.0])
     stop_var = 0
 
@@ -80,15 +80,17 @@ def predicted_responses(adj_inputs, k0, E):
 
     # loop through the experiments in the data set
     for i, input in enumerate(adj_inputs):
-        # get the adjusted inputs
+        # make the temperature globally available
         global T_current
         T_current = input[0]
+
+        # get the other experimental inputs
         PA0 = input[1]
         PB0 = input[2]
         tf = input[3]
 
         # solve the reactor design equations
-        t, nA, nB, nY, nZ = profiles(PA0, PB0, tf)
+        t, nA, nB, nY, nZ = profiles(T_current, PA0, PB0, tf)
         
         # calculate the model-predicted response
         nAf = nA[-1]
@@ -99,7 +101,28 @@ def predicted_responses(adj_inputs, k0, E):
     # return the responses
     return resp
 
-# function that performs the calculations
+# quantities of interest function
+def quantities_of_interest(adjusted_inputs, fA):
+    # guess the parameters
+    par_guess = [1.0, 20.0]
+
+    # estimate the parameters
+    beta, beta_ci, r_squared = fit_to_SR_data(par_guess, adjusted_inputs, fA,
+                                              predicted_responses, False)
+    
+    # extract the results
+    k0 = beta[0]
+    k0_CI = beta_ci[0,:]
+    E = beta[1]
+    E_CI = beta_ci[1,:]
+        
+    # calculate the model-predicted y and the residuals
+    fA_model = predicted_responses(adjusted_inputs, k0, E)
+    epsilon_expt = fA - fA_model
+
+    return k0, k0_CI, E, E_CI, r_squared, fA_model, epsilon_expt
+
+# master function
 def perform_the_calculations():
     # read the data from the .csv file
     df = pd.read_csv('reb_19_5_2/reb_19_5_2_data.csv')
@@ -115,29 +138,13 @@ def perform_the_calculations():
     # combine the adjusted inputs as a matrix
     adjusted_inputs = np.transpose(np.array([T_K, PA0, PB0, tf]))
 
-    # guess the parameters
-    par_guess = [1.0, 20.0]
-
-    # estimate the parameters
-    beta, beta_ci, r_squared = fit_to_SR_data(par_guess, adjusted_inputs 
-            , fA,  predicted_responses, False)
-    
-    # extract the results
-    k0 = beta[0]
-    k0_ll = beta_ci[0,0]
-    k0_ul = beta_ci[0,1]
-    E = beta[1]
-    E_ll = beta_ci[1,0]
-    E_ul = beta_ci[1,1]
-        
-    # calculate the model-predicted y and the residuals
-    fA_model = predicted_responses(adjusted_inputs, k0, E)
-    residual = fA - fA_model
+    k0, k0_CI, E, E_CI, r_squared, fA_model, epsilon_expt = \
+        quantities_of_interest(adjusted_inputs, fA)
         
     # create, show, and save a parity plot
     plt.figure() 
     plt.plot(fA, fA_model, color = 'k', marker='o', ls='')
-    plt.plot([min(fA),max(fA)],[min(fA),max(fA)], \
+    plt.plot([min(fA),max(fA)],[min(fA),max(fA)],
         color = 'r', ls = '-')
     plt.xlabel("$f_{A, expt}$")
     plt.ylabel("$f_{A, model}$")
@@ -147,7 +154,7 @@ def perform_the_calculations():
 
     # create, show and save residuals plots
     plt.figure() 
-    plt.plot(PA0, residual, color = 'k', marker='o', ls='')
+    plt.plot(PA0, epsilon_expt, color = 'k', marker='o', ls='')
     plt.axhline(y=0, color = 'r')
     plt.xlabel("$P_{A,0}$ (atm)")
     plt.ylabel("Residual")
@@ -156,7 +163,7 @@ def perform_the_calculations():
     plt.show()
 
     plt.figure() 
-    plt.plot(PB0, residual, color = 'k', marker='o', ls='')
+    plt.plot(PB0, epsilon_expt, color = 'k', marker='o', ls='')
     plt.axhline(y=0, color = 'r')
     plt.xlabel("$P_{B,0}$ (atm)")
     plt.ylabel("Residual")
@@ -165,7 +172,7 @@ def perform_the_calculations():
     plt.show()
 
     plt.figure() 
-    plt.plot(tf, residual, color = 'k', marker='o', ls='')
+    plt.plot(tf, epsilon_expt, color = 'k', marker='o', ls='')
     plt.axhline(y=0, color = 'r')
     plt.xlabel("$t_f$ (min)")
     plt.ylabel("Residual")
@@ -174,7 +181,7 @@ def perform_the_calculations():
     plt.show()
 
     plt.figure() 
-    plt.plot(T, residual, color = 'k', marker='o', ls='')
+    plt.plot(T, epsilon_expt, color = 'k', marker='o', ls='')
     plt.axhline(y=0, color = 'r')
     plt.xlabel("T (°C)")
     plt.ylabel("Residual")
@@ -184,18 +191,19 @@ def perform_the_calculations():
 
     # report the results
     print(' ')
-    print(f'k0: {k0:.3g} mol/cc/min/atm^2, 95% CI [{k0_ll:.3g}, {k0_ul:.3g}]')
-    print(f'E: {E:.3g} kcal/mol, 95% CI [{E_ll:.3g}, {E_ul:.3g}]')
+    print(f'k0: {k0:.3g} mol/cc/min/atm^2, 95% CI [{k0_CI[0]:.3g}\
+          , {k0_CI[1]:.3g}]')
+    print(f'E: {E:.3g} kcal/mol, 95% CI [{E_CI[0]:.3g}, {E_CI[1]:.3g}]')
     print(f'R-squared: {r_squared:.3g}')
     print(' ')
 
     # save the results to a .csv file
     data = [['k0', f'{k0:.3g}', 'mol cm^-3^ min^-1^ atm^-2^'],
-        ['k0_lower_limit', f'{k0_ll:.3g}', 'mol cm^-3^ min^-1^ atm^-2^'],
-        ['k0_upper_limit', f'{k0_ul:.3g}', 'mol cm^-3^ min^-1^ atm^-2^'],
+        ['k0_lower_limit', f'{k0_CI[0]:.3g}', 'mol cm^-3^ min^-1^ atm^-2^'],
+        ['k0_upper_limit', f'{k0_CI[1]:.3g}', 'mol cm^-3^ min^-1^ atm^-2^'],
         ['E', f'{E:.3g}', 'kcal mol^-1^'],
-        ['E_lower_limit', f'{E_ll:.3g}', 'kcal mol^-1^'],
-        ['E_upper_limit', f'{E_ul:.3g}', 'kcal mol^-1^'],
+        ['E_lower_limit', f'{E_CI[0]:.3g}', 'kcal mol^-1^'],
+        ['E_upper_limit', f'{E_CI[1]:.3g}', 'kcal mol^-1^'],
         ['R_squared', f'{r_squared:.3g}', '']]
     result = pd.DataFrame(data, columns=['item','value','units'])
     result.to_csv("reb_19_5_2/python/reb_19_5_2_results.csv", index=False)
