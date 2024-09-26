@@ -26,12 +26,21 @@ rule reb_19_5_2:
         "../SCoRE/reb_examples/reb_19_5_2/reb_19_5_2.m",
         "../SCoRE/reb_examples/reb_19_5_2/reb_19_5_2.py"
 
-rule reb_19_5_2_python:
+rule reb_19_5_2_data:
     input: 
-        "reb_19_5_2/python/reb_19_5_2_data_generator.py",
-        "reb_19_5_2/python/reb_19_5_2.py"
+        "reb_19_5_2/python/reb_19_5_2_data_generator.py"
     output:
-        "reb_19_5_2/reb_19_5_2_data.csv",
+        "reb_19_5_2/reb_19_5_2_data.csv"
+    shell:
+        """
+        python3 reb_19_5_2/python/reb_19_5_2_data_generator.py
+        """ 
+
+rule reb_19_5_2_python:
+    input:
+        "reb_19_5_2/python/reb_19_5_2.py",
+        "reb_19_5_2/reb_19_5_2_data.csv"
+    output:
         "reb_19_5_2/python/reb_19_5_2_parity.png",
         "reb_19_5_2/python/reb_19_5_2_residuals_PA0.png",
         "reb_19_5_2/python/reb_19_5_2_residuals_PB0.png",
@@ -40,7 +49,6 @@ rule reb_19_5_2_python:
         "reb_19_5_2/python/reb_19_5_2_results.csv"
     shell:
         """
-        python3 reb_19_5_2/python/reb_19_5_2_data_generator.py
         python3 reb_19_5_2/python/reb_19_5_2.py
         """ 
 
