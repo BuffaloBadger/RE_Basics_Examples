@@ -26,12 +26,21 @@ rule reb_20_5_3:
         "../SCoRE/reb_examples/reb_20_5_3/reb_20_5_3.py",
         "../SCoRE/reb_examples/reb_20_5_3/reb_20_5_3.m"
 
+rule reb_20_5_3_data:
+    input:
+        "reb_20_5_3/python/reb_20_5_3_cstr_data_generator.py"
+    output:
+        "reb_20_5_3/reb_20_5_3_data.csv"
+    shell:
+        """
+        python3 reb_20_5_3/python/reb_20_5_3_cstr_data_generator.py
+        """
+
 rule reb_20_5_3_python:
     input:
-        "reb_20_5_3/python/reb_20_5_3_cstr_data_generator.py",
+        "reb_20_5_3/reb_20_5_3_data.csv",
         "reb_20_5_3/python/reb_20_5_3.py"
     output:
-        "reb_20_5_3/reb_20_5_3_data.csv",
         "reb_20_5_3/python/reb_20_5_3_results.csv",
         "reb_20_5_3/python/reb_20_5_3_parity.png",
         "reb_20_5_3/python/reb_20_5_3_Vdot_residual.png",
@@ -40,7 +49,6 @@ rule reb_20_5_3_python:
         "reb_20_5_3/python/reb_20_5_3_CZ0_residual.png"
     shell:
         """
-        python3 reb_20_5_3/python/reb_20_5_3_cstr_data_generator.py
         python3 reb_20_5_3/python/reb_20_5_3.py
         """
 
