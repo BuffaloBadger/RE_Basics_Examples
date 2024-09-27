@@ -231,9 +231,9 @@ def perform_the_calculations():
     data = [['k0', f'{k0:.3g}', 'L mol^-1^ min^-1^'],
         ['k_lower_limit', f'{k0_CI[0]:.3g}', 'L mol^-1^ min^-1^'],
         ['k_upper_limit', f'{k0_CI[1]:.3g}', 'L mol^-1^ min^-1^'],
-        ['E', f'{E:.3g}', 'cal mol^-1^'],
-        ['E_lower_limit', f'{E_CI[0]:.3g}', 'cal mol^-1^'],
-        ['E_upper_limit', f'{E_CI[1]:.3g}', 'cal mol^-1^'],
+        ['E', f'{E:.3g}', 'kcal mol^-1^'],
+        ['E_lower_limit', f'{E_CI[0]:.3g}', 'kcal mol^-1^'],
+        ['E_upper_limit', f'{E_CI[1]:.3g}', 'kcal mol^-1^'],
         ['R_squared', f'{r_squared:.3g}', '']]
     result = pd.DataFrame(data, columns=['item','value','units'])
     print(" ")
