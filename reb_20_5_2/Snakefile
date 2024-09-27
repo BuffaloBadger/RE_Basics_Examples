@@ -20,24 +20,33 @@ rule reb_20_5_2:
         "../SCoRE/reb_examples/reb_20_5_2/reb_20_5_2.m",
         "../SCoRE/reb_examples/reb_20_5_2/reb_20_5_2_data.csv"
 
+rule reb_20_5_2_data:
+    input:
+        "reb_20_5_2/python/reb_20_5_2_cstr_data_generator.py"
+    output:
+        "reb_20_5_2/reb_20_5_2_data.csv"
+    shell:
+        """
+        python3 reb_20_5_2/python/reb_20_5_2_cstr_data_generator.py
+        """
+
 rule reb_20_5_2_python:
     input:
-        "reb_20_5_2/python/reb_20_5_2_cstr_data_generator.py",
+        "reb_20_5_2/reb_20_5_2_data.csv",
         "reb_20_5_2/python/reb_20_5_2.py"
     output:
-        "reb_20_5_2/reb_20_5_2_data.csv",
         "reb_20_5_2/python/reb_20_5_2_results.csv",
         "reb_20_5_2/python/reb_20_5_2_parity.png",
         "reb_20_5_2/python/reb_20_5_2_tau_residual.png",
         "reb_20_5_2/python/reb_20_5_2_yA0_residual.png"
     shell:
         """
-        python3 reb_20_5_2/python/reb_20_5_2_cstr_data_generator.py
         python3 reb_20_5_2/python/reb_20_5_2.py
         """
 
 rule reb_20_5_2_matlab:
     input:
+        "reb_20_5_2/reb_20_5_2_data.csv",
         "reb_20_5_2/matlab/reb_20_5_2.m"
     output:
         "reb_20_5_2/matlab/reb_20_5_2_results.csv",
