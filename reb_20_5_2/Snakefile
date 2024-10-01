@@ -3,10 +3,12 @@ rule reb_20_5_2:
         "reb_20_5_2/reb_20_5_2_data.csv",
         "reb_20_5_2/python/reb_20_5_2_results.csv",
         "reb_20_5_2/python/reb_20_5_2_parity.png",
+        "reb_20_5_2/python/reb_20_5_2_T_residual.png",
         "reb_20_5_2/python/reb_20_5_2_tau_residual.png",
         "reb_20_5_2/python/reb_20_5_2_yA0_residual.png",
         "reb_20_5_2/matlab/reb_20_5_2_results.csv",
         "reb_20_5_2/matlab/reb_20_5_2_parity.png",
+        "reb_20_5_2/matlab/reb_20_5_2_T_residual.png",
         "reb_20_5_2/matlab/reb_20_5_2_tau_residual.png",
         "reb_20_5_2/matlab/reb_20_5_2_yA0_residual.png",
         "../RE_Basics/examples/reb_20_5_2/narrative.qmd",
@@ -14,6 +16,7 @@ rule reb_20_5_2:
         "../RE_Basics/examples/reb_20_5_2/reb_20_5_2_data.csv",
         "../RE_Basics/examples/reb_20_5_2/reb_20_5_2_results.csv",
         "../RE_Basics/examples/reb_20_5_2/reb_20_5_2_parity.png",
+        "../RE_Basics/examples/reb_20_5_2/reb_20_5_2_T_residual.png",
         "../RE_Basics/examples/reb_20_5_2/reb_20_5_2_tau_residual.png",
         "../RE_Basics/examples/reb_20_5_2/reb_20_5_2_yA0_residual.png",
         "../SCoRE/reb_examples/reb_20_5_2/reb_20_5_2.py",
@@ -37,6 +40,7 @@ rule reb_20_5_2_python:
     output:
         "reb_20_5_2/python/reb_20_5_2_results.csv",
         "reb_20_5_2/python/reb_20_5_2_parity.png",
+        "reb_20_5_2/python/reb_20_5_2_T_residual.png",
         "reb_20_5_2/python/reb_20_5_2_tau_residual.png",
         "reb_20_5_2/python/reb_20_5_2_yA0_residual.png"
     shell:
@@ -51,6 +55,7 @@ rule reb_20_5_2_matlab:
     output:
         "reb_20_5_2/matlab/reb_20_5_2_results.csv",
         "reb_20_5_2/matlab/reb_20_5_2_parity.png",
+        "reb_20_5_2/matlab/reb_20_5_2_T_residual.png",
         "reb_20_5_2/matlab/reb_20_5_2_tau_residual.png",
         "reb_20_5_2/matlab/reb_20_5_2_yA0_residual.png"
     shell:
@@ -65,6 +70,7 @@ rule reb_20_5_2_re_basics:
         "reb_20_5_2/reb_20_5_2_data.csv",
         "reb_20_5_2/python/reb_20_5_2_results.csv",
         "reb_20_5_2/python/reb_20_5_2_parity.png",
+        "reb_20_5_2/python/reb_20_5_2_T_residual.png",
         "reb_20_5_2/python/reb_20_5_2_tau_residual.png",
         "reb_20_5_2/python/reb_20_5_2_yA0_residual.png"
     output:
@@ -73,6 +79,7 @@ rule reb_20_5_2_re_basics:
         "../RE_Basics/examples/reb_20_5_2/reb_20_5_2_data.csv",
         "../RE_Basics/examples/reb_20_5_2/reb_20_5_2_results.csv",
         "../RE_Basics/examples/reb_20_5_2/reb_20_5_2_parity.png",
+        "../RE_Basics/examples/reb_20_5_2/reb_20_5_2_T_residual.png",
         "../RE_Basics/examples/reb_20_5_2/reb_20_5_2_tau_residual.png",
         "../RE_Basics/examples/reb_20_5_2/reb_20_5_2_yA0_residual.png"
     shell:
@@ -84,6 +91,7 @@ rule reb_20_5_2_re_basics:
         cp reb_20_5_2/reb_20_5_2_data.csv ../RE_Basics/examples/reb_20_5_2
         cp reb_20_5_2/python/reb_20_5_2_results.csv ../RE_Basics/examples/reb_20_5_2
         cp reb_20_5_2/python/reb_20_5_2_parity.png ../RE_Basics/examples/reb_20_5_2
+        cp reb_20_5_2/python/reb_20_5_2_T_residual.png ../RE_Basics/examples/reb_20_5_2
         cp reb_20_5_2/python/reb_20_5_2_tau_residual.png ../RE_Basics/examples/reb_20_5_2
         cp reb_20_5_2/python/reb_20_5_2_yA0_residual.png ../RE_Basics/examples/reb_20_5_2
         """

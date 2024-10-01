@@ -166,9 +166,9 @@ def perform_the_calculations():
 
     # create, show and save residuals plots
     plt.figure() 
-    plt.plot(T, epsilon_expt, color = 'k', marker='o', ls='')
+    plt.plot(T-273.15, epsilon_expt, color = 'k', marker='o', ls='')
     plt.axhline(y=0, color = 'r')
-    plt.xlabel("$\tau$ (s)")
+    plt.xlabel("T (°C)")
     plt.ylabel("Residual (M)")
     plt.tight_layout()
     plt.savefig('reb_20_5_2/python/reb_20_5_2_T_residual.png')
@@ -177,7 +177,7 @@ def perform_the_calculations():
     plt.figure() 
     plt.plot(tau, epsilon_expt, color = 'k', marker='o', ls='')
     plt.axhline(y=0, color = 'r')
-    plt.xlabel("$\tau$ (s)")
+    plt.xlabel("$\\tau$ (s)")
     plt.ylabel("Residual (M)")
     plt.tight_layout()
     plt.savefig('reb_20_5_2/python/reb_20_5_2_tau_residual.png')
