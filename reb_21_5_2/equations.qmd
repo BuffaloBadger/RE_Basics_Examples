@@ -1,0 +1,9 @@
+
+
+$$
+A + B \rightarrow Y + Z \tag{1}
+$$
+
+$$
+r = kP_{A}^{\alpha_A}P_{B}^{\alpha_B}P_{Y}^{\alpha_Y}P_{Z}^{\alpha_Z}\left( 1 - \frac{P_YP_Z}{KP_AP_B} \right) \tag{2}
+$$
