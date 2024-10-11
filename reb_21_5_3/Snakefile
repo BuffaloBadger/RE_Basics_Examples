@@ -1,0 +1,132 @@
+rule reb_21_5_3:
+    input:
+        "reb_21_5_3/python/reb_21_5_3_results.csv",
+        "reb_21_5_3/python/reb_21_5_3_parity.png",
+        "reb_21_5_3/python/reb_21_5_3_A_residual.png",
+        "reb_21_5_3/python/reb_21_5_3_B_residual.png",
+        "reb_21_5_3/python/reb_21_5_3_Y_residual.png",
+        "reb_21_5_3/python/reb_21_5_3_Z_residual.png",
+        "reb_21_5_3/python/reb_21_5_3_results_follow_up.csv",
+        "reb_21_5_3/python/reb_21_5_3_parity_follow_up.png",
+        "reb_21_5_3/python/reb_21_5_3_A_residual_follow_up.png",
+        "reb_21_5_3/python/reb_21_5_3_B_residual_follow_up.png",
+        "reb_21_5_3/python/reb_21_5_3_Y_residual_follow_up.png",
+        "reb_21_5_3/python/reb_21_5_3_Z_residual_follow_up.png",
+        "../RE_Basics/examples/reb_21_5_3/narrative.qmd",
+        "../RE_Basics/examples/reb_21_5_3/equations.qmd",
+        "../RE_Basics/examples/reb_21_5_3/reb_21_5_3_results.csv",
+        "../RE_Basics/examples/reb_21_5_3/reb_21_5_3_parity.png",
+        "../RE_Basics/examples/reb_21_5_3/reb_21_5_3_A_residual.png",
+        "../RE_Basics/examples/reb_21_5_3/reb_21_5_3_B_residual.png",
+        "../RE_Basics/examples/reb_21_5_3/reb_21_5_3_Y_residual.png",
+        "../RE_Basics/examples/reb_21_5_3/reb_21_5_3_Z_residual.png",
+        "../RE_Basics/examples/reb_21_5_3/reb_21_5_3_results_follow_up.csv",
+        "../RE_Basics/examples/reb_21_5_3/reb_21_5_3_parity_follow_up.png",
+        "../RE_Basics/examples/reb_21_5_3/reb_21_5_3_A_residual_follow_up.png",
+        "../RE_Basics/examples/reb_21_5_3/reb_21_5_3_B_residual_follow_up.png",
+        "../RE_Basics/examples/reb_21_5_3/reb_21_5_3_Y_residual_follow_up.png",
+        "../RE_Basics/examples/reb_21_5_3/reb_21_5_3_Z_residual_follow_up.png"
+
+rule reb_21_5_3_python:
+    input:
+        "reb_21_5_3/python/reb_21_5_3.py",
+        "reb_21_5_3/python/reb_21_5_3_follow_up.py"
+    output:
+        "reb_21_5_3/python/reb_21_5_3_results.csv",
+        "reb_21_5_3/python/reb_21_5_3_parity.png",
+        "reb_21_5_3/python/reb_21_5_3_A_residual.png",
+        "reb_21_5_3/python/reb_21_5_3_B_residual.png",
+        "reb_21_5_3/python/reb_21_5_3_Y_residual.png",
+        "reb_21_5_3/python/reb_21_5_3_Z_residual.png",
+        "reb_21_5_3/python/reb_21_5_3_results_follow_up.csv",
+        "reb_21_5_3/python/reb_21_5_3_parity_follow_up.png",
+        "reb_21_5_3/python/reb_21_5_3_A_residual_follow_up.png",
+        "reb_21_5_3/python/reb_21_5_3_B_residual_follow_up.png",
+        "reb_21_5_3/python/reb_21_5_3_Y_residual_follow_up.png",
+        "reb_21_5_3/python/reb_21_5_3_Z_residual_follow_up.png"
+    shell:
+        """
+        python3 reb_21_5_3/python/reb_21_5_3.py
+        python3 reb_21_5_3/python/reb_21_5_3_follow_up.py
+        """
+
+rule reb_21_5_3_matlab:
+    input:
+         "reb_21_5_3/matlab/reb_21_5_3.m"
+    output:
+        "reb_21_5_3/matlab/reb_21_5_3_results.csv",
+        "reb_21_5_3/matlab/reb_21_5_3_parity.png",
+        "reb_21_5_3/matlab/reb_21_5_3_A_residual.png",
+        "reb_21_5_3/matlab/reb_21_5_3_B_residual.png",
+        "reb_21_5_3/matlab/reb_21_5_3_Y_residual.png",
+        "reb_21_5_3/matlab/reb_21_5_3_Z_residual.png"
+    shell:
+        """
+        matlab -nodisplay -r "cd('reb_21_5_3/matlab');reb_21_5_3;exit"
+        """
+
+rule reb_21_5_3_2_re_basics:
+    input:
+        "reb_21_5_3/narrative.qmd",
+        "reb_21_5_3/equations.qmd",
+        "reb_21_5_3/python/reb_21_5_3_results.csv",
+        "reb_21_5_3/python/reb_21_5_3_parity.png",
+        "reb_21_5_3/python/reb_21_5_3_A_residual.png",
+        "reb_21_5_3/python/reb_21_5_3_B_residual.png",
+        "reb_21_5_3/python/reb_21_5_3_Y_residual.png",
+        "reb_21_5_3/python/reb_21_5_3_Z_residual.png",
+        "reb_21_5_3/python/reb_21_5_3_results_follow_up.csv",
+        "reb_21_5_3/python/reb_21_5_3_parity_follow_up.png",
+        "reb_21_5_3/python/reb_21_5_3_A_residual_follow_up.png",
+        "reb_21_5_3/python/reb_21_5_3_B_residual_follow_up.png",
+        "reb_21_5_3/python/reb_21_5_3_Y_residual_follow_up.png",
+        "reb_21_5_3/python/reb_21_5_3_Z_residual_follow_up.png"
+    output:
+        "../RE_Basics/examples/reb_21_5_3/narrative.qmd",
+        "../RE_Basics/examples/reb_21_5_3/equations.qmd",
+        "../RE_Basics/examples/reb_21_5_3/reb_21_5_3_results.csv",
+        "../RE_Basics/examples/reb_21_5_3/reb_21_5_3_parity.png",
+        "../RE_Basics/examples/reb_21_5_3/reb_21_5_3_A_residual.png",
+        "../RE_Basics/examples/reb_21_5_3/reb_21_5_3_B_residual.png",
+        "../RE_Basics/examples/reb_21_5_3/reb_21_5_3_Y_residual.png",
+        "../RE_Basics/examples/reb_21_5_3/reb_21_5_3_Z_residual.png",
+        "../RE_Basics/examples/reb_21_5_3/reb_21_5_3_results_follow_up.csv",
+        "../RE_Basics/examples/reb_21_5_3/reb_21_5_3_parity_follow_up.png",
+        "../RE_Basics/examples/reb_21_5_3/reb_21_5_3_A_residual_follow_up.png",
+        "../RE_Basics/examples/reb_21_5_3/reb_21_5_3_B_residual_follow_up.png",
+        "../RE_Basics/examples/reb_21_5_3/reb_21_5_3_Y_residual_follow_up.png",
+        "../RE_Basics/examples/reb_21_5_3/reb_21_5_3_Z_residual_follow_up.png"
+    shell:
+        """
+        rm -rf ../RE_Basics/examples/reb_21_5_3
+        mkdir ../RE_Basics/examples/reb_21_5_3
+        cp reb_21_5_3/narrative.qmd ../RE_Basics/examples/reb_21_5_3
+        cp reb_21_5_3/equations.qmd ../RE_Basics/examples/reb_21_5_3
+        cp reb_21_5_3/python/reb_21_5_3_results.csv ../RE_Basics/examples/reb_21_5_3
+        cp reb_21_5_3/python/reb_21_5_3_parity.png ../RE_Basics/examples/reb_21_5_3
+        cp reb_21_5_3/python/reb_21_5_3_A_residual.png ../RE_Basics/examples/reb_21_5_3
+        cp reb_21_5_3/python/reb_21_5_3_B_residual.png ../RE_Basics/examples/reb_21_5_3
+        cp reb_21_5_3/python/reb_21_5_3_Y_residual.png ../RE_Basics/examples/reb_21_5_3
+        cp reb_21_5_3/python/reb_21_5_3_Z_residual.png ../RE_Basics/examples/reb_21_5_3
+        cp reb_21_5_3/python/reb_21_5_3_results_follow_up.csv ../RE_Basics/examples/reb_21_5_3
+        cp reb_21_5_3/python/reb_21_5_3_parity_follow_up.png ../RE_Basics/examples/reb_21_5_3
+        cp reb_21_5_3/python/reb_21_5_3_A_residual_follow_up.png ../RE_Basics/examples/reb_21_5_3
+        cp reb_21_5_3/python/reb_21_5_3_B_residual_follow_up.png ../RE_Basics/examples/reb_21_5_3
+        cp reb_21_5_3/python/reb_21_5_3_Y_residual_follow_up.png ../RE_Basics/examples/reb_21_5_3
+        cp reb_21_5_3/python/reb_21_5_3_Z_residual_follow_up.png ../RE_Basics/examples/reb_21_5_3
+        """
+
+rule reb_21_5_3_score:
+    input:
+        "reb_21_5_3/python/reb_21_5_3.py",
+        "reb_21_5_3/python/reb_21_5_3_follow_up.py"
+    output:
+        "../SCoRE/reb_examples/reb_21_5_3/reb_21_5_3.py",
+        "../SCoRE/reb_examples/reb_21_5_3/reb_21_5_3_follow_up.py"
+    shell:
+        """
+        rm -rf ../SCoRE/reb_examples/reb_21_5_3
+        mkdir ../SCoRE/reb_examples/reb_21_5_3
+        cp reb_21_5_3/python/reb_21_5_3.py ../SCoRE/reb_examples/reb_21_5_3
+        cp reb_21_5_3/python/reb_21_5_3_follow_up.py ../SCoRE/reb_examples/reb_21_5_3
+        """
