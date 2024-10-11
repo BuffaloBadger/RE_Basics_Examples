@@ -1,0 +1,8 @@
+
+$$
+A \rightarrow Y + Z \tag{1}
+$$
+
+$$
+r = kP_A \tag{2}
+$$

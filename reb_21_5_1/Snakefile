@@ -1,0 +1,114 @@
+rule reb_21_5_1:
+    input:
+        "reb_21_5_1/reb_21_5_1_data.csv",
+        "reb_21_5_1/python/reb_21_5_1_parity.png",
+        "reb_21_5_1/python/reb_21_5_1_A_residual.png",
+        "reb_21_5_1/python/reb_21_5_1_Y_residual.png",
+        "reb_21_5_1/python/reb_21_5_1_Z_residual.png",
+        "reb_21_5_1/python/reb_21_5_1_results.csv",
+        "reb_21_5_1/matlab/reb_21_5_1_parity.png",
+        "reb_21_5_1/matlab/reb_21_5_1_A_residual.png",
+        "reb_21_5_1/matlab/reb_21_5_1_Y_residual.png",
+        "reb_21_5_1/matlab/reb_21_5_1_Z_residual.png",
+        "reb_21_5_1/matlab/reb_21_5_1_results.csv",
+        "../RE_Basics/examples/reb_21_5_1/narrative.qmd",
+        "../RE_Basics/examples/reb_21_5_1/equations.qmd",
+        "../RE_Basics/examples/reb_21_5_1/reb_21_5_1_data.csv",
+        "../RE_Basics/examples/reb_21_5_1/reb_21_5_1_parity.png",
+        "../RE_Basics/examples/reb_21_5_1/reb_21_5_1_A_residual.png",
+        "../RE_Basics/examples/reb_21_5_1/reb_21_5_1_Y_residual.png",
+        "../RE_Basics/examples/reb_21_5_1/reb_21_5_1_Z_residual.png",
+        "../RE_Basics/examples/reb_21_5_1/reb_21_5_1_results.csv",
+        "../SCoRE/reb_examples/reb_21_5_1/reb_21_5_1_data.csv",
+        "../SCoRE/reb_examples/reb_21_5_1/reb_21_5_1.py",
+        "../SCoRE/reb_examples/reb_21_5_1/reb_21_5_1.m"
+
+rule reb_21_5_1_data:
+    input:
+        "reb_21_5_1/python/reb_21_5_1_data_generator.py"
+    output:
+        "reb_21_5_1/reb_21_5_1_data.csv"
+    shell:
+        """
+        python3 reb_21_5_1/python/reb_21_5_1_data_generator.py
+        """
+
+rule reb_21_5_1_python:
+    input:
+        "reb_21_5_1/python/reb_21_5_1.py"
+    output:
+        "reb_21_5_1/python/reb_21_5_1_parity.png",
+        "reb_21_5_1/python/reb_21_5_1_A_residual.png",
+        "reb_21_5_1/python/reb_21_5_1_Y_residual.png",
+        "reb_21_5_1/python/reb_21_5_1_Z_residual.png",
+        "reb_21_5_1/python/reb_21_5_1_results.csv"
+    shell:
+        """
+        python3 reb_21_5_1/python/reb_21_5_1.py
+        """
+
+rule reb_21_5_1_matlab:
+    input:
+        "reb_21_5_1/reb_21_5_1_data.csv",
+        "reb_21_5_1/matlab/reb_21_5_1.m"
+    output:
+        "reb_21_5_1/matlab/reb_21_5_1_parity.png",
+        "reb_21_5_1/matlab/reb_21_5_1_A_residual.png",
+        "reb_21_5_1/matlab/reb_21_5_1_Y_residual.png",
+        "reb_21_5_1/matlab/reb_21_5_1_Z_residual.png",
+        "reb_21_5_1/matlab/reb_21_5_1_results.csv"
+    shell:
+        """
+        matlab -nodisplay -r "cd('reb_21_5_1/matlab');reb_21_5_1;exit"
+        """
+
+rule reb_21_5_1_re_basics:
+    input:
+        "reb_21_5_1/narrative.qmd",
+        "reb_21_5_1/equations.qmd",
+        "reb_21_5_1/reb_21_5_1_data.csv",
+        "reb_21_5_1/python/reb_21_5_1_parity.png",
+        "reb_21_5_1/python/reb_21_5_1_A_residual.png",
+        "reb_21_5_1/python/reb_21_5_1_Y_residual.png",
+        "reb_21_5_1/python/reb_21_5_1_Z_residual.png",
+        "reb_21_5_1/python/reb_21_5_1_results.csv"
+    output:
+        "../RE_Basics/examples/reb_21_5_1/narrative.qmd",
+        "../RE_Basics/examples/reb_21_5_1/equations.qmd",
+        "../RE_Basics/examples/reb_21_5_1/reb_21_5_1_data.csv",
+        "../RE_Basics/examples/reb_21_5_1/reb_21_5_1_parity.png",
+        "../RE_Basics/examples/reb_21_5_1/reb_21_5_1_A_residual.png",
+        "../RE_Basics/examples/reb_21_5_1/reb_21_5_1_Y_residual.png",
+        "../RE_Basics/examples/reb_21_5_1/reb_21_5_1_Z_residual.png",
+        "../RE_Basics/examples/reb_21_5_1/reb_21_5_1_results.csv"
+    shell:
+        """
+        rm -rf ../RE_Basics/examples/reb_21_5_1
+        mkdir ../RE_Basics/examples/reb_21_5_1
+        cp reb_21_5_1/narrative.qmd ../RE_Basics/examples/reb_21_5_1
+        cp reb_21_5_1/equations.qmd ../RE_Basics/examples/reb_21_5_1
+        cp reb_21_5_1/reb_21_5_1_data.csv ../RE_Basics/examples/reb_21_5_1
+        cp reb_21_5_1/python/reb_21_5_1_parity.png ../RE_Basics/examples/reb_21_5_1
+        cp reb_21_5_1/python/reb_21_5_1_A_residual.png ../RE_Basics/examples/reb_21_5_1
+        cp reb_21_5_1/python/reb_21_5_1_Y_residual.png ../RE_Basics/examples/reb_21_5_1
+        cp reb_21_5_1/python/reb_21_5_1_Z_residual.png ../RE_Basics/examples/reb_21_5_1
+        cp reb_21_5_1/python/reb_21_5_1_results.csv ../RE_Basics/examples/reb_21_5_1
+        """
+
+rule reb_21_5_1_score:
+    input:
+        "reb_21_5_1/reb_21_5_1_data.csv",
+        "reb_21_5_1/python/reb_21_5_1.py",
+        "reb_21_5_1/matlab/reb_21_5_1.m"
+    output:
+        "../SCoRE/reb_examples/reb_21_5_1/reb_21_5_1_data.csv",
+        "../SCoRE/reb_examples/reb_21_5_1/reb_21_5_1.py",
+        "../SCoRE/reb_examples/reb_21_5_1/reb_21_5_1.m"
+    shell:
+        """
+        rm -rf ../SCoRE/reb_examples/reb_21_5_1
+        mkdir ../SCoRE/reb_examples/reb_21_5_1
+        cp reb_21_5_1/reb_21_5_1_data.csv ../SCoRE/reb_examples/reb_21_5_1
+        cp reb_21_5_1/python/reb_21_5_1.py ../SCoRE/reb_examples/reb_21_5_1
+        cp reb_21_5_1/matlab/reb_21_5_1.m ../SCoRE/reb_examples/reb_21_5_1
+        """
