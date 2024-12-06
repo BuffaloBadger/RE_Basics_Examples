@@ -6,9 +6,9 @@ function reb_19_5_1()
     R = 8.314E-3; % kJ /mol /K
 
     % globally available variables
-    k0_current = nan;
-    E_current = nan;
-    T_current = nan;
+    g_k0 = nan;
+    g_E = nan;
+    g_T = nan;
 
     % derivatives function
     function derivs = derivatives(~,dep)
@@ -16,7 +16,7 @@ function reb_19_5_1()
         nA = dep(1);
 
         % calculate the rate coefficient
-        k = k0_current*exp(-E_current/R/T_current);
+        k = g_k0*exp(-g_E/R/g_T);
 
         % calculate the concentration
         CA = nA/V;
@@ -32,12 +32,10 @@ function reb_19_5_1()
         derivs = [dnAdt; dnZdt];
     end
 
-    % BSTR model function
-    function [t, nA, nZ] = profiles(k0,E,T,CA0,tf)
-        % make rate expression parameters and adjusted inputs available
-        k0_current = k0;
-        E_current = E;
-        T_current = T;
+    % BSTR reactor function
+    function [t, nA, nZ] = profiles(T,CA0,tf)
+        % make T available to the derivatives function
+        g_T = T;
 
         % initial values and stopping criterion
         ind_0 = 0.0;
@@ -66,9 +64,9 @@ function reb_19_5_1()
 
     % predicted responses function
     function CAf_model = predicted_responses(guesses, expt_inputs)
-        % set the current value of k
-        k0 = 10^guesses(1);
-        E = guesses(2);
+        % make the current kinetics parameters globally available
+        g_k0 = 10^guesses(1);
+        g_E = guesses(2);
 
         % get the number of experiments
         n_expt = size(expt_inputs,1);
