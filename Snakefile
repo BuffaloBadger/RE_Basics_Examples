@@ -46,6 +46,9 @@ include: "reb_20_5_3/Snakefile"
 include: "reb_21_5_1/Snakefile"
 include: "reb_21_5_2/Snakefile"
 include: "reb_21_5_3/Snakefile"
+include: "reb_24_7_1/Snakefile"
+include: "reb_24_7_2/Snakefile"
+include: "reb_24_7_3/Snakefile"
 
 # Specify that function  as the input for the all rule
 rule all:

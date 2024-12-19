@@ -1,0 +1,9 @@
+
+| $D_{ax} \left(\text{m}^2 \text{ s}^{-1}\right)$ | $\lambda_{ax} \left(\text{cal m}^{-1} \text{ s}^{-1} \text{ K}^{-1}\right)$ |
+|:------:|:------:|
+| 1.0      | 1.0 x 10^6^   |
+| 1.0 x 10^-2^     | 1.0 x 10^4^   |
+| 1.0 x 10^-3^     | 1.0 x 10^3^    |
+| 1.0 x 10^-5^     | 1.0 x 10^1^    |
+
+: Coefficients for the Axial Dispersion Model. {#tbl-example_24_7_1_data}

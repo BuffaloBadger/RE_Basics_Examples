@@ -1,0 +1,8 @@
+
+$$
+A \rightarrow Z \tag{1}
+$$
+
+$$
+r=kC_A^2 \tag{2}
+$$

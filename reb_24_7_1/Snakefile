@@ -1,0 +1,65 @@
+rule reb_24_7_1:
+    input:
+        "reb_24_7_1/matlab/CA_profile.png",
+        "reb_24_7_1/matlab/T_profile.png",
+        "../RE_Basics/examples/reb_24_7_1/narrative.qmd",
+        "../RE_Basics/examples/reb_24_7_1/equations.qmd",
+        "../RE_Basics/examples/reb_24_7_1/data_table.qmd",
+        "../RE_Basics/examples/reb_24_7_1/CA_profile.png",
+        "../RE_Basics/examples/reb_24_7_1/T_profile.png"
+
+rule reb_24_7_1_python:
+    input:
+        
+    output:
+        
+    shell:
+        """
+        
+        """
+
+rule reb_24_7_1_matlab:
+    input:
+        "reb_24_7_1/matlab/reb_24_7_1.m"
+    output:
+        "reb_24_7_1/matlab/CA_profile.png",
+        "reb_24_7_1/matlab/T_profile.png"
+    shell:
+        """
+        matlab -nodisplay -r "cd('reb_24_7_1/matlab');reb_24_7_1;exit"
+        """
+
+rule reb_24_7_1_re_basics:
+    input:
+        "reb_24_7_1/narrative.qmd",
+        "reb_24_7_1/equations.qmd",
+        "reb_24_7_1/data_table.qmd",
+        "reb_24_7_1/matlab/CA_profile.png",
+        "reb_24_7_1/matlab/T_profile.png"
+    output:
+        "../RE_Basics/examples/reb_24_7_1/narrative.qmd",
+        "../RE_Basics/examples/reb_24_7_1/equations.qmd",
+        "../RE_Basics/examples/reb_24_7_1/data_table.qmd",
+        "../RE_Basics/examples/reb_24_7_1/CA_profile.png",
+        "../RE_Basics/examples/reb_24_7_1/T_profile.png"
+    shell:
+        """
+        rm -rf ../RE_Basics/examples/reb_24_7_1
+        mkdir ../RE_Basics/examples/reb_24_7_1
+        cp reb_24_7_1/narrative.qmd ../RE_Basics/examples/reb_24_7_1
+        cp reb_24_7_1/equations.qmd ../RE_Basics/examples/reb_24_7_1
+        cp reb_24_7_1/data_table.qmd ../RE_Basics/examples/reb_24_7_1
+        cp reb_24_7_1/matlab/CA_profile.png ../RE_Basics/examples/reb_24_7_1
+        cp reb_24_7_1/matlab/T_profile.png ../RE_Basics/examples/reb_24_7_1
+        """
+
+rule reb_24_7_1_score:
+    input:
+        
+    output:
+        
+    shell:
+        """
+        
+        """
+       

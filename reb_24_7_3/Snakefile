@@ -1,0 +1,73 @@
+rule reb_24_7_3:
+    input:
+        "reb_24_7_3/matlab/results.csv",
+        "reb_24_7_3/matlab/CA_profile.png",
+        "reb_24_7_3/matlab/CA_profile.pdf",
+        "reb_24_7_3/matlab/T_profile.png",
+        "reb_24_7_3/matlab/T_profile.pdf",
+        "../RE_Basics/examples/reb_24_7_3/narrative.qmd",
+        "../RE_Basics/examples/reb_24_7_3/equations.qmd",
+        "../RE_Basics/examples/reb_24_7_3/results.csv",
+        "../RE_Basics/examples/reb_24_7_3/CA_profile.png",
+        "../RE_Basics/examples/reb_24_7_3/T_profile.png"
+
+rule reb_24_7_3_python:
+    input:
+        
+    output:
+        
+    shell:
+        """
+        
+        """
+
+rule reb_24_7_3_matlab:
+    input:
+        "reb_24_7_3/matlab/reb_24_7_3.m"
+    output:
+        "reb_24_7_3/matlab/results.csv",
+        "reb_24_7_3/matlab/CA_profile.png",
+        "reb_24_7_3/matlab/CA_profile.pdf",
+        "reb_24_7_3/matlab/T_profile.png",
+        "reb_24_7_3/matlab/T_profile.pdf"
+    shell:
+        """
+        matlab -nodisplay -r "cd('reb_24_7_3/matlab');reb_24_7_3;exit"
+        """
+
+rule reb_24_7_3_re_basics:
+    input:
+        "reb_24_7_3/narrative.qmd",
+        "reb_24_7_3/equations.qmd",
+        "reb_24_7_3/matlab/results.csv",
+        "reb_24_7_3/matlab/CA_profile.png",
+        "reb_24_7_3/matlab/CA_profile.pdf",
+        "reb_24_7_3/matlab/T_profile.png",
+        "reb_24_7_3/matlab/T_profile.pdf",
+    output:
+        "../RE_Basics/examples/reb_24_7_3/narrative.qmd",
+        "../RE_Basics/examples/reb_24_7_3/equations.qmd",
+        "../RE_Basics/examples/reb_24_7_3/results.csv",
+        "../RE_Basics/examples/reb_24_7_3/CA_profile.png",
+        "../RE_Basics/examples/reb_24_7_3/T_profile.png"
+    shell:
+        """
+        rm -rf ../RE_Basics/examples/reb_24_7_3
+        mkdir ../RE_Basics/examples/reb_24_7_3
+        cp reb_24_7_3/narrative.qmd ../RE_Basics/examples/reb_24_7_3
+        cp reb_24_7_3/equations.qmd ../RE_Basics/examples/reb_24_7_3
+        cp reb_24_7_3/matlab/results.csv ../RE_Basics/examples/reb_24_7_3
+        cp reb_24_7_3/matlab/CA_profile.png ../RE_Basics/examples/reb_24_7_3
+        cp reb_24_7_3/matlab/T_profile.png ../RE_Basics/examples/reb_24_7_3
+        """
+
+rule reb_24_7_3_score:
+    input:
+        
+    output:
+        
+    shell:
+        """
+        
+        """
+       
