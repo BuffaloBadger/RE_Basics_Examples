@@ -1,0 +1,73 @@
+rule reb_22_5_1:
+    input:
+        "../RE_Basics/examples/reb_22_5_1/narrative.qmd",
+        "../RE_Basics/examples/reb_22_5_1/data.csv",
+        "../RE_Basics/examples/reb_22_5_1/cum_age_dist.png",
+        "../RE_Basics/examples/reb_22_5_1/response.png",
+        "../RE_Basics/examples/reb_22_5_1/cum_age_dist_comp.png",
+        "../RE_Basics/examples/reb_22_5_1/results.csv",
+        "reb_22_5_1/matlab/reb_22_5_1.m",
+        "reb_22_5_1/matlab/reb_22_5_1_discussion.m"
+
+rule reb_22_5_1_python:
+    input:
+        
+    output:
+        
+    shell:
+        """
+        
+        """
+
+rule reb_22_5_1_matlab:
+    input:
+        "reb_22_5_1/matlab/reb_22_5_1.m",
+        "reb_22_5_1/data.csv",
+        "reb_22_5_1/matlab/reb_22_5_1_discussion.m"
+    output:
+        "reb_22_5_1/matlab/cum_age_dist.png",
+        "reb_22_5_1/matlab/response.png",
+        "reb_22_5_1/matlab/results.csv",
+        "reb_22_5_1/matlab/cum_age_dist_comp.png"
+    shell:
+        """
+        matlab -nodisplay -r "cd('reb_22_5_1/matlab');reb_22_5_1;exit"
+        matlab -nodisplay -r "cd('reb_22_5_1/matlab');reb_22_5_1_discussion;exit"
+        """
+
+rule reb_22_5_1_re_basics:
+    input:
+        "reb_22_5_1/narrative.qmd",
+        "reb_22_5_1/data.csv",
+        "reb_22_5_1/matlab/cum_age_dist.png",
+        "reb_22_5_1/matlab/response.png",
+        "reb_22_5_1/matlab/results.csv",
+        "reb_22_5_1/matlab/cum_age_dist_comp.png"
+    output:
+        "../RE_Basics/examples/reb_22_5_1/narrative.qmd",
+        "../RE_Basics/examples/reb_22_5_1/data.csv",
+        "../RE_Basics/examples/reb_22_5_1/cum_age_dist.png",
+        "../RE_Basics/examples/reb_22_5_1/response.png",
+        "../RE_Basics/examples/reb_22_5_1/cum_age_dist_comp.png",
+        "../RE_Basics/examples/reb_22_5_1/results.csv"
+    shell:
+        """
+        rm -rf ../RE_Basics/examples/reb_22_5_1
+        mkdir ../RE_Basics/examples/reb_22_5_1
+        cp reb_22_5_1/narrative.qmd ../RE_Basics/examples/reb_22_5_1
+        cp reb_22_5_1/data.csv ../RE_Basics/examples/reb_22_5_1
+        cp reb_22_5_1/matlab/cum_age_dist.png ../RE_Basics/examples/reb_22_5_1
+        cp reb_22_5_1/matlab/response.png ../RE_Basics/examples/reb_22_5_1
+        cp reb_22_5_1/matlab/results.csv ../RE_Basics/examples/reb_22_5_1
+        cp reb_22_5_1/matlab/cum_age_dist_comp.png ../RE_Basics/examples/reb_22_5_1
+        """
+
+rule reb_22_5_1_score:
+    input:
+        
+    output:
+        
+    shell:
+        """
+        
+        """

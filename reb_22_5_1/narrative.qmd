@@ -1,0 +1,1 @@
+An engineer needed to measure the cumulative age distribution function for a 10 L stirred tank reactor in which a liquid-phase reaction was taking place. With the reactor operating at a flow rate of 3 L min^-1^, the engineer instantaneously added 5 mg of a tracer to the stirred tank, and measured the tracer concentration in the outlet as a function of time since the injection. 

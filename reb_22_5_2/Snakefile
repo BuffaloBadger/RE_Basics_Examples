@@ -1,0 +1,72 @@
+rule reb_22_5_2:
+    input:
+        "../RE_Basics/examples/reb_22_5_2/narrative.qmd",
+        "../RE_Basics/examples/reb_22_5_2/data.csv",
+        "../RE_Basics/examples/reb_22_5_2/cum_age_dist.png",
+        "../RE_Basics/examples/reb_22_5_2/response.png",
+        "reb_22_5_2/data.csv",
+        "reb_22_5_2/matlab/cum_age_dist.png",
+        "reb_22_5_2/matlab/response.png"
+
+rule reb_22_5_2_data:
+    input:
+        "reb_22_5_2/matlab/reb_22_5_2_data_gen.m"
+    output:
+        "reb_22_5_2/data.csv"
+    shell:
+        """
+        matlab -nodisplay -r "cd('reb_22_5_2/matlab');reb_22_5_2_data_gen;exit"
+        """
+
+rule reb_22_5_2_python:
+    input:
+        
+    output:
+        
+    shell:
+        """
+        
+        """
+
+rule reb_22_5_2_matlab:
+    input:
+        "reb_22_5_2/matlab/reb_22_5_2.m",
+        "reb_22_5_2/data.csv"
+    output:
+        "reb_22_5_2/matlab/cum_age_dist.png",
+        "reb_22_5_2/matlab/response.png"
+    shell:
+        """
+        matlab -nodisplay -r "cd('reb_22_5_2/matlab');reb_22_5_2;exit"
+        """
+
+rule reb_22_5_2_re_basics:
+    input:
+        "reb_22_5_2/narrative.qmd",
+        "reb_22_5_2/data.csv",
+        "reb_22_5_2/matlab/cum_age_dist.png",
+        "reb_22_5_2/matlab/response.png"
+    output:
+        "../RE_Basics/examples/reb_22_5_2/narrative.qmd",
+        "../RE_Basics/examples/reb_22_5_2/data.csv",
+        "../RE_Basics/examples/reb_22_5_2/cum_age_dist.png",
+        "../RE_Basics/examples/reb_22_5_2/response.png"
+    shell:
+        """
+        rm -rf ../RE_Basics/examples/reb_22_5_2
+        mkdir ../RE_Basics/examples/reb_22_5_2
+        cp reb_22_5_2/narrative.qmd ../RE_Basics/examples/reb_22_5_2
+        cp reb_22_5_2/data.csv ../RE_Basics/examples/reb_22_5_2
+        cp reb_22_5_2/matlab/cum_age_dist.png ../RE_Basics/examples/reb_22_5_2
+        cp reb_22_5_2/matlab/response.png ../RE_Basics/examples/reb_22_5_2
+        """
+
+rule reb_22_5_2_score:
+    input:
+        
+    output:
+        
+    shell:
+        """
+        
+        """
