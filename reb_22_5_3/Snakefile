@@ -1,0 +1,70 @@
+rule reb_22_5_3:
+    input:
+        "../RE_Basics/examples/reb_22_5_3/narrative.qmd",
+        "../RE_Basics/examples/reb_22_5_3/equations.qmd",
+        "../RE_Basics/examples/reb_22_5_3/results.csv",
+        "../RE_Basics/examples/reb_22_5_3/VFR_profile.png",
+        "reb_22_5_3/matlab/results.csv",
+        "reb_22_5_3/matlab/VFR_profile.png"
+
+rule reb_22_5_3_data:
+    input:
+        
+    output:
+        
+    shell:
+        """
+        
+        """
+
+rule reb_22_5_3_python:
+    input:
+        
+    output:
+        
+    shell:
+        """
+        
+        """
+
+rule reb_22_5_3_matlab:
+    input:
+        "reb_22_5_3/matlab/reb_22_5_3.m"
+    output:
+        "reb_22_5_3/matlab/results.csv",
+        "reb_22_5_3/matlab/VFR_profile.png"
+    shell:
+        """
+        matlab -nodisplay -r "cd('reb_22_5_3/matlab');reb_22_5_3;exit"
+        """
+
+rule reb_22_5_3_re_basics:
+    input:
+        "reb_22_5_3/narrative.qmd",
+        "reb_22_5_3/equations.qmd",
+        "reb_22_5_3/matlab/results.csv",
+        "reb_22_5_3/matlab/VFR_profile.png"
+    output:
+        "../RE_Basics/examples/reb_22_5_3/narrative.qmd",
+        "../RE_Basics/examples/reb_22_5_3/equations.qmd",
+        "../RE_Basics/examples/reb_22_5_3/results.csv",
+        "../RE_Basics/examples/reb_22_5_3/VFR_profile.png"
+    shell:
+        """
+        rm -rf ../RE_Basics/examples/reb_22_5_3
+        mkdir ../RE_Basics/examples/reb_22_5_3
+        cp reb_22_5_3/narrative.qmd ../RE_Basics/examples/reb_22_5_3
+        cp reb_22_5_3/equations.qmd ../RE_Basics/examples/reb_22_5_3
+        cp reb_22_5_3/matlab/results.csv ../RE_Basics/examples/reb_22_5_3
+        cp reb_22_5_3/matlab/VFR_profile.png ../RE_Basics/examples/reb_22_5_3
+        """
+
+rule reb_22_5_3_score:
+    input:
+        
+    output:
+        
+    shell:
+        """
+        
+        """

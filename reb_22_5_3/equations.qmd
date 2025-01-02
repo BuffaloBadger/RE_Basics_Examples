@@ -1,0 +1,8 @@
+
+$$
+A \rightleftarrows Y + 3 Z \tag{1}
+$$
+
+$$
+r = k_fP_A - k_rP_YP_Z^3 \tag{2}
+$$
