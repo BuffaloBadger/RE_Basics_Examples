@@ -1,0 +1,63 @@
+rule reb_23_3_1:
+    input:
+        "../RE_Basics/examples/reb_23_3_1/narrative.qmd",
+        "../RE_Basics/examples/reb_23_3_1/equations.qmd",
+        "../RE_Basics/examples/reb_23_3_1/cum_age_dist_fcn.csv"
+
+rule reb_23_3_1_data:
+    input:
+        
+    output:
+        
+    shell:
+        """
+        
+        """
+
+rule reb_23_3_1_python:
+    input:
+        
+    output:
+        
+    shell:
+        """
+        
+        """
+
+rule reb_23_3_1_matlab:
+    input:
+        
+    output:
+        
+    shell:
+        """
+        matlab -nodisplay -r "cd('reb_23_3_1/matlab');reb_23_3_1;exit"
+        """
+
+rule reb_23_3_1_re_basics:
+    input:
+        "reb_23_3_1/narrative.qmd",
+        "reb_23_3_1/equations.qmd"
+    output:
+        "../RE_Basics/examples/reb_23_3_1/narrative.qmd",
+        "../RE_Basics/examples/reb_23_3_1/equations.qmd",
+        "../RE_Basics/examples/reb_23_3_1/cum_age_dist_fcn.csv"
+    shell:
+        """
+        snakemake --cores 1 -s reb_22_5_1/Snakefile
+        rm -rf ../RE_Basics/examples/reb_23_3_1
+        mkdir ../RE_Basics/examples/reb_23_3_1
+        cp reb_23_3_1/narrative.qmd ../RE_Basics/examples/reb_23_3_1
+        cp reb_23_3_1/equations.qmd ../RE_Basics/examples/reb_23_3_1
+        cp reb_22_5_1/matlab/cum_age_dist_fcn.csv ../RE_Basics/examples/reb_23_3_1
+        """
+
+rule reb_23_3_1_score:
+    input:
+        
+    output:
+        
+    shell:
+        """
+        
+        """
