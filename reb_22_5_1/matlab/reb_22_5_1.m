@@ -18,6 +18,11 @@ function reb_22_5_1()
         F(i) = VFR/m_impulse*trapz(t(1:i),Cout(1:i));
     end
 
+    % save the cumulative age distribution function
+    results_table = table(t,F);
+    results_table.Properties.VariableNames = ["lambda (min)", "F"];
+    writetable(results_table,'cum_age_dist_fcn.csv');
+
     % calculate F vs. lambda for an equivalent ideal CSTR
     t_bar = V/VFR;
     F_cstr = nan(length(t),1);
