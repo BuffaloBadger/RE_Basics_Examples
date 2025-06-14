@@ -1,6 +1,0 @@
-
-Liquid-phase reaction (1) takes place in an ideal steady-state CSTR. Saturated steam is fed to the reactor jacket at a constant rate and condenses within the jacket. Write and simplify the reactor design equations needed to model this system assuming that the gravimetric heat capacities of the reacting and exchange fluids are known and constant.
-
-$$
-A + B \rightarrow Z \tag{1}
-$$

@@ -1,6 +1,0 @@
-
-Gas-phase reaction (1) takes place in an ideal, adiabatic BSTR. Write and simplify the reactor design equations needed to model this system.
-
-$$
-A \rightarrow Z \tag{1}
-$$

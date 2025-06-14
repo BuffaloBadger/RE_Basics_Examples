@@ -1,6 +1,0 @@
-
-The exothermic, liquid-phase acid neutralization, reaction (1), occurs in an ideal SBSTR. Initially a known volume of a solution containing only reagent B is present in the reactor. To start the process a different solution containing only A begins flowing into the reactor. The pressure within the reactor is constant. Chilled water flows into the reactor jacket at a constant flow rate. Write and simplify the reactor design equations needed to model this system. Assume that the volumetric heat capacity of the reacting fluid and the gravimetric heat capacity of the exchange fluid are known.
-
-$$
-A + B \rightarrow S + W \tag{1}
-$$

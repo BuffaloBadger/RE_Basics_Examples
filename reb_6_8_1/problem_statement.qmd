@@ -1,5 +1,0 @@
-Gas phase reaction (1) occurs isothermally at a known temperature in an ideal BSTR. Initially the reactor contains only known molar amounts of A, B, and an inert gas, I. Write the minimum number of reactor design equations needed to model the composition within this system over time. 
-
-$$
-A + 2 B \rightarrow Y + Z \tag{1}
-$$
